@@ -1,0 +1,20 @@
+// 业务流中action的配置设计
+
+// sql
+{
+	"type":"sql_query", // sql查询, sql增删改都是相同的配置方式
+	"content":{
+		"sql":"SELECT ID, NAME, AGE FROM SYS_USER WHERE SEX = ?", // 查询的sql语句
+		"params":[{ // sql语句中用到的参数
+			"name":"", // 从指定的来源, 根据该名称获取对应的值
+			"scope":1 // 参数值的来源
+		}]
+	},
+	"result":{
+		"name":"users",
+		"scope":5,
+		"dataType":"list"
+	}
+}
+
+// 
