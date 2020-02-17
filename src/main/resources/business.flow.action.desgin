@@ -1,4 +1,4 @@
-// 业务流中action的配置设计
+// 业务流中部分action的配置设计
 
 // sql
 {
@@ -6,15 +6,55 @@
 	"content":{
 		"sql":"SELECT ID, NAME, AGE FROM SYS_USER WHERE SEX = ?", // 查询的sql语句
 		"params":[{ // sql语句中用到的参数
-			"name":"", // 从指定的来源, 根据该名称获取对应的值
+			"name":"", // 从指定的来源, 根据该名称获取对应的数据值
 			"scope":1 // 参数值的来源
 		}]
 	},
 	"result":{
+		"isDeclare":true,
 		"name":"users",
 		"scope":5,
 		"dataType":"list"
 	}
 }
 
-// 
+// data_op, 数据操作
+{
+	"type":"data_op_loop", // 循环
+	"content":{
+		"collectionName":"", // 从指定的来源, 根据该名称获取对应的数据集合
+		"scope":1, // 集合的来源
+		"alias":"", // 每个循环对象的别名
+		"actions":[{ // 在循环中要执行的action数组
+		}]
+	}
+}
+
+// var_op, 变量操作
+{
+	"type":"var_op_declare", // 声明变量
+	"content":{
+		"vars":[{
+			"name":"", // 变量名
+			"description":"", // 变量描述, 默认为null
+			"scope":5, // 变量的范围, 默认为5
+			"dataType":"string", // 变量数据类型, 默认为string
+			"value":"", // 变量的初始值, 默认为null, 如果是null或用户指定的值和dataType不匹配时, 使用dataType的默认初始值, 否则就使用用户指定的值
+			"refName":"", // 引用的名称
+			"refScope":-1 // 变量的值来源(引用范围), 默认为-1, 其值和scope值相同, 如果是-1表示根据value来给变量赋值, 否则去指定的scope找refName的数据值, 并赋给当前变量
+		}]
+	}
+}
+
+{
+	"type":"var_op_assign", // 变量的赋值
+	"content":{
+		"vars":[{
+			"name":"", // 变量名
+			"scope":0, // 变量的范围, 对指定范围的变量进行赋值, 无默认值, 必须配置
+			"value":"", // 变量的值, 默认为null, 如果是null或用户指定的值和dataType不匹配时, 使用dataType的默认初始值, 否则就使用用户指定的值
+			"refName":"", // 引用的名称
+			"refScope":-1 // 变量的值来源(引用范围), 默认为-1, 其值和scope值相同, 如果是-1表示根据value来给变量赋值, 否则去指定的scope找refName的数据值, 并赋给当前变量
+		}]
+	}
+}

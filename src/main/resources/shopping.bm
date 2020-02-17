@@ -1,0 +1,94 @@
+{
+	"name":"shoppingDiscount",
+	"description":"购物打折流程", 
+	"version":"1",
+	"state":1,
+	
+	"params":[{
+		"name":"shoppingCarId",
+		"description":"购物车id",
+		"scope":1,
+		"required":true // 参数是否必须, 默认为true
+	}],
+	
+	"events":[{
+		"name":"queryProductsByShoppingCarId",
+		"description":"根据购物车id获取商品集合",
+		"actions":[{ 
+			"type":"sql_query", 
+			"content":{
+				"sql":"SELECT ID, TYPE, NAME, PRICE FROM PRODUCT WHERE ID IN (SELECT PRODUCT_ID FROM SHOPPING_CAR WHERE SHOPPING_CAR_ID = ?)",
+				"params":[{
+					"name":"shoppingCarId",
+					"scope":1
+				}]
+			},
+			"result":{
+				"name":"products",
+				"scope":4,
+				"dataType":"list"
+			}
+		}]
+	},{
+		"name":"productsNotExists",
+		"description":"购物车中没有商品",
+		"actions":[{ 
+			"type":"end", 
+			"content":{
+				"actions":[{
+					"type":"var_op_declare",
+					"content":{
+						"vars":[{
+							"name":"productsNotExists",
+							"description":"购物车中不存在商品",
+							"scope":2,
+							"dataType":"string",
+							"value":"购物车中不存在商品"
+						}]
+					}
+				}]
+			}
+		}]
+	},{
+		"name":"calcProductsTotalPrice",
+		"description":"计算商品的总价",
+		"actions":[{ 
+			"type":"data_op_loop",
+			"content":{
+				"collectionName":"products",
+				"scope":4,
+				"alias":"product",
+				"actions":[{
+					...
+				}]
+			},
+			"result":{
+				"name":"products",
+				"scope":4,
+				"dataType":"list"
+			}
+		}]
+	}],
+	
+	// 流配置
+	"flows":[{ // 业务流包含的所有流
+		"description":"", // 流描述, 默认为null
+		"type":1, // 流类型, 1顺序流, 2单条件流(if-else), 3多条件流(if-elsif-else), 默认为1, 在配置了条件流后, 如果没有配置else, 则提供一个默认的end-else结束流程
+		"order":1, // 排序值, 默认为1, 当是条件流时, 如果配置了order值, 则根据order值的顺序, 从大到小依次判断, 碰到判断为true的, 进入到相应的targetEvent, 否则就按照json中配置的顺序依次判断
+		"sourceEvent":"", // 起始的事件名 event.name, 同一个起始事件的流, 其type值必须保持一致
+		"targetEvent":"", // 目标的事件名 event.name
+		"conditionGroups":[{ // 判断条件组, 默认为空数组, 空数组标识判断结果默认为true
+			"conditions":[{ // 条件
+				"type":"",
+				"content":{},
+				"result":{
+					"name":"",
+					"scope":5,
+					"dataType":"boolean" // condition这里, dataType就只能是boolean类型
+				},
+				"nextLogicOp":"and" // 与下一个条件连接的逻辑操作符, and, or, 默认为and
+			}],
+			"nextLogicOp":"and" // 与下一个条件连接的逻辑操作符, and, or, 默认为and
+		}],
+	}]
+}
