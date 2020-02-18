@@ -11,50 +11,69 @@
 		}]
 	},
 	"result":{
-		"isDeclare":true,
+		"declare":true,
 		"name":"users",
 		"scope":5,
 		"dataType":"list"
 	}
 }
 
+// func, 函数
+
 // data_op, 数据操作
 {
-	"type":"data_op_loop", // 循环
+	"type":"data_op_comp", // 比较 
 	"content":{
-		"collectionName":"", // 从指定的来源, 根据该名称获取对应的数据集合
-		"scope":1, // 集合的来源
-		"alias":"", // 每个循环对象的别名
-		"actions":[{ // 在循环中要执行的action数组
+		"op":"eq", // eq(等于), ne(不等于), gt(大于), ge(大于等于), lt(小于), le(小于等于), bool(表示left的结果就是boolean类型)
+		"left":{
+			"value":"", // 固定值, 引号可有可无, 根据用户配置()
+			
+			"paramName":"", // 参数名
+			"paramScope":4, // 参数范围, 从指定的范围获取指定参数名的值
+			
+			"action":{} // 执行action后得到的result
+		},
+		"right":{
+			// 配置内容和left相同, 如果left的结果就是boolean, 则可以不配置right
+		}
+	}
+}
+
+
+// param_op, 参数操作
+{
+	"type":"param_op_declare", // 声明参数
+	"content":{
+		"params":[{
+			"name":"", // 参数名
+			"description":"", // 参数描述, 默认为null
+			"scope":5, // 参数范围, 默认为5
+			"dataType":"string", // 参数数据类型, 默认为string
+			
+			"value":"", // 参数初始值
+			
+			"refParamName":"", // 引用的参数名称
+			"refParamScope":4, // 引用的参数来源, 从指定的范围获取指定参数名的值赋给当前参数
+			
+			"action":{} // 执行action后得到的result赋给当前参数
+		}]
+	}
+}
+1
+{
+	"type":"param_op_assign", // 参数赋值
+	"content":{
+		"params":[{
+			"name":"", // 参数名
+			"scope":0, // 参数范围, 对指定范围的参数进行赋值
+			
+			"value":"", // 参数初始值
+			
+			"refParamName":"", // 引用的参数名称
+			"refParamScope":4, // 引用的参数来源, 从指定的范围获取指定参数名的值赋给当前参数
+			
+			"action":{} // 执行action后得到的result赋给当前参数
 		}]
 	}
 }
 
-// var_op, 变量操作
-{
-	"type":"var_op_declare", // 声明变量
-	"content":{
-		"vars":[{
-			"name":"", // 变量名
-			"description":"", // 变量描述, 默认为null
-			"scope":5, // 变量的范围, 默认为5
-			"dataType":"string", // 变量数据类型, 默认为string
-			"value":"", // 变量的初始值, 默认为null, 如果是null或用户指定的值和dataType不匹配时, 使用dataType的默认初始值, 否则就使用用户指定的值
-			"refName":"", // 引用的名称
-			"refScope":-1 // 变量的值来源(引用范围), 默认为-1, 其值和scope值相同, 如果是-1表示根据value来给变量赋值, 否则去指定的scope找refName的数据值, 并赋给当前变量
-		}]
-	}
-}
-
-{
-	"type":"var_op_assign", // 变量的赋值
-	"content":{
-		"vars":[{
-			"name":"", // 变量名
-			"scope":0, // 变量的范围, 对指定范围的变量进行赋值, 无默认值, 必须配置
-			"value":"", // 变量的值, 默认为null, 如果是null或用户指定的值和dataType不匹配时, 使用dataType的默认初始值, 否则就使用用户指定的值
-			"refName":"", // 引用的名称
-			"refScope":-1 // 变量的值来源(引用范围), 默认为-1, 其值和scope值相同, 如果是-1表示根据value来给变量赋值, 否则去指定的scope找refName的数据值, 并赋给当前变量
-		}]
-	}
-}

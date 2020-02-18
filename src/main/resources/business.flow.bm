@@ -1,6 +1,8 @@
-// 统一枚举值
+// 统一说明
 // 1.数据类型: string, byte, short, integer, long, float, double, boolean, date, array, list, map, 每种类型会有自己的默认初始值(和java的标准一致)
-// 2.参数范围: 1(输入参数), 2(输出参数), 3(全局参数), 4(可传递参数, 在本地配置中), 5(本地参数), 参数的范围从大到小排序为: 1=2>3>4>5
+// 2.参数范围: 1(输入参数), 2(输出参数), 3(全局参数), 4(可传递参数, 当前event可传递到下一个event, 包括连接的flow都可获取的参数), 5(本地参数, 符合java变量范围的规范), 参数的范围从大到小排序为: 1=2>3>4>5
+// 3.在给定参数名和参数的范围时, 参数名可以通过使用xxx.xx形式, 例如scope=1, paramName=user.name表示, 取输入参数中, 参数名为user数据的name属性值, 其他还例如 users.length, 表示取users集合或数组的长度, 等等
+// 4.在配置value(固定值)时, 其值的类型可能是string, integer, date, boolean, 所以value后的双引号可有可无, 具体根据用户配置的值决定
 
 {
 	// 基本配置
@@ -29,7 +31,7 @@
 			"type":"", // 动作的类型, 以"类型前缀_描述"的命名规则定义
 			"content":{}, // 动作具体要执行的内容
 			"result":{ // 动作执行的结果, 可以没有返回结果, 默认为null
-				"isDeclare":true, // 是否定义变量, 默认为true; true表示创建一个新的变量存储结果, false表示从指定的scope获取指定name的变量存储结果(即赋值)
+				"declare":true, // 是否定义参数, 默认为true; true表示创建一个新的参数存储结果, false表示从指定的scope获取指定name的参数存储结果(即赋值)
 				"name":"", // 结果的(参数)名称, 默认为32位UUID
 				"scope":5, // 结果的(参数)范围, 默认为5
 				"dataType":"", // 结果的数据类型
@@ -40,19 +42,14 @@
 	// 流配置
 	"flows":[{ // 业务流包含的所有流
 		"description":"", // 流描述, 默认为null
-		"type":1, // 流类型, 1顺序流, 2单条件流(if-else), 3多条件流(if-elsif-else), 默认为1, 在配置了条件流后, 如果没有配置else, 则提供一个默认的end-else结束流程
+		"type":1, // 流类型, 1顺序流, 2条件流(if-else/if-elsif-else), 默认为1, 在配置了条件流后, 如果没有配置else, 则提供一个默认的end-else结束流程
 		"order":1, // 排序值, 默认为1, 当是条件流时, 如果配置了order值, 则根据order值的顺序, 从大到小依次判断, 碰到判断为true的, 进入到相应的targetEvent, 否则就按照json中配置的顺序依次判断
 		"sourceEvent":"", // 起始的事件名 event.name
 		"targetEvent":"", // 目标的事件名 event.name
 		"conditionGroups":[{ // 判断条件组, 默认为空数组, 空数组标识判断结果默认为true
 			"conditions":[{ // 条件
-				"type":"",
-				"content":{},
-				"result":{
-					"name":"",
-					"scope":5,
-					"dataType":"boolean" // condition这里, dataType就只能是boolean类型
-				},
+				// 这里就是action的配置
+				
 				"nextLogicOp":"and" // 与下一个条件连接的逻辑操作符, and, or, 默认为and
 			}],
 			"nextLogicOp":"and" // 与下一个条件连接的逻辑操作符, and, or, 默认为and
