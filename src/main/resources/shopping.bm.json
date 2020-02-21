@@ -25,29 +25,24 @@
 			},
 			"result":{
 				"name":"products",
-				"scope":4,
+				"scope":3,
 				"dataType":"list"
 			}
 		}]
 	},{
 		"name":"productsNotExists",
 		"description":"购物车中没有商品",
-		"actions":[{ 
-			"type":"end", 
+		"actions":[{
+			"type":"param_op_declare",
 			"content":{
-				"actions":[{
-					"type":"var_op_declare",
-					"content":{
-						"vars":[{
-							"name":"productsNotExists",
-							"description":"购物车中不存在商品",
-							"scope":2,
-							"dataType":"string",
-							"value":"购物车中不存在商品"
-						}]
-					}
+				"params":[{
+					"name":"productsNotExists",
+					"scope":2,
+					"value":"购物车中不存在商品"
 				}]
 			}
+		},{ 
+			"type":"end"
 		}]
 	},{
 		"name":"calcProductsTotalPrice",
@@ -56,12 +51,28 @@
 			"type":"func_sum",
 			"content":{
 				"collection":"products",
-				"scope":4,
+				"scope":3,
 				"property":"PRICE"
 			},
 			"result":{
 				"name":"totalPrice",
 				"scope":2,
+				"dataType":"double"
+			}
+		}]
+	},{
+		"name":"calcXSLProductsTotalPrice",
+		"description":"计算商品中洗漱类用品的总价",
+		"actions":[{
+			"type":"func_sum",
+			"content":{
+				"collection":"products",
+				"scope":3,
+				"property":"PRICE"
+			},
+			"result":{
+				"name":"xslTotalPrice",
+				"scope":3,
 				"dataType":"double"
 			}
 		}]
@@ -75,32 +86,29 @@
 		"targetEvent":"productsNotExists",	
 		"conditionGroups":[{
 			"conditions":[{
-				"type":"comp_eq",
+				"type":"data_op_comp",
 				"content":{
+					"op":"eq",
 					"left":{
-						"actions":[{ 
-							"type":"func_count",
-							"content":{
-								"collection":"products",
-								"scope":4
-							},
-							"result":{
-								"name":"count",
-								"dataType":"integer"
-							}
-						}]
+						"paramName":"products.size",
+						"paramScope":3
 					},
 					"right":{
-						"value":"0"
+						"value":0
 					}
 				}
 			}]
-		}]
+		}],
+		"actions":[]
 	},{ 
 		"description":"如果指定购物车id中有商品",
 		"type":2,
 		"order":2,
 		"sourceEvent":"queryProductsByShoppingCarId",
-		"targetEvent":"calcProductsTotalPrice",
+		"targetEvent":"calcProductsTotalPrice"
+	},{
+		"type":1,
+		"sourceEvent":"calcProductsTotalPrice",
+		"targetEvent":"calcProductsTotalPrice"
 	}]
 }
