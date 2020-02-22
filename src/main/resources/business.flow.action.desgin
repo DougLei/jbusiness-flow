@@ -19,7 +19,6 @@
 		}]
 	},
 	"result":{
-		"declare":true,
 		"name":"users",
 		"scope":5,
 		"dataType":"list"
@@ -30,9 +29,9 @@
 // func, 函数
 // 判断
 {
-	"type":"func_judge", 
+	"type":"func_switch", 
 	"content":{
-		"switch":[{ // 每一组条件和其要执行的动作
+		"switch":[{ // 每一组条件和其要执行的动作, 按照配置的顺序判断下去, 遇到符合条件的, 以后的都不会执行
 			"conditionGroups":[{}],
 			"actions":[{}]
 		}]
@@ -45,6 +44,7 @@
 	"content":{
 		"collection":"", // 要操作的集合名称
 		"scope":3, // 操作集合所在的范围
+		"alias":"", // 别名
 		"actions":[{}] // 循环中要执行的动作
 	}
 }
@@ -90,7 +90,7 @@
 // data_op, 数据操作
 // 比较 
 {
-	"type":"data_op_comp", 
+	"type":"data_op_compare", 
 	"content":{
 		"op":"eq", // eq(等于), ne(不等于), gt(大于), ge(大于等于), lt(小于), le(小于等于), bool(表示left的结果就是boolean类型)
 		"left":{
@@ -115,6 +115,14 @@
 		"right":{
 			// 配置内容和left相同, 如果left的结果就是boolean, 则可以不配置right
 		}
+	}
+}
+
+// 运算操作
+{
+	"type":"data_op_arithmetic",
+	"content":{
+		???
 	}
 }
 
