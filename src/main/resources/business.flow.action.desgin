@@ -58,11 +58,15 @@
 			"name":"", // 参数名(当前业务流中)
 			"scope":1 // 参数所在的范围(当前业务流中)
 		}],
-		"return":[{ // 接收方法返回的数据
-			"returnName":"", 方法返回值中的参数名, 如果参数名为"_RETURN_ALL_", 表示将返回的数据(map)全部赋给一个参数; 如果方法中只返回了一个参数, 则可以不配置该属性值
+		"receive":[{ // 接收方法返回的数据
+			"returnName":"", 方法返回值中的参数名, 如果方法中只返回了一个参数(不是map), 则可以不配置该属性值
 			"name":"", // 参数名(和result中的含义一致), 将returnName的值赋给当前业务流中, 指定范围中指定name的参数
 			"scope":1 // 参数所在的范围(和result中的含义一致)
-		}]
+		}],
+		"receiveAll":{ // 表示将返回的数据全部赋给一个参数, 可以和receive共存
+			"name":"",
+			"scope":1
+		}
 	}
 }
 
@@ -92,9 +96,7 @@
 			"paramName":"", // 参数名
 			"paramScope":4, // 参数范围, 从指定的范围获取指定参数名的值
 			
-			"action":{}, // 执行action后得到的result
-			
-			"method":{} // 执行method后得到的result
+			"action":{} // 执行action后得到的result
 		},
 		"right":{
 			// 配置内容和left相同, 如果left的结果就是boolean, 则可以不配置right
