@@ -141,8 +141,13 @@
 			"description":"", // 参数描述, 默认为null
 			"scope":5, // 参数范围, 默认为5
 			"dataType":"string", // 参数数据类型, 默认为string
-			"value":"" // 参数初始值
+			"value":"", // 参数初始值
+			
+			// 将范围中其他参数的值赋给当前参数
+			"paramName":"", // 参数名
+			"paramScope":4 // 参数范围, 从指定的范围获取指定参数名的值
+			
+			// 不设计从method或action中赋值给当前参数, 如有需要, 通过使用action的result或func_method的receive声明并给参数赋值
 		}]
 	}
 }
-
