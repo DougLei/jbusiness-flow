@@ -88,5 +88,24 @@
 			"names":["", ""], // all=false时, 要从本地map中返回的参数名
 			"excludeNames":["", ""]	// all=true时, 排除这些名称的参数不返回
 		}
+	}],
+	
+	// sql配置, 可复用
+	"sqls":[{
+		"name":"", // 名称, 全局唯一
+		"description":"", // 描述
+		"content":{ // sql内容配置
+			...
+		}, 
+		"params":[{ // sql需要的参数配置
+			"name":"", // 参数名(英文) * 
+			"description":"", // 参数描述, 默认为null
+			"scope":5, // 参数范围, 这里不用配置, 直接使用5做为固定值
+			"dataType":"string", // 参数数据类型, 默认为string *
+			"length":0, // 参数长度, 0表示不限制长度, 用作数据验证, 默认为0
+			"precision":0, // 参数精度, 0表示不限制长度, 用作数据验证, 默认为0
+			"defaultValue":"", // 参数默认值, 默认为null
+			"required":true // 参数是否必须, 这里不用配置, 直接使用true做为固定值
+		}] 
 	}]
 }

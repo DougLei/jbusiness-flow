@@ -22,7 +22,7 @@
 		"actions":[{ 
 			"type":"sql_query", 
 			"content":{
-				"sql":"SELECT ID, TYPE, NAME, PRICE FROM PRODUCT WHERE ID IN (SELECT PRODUCT_ID FROM SHOPPING_CAR WHERE SHOPPING_CAR_ID = ?)",
+				"name":"SQL_queryProductsByShoppingCarId",
 				"params":[{
 					"name":"shoppingCarId",
 					"scope":1
@@ -221,5 +221,17 @@
 		"type":1,
 		"sourceEvent":"calcXSLProductsTotalPrice",
 		"targetEvent":"end"
+	}],
+	
+	"sqls":[{
+		"name":"SQL_queryProductsByShoppingCarId",
+		"description":"根据购物车id查询商品集合",
+		"content":{
+			"tmp":"SELECT ID, TYPE, NAME, PRICE FROM PRODUCT WHERE ID IN (SELECT PRODUCT_ID FROM SHOPPING_CAR WHERE SHOPPING_CAR_ID = ?)"
+		},
+		"params":[{
+			"name":"shoppingCarId",
+			"dataType":"string"
+		}]
 	}]
 }
