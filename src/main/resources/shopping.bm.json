@@ -12,6 +12,11 @@
 	}],
 	
 	"events":[{
+		"name":"end",
+		"actions":[{ 
+			"type":"end"
+		}]
+	},{
 		"name":"queryProductsByShoppingCarId",
 		"description":"根据购物车id获取商品集合",
 		"actions":[{ 
@@ -41,39 +46,138 @@
 					"value":"购物车中不存在商品"
 				}]
 			}
-		},{ 
-			"type":"end"
 		}]
 	},{
 		"name":"calcProductsTotalPrice",
 		"description":"计算商品的总价",
-		"actions":[{ 
-			"type":"func_sum",
+		"actions":[{
+			"type":"param_op_declare",
+			"content":{
+				"params":[{
+					"name":"totalPrice",
+					"scope":2,
+					"dataType":"double"
+				}]
+			}
+		},{ 
+			"type":"func_loop",
 			"content":{
 				"collection":"products",
 				"scope":3,
-				"property":"PRICE"
-			},
-			"result":{
-				"name":"totalPrice",
-				"scope":2,
-				"dataType":"double"
+				"alias":"product",
+				"actions":[{
+					"type":"data_op_arithmetic",
+					"content":{
+						"arithmetic":[{
+							"paramName":"totalPrice",
+							"paramScope":2,
+							"op":"add"
+						},{
+							"paramName":"product.PRICE",
+							"paramScope":4
+						}]
+					},
+					"result":{
+						"name":"totalPrice",
+						"scope":2
+					}
+				}]
 			}
 		}]
 	},{
 		"name":"calcXSLProductsTotalPrice",
-		"description":"计算商品中洗漱类用品的总价",
+		"description":"计算商品中洗漱类用品的总价, 如果大于等于50就减去10元",
 		"actions":[{
-			"type":"func_sum",
+			"type":"param_op_declare",
+			"content":{
+				"params":[{
+					"name":"xslTotalPrice",
+					"scope":4,
+					"dataType":"double"
+				}]
+			}
+		},{ 
+			"type":"func_loop",
 			"content":{
 				"collection":"products",
 				"scope":3,
-				"property":"PRICE"
-			},
-			"result":{
-				"name":"xslTotalPrice",
-				"scope":3,
-				"dataType":"double"
+				"alias":"product",
+				"actions":[{
+					"type":"func_switch",
+					"content":{
+						"switch":[{
+							"conditionGroups":[{
+								"conditions":[{
+									"type":"data_op_comp",
+									"content":{
+										"op":"eq",
+										"left":{
+											"paramName":"product.TYPE",
+											"paramScope":4
+										},
+										"right":{
+											"value":1
+										}
+									}
+								}]
+							}],
+							"actions":[{
+								"type":"data_op_arithmetic",
+								"content":{
+									"arithmetic":[{
+										"paramName":"xslTotalPrice",
+										"paramScope":4,
+										"op":"add"
+									},{
+										"paramName":"product.PRICE",
+										"paramScope":4
+									}]
+								},
+								"result":{
+									"name":"xslTotalPrice",
+									"scope":4
+								}
+							}]
+						}]
+					}
+				}]
+			}
+		},{
+			"type":"func_switch",
+			"content":{
+				"switch":[{
+					"conditionGroups":[{
+						"condition":[{
+							"type":"data_op_comp",
+							"content":{
+								"op":"ge",
+								"left":{
+									"paramName":"xslTotalPrice",
+									"paramScope":4
+								},
+								"right":{
+									"value":50
+								}
+							}
+						}]
+					}],
+					"actions":[{
+						"type":"data_op_arithmetic",
+						"content":{
+							"arithmetic":[{
+								"paramName":"totalPrice",
+								"paramScope":2,
+								"op":"sub"
+							},{
+								"value":10
+							}]
+						},
+						"result":{
+							"name":"totalPrice",
+							"scope":2
+						}
+					}]
+				}]
 			}
 		}]
 	}],
@@ -98,8 +202,7 @@
 					}
 				}
 			}]
-		}],
-		"actions":[]
+		}]
 	},{ 
 		"description":"如果指定购物车id中有商品",
 		"type":2,
@@ -108,7 +211,15 @@
 		"targetEvent":"calcProductsTotalPrice"
 	},{
 		"type":1,
+		"sourceEvent":"productsNotExists",
+		"targetEvent":"end"
+	},{
+		"type":1,
 		"sourceEvent":"calcProductsTotalPrice",
-		"targetEvent":"calcProductsTotalPrice"
+		"targetEvent":"calcXSLProductsTotalPrice"
+	},{
+		"type":1,
+		"sourceEvent":"calcXSLProductsTotalPrice",
+		"targetEvent":"end"
 	}]
 }

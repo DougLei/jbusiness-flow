@@ -49,7 +49,7 @@
 		"targetEvent":"", // 目标的事件名 event.name
 		"conditionGroups":[{ // 判断条件组, 默认为空数组, 空数组标识判断结果默认为true
 			"conditions":[{ // 条件
-				"type":"data_op_comp", // 使用数据判断的action, 具体配置参看business.flow.action.desgin
+				"type":"data_op_comp", // 使用数据判断的action, 具体配置参看business.flow.action.desgin, 这里也只能配置这个type
 				"content":{
 					...
 				},
