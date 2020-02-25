@@ -141,6 +141,8 @@
 			"description":"", // 参数描述, 默认为null
 			"scope":5, // 参数范围, 默认为5
 			"dataType":"string", // 参数数据类型, 默认为string
+			
+			// value的优先级高于paramName			
 			"value":"", // 参数初始值
 			
 			// 将范围中其他参数的值赋给当前参数

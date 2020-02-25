@@ -1,0 +1,62 @@
+// 业务流中sql(主要为content中)的配置设计
+
+// insert
+{
+	"tableName":"", // 给哪个表插入数据
+	"columns":["", ""], // 要插入得列名
+	"values":{ // 要插入的列值
+		// 以下的values和query互斥, values的优先级高于query
+		"values":[{ // 值插入
+			// 优先级排序: value > paramName > function > query
+			"value":"", // 固定值, 同样符合业务流配置中统一说明的固定值
+			"valuePackage":0, // 是否使用单引号包裹固定值, 0未配置, 1需要, 2不需要, 首先判断value是否数字, 如果是数字则该配置默认为2, 否则该配置默认为1, 再根据用户实际配置的该值, 决定最终的值
+			
+			"paramName":"", // 从sql中配置的参数params获取指定的参数值
+			
+			"function":{ // sql函数
+				"name":"", // 函数名
+				"values":[{ // 函数传入的参数
+					... // 与上一层的values配置一致
+				}]
+			},
+			
+			"query":{ // 查询获取一个值
+				... // 具体的配置参看select
+			}
+		}],
+		"query":{ // 查询插入
+			... // 具体的配置参看select
+		}
+	}
+}
+
+
+
+// delete
+{
+	"tableName":"", // 删除哪个表的数据
+	"whereGroups":[{}] // 条件组, 具体的配置参看select
+}
+
+
+// update
+{
+	"tableName":"", // 修改哪个表的数据
+	"sets":[{
+		"column":"", // 要set的列名
+		
+		// 以下配置的具体信息参看insert的values配置
+		"value":"",
+		"valuePackage":0,
+		"paramName":"",
+		"function":{...},
+		"query":{}
+	}],
+	"whereGroups":[{}] // 条件组, 具体的配置参看select
+}
+
+
+// select
+{
+	
+}
