@@ -1,43 +1,51 @@
 // 业务流中sql(主要为content中)的配置设计
+// 统一说明
+// 1.参数名(paramName)也遵循业务流规则, 可以通过使用xxx.xx形式获取值
+// 2.固定值, 同样符合业务流配置中统一说明的固定值
 
 // insert
 {
 	"tableName":"", // 给哪个表插入数据
 	"columns":["", ""], // 要插入得列名
 	"values":{ // 要插入的列值
-		// 以下的values和query互斥, values的优先级高于query
+		// 优先级排序: values > select
 		"values":[{ // 值插入
-			// 优先级排序: value > paramName > function > query
-			"value":"", // 固定值, 同样符合业务流配置中统一说明的固定值
-			"valuePackage":0, // 是否使用单引号包裹固定值, 0未配置, 1需要, 2不需要, 首先判断value是否数字, 如果是数字则该配置默认为2, 否则该配置默认为1, 再根据用户实际配置的该值, 决定最终的值
+			// 优先级排序: value > paramName > function > select
+			"value":"", // 固定值
 			
 			"paramName":"", // 从sql中配置的参数params获取指定的参数值
+			"placeholder":true, // 是否使用占位符, 默认为true
 			
-			"function":{ // sql函数
+			// 是否包裹固定值, 0未配置, 1包裹, 2不包裹
+			// => 针对value
+			// 首先判断如果value是数字类型, 则package默认为2, 否则package默认为1, 再判断用户是否配置了该属性值, 如果配置了则使用用户配置的值, 否则使用默认值
+			// => 针对paramName
+			// placeholder=false才有效
+			// 首先判断如果paramName对应的值是数字类型, 则package默认为2, 否则package默认为1, 再判断用户是否配置了该属性值, 如果配置了则使用用户配置的值, 否则使用默认值
+			"package":0,
+			
+			"function":{ // 函数
 				"name":"", // 函数名
 				"values":[{ // 函数传入的参数
 					... // 与上一层的values配置一致
 				}]
 			},
 			
-			"query":{ // 查询获取一个值
+			"select":{ // 查询获取一个值
 				... // 具体的配置参看select
 			}
 		}],
-		"query":{ // 查询插入
+		"select":{ // 查询插入
 			... // 具体的配置参看select
 		}
 	}
 }
-
-
 
 // delete
 {
 	"tableName":"", // 删除哪个表的数据
 	"whereGroups":[{}] // 条件组, 具体的配置参看select
 }
-
 
 // update
 {
@@ -47,16 +55,102 @@
 		
 		// 以下配置的具体信息参看insert的values配置
 		"value":"",
-		"valuePackage":0,
 		"paramName":"",
-		"function":{...},
-		"query":{}
+		"placeholder":true,
+		"package":0,
+		"function":{},
+		"select":{}
 	}],
 	"whereGroups":[{}] // 条件组, 具体的配置参看select
 }
 
-
 // select
 {
-	
+	"withs":[{ // with字句, 非必须配置
+		"alias":"", // 对with查询定义的别名,
+		"selects":[{}] // 具体的查询语句
+	}],
+	"selects":[{
+		"results":[{ // 查询结果集, 即列名的配置
+			// 优先级排序: column > value > paramName > function > select
+			"column":"", // 列名
+			"alias":"", // 别名
+			
+			// 以下配置和insert的values中的配置相似, 具体信息参看insert的values配置
+			"value":"", 
+			"paramName":"",
+			"placeholder":true,
+			"package":0,
+			"function":{
+				"name":"",
+				"values":[{
+					"column":""
+					... // 这里面比insert的values中function多一个column属性
+				}]
+			},
+			"select":{}
+		}],
+		"table":{
+			// 优先级排序: name > paramName > function > select
+			"name":"", // 表名
+			"alias":"", // 别名
+			
+			"paramName":"", // 指定参数名的数据, 例如该参数名存储的是一个表名, 实现动态表名的功能
+			
+			"function":{}, // 参看insert的values中的function配置
+			
+			"select":{} // 子查询, 具体的配置参看select
+		},
+		"joins":[{ // join
+			"type":0, // 0.inner join, 1.left join, 2.right join, 3.full join
+			
+			// 以下配置的具体信息参看selects的table配置
+			"name":"",
+			"alias":"",
+			"paramName":"",
+			"function":{}, 
+			"select":{},
+			
+			"onGroups":[{ // on条件
+				"ons":[{
+					"op":"", // eq(等于), ne(不等于), gt(大于), ge(大于等于), lt(小于), le(小于等于), btn(在之间), in(包含), like(包含), null(是否为null), 如果在这些操作符前面加上!, 表示反向判断, 例如!eq
+					"left":{ // 主要是列的信息
+						// 优先级排序: column > paramName > function
+						"column":"", // 列名
+						"paramName":"", // 指定参数名的数据, 例如该参数名下存储的是一个列名, 实现动态列名的功能
+						"function":{} // 参看selects的results中的function配置
+					},
+					"right":[{ // 之所以是数组, 是为了满足btn, in这种会有多个值的比较
+						// 优先级排序: column > value > paramName > function > select
+						"column":"",
+						"value":"",
+						"paramName":"",
+						"placeholder":true,
+						"package":0,
+						"function":{},
+						"select":{}
+					}],
+					"nextLogicOp":"and" // 与下一个条件连接的逻辑操作符, and, or, 默认为and
+				}],
+				"nextLogicOp":"and"
+			}]
+		}],
+		"whereGroups":[{ // where
+			// 参看select中join中的on配置
+		}],
+		"groupBys":[{ // group by
+			"column":"", // 列名
+			"function":{} // 参看selects的results中的function配置
+		}],
+		"havingGroups":[{ // having
+			// 参看select中join中的on配置
+		}],
+		"orderBys":[{ // order by
+			// 优先级排序: column > function
+			"column":"", // 列名
+			"function":{}, // 参看selects的results中的function配置
+			"sort":0 // 排序, 0为asc, 1为desc, 默认为0
+		}],
+		"union":0 // 是否union, 非必须配置, 1表示union, 2表示union all, 如果之下再没有配置select, 则该项配置无效
+	}]
 }

@@ -79,7 +79,7 @@
 {
 	"type":"data_op_compare", 
 	"content":{
-		"op":"eq", // eq(等于), ne(不等于), gt(大于), ge(大于等于), lt(小于), le(小于等于), bool(表示left的结果就是boolean类型)
+		"op":"eq", // eq(等于), ne(不等于), gt(大于), ge(大于等于), lt(小于), le(小于等于), bool(表示left的结果就是boolean类型), 如果在这些操作符前加上!, 表示反向判断, 例如!eq
 		"left":{
 			"value":"", // 固定值
 			
