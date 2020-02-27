@@ -2,7 +2,7 @@
 	"name":"shoppingDiscount",
 	"description":"购物打折流程", 
 	"version":"1",
-	"state":1,
+	"state":0,
 	
 	"params":[{
 		"name":"shoppingCarId",
@@ -12,11 +12,7 @@
 	}],
 	
 	"events":[{
-		"name":"end",
-		"actions":[{ 
-			"type":"end"
-		}]
-	},{
+		"type":1, 
 		"name":"queryProductsByShoppingCarId",
 		"description":"根据购物车id获取商品集合",
 		"actions":[{ 
@@ -30,11 +26,12 @@
 			},
 			"result":{
 				"name":"products",
-				"scope":3,
+				"scope":4,
 				"dataType":"list"
 			}
 		}]
 	},{
+		"type":2,
 		"name":"productsNotExists",
 		"description":"购物车中没有商品",
 		"actions":[{
@@ -63,7 +60,7 @@
 			"type":"func_loop",
 			"content":{
 				"collection":"products",
-				"scope":3,
+				"scope":4,
 				"alias":"product",
 				"actions":[{
 					"type":"data_op_arithmetic",
@@ -74,7 +71,7 @@
 							"op":"add"
 						},{
 							"paramName":"product.PRICE",
-							"paramScope":4
+							"paramScope":5
 						}]
 					},
 					"result":{
@@ -85,6 +82,7 @@
 			}
 		}]
 	},{
+		"type":2,
 		"name":"calcXSLProductsTotalPrice",
 		"description":"计算商品中洗漱类用品的总价, 如果大于等于50就减去10元",
 		"actions":[{
@@ -92,7 +90,7 @@
 			"content":{
 				"params":[{
 					"name":"xslTotalPrice",
-					"scope":4,
+					"scope":5,
 					"dataType":"double"
 				}]
 			}
@@ -100,7 +98,7 @@
 			"type":"func_loop",
 			"content":{
 				"collection":"products",
-				"scope":3,
+				"scope":4,
 				"alias":"product",
 				"actions":[{
 					"type":"func_switch",
@@ -113,7 +111,7 @@
 										"op":"eq",
 										"left":{
 											"paramName":"product.TYPE",
-											"paramScope":4
+											"paramScope":5
 										},
 										"right":{
 											"value":1
@@ -126,16 +124,16 @@
 								"content":{
 									"arithmetic":[{
 										"paramName":"xslTotalPrice",
-										"paramScope":4,
+										"paramScope":5,
 										"op":"add"
 									},{
 										"paramName":"product.PRICE",
-										"paramScope":4
+										"paramScope":5
 									}]
 								},
 								"result":{
 									"name":"xslTotalPrice",
-									"scope":4
+									"scope":5
 								}
 							}]
 						}]
@@ -153,7 +151,7 @@
 								"op":"ge",
 								"left":{
 									"paramName":"xslTotalPrice",
-									"paramScope":4
+									"paramScope":5
 								},
 								"right":{
 									"value":50
@@ -195,7 +193,7 @@
 					"op":"eq",
 					"left":{
 						"paramName":"products.size",
-						"paramScope":3
+						"paramScope":4
 					},
 					"right":{
 						"value":0
@@ -211,23 +209,58 @@
 		"targetEvent":"calcProductsTotalPrice"
 	},{
 		"type":1,
-		"sourceEvent":"productsNotExists",
-		"targetEvent":"end"
-	},{
-		"type":1,
 		"sourceEvent":"calcProductsTotalPrice",
 		"targetEvent":"calcXSLProductsTotalPrice"
-	},{
-		"type":1,
-		"sourceEvent":"calcXSLProductsTotalPrice",
-		"targetEvent":"end"
 	}],
 	
 	"sqls":[{
 		"name":"SQL_queryProductsByShoppingCarId",
 		"description":"根据购物车id查询商品集合",
+		"type":"select",
 		"content":{
-			"tmp":"SELECT ID, TYPE, NAME, PRICE FROM PRODUCT WHERE ID IN (SELECT PRODUCT_ID FROM SHOPPING_CAR WHERE SHOPPING_CAR_ID = ?)"
+			"selects":[{
+				"results":[{
+					"column":"ID"
+				},{
+					"column":"TYPE"
+				},{
+					"column":"NAME"
+				},{
+					"column":"PRICE"
+				}],
+				"table":{
+					"name":"PRODUCT"
+				},
+				"whereGroups":[{
+					"wheres":[{
+						"op":"in",
+						"left":{
+							"column":"ID"
+						},
+						"right":[{
+							"select":{
+								"results":[{
+									"column":"PRODUCT_ID"
+								}],
+								"table":{
+									"name":"SHOPPING_CAR"
+								},
+								"whereGroups":[{
+									"wheres":[{
+										"op":"eq",
+										"left":{
+											"column":"SHOPPING_CAR_ID"
+										},
+										"right":{
+											"paramName":"shoppingCarId"
+										}
+									}]
+								}]
+							}
+						}]
+					}]
+				}]
+			}]
 		},
 		"params":[{
 			"name":"shoppingCarId",
