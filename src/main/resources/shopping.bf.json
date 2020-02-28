@@ -182,7 +182,7 @@
 	
 	"flows":[{ 
 		"description":"如果指定购物车id中没有商品",
-		"type":2,
+		"type":1,
 		"order":1,
 		"sourceEvent":"queryProductsByShoppingCarId",
 		"targetEvent":"productsNotExists",	
@@ -203,12 +203,12 @@
 		}]
 	},{ 
 		"description":"如果指定购物车id中有商品",
-		"type":2,
+		"type":1,
 		"order":2,
 		"sourceEvent":"queryProductsByShoppingCarId",
 		"targetEvent":"calcProductsTotalPrice"
 	},{
-		"type":1,
+		"type":0,
 		"sourceEvent":"calcProductsTotalPrice",
 		"targetEvent":"calcXSLProductsTotalPrice"
 	}],
@@ -216,7 +216,7 @@
 	"sqls":[{
 		"name":"SQL_queryProductsByShoppingCarId",
 		"description":"根据购物车id查询商品集合",
-		"type":"select",
+		"type":4,
 		"content":{
 			"selects":[{
 				"results":[{

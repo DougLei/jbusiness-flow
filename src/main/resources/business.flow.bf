@@ -1,5 +1,5 @@
 // 统一说明
-// 1.数据类型: string, byte, short, integer, long, float, double, boolean, date, array, list, object(使用map实现), 每种类型会有自己的默认初始值(和java的标准一致)
+// 1.数据类型: 1(string), 2(byte), 3(short), 4(integer), 5(long), 6(float), 7(double), 8(boolean), 9(date), 10(array), 11(list), 12(object)(使用map实现), 每种类型会有自己的默认初始值(和java的标准一致)
 // 2.参数范围: 1(输入参数), 2(输入输出参数), 3(输出参数), 4(全局参数), 5(本地参数, 遵循java变量的生命周期), 参数的范围从大到小排序为: 1=2=3>4>5
 // 3.在给定参数名和参数的范围时, 参数名可以通过使用xxx.xx形式, 例如scope=1, paramName=user.name表示, 取输入参数中, 参数名为user数据的name属性值, 其他还例如 users.size, 表示取users集合或数组的长度, 等等
 // 4.在配置value(固定值)时, 其值的类型可能是string, integer, date, boolean, 所以value后的双引号可有可无, 具体根据用户配置的值决定
@@ -11,17 +11,15 @@
 	"name":"", // 业务流名称(英文), 必填, 全局唯一
 	"description":"", // 业务流描述, 默认为null
 	"version":"1", // 版本控制, 默认为1
-	"state":0, // 业务流状态, 0启用(最新版本的业务流状态值), 1停用(可以通过指定版本号使用该状态的业务流, 旧业务流版本的默认状态), 2禁用(无法使用业务流, 该状态必须专门设置)
+	"enabled":true, // 业务流是否启用, 默认为true
 	
 	// 参数配置
 	"params":[{ // 输入参数数组, 默认为空数组
 		"name":"", // 参数名(英文)
 		"description":"", // 参数描述, 默认为null
-		"scope":1, // 参数范围, 这里不用配置, 直接使用1做为固定值
-		"dataType":"string", // 参数数据类型, 默认为string
-		"length":0, // 参数长度, 0表示不限制长度, 用作数据验证, 默认为0
-		"precision":0, // 参数精度, 0表示不限制长度, 用作数据验证, 默认为0
-		"defaultValue":"", // 参数默认值, 默认为null
+		"scope":1, // 参数范围
+		"dataType":1, // 参数数据类型, 默认为1
+		"defaultValue":"", // 参数默认值, 与固定值一样, 默认为null
 		"required":true // 参数是否必须, 默认为true
 	}],
 	
@@ -44,7 +42,7 @@
 	// 流配置
 	"flows":[{ // 业务流包含的所有流
 		"description":"", // 流描述, 默认为null
-		"type":1, // 流类型, 1顺序流, 2条件流(if-else/if-elsif-else), 默认为1, 在配置了条件流后, 如果没有配置else, 则提供一个默认的end-else结束流程
+		"type":1, // 流类型, 0顺序流, 1条件流(if-else/if-elsif-else), 默认为0, 在配置了条件流后, 如果没有配置else, 则提供一个默认的end-else结束流程
 		"order":1, // 排序值, 默认为1, 当是条件流时, 如果配置了order值, 则根据order值的顺序, 从大到小依次判断, 碰到判断为true的, 进入到相应的targetEvent, 否则就按照json中配置的顺序依次判断
 		"sourceEvent":"", // 起始的事件名 event.name
 		"targetEvent":"", // 目标的事件名 event.name
@@ -75,8 +73,6 @@
 			"description":"", // 参数描述, 默认为null
 			"scope":5, // 参数范围, 这里不用配置, 直接使用5做为固定值
 			"dataType":"string", // 参数数据类型, 默认为string *
-			"length":0, // 参数长度, 0表示不限制长度, 用作数据验证, 默认为0
-			"precision":0, // 参数精度, 0表示不限制长度, 用作数据验证, 默认为0
 			"defaultValue":"", // 参数默认值, 默认为null
 			"required":true // 参数是否必须, 这里不用配置, 直接使用true做为固定值
 		}],
@@ -95,7 +91,7 @@
 	"sqls":[{
 		"name":"", // 名称, 全局唯一
 		"description":"", // 描述
-		"type":"", // 类型, insert, delete, update, select
+		"type":1, // 类型, 1(insert), 2(delete), 3(update), 4(select)
 		"content":{ // sql内容配置
 			... // 具体参看business.flow.sql.desgin中不同type的配置结构
 		}, 
@@ -104,8 +100,6 @@
 			"description":"", // 参数描述, 默认为null
 			"scope":5, // 参数范围, 这里不用配置, 直接使用5做为固定值
 			"dataType":"string", // 参数数据类型, 默认为string *
-			"length":0, // 参数长度, 0表示不限制长度, 用作数据验证, 默认为0
-			"precision":0, // 参数精度, 0表示不限制长度, 用作数据验证, 默认为0
 			"defaultValue":"", // 参数默认值, 默认为null
 			"required":true // 参数是否必须, 这里不用配置, 直接使用true做为固定值
 		}] 
