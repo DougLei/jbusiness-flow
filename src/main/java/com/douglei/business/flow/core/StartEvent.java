@@ -1,4 +1,4 @@
-package com.douglei.business.flow.core.event;
+package com.douglei.business.flow.core;
 
 /**
  * 
@@ -6,7 +6,8 @@ package com.douglei.business.flow.core.event;
  */
 public class StartEvent extends Event{
 	
-	public Object start(Object param) {
+	@Override
+	public Object execute(Object param) {
 		return null;
 	}
 }

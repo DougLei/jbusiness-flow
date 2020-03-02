@@ -1,33 +1,21 @@
 package com.douglei.business.flow.resolver;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.alibaba.fastjson.JSONObject;
-import com.douglei.business.flow.Constants;
+import com.douglei.business.flow.core.Event;
 
 /**
  * 
  * @author DougLei
  */
 public class EventResolver {
-	private JSONObject event;
-	private List<FlowResolver> flowResolvers;
+	private JSONObject eventJson;
 	
-	public EventResolver(JSONObject event) {
-		this.event = event;
+	public EventResolver(JSONObject eventJson) {
+		this.eventJson = eventJson;
 	}
 
-	public boolean isStart() {
-		return event.getByteValue("type") == Constants.EVENT_START;
-	}
-	public String getName() {
-		return event.getString("name");
-	}
-	public void linkFlow(FlowResolver flowResolver) {
-		if(flowResolvers == null) {
-			flowResolvers = new ArrayList<FlowResolver>(3);
-		}
-		flowResolvers.add(flowResolver);
+	public Event parse(CommonActionResolver commonActionResolver, MethodResolver methodResolver, SqlResolver sqlResolver) {
+		// TODO 解析出event
+		return null;
 	}
 }

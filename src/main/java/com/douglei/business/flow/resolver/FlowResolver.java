@@ -1,23 +1,21 @@
 package com.douglei.business.flow.resolver;
 
-import java.util.Map;
-
 import com.alibaba.fastjson.JSONObject;
+import com.douglei.business.flow.core.Flow;
 
 /**
  * 
  * @author DougLei
  */
 public class FlowResolver {
-	private JSONObject flow;
-	private EventResolver targetResolver;
+	private JSONObject flowJson;
 	
-	public FlowResolver(JSONObject flow) {
-		this.flow = flow;
+	public FlowResolver(JSONObject flowJson) {
+		this.flowJson = flowJson;
 	}
-
-	public void linkEvents(Map<String, EventResolver> eventResolvers) {
-		eventResolvers.get(flow.getString("sourceEvent")).linkFlow(this);
-		this.targetResolver = eventResolvers.get(flow.getString("targetEvent"));
+	
+	public Flow parse(CommonActionResolver commonActionResolver, MethodResolver methodResolver, SqlResolver sqlResolver) {
+		// TODO 解析出flow
+		return null;
 	}
 }
