@@ -58,7 +58,7 @@
 		}],
 	}],
 	
-	// 通用的action, 考虑可复用
+	// 通用的action
 	"commonActions":[{
 		"name":"", // action的名称, 业务流唯一
 		"description":"", // 描述

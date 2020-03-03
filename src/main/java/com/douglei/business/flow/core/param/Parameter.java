@@ -1,4 +1,4 @@
-package com.douglei.business.flow.core;
+package com.douglei.business.flow.core.param;
 
 import com.douglei.business.flow.Constants;
 

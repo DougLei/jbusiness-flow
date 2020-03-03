@@ -10,9 +10,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.BFConfiguration;
 import com.douglei.business.flow.core.BusinessFlow;
-import com.douglei.business.flow.core.Event;
-import com.douglei.business.flow.core.Flow;
-import com.douglei.business.flow.core.Parameter;
+import com.douglei.business.flow.core.event.Event;
+import com.douglei.business.flow.core.flow.Flow;
+import com.douglei.business.flow.core.param.Parameter;
 
 /**
  * 业务流解析器
@@ -29,12 +29,8 @@ public class BusinessFlowResolver {
 		JSONObject json = JSONObject.parseObject(bfjson);
 		BusinessFlow bf = new BusinessFlow(json.getString("name"), json.getString("description"), json.getString("version"), json.getBooleanValue("state"));
 		if(bf.isEnabled()) {
-			CommonActionResolver commonActionResolver = CommonActionResolver.instance(json.getJSONArray("commonActions"));
-			MethodResolver methodResolver = MethodResolver.instance(json.getJSONArray("methods"));
-			SqlResolver sqlResolver = SqlResolver.instance(configuration, json.getJSONArray("sqls"));
-			
 			bf.setInputParameters(inputParamsResolving(json.getJSONArray("params")));
-			bf.setStartEvent(buildBFStruct(json.getJSONArray("events"), json.getJSONArray("flows"), commonActionResolver, methodResolver, sqlResolver));
+			bf.setStartEvent(buildBFStruct(json.getJSONArray("events"), json.getJSONArray("flows"), new ReferenceResolver(configuration, json.getJSONArray("commonActions"), json.getJSONArray("methods"), json.getJSONArray("sqls"))));
 		}
 		return bf;
 	}
@@ -61,15 +57,14 @@ public class BusinessFlowResolver {
 	}
 	
 	// 根据event和flow, 搭建业务流的整体结构
-	private Event buildBFStruct(JSONArray events, JSONArray flows, CommonActionResolver commonActionResolver, MethodResolver methodResolver, SqlResolver sqlResolver) {
+	private Event buildBFStruct(JSONArray events, JSONArray flows, ReferenceResolver referenceResolver) {
 		Event startEvent = null;
 		
 		// 获取起始的事件, 以及所有事件的map集合
-		short size = (short) events.size();
-		Map<String, Event> eventMap = new HashMap<String, Event>(size>8?16:8);
+		Map<String, Event> eventMap = new HashMap<String, Event>();
 		Event event;
-		for(byte i=0;i<size;i++) {
-			event = new EventResolver(events.getJSONObject(i)).parse(commonActionResolver, methodResolver, sqlResolver);
+		for(short index=0;index<events.size();index++) {
+			event = new EventResolver(events.getJSONObject(index)).parse(referenceResolver);
 			if(event.isStart()) {
 				startEvent = event;
 			}
@@ -77,10 +72,9 @@ public class BusinessFlowResolver {
 		}
 		
 		// 通过flow, 将event连接起来
-		size = (short) flows.size();
 		Flow flow;
-		for(byte i=0;i<size;i++) {
-			flow = new FlowResolver(flows.getJSONObject(i)).parse(commonActionResolver, methodResolver, sqlResolver);
+		for(short index=0;index<flows.size();index++) {
+			flow = new FlowResolver(flows.getJSONObject(index)).parse(referenceResolver);
 			eventMap.get(flow.getSourceEvent()).linkFlows(flow);// 将sourceEvent和flow关联
 			flow.linkNextEvent(eventMap.get(flow.getTargetEvent()));// 将targetEvent和flow关联
 		}

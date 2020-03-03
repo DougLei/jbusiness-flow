@@ -5,10 +5,6 @@ package com.douglei.business.flow;
  * @author DougLei
  */
 public class Constants {
-	public static final byte DB_SQLSERVER = 1;
-	public static final byte DB_ORACLE = 2;
-	public static final byte DB_MYSQL = 3;
-	
 	public static final byte PARAM_SCOPE_IN = 1; // 参数范围: 输入
 	public static final byte PARAM_SCOPE_INOUT = 2; // 参数范围: 输入输出
 	public static final byte PARAM_SCOPE_OUT = 3; // 参数范围: 输出

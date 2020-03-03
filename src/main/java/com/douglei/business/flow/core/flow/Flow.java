@@ -1,6 +1,7 @@
-package com.douglei.business.flow.core;
+package com.douglei.business.flow.core.flow;
 
 import com.douglei.business.flow.Constants;
+import com.douglei.business.flow.core.event.Event;
 
 /**
  * 

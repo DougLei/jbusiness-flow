@@ -1,10 +1,11 @@
-package com.douglei.business.flow.core;
+package com.douglei.business.flow.core.event;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 import com.douglei.business.flow.Constants;
+import com.douglei.business.flow.core.flow.Flow;
 
 /**
  * 

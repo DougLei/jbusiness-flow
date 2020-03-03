@@ -3,6 +3,9 @@ package com.douglei.business.flow.core;
 import java.io.Serializable;
 import java.util.List;
 
+import com.douglei.business.flow.core.event.Event;
+import com.douglei.business.flow.core.param.Parameter;
+
 /**
  * 
  * @author DougLei

@@ -1,4 +1,4 @@
-package com.douglei.business.flow.core;
+package com.douglei.business.flow.core.event;
 
 /**
  * 

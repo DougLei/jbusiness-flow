@@ -1,7 +1,7 @@
 package com.douglei.business.flow.resolver;
 
 import com.alibaba.fastjson.JSONObject;
-import com.douglei.business.flow.core.Flow;
+import com.douglei.business.flow.core.flow.Flow;
 
 /**
  * 
@@ -14,7 +14,7 @@ public class FlowResolver {
 		this.flowJson = flowJson;
 	}
 	
-	public Flow parse(CommonActionResolver commonActionResolver, MethodResolver methodResolver, SqlResolver sqlResolver) {
+	public Flow parse(ReferenceResolver referenceResolver) {
 		// TODO 解析出flow
 		return null;
 	}
