@@ -12,6 +12,9 @@ import com.douglei.business.flow.core.flow.Flow;
  * @author DougLei
  */
 public class Event {
+	/**
+	 * {@link Constants}
+	 */
 	private byte type;
 	private String name;
 	private String description;
@@ -20,6 +23,12 @@ public class Event {
 	private List<Flow> flows;
 	
 	
+	public Event(byte type, String name, String description) {
+		this.type = type;
+		this.name = name;
+		this.description = description;
+	}
+
 	public Object execute(Object param) {
 		// TODO 
 		return null;

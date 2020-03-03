@@ -24,8 +24,8 @@ public class Parameter {
 	public Parameter(String name, String description, byte scope, byte dataType, Object defaultValue, Boolean required) {
 		this.name = name;
 		this.description = description;
-		this.scope = (scope<1 || scope>5)?Constants.PARAM_SCOPE_LOCAL:scope;
-		this.dataType = (dataType<1 || dataType>12)?Constants.DATATYPE_STRING:dataType;
+		this.scope = scope;
+		this.dataType = dataType;
 		this.defaultValue = defaultValue;
 		this.required = required==null?true:required;
 	}

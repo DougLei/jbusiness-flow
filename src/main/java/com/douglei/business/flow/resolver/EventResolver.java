@@ -15,6 +15,8 @@ public class EventResolver {
 	}
 
 	public Event parse(ReferenceResolver referenceResolver) {
+		Event event = new Event(eventJson.getByteValue("type"), eventJson.getString("name"), eventJson.getString("description"));
+		
 		// TODO 解析出event
 		return null;
 	}
