@@ -4,7 +4,8 @@
 // 3.在给定参数名和参数的范围时, 参数名可以通过使用xxx.xx形式, 例如scope=1, paramName=user.name表示, 取输入参数中, 参数名为user数据的name属性值, 其他还例如 users.size, 表示取users集合或数组的长度, 等等
 // 4.在配置value(固定值)时, 其值的类型可能是string, integer, date, boolean, 所以value后的双引号可有可无, 具体根据用户配置的值决定
 // 5.在配置actions时, 如果需要配置具体的内容, 则用数组配置("actions":[{}]); 如果是引用commonActions中的, 则直接配置对应的name即可("actions":"xxxxName"); 即一个属性有不同的配置方式, 和value的配置相似(参看第4条统一说明)
-// 6.action中的结果是会对业务流的参数有影响的, 而method中的参数不会
+// 6.action中的content同上, 可为对象, 也可为数组
+// 7.action中的结果是会对业务流的参数有影响的, 而method中的参数不会
 
 {
 	// 基本配置

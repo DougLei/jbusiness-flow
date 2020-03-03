@@ -1,7 +1,6 @@
-package com.douglei.business.flow.core.flow;
+package com.douglei.business.flow.core;
 
 import com.douglei.business.flow.Constants;
-import com.douglei.business.flow.core.event.Event;
 
 /**
  * 
@@ -22,9 +21,6 @@ public class Flow {
 	}
 	public boolean isSequence() {
 		return type == Constants.FLOW_SEQUENCE;
-	}
-	public boolean isCondition() {
-		return type == Constants.FLOW_CONDITION;
 	}
 	
 	public String getDescription() {

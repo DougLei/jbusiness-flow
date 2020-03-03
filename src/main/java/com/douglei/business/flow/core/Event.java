@@ -1,39 +1,28 @@
-package com.douglei.business.flow.core.event;
+package com.douglei.business.flow.core;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 import com.douglei.business.flow.Constants;
-import com.douglei.business.flow.core.flow.Flow;
+import com.douglei.business.flow.core.action.Action;
 
 /**
  * 
  * @author DougLei
  */
 public class Event {
-	/**
-	 * {@link Constants}
-	 */
 	private byte type;
 	private String name;
 	private String description;
-	
-	// TODO 缺少actions属性
-	private List<Flow> flows;
-	
 	
 	public Event(byte type, String name, String description) {
 		this.type = type;
 		this.name = name;
 		this.description = description;
 	}
-
-	public Object execute(Object param) {
-		// TODO 
-		return null;
-	}
 	
+	private List<Flow> flows;
 	public void linkFlows(Flow flow) {
 		if(flows == null) {
 			flows = new ArrayList<Flow>(flow.isSequence()?1:4);
@@ -54,11 +43,12 @@ public class Event {
 		}
 	}
 	
+	private List<Action> actions;
+	
+	
+	
 	public boolean isStart() {
 		return type == Constants.EVENT_START;
-	}
-	public boolean isEnd() {
-		return type == Constants.EVENT_END;
 	}
 
 	public byte getType() {
@@ -69,5 +59,10 @@ public class Event {
 	}
 	public String getDescription() {
 		return description;
+	}
+	
+	public Object execute(Object param) {
+		// TODO 
+		return null;
 	}
 }

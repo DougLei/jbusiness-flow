@@ -24,12 +24,10 @@
 // 判断
 {
 	"type":"func_switch", 
-	"content":{
-		"switch":[{ // 每一组条件和其要执行的动作, 按照配置的顺序判断下去, 遇到符合条件的, 以后的都不会执行
-			"conditionGroups":[{}],
-			"actions":[{}]
-		}]
-	}
+	"content":[{ // 每一组条件和其要执行的动作, 按照配置的顺序判断下去, 遇到符合条件的, 以后的都不会执行
+		"conditionGroups":[{}],
+		"actions":[{}]
+	}]
 }
 
 // 循环
@@ -102,23 +100,21 @@
 // 运算操作
 {
 	"type":"data_op_arithmetic",
-	"content":{
-		"arithmetic":[{
-			// 这几种配置方式, 同data_op_compare中的配置一致
-			"value":"",
-			"paramName":"",
-			"paramScope":4,
-			"action":{},
-			"method":{},
-			
-			// group和上面的配置时互斥的, 上面配置的优先级高于group
-			"group":[{ // 表示使用()括起来的运算操作
-				// 这里的配置和上面的配置一致
-			}],
-			
-			"op":"add"  // 运算符, add(加), sub(减), mul(乘), div(除), mod(取余), 用来和下一个操作数连接, 如果后面再没有配置, 则这块的配置无效
-		}]
-	},
+	"content":[{
+		// 这几种配置方式, 同data_op_compare中的配置一致
+		"value":"",
+		"paramName":"",
+		"paramScope":4,
+		"action":{},
+		"method":{},
+		
+		// group和上面的配置时互斥的, 上面配置的优先级高于group
+		"group":[{ // 表示使用()括起来的运算操作
+			// 这里的配置和上面的配置一致
+		}],
+		
+		"op":"add"  // 运算符, add(加), sub(减), mul(乘), div(除), mod(取余), 用来和下一个操作数连接, 如果后面再没有配置, 则这块的配置无效
+	}],
 	"result":{
 		// 这里可将计算结果赋给指定的参数
 	}
@@ -129,21 +125,19 @@
 // 声明参数
 {
 	"type":"param_op_declare", 
-	"content":{
-		"params":[{
-			"name":"", // 参数名
-			"description":"", // 参数描述, 默认为null
-			"scope":5, // 参数范围, 默认为5
-			"dataType":"string", // 参数数据类型, 默认为string
-			
-			// value的优先级高于paramName			
-			"value":"", // 参数初始值
-			
-			// 将范围中其他参数的值赋给当前参数
-			"paramName":"", // 参数名
-			"paramScope":4 // 参数范围, 从指定的范围获取指定参数名的值
-			
-			// 不设计从method或action中赋值给当前参数, 如有需要, 通过使用action的result或func_method的receive声明并给参数赋值
-		}]
-	}
+	"content":[{
+		"name":"", // 参数名
+		"description":"", // 参数描述, 默认为null
+		"scope":5, // 参数范围, 默认为5
+		"dataType":"string", // 参数数据类型, 默认为string
+		
+		// value的优先级高于paramName			
+		"value":"", // 参数初始值
+		
+		// 将范围中其他参数的值赋给当前参数
+		"paramName":"", // 参数名
+		"paramScope":4 // 参数范围, 从指定的范围获取指定参数名的值
+		
+		// 不设计从method或action中赋值给当前参数, 如有需要, 通过使用action的result或func_method的receive声明并给参数赋值
+	}]
 }

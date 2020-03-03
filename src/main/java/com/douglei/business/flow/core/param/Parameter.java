@@ -1,7 +1,5 @@
 package com.douglei.business.flow.core.param;
 
-import com.douglei.business.flow.Constants;
-
 /**
  * 参数
  * @author DougLei
@@ -9,18 +7,11 @@ import com.douglei.business.flow.Constants;
 public class Parameter {
 	private String name;
 	private String description;
-	/**
-	 * {@link Constants}
-	 */
 	private byte scope;
-	/**
-	 * {@link Constants}
-	 */
 	private byte dataType;
 	private Object defaultValue;
 	private boolean required;
 	
-	public Parameter() {}
 	public Parameter(String name, String description, byte scope, byte dataType, Object defaultValue, Boolean required) {
 		this.name = name;
 		this.description = description;

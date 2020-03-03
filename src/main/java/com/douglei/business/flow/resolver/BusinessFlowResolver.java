@@ -10,8 +10,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.BFConfiguration;
 import com.douglei.business.flow.core.BusinessFlow;
-import com.douglei.business.flow.core.event.Event;
-import com.douglei.business.flow.core.flow.Flow;
+import com.douglei.business.flow.core.Event;
+import com.douglei.business.flow.core.Flow;
 import com.douglei.business.flow.core.param.Parameter;
 
 /**
