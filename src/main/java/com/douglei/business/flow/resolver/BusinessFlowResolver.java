@@ -12,7 +12,7 @@ import com.douglei.business.flow.BFConfiguration;
 import com.douglei.business.flow.core.BusinessFlow;
 import com.douglei.business.flow.core.Event;
 import com.douglei.business.flow.core.Flow;
-import com.douglei.business.flow.core.param.Parameter;
+import com.douglei.business.flow.core.Parameter;
 
 /**
  * 业务流解析器

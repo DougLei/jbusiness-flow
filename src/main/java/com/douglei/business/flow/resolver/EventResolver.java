@@ -16,13 +16,7 @@ public class EventResolver {
 
 	public Event parse(ReferenceResolver referenceResolver) {
 		Event event = new Event(eventJson.getByteValue("type"), eventJson.getString("name"), eventJson.getString("description"));
-		
-		Object actions = eventJson.get("actions");
-		if(actions instanceof String) {
-			// TODO referenceResolver.parseCommonAction(actions.toString());
-		}else {
-			
-		}
+		event.setActions(referenceResolver.parseAction(eventJson.get("actions")));
 		return event;
 	}
 }

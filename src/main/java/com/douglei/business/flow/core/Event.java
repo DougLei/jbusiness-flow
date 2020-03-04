@@ -44,13 +44,13 @@ public class Event {
 	}
 	
 	private List<Action> actions;
-	
-	
+	public void setActions(List<Action> actions) {
+		this.actions = actions;
+	}
 	
 	public boolean isStart() {
 		return type == Constants.EVENT_START;
 	}
-
 	public byte getType() {
 		return type;
 	}
@@ -63,6 +63,7 @@ public class Event {
 	
 	public Object execute(Object param) {
 		// TODO 
+		System.out.println(actions);
 		return null;
 	}
 }

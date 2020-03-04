@@ -1,4 +1,4 @@
-package com.douglei.business.flow.core.param;
+package com.douglei.business.flow.core;
 
 /**
  * 参数

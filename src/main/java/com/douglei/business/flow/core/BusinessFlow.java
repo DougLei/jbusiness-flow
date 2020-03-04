@@ -1,15 +1,12 @@
 package com.douglei.business.flow.core;
 
-import java.io.Serializable;
 import java.util.List;
-
-import com.douglei.business.flow.core.param.Parameter;
 
 /**
  * 
  * @author DougLei
  */
-public class BusinessFlow implements Serializable{
+public class BusinessFlow {
 	private String name;
 	private String description;
 	private String version;
@@ -31,7 +28,7 @@ public class BusinessFlow implements Serializable{
 	
 	public Object execute(Object param) {
 		// TODO 验证输入参数, 然后传入输入参数
-		
+		System.out.println(inputParameters);
 		return startEvent.execute(param);
 	}
 	
