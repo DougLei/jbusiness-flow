@@ -1,7 +1,5 @@
 package com.douglei.business.flow.core;
 
-import java.util.List;
-
 /**
  * 
  * @author DougLei
@@ -12,7 +10,7 @@ public class BusinessFlow {
 	private String version;
 	private boolean enabled; 
 	
-	private List<Parameter> inputParameters;
+	private Parameter[] inputParameters;
 	private Event startEvent;
 	
 	public BusinessFlow(String name, String description, String version, boolean enabled) {
@@ -44,7 +42,7 @@ public class BusinessFlow {
 	public boolean isEnabled() {
 		return enabled;
 	}
-	public void setInputParameters(List<Parameter> inputParameters) {
+	public void setInputParameters(Parameter[] inputParameters) {
 		this.inputParameters = inputParameters;
 	}
 	public void setStartEvent(Event startEvent) {

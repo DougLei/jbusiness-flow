@@ -1,5 +1,7 @@
 package com.douglei.business.flow;
 
+import com.douglei.business.flow.core.Parameter;
+
 /**
  * 
  * @author DougLei

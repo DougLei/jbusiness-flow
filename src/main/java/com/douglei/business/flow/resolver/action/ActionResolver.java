@@ -2,6 +2,7 @@ package com.douglei.business.flow.resolver.action;
 
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.core.action.Action;
+import com.douglei.business.flow.resolver.ReferenceResolver;
 
 /**
  * 
@@ -17,8 +18,9 @@ public interface ActionResolver {
 
 	/**
 	 * 解析
-	 * @param action
+	 * @param actionJSON
+	 * @param referenceResolver 
 	 * @return
 	 */
-	Action parse(JSONObject action);
+	Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver);
 }

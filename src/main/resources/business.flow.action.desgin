@@ -34,7 +34,7 @@
 {
 	"type":"func_loop", 
 	"content":{
-		"collection":"", // 要操作的集合名称
+		"name":"", // 要操作的集合名称
 		"scope":4, // 操作集合所在的范围
 		"alias":"", // 别名
 		"actions":[{}] // 循环中要执行的动作

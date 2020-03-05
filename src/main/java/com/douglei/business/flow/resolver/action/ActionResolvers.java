@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.core.action.Action;
+import com.douglei.business.flow.resolver.ReferenceResolver;
 import com.douglei.tools.instances.scanner.ClassScanner;
 import com.douglei.tools.utils.reflect.ConstructorUtil;
 
@@ -14,7 +15,7 @@ import com.douglei.tools.utils.reflect.ConstructorUtil;
  * @author DougLei
  */
 public class ActionResolvers {
-	private static final Map<String, ActionResolver> map = new HashMap<String, ActionResolver>(32);
+	private static final Map<String, ActionResolver> MAP = new HashMap<String, ActionResolver>(32);
 	static {
 		ClassScanner cs = new ClassScanner();
 		List<String> classPaths = cs.scan(ActionResolvers.class.getPackage().getName() + ".impl");
@@ -22,12 +23,12 @@ public class ActionResolvers {
 		ActionResolver actionResolver = null;
 		for (String cp : classPaths) {
 			actionResolver= (ActionResolver) ConstructorUtil.newInstance(cp);
-			map.put(actionResolver.getType(), actionResolver);
+			MAP.put(actionResolver.getType(), actionResolver);
 		}
 		cs.destroy();
 	}
 	
-	public static Action parse(JSONObject action) {
-		return map.get(action.getString("type")).parse(action);
+	public static Action parse(JSONObject action, ReferenceResolver referenceResolver) {
+		return MAP.get(action.getString("type")).parse(action, referenceResolver);
 	}
 }

@@ -1,22 +1,23 @@
-package com.douglei.business.flow.resolver.action.impl;
+package com.douglei.business.flow.resolver.action.impl.func;
 
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.core.action.Action;
+import com.douglei.business.flow.resolver.ReferenceResolver;
 import com.douglei.business.flow.resolver.action.ActionResolver;
 
 /**
  * 
  * @author DougLei
  */
-public class SqlQueryActionResolver implements ActionResolver {
+public class FuncSwitchActionResolver implements ActionResolver {
 
 	@Override
 	public String getType() {
-		return "sql_query";
+		return "func_switch";
 	}
-
+	
 	@Override
-	public Action parse(JSONObject action) {
+	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
 		// TODO Auto-generated method stub
 		return null;
 	}

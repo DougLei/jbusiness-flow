@@ -1,9 +1,7 @@
 package com.douglei.business.flow.resolver;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONArray;
@@ -43,26 +41,40 @@ public class ReferenceResolver {
 		}
 		return map;
 	}
+	
 
+	// ----------------------------------------------------------------------------
 	/**
 	 * 解析action
 	 * @param actions 为commonAction的name, 或为actions配置数组
 	 * @return
 	 */
-	public List<Action> parseAction(Object actions) {
+	public Action[] parseAction(Object actions) {
 		if(actions instanceof JSONArray) {
 			return parseAction_((JSONArray)actions);
 		}
 		return parseAction_(actions.toString());
 	}
-	private List<Action> parseAction_(JSONArray actionArray) {
-		List<Action> actions = new ArrayList<Action>(actionArray.size());
+	private Action[] parseAction_(JSONArray actionArray) {
+		Action[] actions = new Action[actionArray.size()];
 		for(short i=0;i<actionArray.size();i++) {
-			actions.add(ActionResolvers.parse(actionArray.getJSONObject(i)));
+			actions[i] = ActionResolvers.parse(actionArray.getJSONObject(i), this);
 		}
 		return actions;
 	}
-	private List<Action> parseAction_(String name) {
+	private Action[] parseAction_(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	// ----------------------------------------------------------------------------
+	/**
+	 * 解析指定name的sql
+	 * @param name
+	 * @return
+	 */
+	public String parseSql(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}

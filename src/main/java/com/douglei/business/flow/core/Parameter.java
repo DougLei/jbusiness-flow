@@ -12,7 +12,7 @@ public class Parameter {
 	private Object defaultValue;
 	private boolean required;
 	
-	public Parameter(String name, String description, byte scope, byte dataType, Object defaultValue, Boolean required) {
+	public Parameter(String name,String description, byte scope, byte dataType, Object defaultValue, Boolean required) {
 		this.name = name;
 		this.description = description;
 		this.scope = scope;
@@ -21,12 +21,6 @@ public class Parameter {
 		this.required = required==null?true:required;
 	}
 	
-	public byte getDataType() {
-		return dataType;
-	}
-	public void setDataType(byte dataType) {
-		this.dataType = dataType;
-	}
 	public String getName() {
 		return name;
 	}
@@ -35,6 +29,9 @@ public class Parameter {
 	}
 	public byte getScope() {
 		return scope;
+	}
+	public byte getDataType() {
+		return dataType;
 	}
 	public Object getDefaultValue() {
 		return defaultValue;

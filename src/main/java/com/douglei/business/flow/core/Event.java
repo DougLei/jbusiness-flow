@@ -43,8 +43,8 @@ public class Event {
 		}
 	}
 	
-	private List<Action> actions;
-	public void setActions(List<Action> actions) {
+	private Action[] actions;
+	public void setActions(Action[] actions) {
 		this.actions = actions;
 	}
 	
