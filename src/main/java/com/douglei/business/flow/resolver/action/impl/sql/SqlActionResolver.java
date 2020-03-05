@@ -15,7 +15,7 @@ import com.douglei.business.flow.resolver.action.ActionResolver;
 public abstract class SqlActionResolver implements ActionResolver {
 
 	@Override
-	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
+	public final Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
 		String sql = referenceResolver.parseSql(actionJSON.getString("name"));
 		Parameter[] parameters = ParameterResolver.parse(actionJSON.getJSONArray("params"));
 		return new SqlAction(sql, parameters);

@@ -21,4 +21,10 @@ public class DataOpCompareActionResolver implements ActionResolver{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	class Test{}
 }
+
+
+
+
