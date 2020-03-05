@@ -1,7 +1,7 @@
-package com.douglei.business.flow.core.action.impl.sql;
+package com.douglei.business.flow.executer.action.impl.sql;
 
-import com.douglei.business.flow.core.Parameter;
-import com.douglei.business.flow.core.action.Action;
+import com.douglei.business.flow.executer.Parameter;
+import com.douglei.business.flow.executer.action.Action;
 
 /**
  * 

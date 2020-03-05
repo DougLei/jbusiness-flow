@@ -1,5 +1,5 @@
 // 统一说明
-// 1.数据类型: 1(string), 2(byte), 3(short), 4(integer), 5(long), 6(float), 7(double), 8(boolean), 9(date), 10(array), 11(list), 12(object)(使用map实现), 每种类型会有自己的默认初始值(和java的标准一致)
+// 1.数据类型: string, byte, short, integer, long, float, double, boolean, date, array, list, object(使用map实现), 每种类型会有自己的默认初始值(和java的标准一致)
 // 2.参数范围: 1(输入参数), 2(输入输出参数), 3(输出参数), 4(全局参数), 5(本地参数, 遵循java变量的生命周期), 参数的范围从大到小排序为: 1=2=3>4>5
 // 3.在给定参数名和参数的范围时, 参数名可以通过使用xxx.xx形式, 例如scope=1, paramName=user.name表示, 取输入参数中, 参数名为user数据的name属性值, 其他还例如 users.size, 表示取users集合或数组的长度, 等等
 // 4.在配置value(固定值)时, 其值的类型可能是string, integer, date, boolean, 所以value后的双引号可有可无, 具体根据用户配置的值决定
@@ -19,7 +19,7 @@
 		"name":"", // 参数名(英文)
 		"description":"", // 参数描述, 默认为null
 		"scope":1, // 参数范围
-		"dataType":1, // 参数数据类型, 默认为1
+		"dataType":"string", // 参数数据类型, 默认为string
 		"defaultValue":"", // 参数默认值, 与固定值一样, 默认为null
 		"required":true // 参数是否必须, 默认为true
 	}],

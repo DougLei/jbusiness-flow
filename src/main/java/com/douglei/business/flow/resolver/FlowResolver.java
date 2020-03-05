@@ -1,7 +1,7 @@
 package com.douglei.business.flow.resolver;
 
 import com.alibaba.fastjson.JSONObject;
-import com.douglei.business.flow.core.Flow;
+import com.douglei.business.flow.executer.Flow;
 
 /**
  * 

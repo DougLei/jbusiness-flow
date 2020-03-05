@@ -1,6 +1,6 @@
 package com.douglei.business.flow;
 
-import com.douglei.business.flow.core.BusinessFlow;
+import com.douglei.business.flow.executer.BusinessFlow;
 import com.douglei.business.flow.resolver.BusinessFlowResolver;
 
 /**

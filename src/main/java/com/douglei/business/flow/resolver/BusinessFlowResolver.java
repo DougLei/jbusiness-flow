@@ -6,9 +6,9 @@ import java.util.Map;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.BFConfiguration;
-import com.douglei.business.flow.core.BusinessFlow;
-import com.douglei.business.flow.core.Event;
-import com.douglei.business.flow.core.Flow;
+import com.douglei.business.flow.executer.BusinessFlow;
+import com.douglei.business.flow.executer.Event;
+import com.douglei.business.flow.executer.Flow;
 
 /**
  * 业务流解析器

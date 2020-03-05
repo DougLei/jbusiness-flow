@@ -1,4 +1,4 @@
-package com.douglei.business.flow.core;
+package com.douglei.business.flow.executer;
 
 /**
  * 参数
@@ -8,19 +8,27 @@ public class Parameter {
 	private String name;
 	private String description;
 	private byte scope;
-	private byte dataType;
+	private DataType dataType;
 	private Object defaultValue;
 	private boolean required;
 	
-	public Parameter(String name,String description, byte scope, byte dataType, Object defaultValue, Boolean required) {
+	public Parameter(String name,String description, byte scope, String dataType, Object defaultValue, Boolean required) {
 		this.name = name;
 		this.description = description;
 		this.scope = scope;
-		this.dataType = dataType;
+		this.dataType = DataType.toValue(dataType);
 		this.defaultValue = defaultValue;
 		this.required = required==null?true:required;
 	}
 	
+	private Object value;
+	public Object getValue() {
+		return value;
+	}
+	public void setValue(Object value) {
+		this.value = value;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -30,7 +38,7 @@ public class Parameter {
 	public byte getScope() {
 		return scope;
 	}
-	public byte getDataType() {
+	public DataType getDataType() {
 		return dataType;
 	}
 	public Object getDefaultValue() {

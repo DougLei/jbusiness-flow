@@ -1,8 +1,7 @@
-package com.douglei.business.flow.core.action.impl.func;
+package com.douglei.business.flow.executer.action.impl.func;
 
-import com.douglei.business.flow.core.Parameter;
-import com.douglei.business.flow.core.action.Action;
-import com.douglei.tools.utils.StringUtil;
+import com.douglei.business.flow.executer.Parameter;
+import com.douglei.business.flow.executer.action.Action;
 
 /**
  * 
@@ -15,7 +14,7 @@ public class FuncLoopAction extends Action {
 	
 	public FuncLoopAction(Parameter collection, String alias, Action[] actions) {
 		this.collection = collection;
-		this.alias = StringUtil.isEmpty(alias)?collection.getName():alias;
+		this.alias = alias;
 		this.actions = actions;
 	}
 

@@ -7,7 +7,7 @@ import java.util.Map;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.BFConfiguration;
-import com.douglei.business.flow.core.action.Action;
+import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.resolver.action.ActionResolvers;
 import com.douglei.tools.utils.CollectionUtil;
 

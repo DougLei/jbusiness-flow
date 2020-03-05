@@ -1,4 +1,4 @@
-package com.douglei.business.flow.resolver.action.impl.func;
+package com.douglei.business.flow.resolver.action.impl.data.op;
 
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.action.Action;
@@ -9,13 +9,13 @@ import com.douglei.business.flow.resolver.action.ActionResolver;
  * 
  * @author DougLei
  */
-public class FuncSwitchActionResolver implements ActionResolver {
+public class DataOpCompareActionResolver implements ActionResolver{
 
 	@Override
 	public String getType() {
-		return "func_switch";
+		return "data_op_compare";
 	}
-	
+
 	@Override
 	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
 		// TODO Auto-generated method stub
