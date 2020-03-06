@@ -93,6 +93,7 @@
 		},
 		"right":{
 			// 配置内容和left相同, 如果left的结果就是boolean, 则可以不配置right
+			// 同样, 如果op=bool, 则忽略right
 		}
 	}
 }

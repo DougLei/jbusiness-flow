@@ -20,8 +20,6 @@ public enum DataType {
 	LIST,
 	OBJECT;
 
-	
-	
 	public static DataType toValue(String value) {
 		if(StringUtil.notEmpty(value)) {
 			value = value.trim().toUpperCase();

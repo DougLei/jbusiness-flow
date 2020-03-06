@@ -9,7 +9,8 @@ public abstract class Action {
 	protected Result result;
 	
 	/**
-	 * 执行
+	 * 
+	 * @return
 	 */
-	public abstract void execute();
+	public abstract Object execute();
 }

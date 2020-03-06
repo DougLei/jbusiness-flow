@@ -13,11 +13,11 @@ import com.douglei.business.flow.resolver.action.impl.data.DataResolver;
  * 
  * @author DougLei
  */
-public class DataOpCompareActionResolver implements ActionResolver{
+public class DataOpArithmeticActionResolver implements ActionResolver{
 
 	@Override
 	public String getType() {
-		return "data_op_compare";
+		return "data_op_arithmetic";
 	}
 
 	@Override
