@@ -20,7 +20,7 @@
 		"description":"", // 参数描述, 默认为null
 		"scope":1, // 参数范围
 		"dataType":"string", // 参数数据类型, 默认为string
-		"defaultValue":"", // 参数默认值, 与固定值一样, 默认为null
+		"value":"", // 参数默认值,  默认为null
 		"required":true // 参数是否必须, 默认为true
 	}],
 	
@@ -74,7 +74,7 @@
 			"description":"", // 参数描述, 默认为null
 			"scope":5, // 参数范围, 这里不用配置, 直接使用5做为固定值
 			"dataType":"string", // 参数数据类型, 默认为string *
-			"defaultValue":"", // 参数默认值, 默认为null
+			"value":"", // 参数默认值, 默认为null
 			"required":true // 参数是否必须, 这里不用配置, 直接使用true做为固定值
 		}],
 		"actions":[{ // 具体的action
@@ -101,7 +101,7 @@
 			"description":"", // 参数描述, 默认为null
 			"scope":5, // 参数范围, 这里不用配置, 直接使用5做为固定值
 			"dataType":"string", // 参数数据类型, 默认为string *
-			"defaultValue":"", // 参数默认值, 默认为null
+			"value":"", // 参数默认值, 默认为null
 			"required":true // 参数是否必须, 这里不用配置, 直接使用true做为固定值
 		}] 
 	}]

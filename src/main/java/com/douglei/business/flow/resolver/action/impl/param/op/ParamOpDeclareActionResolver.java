@@ -1,5 +1,6 @@
 package com.douglei.business.flow.resolver.action.impl.param.op;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.Parameter;
 import com.douglei.business.flow.executer.action.Action;
@@ -21,9 +22,8 @@ public class ParamOpDeclareActionResolver implements ActionResolver {
 
 	@Override
 	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
-		Parameter parameter = ParameterResolver.parse(actionJSON);
-		String paramName = actionJSON.getString("paramName");
-		byte paramScope = actionJSON.getByteValue("paramScope");
-		return new ParamOpDeclareAction(parameter, paramName, paramScope);
+		JSONArray contents = actionJSON.getJSONArray("content");
+		Parameter[] parameters = ParameterResolver.parse(contents);
+		return new ParamOpDeclareAction(parameters);
 	}
 }

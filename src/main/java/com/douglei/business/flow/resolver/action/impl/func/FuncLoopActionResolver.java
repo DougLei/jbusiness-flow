@@ -21,9 +21,10 @@ public class FuncLoopActionResolver implements ActionResolver {
 
 	@Override
 	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
-		Parameter collection = ParameterResolver.parse(actionJSON);
-		String alias = actionJSON.getString("alias");
-		Action[] actions = referenceResolver.parseAction(actionJSON.get("actions"));
+		JSONObject content = actionJSON.getJSONObject("content");
+		Parameter collection = ParameterResolver.parse(content);
+		String alias = content.getString("alias");
+		Action[] actions = referenceResolver.parseAction(content.get("actions"));
 		return new FuncLoopAction(collection, alias, actions);
 	}
 }

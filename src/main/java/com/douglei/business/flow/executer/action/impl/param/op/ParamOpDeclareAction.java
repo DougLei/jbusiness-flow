@@ -8,14 +8,10 @@ import com.douglei.business.flow.executer.action.Action;
  * @author DougLei
  */
 public class ParamOpDeclareAction extends Action{
-	private Parameter parameter;
-	private String paramName;
-	private byte paramScope;
+	private Parameter[] parameters;
 	
-	public ParamOpDeclareAction(Parameter parameter, String paramName, byte paramScope) {
-		this.parameter = parameter;
-		this.paramName = paramName;
-		this.paramScope = paramScope;
+	public ParamOpDeclareAction(Parameter[] parameters) {
+		this.parameters = parameters;
 	}
 
 	@Override

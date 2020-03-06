@@ -9,26 +9,23 @@ public class Parameter {
 	private String description;
 	private byte scope;
 	private DataType dataType;
-	private Object defaultValue;
-	private boolean required;
-	
-	public Parameter(String name,String description, byte scope, String dataType, Object defaultValue, Boolean required) {
-		this.name = name;
-		this.description = description;
-		this.scope = scope;
-		this.dataType = DataType.toValue(dataType);
-		this.defaultValue = defaultValue;
-		this.required = required==null?true:required;
-	}
-	
 	private Object value;
-	public Object getValue() {
-		return value;
+	private boolean required;
+	private Parameter refParam;
+	
+	private Parameter(String name, byte scope) {
+		this.name = name;
+		this.scope = scope;
 	}
-	public void setValue(Object value) {
+	public Parameter(String name, byte scope, String description, String dataType, Object value, Boolean required, String refParamName, byte refParamScope) {
+		this(name, scope);
+		this.description = description;
+		this.dataType = DataType.toValue(dataType);
 		this.value = value;
+		this.required = required==null?true:required;
+		this.refParam = (refParamName==null)?null:new Parameter(refParamName, refParamScope);
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -41,8 +38,8 @@ public class Parameter {
 	public DataType getDataType() {
 		return dataType;
 	}
-	public Object getDefaultValue() {
-		return defaultValue;
+	public Object getValue() {
+		return value;
 	}
 	public boolean isRequired() {
 		return required;

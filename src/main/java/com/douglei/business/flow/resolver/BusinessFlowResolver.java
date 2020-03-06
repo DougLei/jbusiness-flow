@@ -39,7 +39,7 @@ public class BusinessFlowResolver {
 		Map<String, Event> eventMap = new HashMap<String, Event>();
 		Event event;
 		for(short index=0;index<events.size();index++) {
-			event = new EventResolver(events.getJSONObject(index)).parse(referenceResolver);
+			event = eventParse(events.getJSONObject(index), referenceResolver);
 			if(event.isStart()) {
 				startEvent = event;
 			}
@@ -49,10 +49,23 @@ public class BusinessFlowResolver {
 		// 通过flow, 将event连接起来
 		Flow flow;
 		for(short index=0;index<flows.size();index++) {
-			flow = new FlowResolver(flows.getJSONObject(index)).parse(referenceResolver);
+			flow = flowParse(flows.getJSONObject(index), referenceResolver);
 			eventMap.get(flow.getSourceEvent()).linkFlows(flow);// 将sourceEvent和flow关联
 			flow.linkNextEvent(eventMap.get(flow.getTargetEvent()));// 将targetEvent和flow关联
 		}
 		return startEvent;
+	}
+
+	// 解析event
+	private Event eventParse(JSONObject eventJson, ReferenceResolver referenceResolver) {
+		Event event = new Event(eventJson.getByteValue("type"), eventJson.getString("name"), eventJson.getString("description"));
+		event.setActions(referenceResolver.parseAction(eventJson.get("actions")));
+		return event;
+	}
+	
+	// 解析flow
+	private Flow flowParse(JSONObject jsonObject, ReferenceResolver referenceResolver) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

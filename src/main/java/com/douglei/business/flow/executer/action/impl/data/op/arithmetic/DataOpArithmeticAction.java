@@ -1,19 +1,17 @@
 package com.douglei.business.flow.executer.action.impl.data.op.arithmetic;
 
 import com.douglei.business.flow.executer.action.Action;
-import com.douglei.business.flow.executer.action.impl.data.op.Data;
 
 /**
  * 
  * @author DougLei
  */
 public class DataOpArithmeticAction extends Action {
-	private ArithmeticType op;
-	private Data data;
-	
-	
+	private DataOpArithmetic[] group;
 
-
+	public DataOpArithmeticAction(DataOpArithmetic[] group) {
+		this.group = group;
+	}
 
 	@Override
 	public Object execute() {

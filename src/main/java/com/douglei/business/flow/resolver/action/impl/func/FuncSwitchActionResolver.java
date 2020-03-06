@@ -18,6 +18,7 @@ public class FuncSwitchActionResolver implements ActionResolver {
 	
 	@Override
 	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
+		JSONObject content = actionJSON.getJSONObject("content");
 		// TODO Auto-generated method stub
 		return null;
 	}

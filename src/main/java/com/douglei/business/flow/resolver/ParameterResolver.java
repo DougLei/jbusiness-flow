@@ -18,11 +18,13 @@ public class ParameterResolver {
 	 */
 	public static Parameter parse(JSONObject json) {
 		return new Parameter(json.getString("name"),
-				json.getString("description"),
 				json.getByteValue("scope"),
+				json.getString("description"),
 				json.getString("dataType"),
-				json.get("defaultValue"),
-				json.getBoolean("required"));
+				json.get("value"),
+				json.getBoolean("required"),
+				json.getString("refParamName"),
+				json.getByteValue("refParamScope"));
 	}
 	
 	/**
