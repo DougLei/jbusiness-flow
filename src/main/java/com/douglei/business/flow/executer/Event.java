@@ -15,11 +15,13 @@ public class Event {
 	private byte type;
 	private String name;
 	private String description;
+	private Action[] actions;
 	
-	public Event(byte type, String name, String description) {
+	public Event(byte type, String name, String description, Action[] actions) {
 		this.type = type;
 		this.name = name;
 		this.description = description;
+		this.actions = actions;
 	}
 	
 	private List<Flow> flows;
@@ -41,11 +43,6 @@ public class Event {
 				}
 			});
 		}
-	}
-	
-	private Action[] actions;
-	public void setActions(Action[] actions) {
-		this.actions = actions;
 	}
 	
 	public boolean isStart() {

@@ -44,19 +44,18 @@
 	"flows":[{ // 业务流包含的所有流
 		"description":"", // 流描述, 默认为null
 		"type":1, // 流类型, 0顺序流, 1条件流(if-else/if-elsif-else), 默认为0, 在配置了条件流后, 如果没有配置else, 则提供一个默认的end-else结束流程
-		"order":1, // 排序值, 默认为1, 当是条件流时, 如果配置了order值, 则根据order值的顺序, 从大到小依次判断, 碰到判断为true的, 进入到相应的targetEvent, 否则就按照json中配置的顺序依次判断
+		"order":0, // 排序值, 默认为0, 当是条件流时, 如果配置了order值, 则根据order值的顺序, 从大到小依次判断, 碰到判断为true的, 进入到相应的targetEvent, 否则就按照json中配置的顺序依次判断
 		"sourceEvent":"", // 起始的事件名 event.name
 		"targetEvent":"", // 目标的事件名 event.name
 		"conditionGroups":[{ // 判断条件组, 默认为空数组, 空数组标识判断结果默认为true
-			"conditions":[{ // 条件
-				"type":"data_op_comp", // 使用数据判断的action, 具体配置参看business.flow.action.desgin, 这里也只能配置这个type, 所以可以通过默认值, 无需专门配置这个值
+			"conditions":[{ // 条件, 空数组标识判断结果默认为true
 				"content":{
 					...
 				},
-				"nextLogicOp":"and" // 与下一个条件连接的逻辑操作符, and, or, 默认为and
+				"op":0 // 与下一个条件连接的逻辑操作符, 0.and, 1.or, 默认为0
 			}],
-			"nextLogicOp":"and" // 与下一个条件连接的逻辑操作符, and, or, 默认为and
-		}],
+			"op":0 // 与下一个条件连接的逻辑操作符, 0.and, 1.or, 默认为0
+		}]
 	}],
 	
 	// 通用的action

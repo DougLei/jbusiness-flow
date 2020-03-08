@@ -22,4 +22,7 @@ public class Constants {
 	public static final byte SQL_DELETE = 2; // sql类型: delete
 	public static final byte SQL_UPDATE = 3; // sql类型: update
 	public static final byte SQL_SELECT = 4; // sql类型: select
+	
+	public static final byte CONDITION_AND = 0; // 条件: and
+	public static final byte CONDITION_OR = 1; // 条件: or
 }

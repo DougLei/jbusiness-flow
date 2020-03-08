@@ -188,7 +188,6 @@
 		"targetEvent":"productsNotExists",	
 		"conditionGroups":[{
 			"conditions":[{
-				"type":"data_op_comp",
 				"content":{
 					"op":"eq",
 					"left":{

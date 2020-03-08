@@ -34,12 +34,17 @@ public class BusinessFlowResolver {
 	// 根据event和flow, 搭建业务流的整体结构
 	private Event buildBFStruct(JSONArray events, JSONArray flows, ReferenceResolver referenceResolver) {
 		Event startEvent = null;
+		JSONObject json;
 		
 		// 获取起始的事件, 以及所有事件的map集合
 		Map<String, Event> eventMap = new HashMap<String, Event>();
 		Event event;
 		for(short index=0;index<events.size();index++) {
-			event = eventParse(events.getJSONObject(index), referenceResolver);
+			json = events.getJSONObject(index);
+			event = new Event(json.getByteValue("type"), 
+							  json.getString("name"), 
+							  json.getString("description"), 
+							  referenceResolver.parseAction(json.get("actions")));
 			if(event.isStart()) {
 				startEvent = event;
 			}
@@ -49,23 +54,16 @@ public class BusinessFlowResolver {
 		// 通过flow, 将event连接起来
 		Flow flow;
 		for(short index=0;index<flows.size();index++) {
-			flow = flowParse(flows.getJSONObject(index), referenceResolver);
+			json = flows.getJSONObject(index);
+			flow = new Flow(json.getString("description"), 
+							json.getByteValue("type"), 
+							json.getByteValue("order"), 
+							json.getString("sourceEvent"), 
+							json.getString("targetEvent"),
+							ConditionResolver.parse(json.getJSONArray("conditionGroups"), referenceResolver));
 			eventMap.get(flow.getSourceEvent()).linkFlows(flow);// 将sourceEvent和flow关联
-			flow.linkNextEvent(eventMap.get(flow.getTargetEvent()));// 将targetEvent和flow关联
+			flow.linkEvent(eventMap.get(flow.getTargetEvent()));// 将targetEvent和flow关联
 		}
 		return startEvent;
-	}
-
-	// 解析event
-	private Event eventParse(JSONObject eventJson, ReferenceResolver referenceResolver) {
-		Event event = new Event(eventJson.getByteValue("type"), eventJson.getString("name"), eventJson.getString("description"));
-		event.setActions(referenceResolver.parseAction(eventJson.get("actions")));
-		return event;
-	}
-	
-	// 解析flow
-	private Flow flowParse(JSONObject jsonObject, ReferenceResolver referenceResolver) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

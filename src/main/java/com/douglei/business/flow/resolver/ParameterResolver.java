@@ -33,7 +33,7 @@ public class ParameterResolver {
 	 * @return
 	 */
 	public static Parameter[] parse(JSONArray array) {
-		byte size = array==null?0:(byte)array.size();
+		int size = array==null?0:array.size();
 		if(size == 0) {
 			return EMPTY_PARAMETERS;
 		}

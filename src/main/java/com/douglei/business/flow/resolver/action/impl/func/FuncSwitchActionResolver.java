@@ -1,7 +1,10 @@
 package com.douglei.business.flow.resolver.action.impl.func;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.action.Action;
+import com.douglei.business.flow.executer.action.impl.func.FuncSwitchAction;
+import com.douglei.business.flow.resolver.ConditionResolver;
 import com.douglei.business.flow.resolver.ReferenceResolver;
 import com.douglei.business.flow.resolver.action.ActionResolver;
 
@@ -18,8 +21,15 @@ public class FuncSwitchActionResolver implements ActionResolver {
 	
 	@Override
 	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
-		JSONObject content = actionJSON.getJSONObject("content");
-		// TODO Auto-generated method stub
-		return null;
+		JSONArray contents = actionJSON.getJSONArray("content");
+		FuncSwitchAction action = new FuncSwitchAction(contents.size());
+		JSONObject content;
+		for(byte i=0;i<contents.size();i++) {
+			content = contents.getJSONObject(i);
+			action.add(i, 
+					ConditionResolver.parse(content.getJSONArray("conditionGroups"), referenceResolver), 
+					referenceResolver.parseAction(content.get("actions")));
+		}
+		return action;
 	}
 }
