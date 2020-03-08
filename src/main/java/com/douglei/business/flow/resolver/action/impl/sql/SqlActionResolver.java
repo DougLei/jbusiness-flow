@@ -19,9 +19,6 @@ public abstract class SqlActionResolver implements ActionResolver {
 		JSONObject content = actionJSON.getJSONObject("content");
 		String sql = referenceResolver.parseSql(content.getString("name"));
 		Parameter[] parameters = ParameterResolver.parse(content.getJSONArray("params"));
-		
-		// TODO RESULT
-		
-		return new SqlAction(sql, parameters);
+		return new SqlAction(sql, parameters, getResult(actionJSON));
 	}
 }

@@ -23,12 +23,9 @@ public class DataOpCompareActionResolver implements ActionResolver{
 	@Override
 	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
 		JSONObject content = actionJSON.getJSONObject("content");
-		
 		CompareType op = CompareType.toValue(content.getString("op"));
 		Data left = DataResolver.parse(content.getJSONObject("left"), referenceResolver);
 		Data right = (op == CompareType.BOOL || op == CompareType.NBOOL)?null:DataResolver.parse(content.getJSONObject("right"), referenceResolver);
-		
-		// RESULT
 		return new DataOpCompareAction(op, left, right);
 	}
 }

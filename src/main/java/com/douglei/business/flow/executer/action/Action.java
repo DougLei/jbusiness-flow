@@ -1,12 +1,13 @@
 package com.douglei.business.flow.executer.action;
 
+import com.douglei.business.flow.executer.Parameter;
+
 /**
  * 
  * @author DougLei
  */
 public abstract class Action {
-	protected Content content;
-	protected Result result;
+	protected Parameter result;
 	
 	/**
 	 * 

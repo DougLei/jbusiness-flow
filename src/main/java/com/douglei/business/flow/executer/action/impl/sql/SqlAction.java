@@ -11,9 +11,10 @@ public class SqlAction extends Action {
 	private String sql;
 	private Parameter[] parameters;
 	
-	public SqlAction(String sql, Parameter[] parameters) {
+	public SqlAction(String sql, Parameter[] parameters, Parameter result) {
 		this.sql = sql;
 		this.parameters = parameters;
+		this.result = result;
 	}
 
 	@Override
