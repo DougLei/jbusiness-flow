@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.BFConfiguration;
 import com.douglei.business.flow.executer.action.Action;
+import com.douglei.business.flow.executer.method.Method;
 import com.douglei.business.flow.resolver.action.ActionResolvers;
 import com.douglei.tools.utils.CollectionUtil;
 
@@ -75,6 +76,18 @@ public class ReferenceResolver {
 	 * @return
 	 */
 	public String parseSql(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	// ----------------------------------------------------------------------------
+	/**
+	 * 解析指定name的method
+	 * @param name
+	 * @return
+	 */
+	public Method parseMethod(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
