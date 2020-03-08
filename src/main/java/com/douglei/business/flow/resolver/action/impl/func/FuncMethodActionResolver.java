@@ -19,6 +19,29 @@ public class FuncMethodActionResolver implements ActionResolver {
 	@Override
 	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
 		JSONObject content = actionJSON.getJSONObject("content");
+		
+		content.getString("methodName");
+		
+		
+		content.getJSONArray("params");
+		
+		
+		content.getJSONArray("receive");
+		
+		
+		content.getJSONObject("receiveAll");
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,7 +1,6 @@
 package com.douglei.business.flow.executer;
 
 import com.douglei.business.flow.Constants;
-import com.douglei.business.flow.executer.condition.ConditionGroup;
 
 /**
  * 
