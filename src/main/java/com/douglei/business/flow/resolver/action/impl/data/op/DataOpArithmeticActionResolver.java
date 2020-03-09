@@ -7,15 +7,14 @@ import com.douglei.business.flow.executer.action.impl.data.op.arithmetic.Arithme
 import com.douglei.business.flow.executer.action.impl.data.op.arithmetic.DataOpArithmetic;
 import com.douglei.business.flow.executer.action.impl.data.op.arithmetic.DataOpArithmeticAction;
 import com.douglei.business.flow.resolver.ReferenceResolver;
-import com.douglei.business.flow.resolver.action.ActionResolver;
-import com.douglei.business.flow.resolver.action.impl.data.DataResolver;
+import com.douglei.business.flow.resolver.action.impl.data.DataOpResolver;
 import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 
  * @author DougLei
  */
-public class DataOpArithmeticActionResolver implements ActionResolver{
+public class DataOpArithmeticActionResolver extends DataOpResolver{
 
 	@Override
 	public String getType() {
@@ -38,7 +37,7 @@ public class DataOpArithmeticActionResolver implements ActionResolver{
 		DataOpArithmetic dataOpArithmetic = new DataOpArithmetic(ArithmeticType.toValue(content.getString("op")));
 		JSONArray groupArray = content.getJSONArray("group");
 		if(CollectionUtil.isEmpty(groupArray)) {
-			dataOpArithmetic.setData(DataResolver.parse(content, referenceResolver));
+			dataOpArithmetic.setData(parseData(content, referenceResolver));
 		}else {
 			byte size = (byte) groupArray.size();
 			DataOpArithmetic[] group = new DataOpArithmetic[size];

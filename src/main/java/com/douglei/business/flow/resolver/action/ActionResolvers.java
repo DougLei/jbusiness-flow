@@ -36,10 +36,21 @@ public class ActionResolvers {
 		cs.destroy();
 	}
 	
+	/**
+	 * 解析action
+	 * @param action
+	 * @param referenceResolver
+	 * @return
+	 */
 	public static Action parse(JSONObject action, ReferenceResolver referenceResolver) {
 		return MAP.get(action.getString("type")).parse(action, referenceResolver);
 	}
 	
+	/**
+	 * 获取指定type的action解析器
+	 * @param type
+	 * @return
+	 */
 	public static ActionResolver getActionResolver(String type) {
 		return MAP.get(type);
 	}

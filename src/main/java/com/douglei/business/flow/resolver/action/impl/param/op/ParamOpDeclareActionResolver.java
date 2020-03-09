@@ -23,7 +23,21 @@ public class ParamOpDeclareActionResolver implements ActionResolver {
 	@Override
 	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
 		JSONArray contents = actionJSON.getJSONArray("content");
-		Parameter[] parameters = ParameterResolver.parse(contents);
-		return new ParamOpDeclareAction(parameters);
+		
+		int size = contents.size();
+		ParamOpDeclareAction action = new ParamOpDeclareAction(size);
+
+		JSONObject content;
+		Parameter parameter;
+		for(byte i=0;i<size;i++) {
+			content = contents.getJSONObject(i);
+			parameter = ParameterResolver.parse(content);
+			action.addParam(i, parameter);
+			
+			if(parameter.getValue() == null) {
+				action.addRefParam(i, Parameter.newInstance(content.getString("refParamName"), content.getByteValue("refParamScope")));
+			}
+		}
+		return action;
 	}
 }

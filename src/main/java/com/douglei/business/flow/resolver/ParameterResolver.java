@@ -17,14 +17,15 @@ public class ParameterResolver {
 	 * @return
 	 */
 	public static Parameter parse(JSONObject json) {
-		return new Parameter(json.getString("name"),
-				json.getByteValue("scope"),
-				json.getString("description"),
-				json.getString("dataType"),
-				json.get("value"),
-				json.getBoolean("required"),
-				json.getString("refParamName"),
-				json.getByteValue("refParamScope"));
+		if(json == null) {
+			return null;
+		}
+		return Parameter.newInstance(json.getString("name"),
+					json.getByteValue("scope"),
+					json.getString("dataType"),
+					json.getBoolean("required"),
+					json.get("value"),
+					json.getString("description"));
 	}
 	
 	/**

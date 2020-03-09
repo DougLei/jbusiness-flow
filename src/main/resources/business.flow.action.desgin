@@ -80,16 +80,15 @@
 			
 			"action":{ // 执行action, 从其result中获取相应的值进行比较, 本质和method的receive是相同的
 				"actions":[{}], 
-				"actionResultPick":{
-					"all":false, // 是否获取全部result, 默认false
-					"names":["", ""], // pickAll=false时, 拾取指定name的result进行比较
-					"excludeNames":["", ""] // pickAll=false时, 排除这些名称的result不拾取, 拾取其他的result进行比较
-				}
+				"pickAll":false, // 是否获取全部result, 默认false
+				"names":["", ""] // pickAll=false时, 拾取指定name的result进行比较; pickAll=true时, 排除指定name的result不拾取, 拾取其他的result进行比较
 			},
 			
 			"method":{ // 执行method
 				// 和type=func_method的content中的配置一致, 用最后receive的值进行比较
 			}
+			
+			// 这上面的优先级为: value > name,scope > action > method
 		},
 		"right":{
 			// 配置内容和left相同, 如果left的结果就是boolean, 则可以不配置right

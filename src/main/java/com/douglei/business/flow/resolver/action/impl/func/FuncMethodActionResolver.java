@@ -1,7 +1,5 @@
 package com.douglei.business.flow.resolver.action.impl.func;
 
-import java.util.Arrays;
-
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.action.Action;
@@ -58,16 +56,5 @@ public class FuncMethodActionResolver implements ActionResolver {
 				excludeNames,
 				ParameterResolver.parse(json)));
 		return action;
-	}
-	
-	public static void main(String[] args) {
-		JSONObject json = JSONObject.parseObject("{'name':['name1','name2']}");
-		JSONArray array = json.getJSONArray("name");
-		
-		String[] aa = new String[10];
-		
-		array.toArray(aa);
-		System.out.println(Arrays.toString(aa));
-		
 	}
 }

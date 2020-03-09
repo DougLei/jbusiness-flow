@@ -7,13 +7,15 @@ import com.douglei.business.flow.executer.action.impl.data.op.Data;
  * @author DougLei
  */
 public class DataOpArithmetic {
-	private Data data;
 	private DataOpArithmetic[] group;
+	private Data data;
 	private ArithmeticType op;
+	
 	
 	public DataOpArithmetic(ArithmeticType op) {
 		this.op = op;
 	}
+	
 	public Data getData() {
 		return data;
 	}

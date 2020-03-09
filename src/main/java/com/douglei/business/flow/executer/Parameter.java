@@ -1,36 +1,52 @@
 package com.douglei.business.flow.executer;
 
+import com.douglei.business.flow.Constants;
+import com.douglei.tools.utils.StringUtil;
+
 /**
  * 参数
  * @author DougLei
  */
 public class Parameter {
 	private String name;
-	private String description;
 	private byte scope;
 	private DataType dataType;
-	private Object value;
 	private boolean required;
-	private Parameter refParam;
+	private Object value;
+	private String description;
+	
+	
+	private static boolean validate(String name, byte scope) {
+		return StringUtil.notEmpty(name) && scope >= Constants.PARAM_SCOPE_IN && scope <= Constants.PARAM_SCOPE_LOCAL;
+	}
+	
+	public static Parameter newInstance(String name, byte scope) {
+		if(validate(name, scope)) {
+			return new Parameter(name, scope);
+		}
+		return null;
+	}
+	public static Parameter newInstance(String name, byte scope, String dataType, Boolean required, Object value, String description) {
+		if(validate(name, scope)) {
+			return new Parameter(name, scope, dataType, required, value, description);
+		}
+		return null;
+	}
 	
 	private Parameter(String name, byte scope) {
 		this.name = name;
 		this.scope = scope;
 	}
-	public Parameter(String name, byte scope, String description, String dataType, Object value, Boolean required, String refParamName, byte refParamScope) {
+	private Parameter(String name, byte scope, String dataType, Boolean required, Object value, String description) {
 		this(name, scope);
-		this.description = description;
 		this.dataType = DataType.toValue(dataType);
-		this.value = value;
 		this.required = required==null?true:required;
-		this.refParam = (refParamName==null)?null:new Parameter(refParamName, refParamScope);
+		this.value = value;
+		this.description = description;
 	}
 	
 	public String getName() {
 		return name;
-	}
-	public String getDescription() {
-		return description;
 	}
 	public byte getScope() {
 		return scope;
@@ -38,10 +54,13 @@ public class Parameter {
 	public DataType getDataType() {
 		return dataType;
 	}
+	public boolean isRequired() {
+		return required;
+	}
 	public Object getValue() {
 		return value;
 	}
-	public boolean isRequired() {
-		return required;
+	public String getDescription() {
+		return description;
 	}
 }

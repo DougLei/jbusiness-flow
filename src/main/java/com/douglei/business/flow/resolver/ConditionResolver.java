@@ -15,13 +15,6 @@ public class ConditionResolver {
 	private static final Condition[] EMPTY_CONDITIONS = new Condition[0]; // 空的条件数组
 	private static final String ACTION_TYPE = "data_op_compare";
 	
-	/**
-	 * 
-	 * @param array
-	 * @param referenceResolver) {
-
-	 * @return
-	 */
 	public static ConditionGroup[] parse(JSONArray array, ReferenceResolver referenceResolver) {
 		int size = array==null?0:array.size();
 		if(size == 0) {
