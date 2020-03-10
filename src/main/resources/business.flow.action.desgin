@@ -80,8 +80,10 @@
 			
 			"action":{ // 执行action, 从其result中获取相应的值进行比较, 本质和method的receive是相同的
 				"actions":[{}], 
-				"pickAll":false, // 是否获取全部result, 默认false
-				"names":["", ""] // pickAll=false时, 拾取指定name的result进行比较; pickAll=true时, 排除指定name的result不拾取, 拾取其他的result进行比较
+				"resultPick":{ // 对actions的结果进行拾取, 用拾取的数据进行操作
+					"all":false, // 是否获取全部result, 默认false
+					"names":["", ""] // all=false时, 拾取指定name的result进行比较(可为空); all=true时, 排除指定name的result不拾取, 拾取其他的result进行比较(可为空)
+				}
 			},
 			
 			"method":{ // 执行method

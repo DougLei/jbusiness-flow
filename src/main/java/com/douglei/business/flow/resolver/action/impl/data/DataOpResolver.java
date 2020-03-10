@@ -29,14 +29,15 @@ public abstract class DataOpResolver implements ActionResolver {
 			JSONObject action = (JSONObject) obj;
 			Action[] actions = referenceResolver.parseAction(action.get("actions"));
 			
+			JSONObject resultPick = action.getJSONObject("resultPick");
 			String[] names = null;
-			JSONArray array = action.getJSONArray("names");
+			JSONArray array = resultPick.getJSONArray("names");
 			if(array != null && array.size() >0) {
 				names = new String[array.size()];
 				array.toArray(names);
 			}
 			
-			data.setAction(actions, action.getBooleanValue("pickAll"), names);
+			data.setAction(actions, resultPick.getBooleanValue("all"), names);
 		}else if((obj = json.getJSONObject("method")) != null) {
 			JSONObject actionJSON = new JSONObject(4);
 			actionJSON.put("content", obj);

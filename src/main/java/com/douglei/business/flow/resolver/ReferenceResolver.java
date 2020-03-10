@@ -6,9 +6,11 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.douglei.business.flow.BFConfiguration;
+import com.douglei.business.flow.container.reference.ReferenceContainer;
+import com.douglei.business.flow.executer.Parameter;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.method.Method;
+import com.douglei.business.flow.executer.method.Return;
 import com.douglei.business.flow.resolver.action.ActionResolvers;
 import com.douglei.tools.utils.CollectionUtil;
 
@@ -17,19 +19,31 @@ import com.douglei.tools.utils.CollectionUtil;
  * @author DougLei
  */
 public class ReferenceResolver {
-	private BFConfiguration configuration;
-	
-	private Map<String, JSONObject> commonActionMap;
+	private ReferenceContainer container;
+	private Map<String, CommonActionWrapper> commonActionWrapperMap;
 	private Map<String, JSONObject> methodMap;
 	private Map<String, JSONObject> sqlMap;
 	
-	public ReferenceResolver(BFConfiguration configuration, JSONArray commonActions, JSONArray methods, JSONArray sqls) {
-		this.configuration = configuration;
-		this.commonActionMap = array2Map(commonActions);
+	public ReferenceResolver(ReferenceContainer container, JSONArray commonActions, JSONArray methods, JSONArray sqls) {
+		this.container = container;
+		this.commonActionWrapperMap = array2CommonActionWrapperMap(commonActions);
 		this.methodMap = array2Map(methods);
 		this.sqlMap = array2Map(sqls);
 	}
-
+	
+	private Map<String, CommonActionWrapper> array2CommonActionWrapperMap(JSONArray array) {
+		if(CollectionUtil.isEmpty(array)) {
+			return Collections.emptyMap();
+		}
+		Map<String, CommonActionWrapper> map = new HashMap<String, CommonActionWrapper>();
+		JSONObject json;
+		for(short i=0;i<array.size();i++) {
+			json = array.getJSONObject(i);
+			map.put(json.getString("name"), new CommonActionWrapper(json.getJSONArray("actions")));
+		}
+		return map;
+	}
+	
 	private Map<String, JSONObject> array2Map(JSONArray array) {
 		if(CollectionUtil.isEmpty(array)) {
 			return Collections.emptyMap();
@@ -64,8 +78,23 @@ public class ReferenceResolver {
 		return actions;
 	}
 	private Action[] parseAction_(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return commonActionWrapperMap.get(name).parseAction();
+	}
+	
+	// CommonAction的包装类
+	private class CommonActionWrapper{
+		JSONArray confActions; // 配置的action数组
+		Action[] actions; // 解析后的action数组
+		CommonActionWrapper(JSONArray confActions) {
+			this.confActions = confActions;
+		}
+		
+		Action[] parseAction() {
+			if(actions == null) {
+				actions = parseAction_(confActions);
+			}
+			return actions;
+		}
 	}
 
 	
@@ -88,7 +117,25 @@ public class ReferenceResolver {
 	 * @return
 	 */
 	public Method parseMethod(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		Method method = container.getMethod(name);
+		if(method == null) {
+			JSONObject methodJSON = methodMap.get(name);
+			
+			Parameter[] parameters = ParameterResolver.parse(methodJSON.getJSONArray("params"));
+			Action[] actions = parseAction_(methodJSON.getJSONArray("actions"));
+			
+			JSONObject returnJSON = methodJSON.getJSONObject("return");
+			String[] names = null;
+			JSONArray array = returnJSON.getJSONArray("names");
+			if(array != null && array.size() > 0) {
+				names = new String[array.size()];
+				array.toArray(names);
+			}
+			Return return_ = new Return(returnJSON.getBooleanValue("all"), names);
+			
+			method = new Method(name, parameters, actions, return_);
+			container.putMethod(method);
+		}
+		return method;
 	}
 }

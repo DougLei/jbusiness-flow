@@ -77,13 +77,11 @@
 			"required":true // 参数是否必须, 这里不用配置, 直接使用true做为固定值
 		}],
 		"actions":[{ // 具体的action
-			// 所有的结果都属于本地map, 在return中决定返回哪些数据
+			// 所有的结果参数都属于本地map, 在return中决定返回哪些参数
 		}], 
-		
 		"return":{ // 方法的返回值, 可有可无, 返回多个, 就返回map; 返回单个, 就直接返回值
 			"all":false, // 是否返回全部数据, 默认false
-			"names":["", ""], // all=false时, 要从本地map中返回的参数名
-			"excludeNames":["", ""]	// all=true时, 排除这些名称的参数不返回
+			"names":["", ""] // all=false时, 返回指定name的参数(可为空); all=true时, 排除指定name的参数不返回, 剩下的参数都返回(可为空)
 		}
 	}],
 	

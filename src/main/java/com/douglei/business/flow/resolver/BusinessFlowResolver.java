@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.douglei.business.flow.BFConfiguration;
+import com.douglei.business.flow.container.reference.ReferenceContainer;
 import com.douglei.business.flow.executer.BusinessFlow;
 import com.douglei.business.flow.executer.Event;
 import com.douglei.business.flow.executer.Flow;
@@ -15,10 +15,10 @@ import com.douglei.business.flow.executer.Flow;
  * @author DougLei
  */
 public class BusinessFlowResolver {
-	private BFConfiguration configuration;
+	private ReferenceContainer referenceContainer;
 	
-	public BusinessFlowResolver(BFConfiguration configuration) {
-		this.configuration = configuration;
+	public BusinessFlowResolver(ReferenceContainer referenceContainer) {
+		this.referenceContainer = referenceContainer;
 	}
 
 	public BusinessFlow parse(String bfjson) {
@@ -26,7 +26,7 @@ public class BusinessFlowResolver {
 		BusinessFlow bf = new BusinessFlow(json.getString("name"), json.getString("description"), json.getString("version"), json.getBooleanValue("state"));
 		if(bf.isEnabled()) {
 			bf.setInputParameters(ParameterResolver.parse(json.getJSONArray("params")));
-			bf.setStartEvent(buildBFStruct(json.getJSONArray("events"), json.getJSONArray("flows"), new ReferenceResolver(configuration, json.getJSONArray("commonActions"), json.getJSONArray("methods"), json.getJSONArray("sqls"))));
+			bf.setStartEvent(buildBFStruct(json.getJSONArray("events"), json.getJSONArray("flows"), new ReferenceResolver(referenceContainer, json.getJSONArray("commonActions"), json.getJSONArray("methods"), json.getJSONArray("sqls"))));
 		}
 		return bf;
 	}

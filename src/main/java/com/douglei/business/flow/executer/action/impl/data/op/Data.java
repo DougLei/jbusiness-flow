@@ -32,8 +32,8 @@ public class Data {
 	public void setParameter(Parameter parameter) {
 		this.parameter = parameter;
 	}
-	public void setAction(Action[] actions, boolean pickAll, String[] names) {
-		this.action = new DataAction(actions, pickAll, names);
+	public void setAction(Action[] actions, boolean resultPick_all, String[] resultPick_names) {
+		this.action = new DataAction(actions, resultPick_all, resultPick_names);
 	}
 	public void setMethod(Action method) {
 		this.method = method;
@@ -42,13 +42,21 @@ public class Data {
 
 	private class DataAction {
 		private Action[] actions;
-		private boolean pickAll;
-		private String[] names;
+		private DataActionResultPick resultPick;
 		
-		public DataAction(Action[] actions, boolean pickAll, String[] names) {
+		public DataAction(Action[] actions, boolean resultPick_all, String[] resultPick_names) {
 			this.actions = actions;
-			this.pickAll = pickAll;
+			this.resultPick = new DataActionResultPick(resultPick_all, resultPick_names);
+		}
+	}
+	
+	private class DataActionResultPick{
+		private boolean all;
+		private String[] names;
+		public DataActionResultPick(boolean all, String[] names) {
+			this.all = all;
 			this.names = names;
 		}
+		
 	}
 }
