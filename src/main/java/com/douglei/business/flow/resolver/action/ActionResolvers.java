@@ -31,9 +31,17 @@ public class ActionResolvers {
 				continue;
 			}
 			actionResolver= (ActionResolver) ConstructorUtil.newInstance(clz);
-			MAP.put(actionResolver.getType(), actionResolver);
+			registerActionResolver(actionResolver);
 		}
 		cs.destroy();
+	}
+	
+	/**
+	 * 注册新的action解析器
+	 * @param actionResolver
+	 */
+	public static void registerActionResolver(ActionResolver actionResolver) {
+		MAP.put(actionResolver.getType(), actionResolver);
 	}
 	
 	/**

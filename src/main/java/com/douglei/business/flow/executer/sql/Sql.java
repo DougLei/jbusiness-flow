@@ -1,9 +1,19 @@
 package com.douglei.business.flow.executer.sql;
 
+import com.douglei.business.flow.executer.Parameter;
+
 /**
  * 
  * @author DougLei
  */
-public class Sql {
-
+public abstract class Sql {
+	protected String name;
+	protected String description;
+	protected Parameter[] parameters;
+	
+	public Sql(String name, String description, Parameter[] parameters) {
+		this.name = name;
+		this.description = description;
+		this.parameters = parameters;
+	}
 }

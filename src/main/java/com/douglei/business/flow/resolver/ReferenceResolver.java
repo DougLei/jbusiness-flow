@@ -11,7 +11,9 @@ import com.douglei.business.flow.executer.Parameter;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.method.Method;
 import com.douglei.business.flow.executer.method.Return;
+import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.resolver.action.ActionResolvers;
+import com.douglei.business.flow.resolver.sql.SqlResolvers;
 import com.douglei.tools.utils.CollectionUtil;
 
 /**
@@ -39,7 +41,7 @@ public class ReferenceResolver {
 		JSONObject json;
 		for(short i=0;i<array.size();i++) {
 			json = array.getJSONObject(i);
-			map.put(json.getString("name"), new CommonActionWrapper(json.getJSONArray("actions")));
+			map.put(json.getString("name"), new CommonActionWrapper(json.getString("description"), json.getJSONArray("actions")));
 		}
 		return map;
 	}
@@ -83,9 +85,11 @@ public class ReferenceResolver {
 	
 	// CommonAction的包装类
 	private class CommonActionWrapper{
+		String description;
 		JSONArray confActions; // 配置的action数组
 		Action[] actions; // 解析后的action数组
-		CommonActionWrapper(JSONArray confActions) {
+		CommonActionWrapper(String description, JSONArray confActions) {
+			this.description = description;
 			this.confActions = confActions;
 		}
 		
@@ -104,9 +108,13 @@ public class ReferenceResolver {
 	 * @param name
 	 * @return
 	 */
-	public String parseSql(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public Sql parseSql(String name) {
+		Sql sql = container.getSql(name);
+		if(sql == null) {
+			sql = SqlResolvers.parse(name, sqlMap.get(name));
+			container.putSql(sql);
+		}
+		return sql;
 	}
 
 	
@@ -133,7 +141,7 @@ public class ReferenceResolver {
 			}
 			Return return_ = new Return(returnJSON.getBooleanValue("all"), names);
 			
-			method = new Method(name, parameters, actions, return_);
+			method = new Method(name, methodJSON.getString("description"), parameters, actions, return_);
 			container.putMethod(method);
 		}
 		return method;

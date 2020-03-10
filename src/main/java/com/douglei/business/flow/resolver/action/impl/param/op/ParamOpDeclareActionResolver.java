@@ -13,7 +13,7 @@ import com.douglei.business.flow.resolver.action.ActionResolver;
  * 
  * @author DougLei
  */
-public class ParamOpDeclareActionResolver implements ActionResolver {
+public class ParamOpDeclareActionResolver extends ActionResolver {
 
 	@Override
 	public String getType() {

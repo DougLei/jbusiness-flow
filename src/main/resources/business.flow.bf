@@ -68,6 +68,7 @@
 	// 方法配置, 一个method包含多个action, 最终提供返回值
 	"methods":[{
 		"name":"", // 方法名, 全局唯一
+		"description":"",
 		"params":[{ 
 			"name":"", // 参数名(英文) * 
 			"description":"", // 参数描述, 默认为null
@@ -87,12 +88,9 @@
 	
 	// sql配置, 可复用
 	"sqls":[{
+		"type":1, // 类型, 1(insert), 2(delete), 3(update), 4(select)
 		"name":"", // 名称, 全局唯一
 		"description":"", // 描述
-		"type":1, // 类型, 1(insert), 2(delete), 3(update), 4(select)
-		"content":{ // sql内容配置
-			... // 具体参看business.flow.sql.desgin中不同type的配置结构
-		}, 
 		"params":[{ // sql需要的参数配置
 			"name":"", // 参数名(英文) * 
 			"description":"", // 参数描述, 默认为null
@@ -100,6 +98,9 @@
 			"dataType":"string", // 参数数据类型, 默认为string *
 			"value":"", // 参数默认值, 默认为null
 			"required":true // 参数是否必须, 这里不用配置, 直接使用true做为固定值
-		}] 
+		}],
+		"content":{ // sql内容配置
+			... // 具体参看business.flow.sql.desgin中不同type的配置结构
+		}
 	}]
 }

@@ -12,7 +12,7 @@ import com.douglei.business.flow.resolver.action.ActionResolver;
  * 
  * @author DougLei
  */
-public class FuncSwitchActionResolver implements ActionResolver {
+public class FuncSwitchActionResolver extends ActionResolver {
 
 	@Override
 	public String getType() {

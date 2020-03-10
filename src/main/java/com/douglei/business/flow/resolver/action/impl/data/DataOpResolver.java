@@ -14,7 +14,7 @@ import com.douglei.business.flow.resolver.action.ActionResolvers;
  * 
  * @author DougLei
  */
-public abstract class DataOpResolver implements ActionResolver {
+public abstract class DataOpResolver extends ActionResolver {
 	private static final String ACTION_TYPE = "func_method";
 	
 	protected Data parseData(JSONObject json, ReferenceResolver referenceResolver) {

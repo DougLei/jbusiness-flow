@@ -10,13 +10,13 @@ import com.douglei.business.flow.resolver.ReferenceResolver;
  * 
  * @author DougLei
  */
-public interface ActionResolver {
+public abstract class ActionResolver {
 	
 	/**
 	 * action解析器的类型
 	 * @return
 	 */
-	String getType();
+	public abstract String getType();
 
 	/**
 	 * 解析
@@ -24,14 +24,14 @@ public interface ActionResolver {
 	 * @param referenceResolver 
 	 * @return
 	 */
-	Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver);
+	public abstract Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver);
 	
 	/**
 	 * 获取配置的result
 	 * @param actionJSON
 	 * @return
 	 */
-	default Parameter getResult(JSONObject actionJSON) {
+	protected final Parameter getResult(JSONObject actionJSON) {
 		return ParameterResolver.parse(actionJSON.getJSONObject("result"));
 	}
 }

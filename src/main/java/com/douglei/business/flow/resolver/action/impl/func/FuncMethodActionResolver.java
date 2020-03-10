@@ -14,7 +14,7 @@ import com.douglei.business.flow.resolver.action.ActionResolver;
  * 
  * @author DougLei
  */
-public class FuncMethodActionResolver implements ActionResolver {
+public class FuncMethodActionResolver extends ActionResolver {
 
 	@Override
 	public String getType() {

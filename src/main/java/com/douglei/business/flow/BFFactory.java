@@ -1,6 +1,7 @@
 package com.douglei.business.flow;
 
 import com.douglei.business.flow.container.reference.ReferenceContainer;
+import com.douglei.business.flow.container.reference.impl.ApplicationReferenceContainer;
 import com.douglei.business.flow.executer.BusinessFlow;
 import com.douglei.business.flow.resolver.BusinessFlowResolver;
 
@@ -11,6 +12,9 @@ import com.douglei.business.flow.resolver.BusinessFlowResolver;
 public class BFFactory {
 	private BusinessFlowResolver resolver;
 	
+	public BFFactory() {
+		this(new ApplicationReferenceContainer());
+	}
 	public BFFactory(ReferenceContainer referenceContainer) {
 		this.resolver = new BusinessFlowResolver(referenceContainer);
 	}
