@@ -11,7 +11,7 @@ public abstract class Sql {
 	protected String description;
 	protected Parameter[] parameters;
 	
-	public Sql(String name, String description, Parameter[] parameters) {
+	protected Sql(String name, String description, Parameter[] parameters) {
 		this.name = name;
 		this.description = description;
 		this.parameters = parameters;

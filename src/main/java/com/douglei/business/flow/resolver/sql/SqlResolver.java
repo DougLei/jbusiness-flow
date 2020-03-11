@@ -1,8 +1,14 @@
 package com.douglei.business.flow.resolver.sql;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.Parameter;
 import com.douglei.business.flow.executer.sql.Sql;
+import com.douglei.business.flow.executer.sql.component.Function;
+import com.douglei.business.flow.executer.sql.component.Select;
+import com.douglei.business.flow.executer.sql.component.Table;
+import com.douglei.business.flow.executer.sql.component.Value;
+import com.douglei.tools.utils.StringUtil;
 
 /**
  * 
@@ -25,4 +31,112 @@ public abstract class SqlResolver {
 	 * @return
 	 */
 	public abstract Sql parse(String name, String description, Parameter[] parameters, JSONObject content);
+	
+	
+	// 解析Function
+	private Function parseFunction(JSONObject functionJSON) {
+		Function function = new Function(functionJSON.getString("name"));
+		
+		JSONArray array = functionJSON.getJSONArray("values");
+		byte size = array==null?0:(byte)array.size();
+		if(size>0) {
+			Value[] values = new Value[size];
+			for(byte i=0;i<size;i++) {
+				values[i] = parseValue(array.getJSONObject(i));
+			}
+			function.setValues(values);
+		}
+		return function;
+	}
+	
+	
+	// 给子类提供解析必要sql组件的方法
+	// 解析Table
+	protected Table parseTable(JSONObject tableJSON) {
+		Table table = new Table(tableJSON.getString("alias"));
+		
+		Object object;
+		if(StringUtil.notEmpty(object = tableJSON.getString("name"))) {
+			table.setName(object.toString());
+		}else if(StringUtil.notEmpty(object = tableJSON.getString("paramName"))) {
+			table.setParamName(object.toString());
+		}else if((object = tableJSON.getJSONObject("function")) != null) {
+			table.setFunction(parseFunction((JSONObject)object));
+		}else if((object = tableJSON.getJSONArray("selects")) != null) {
+			table.setSelects(parseSelects((JSONArray)object));
+		}
+		return table;
+	}
+	
+	// 解析Value
+	protected Value parseValue(JSONObject valueJSON) {
+		Value value = new Value();
+		
+		Object object;
+		if((object = valueJSON.get("value")) != null) {
+			value.setValue(object, valueJSON.getBoolean("placeholder"), valueJSON.getByteValue("package"));
+		}else if(StringUtil.notEmpty(object = valueJSON.getString("paramName"))) {
+			value.setParamName(object.toString(), valueJSON.getBoolean("placeholder"), valueJSON.getByteValue("package"));
+		}else if((object = valueJSON.getJSONObject("function")) != null) {
+			value.setFunction(parseFunction((JSONObject)object));
+		}else if((object = valueJSON.getJSONArray("selects")) != null) {
+			value.setSelects(parseSelects((JSONArray)object));
+		}
+		return value;
+	}
+	
+	// ----------------------------------------------------------------------------------------------------
+	// 解析selects, 因为都是数组形式配置, 所以不开放解析单个select的方法
+	protected Select[] parseSelects(JSONArray selectARRAY) {
+		byte size = selectARRAY ==null?0:(byte) selectARRAY.size();
+		if(size == 0) {
+			return null;
+		}
+		Select[] selects = new Select[size];
+		for(byte i=0;i<size;i++) {
+			selects[i] = parseSelect(selectARRAY.getJSONObject(i));
+		}
+		return selects;
+	}
+	// 解析select
+	private Select parseSelect(JSONObject selectJSON) {
+		Select select = new Select();
+		// TODO 
+		
+		
+		
+		return select;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

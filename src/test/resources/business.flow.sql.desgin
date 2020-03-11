@@ -5,7 +5,9 @@
 
 // insert
 {
-	"tableName":"", // 给哪个表插入数据
+	"table":{ // 给哪个表插入数据
+		"name":""
+	}, 
 	"columns":["", ""], // 要插入得列名
 	
 	"valuesType":0, // values的类型, 0表示值插入, 1表示子查询插入
@@ -31,27 +33,31 @@
 			}]
 		},
 		
-		"select":{ // 查询获取一个值
-			... // 具体的配置参看select
-		}
+		"selects":[{ // 查询获取一个值
+			... // 具体的配置参看select中的selects
+		}]
 	}]
 	或
-	"values":{ // 查询插入
-		... // 具体的配置参看select
-	}
+	"values":[{ // 查询插入, 具体的配置参看select中的selects
+		... 
+	}]
 		
 	
 }
 
 // delete
 {
-	"tableName":"", // 删除哪个表的数据
+	"table":{ // 删除哪个表的数据
+		"name":""
+	}, 
 	"whereGroups":[{}] // 条件组, 具体的配置参看select
 }
 
 // update
 {
-	"tableName":"", // 修改哪个表的数据
+	"table":{ // 修改哪个表的数据
+		"name":""
+	}, 
 	"sets":[{
 		"column":"", // 要set的列名
 		
@@ -94,14 +100,14 @@
 		}],
 		"table":{
 			// 优先级排序: name > paramName > function > select
-			"name":"", // 表名
 			"alias":"", // 别名
+			"name":"", // 表名
 			
 			"paramName":"", // 指定参数名的数据, 例如该参数名存储的是一个表名, 实现动态表名的功能
 			
 			"function":{}, // 参看insert的values中的function配置
 			
-			"select":{} // 子查询, 具体的配置参看select
+			"selects":[{}] // 子查询, 具体的配置参看select中的selects
 		},
 		"joins":[{ // join
 			"type":0, // 0.inner join, 1.left join, 2.right join, 3.full join
@@ -151,8 +157,8 @@
 			// 优先级排序: column > function
 			"column":"", // 列名
 			"function":{}, // 参看selects的results中的function配置
-			"sort":0 // 排序, 0为asc, 1为desc, 默认为0
+			"sort":0 // 排序方式, 0为asc, 1为desc, 默认为0
 		}],
-		"union":0 // 是否union, 非必须配置, 1表示union, 2表示union all, 如果之下再没有配置select, 则该项配置无效
+		"union":0 // 是否union, 默认为0, 0表示union, 1表示union all, 如果之下再没有配置select, 则该项配置无效
 	}]
 }

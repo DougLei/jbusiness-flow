@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import com.douglei.business.flow.Constants;
 import com.douglei.business.flow.executer.action.Action;
 
 /**
@@ -12,6 +11,10 @@ import com.douglei.business.flow.executer.action.Action;
  * @author DougLei
  */
 public class Event {
+	public static final byte EVENT_TYPE_NORMAL = 0; // 事件类型: 一般
+	public static final byte EVENT_TYPE_START = 1; // 事件类型: 起始
+	public static final byte EVENT_TYPE_END = 2; // 事件类型: 结束
+	
 	private byte type;
 	private String name;
 	private String description;
@@ -46,7 +49,7 @@ public class Event {
 	}
 	
 	public boolean isStart() {
-		return type == Constants.EVENT_START;
+		return type == EVENT_TYPE_START;
 	}
 	public byte getType() {
 		return type;

@@ -1,6 +1,5 @@
 package com.douglei.business.flow.executer;
 
-import com.douglei.business.flow.Constants;
 import com.douglei.tools.utils.StringUtil;
 
 /**
@@ -8,6 +7,12 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public class Parameter {
+	public static final byte SCOPE_IN = 1; // 参数范围: 输入
+	public static final byte SCOPE_INOUT = 2; // 参数范围: 输入输出
+	public static final byte SCOPE_OUT = 3; // 参数范围: 输出
+	public static final byte SCOPE_GLOBAL = 4; // 参数范围: 全局
+	public static final byte SCOPE_LOCAL = 5; // 参数范围: 本地
+	
 	private String name;
 	private byte scope;
 	private DataType dataType;
@@ -17,7 +22,7 @@ public class Parameter {
 	
 	
 	private static boolean validate(String name, byte scope) {
-		return StringUtil.notEmpty(name) && scope >= Constants.PARAM_SCOPE_IN && scope <= Constants.PARAM_SCOPE_LOCAL;
+		return StringUtil.notEmpty(name) && scope >= SCOPE_IN && scope <= SCOPE_LOCAL;
 	}
 	
 	public static Parameter newInstance(String name, byte scope) {
