@@ -126,14 +126,7 @@
 						"function":{} // 参看selects的results中的function配置
 					},
 					"right":[{ // 之所以是数组, 是为了满足btn, in这种会有多个值的比较
-						// 优先级排序: column > value > paramName > function > select
-						"column":"",
-						"value":"",
-						"paramName":"",
-						"placeholder":true,
-						"package":0,
-						"function":{},
-						"selects":[{}]
+						// 参考insert的values
 					}],
 					"nextLogicOp":"and" // 与下一个条件连接的逻辑操作符, and, or, 默认为and
 				}],
