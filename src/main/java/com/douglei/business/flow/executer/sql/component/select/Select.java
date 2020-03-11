@@ -13,10 +13,15 @@ public class Select {
 	
 	private Result[] results;
 	private Table table;
+	// join
+	// where
+	private GroupAndOrder[] groupBys;
+	// having
+	private GroupAndOrder[] orderBys;
 	private byte union;
 
 	public Select(byte union) {
-		this.union = (union==UNION || union==UNION_ALL)?union:UNION;
+		this.union = union;
 	}
 
 	public void setResults(Result[] results) {
@@ -24,5 +29,11 @@ public class Select {
 	}
 	public void setTable(Table table) {
 		this.table = table;
+	}
+	public void setGroupBys(GroupAndOrder[] groupBys) {
+		this.groupBys = groupBys;
+	}
+	public void setOrderBys(GroupAndOrder[] orderBys) {
+		this.orderBys = orderBys;
 	}
 }

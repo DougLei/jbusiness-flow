@@ -7,6 +7,7 @@ import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.component.Function;
 import com.douglei.business.flow.executer.sql.component.Table;
 import com.douglei.business.flow.executer.sql.component.Value;
+import com.douglei.business.flow.executer.sql.component.select.GroupAndOrder;
 import com.douglei.business.flow.executer.sql.component.select.Result;
 import com.douglei.business.flow.executer.sql.component.select.Select;
 import com.douglei.tools.utils.StringUtil;
@@ -104,12 +105,15 @@ public abstract class SqlResolver {
 	// 解析select
 	private Select parseSelect(JSONObject selectJSON) {
 		Select select = new Select(selectJSON.getByteValue("union"));
-		select.setResults(parseResult(selectJSON.getJSONArray("results")));
+		select.setResults(parseResults(selectJSON.getJSONArray("results")));
 		select.setTable(parseTable(selectJSON.getJSONObject("table")));
 		
 		
-		
-		
+		// join
+		// where
+		select.setGroupBys(parseGO(selectJSON.getJSONArray("groupBys")));
+		// having
+		select.setOrderBys(parseGO(selectJSON.getJSONArray("orderBys")));
 		
 		
 		// TODO 
@@ -119,16 +123,39 @@ public abstract class SqlResolver {
 		return select;
 	}
 	// 解析result
-	private Result[] parseResult(JSONArray resultArray) {
+	private Result[] parseResults(JSONArray array) {
 		JSONObject resultJSON;
-		Result[] results = new Result[resultArray.size()];
-		for(short i=0;i<resultArray.size();i++) {
-			resultJSON = resultArray.getJSONObject(i);
+		Result[] results = new Result[array.size()];
+		for(short i=0;i<array.size();i++) {
+			resultJSON = array.getJSONObject(i);
 			results[i] = new Result(resultJSON.getString("alias"), parseValue(resultJSON));
 		}
 		return results;
 	}
+	// join
+	// where
+	// having
 	
+	// 解析group by和order by
+	private GroupAndOrder[] parseGO(JSONArray array) {
+		byte size = array==null?0:(byte)array.size();
+		if(size > 0) {
+			GroupAndOrder[] gos = new GroupAndOrder[size];
+			JSONObject goJSON;
+			String column;
+			for(byte i=0;i<size;i++) {
+				goJSON = array.getJSONObject(i);
+				gos[i] = new GroupAndOrder(goJSON.getByteValue("sort"));
+				if(StringUtil.notEmpty(column = goJSON.getString("column"))) {
+					gos[i].setColumn(column);
+				}else {
+					gos[i].setFunction(parseFunction(goJSON.getJSONObject("function")));
+				}
+			}
+			return gos;
+		}
+		return null;
+	}
 	
 	
 	
