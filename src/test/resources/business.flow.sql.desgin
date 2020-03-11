@@ -67,7 +67,7 @@
 		"placeholder":true,
 		"package":0,
 		"function":{},
-		"select":{}
+		"selects":[{}]
 	}],
 	"whereGroups":[{}] // 条件组, 具体的配置参看select
 }
@@ -81,22 +81,19 @@
 	"selects":[{
 		"results":[{ // 查询结果集, 即列名的配置
 			// 优先级排序: column > value > paramName > function > select
-			"column":"", // 列名
 			"alias":"", // 别名
 			
-			// 以下配置和insert的values中的配置相似, 具体信息参看insert的values配置
+			// 配置和insert的values中的配置相同, 具体信息参看insert的values配置
+			"column":"", // 列名
 			"value":"", 
 			"paramName":"",
 			"placeholder":true,
 			"package":0,
 			"function":{
 				"name":"",
-				"values":[{
-					"column":""
-					... // 这里面比insert的values中function多一个column属性
-				}]
+				"values":[{}]
 			},
-			"select":{}
+			"selects":[{}]
 		}],
 		"table":{
 			// 优先级排序: name > paramName > function > select
@@ -117,7 +114,7 @@
 			"alias":"",
 			"paramName":"",
 			"function":{}, 
-			"select":{},
+			"selects":[{}],
 			
 			"onGroups":[{ // on条件
 				"ons":[{
@@ -136,7 +133,7 @@
 						"placeholder":true,
 						"package":0,
 						"function":{},
-						"select":{}
+						"selects":[{}]
 					}],
 					"nextLogicOp":"and" // 与下一个条件连接的逻辑操作符, and, or, 默认为and
 				}],

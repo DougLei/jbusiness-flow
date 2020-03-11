@@ -1,10 +1,13 @@
 package com.douglei.business.flow.executer.sql.component;
 
+import com.douglei.business.flow.executer.sql.component.select.Select;
+
 /**
  * 
  * @author DougLei
  */
 public class Value {
+	private String column;
 	private Object value; 
 	private String paramName;
 	private boolean placeholder;
@@ -13,6 +16,10 @@ public class Value {
 	private Function function;
 	private Select[] selects;
 	
+	
+	public void setColumn(String column) {
+		this.column = column;
+	}
 	public void setValue(Object value, Boolean placeholder, byte package_) {
 		this.value = value;
 		// TODO 这里要根据值去决定placeholder和package_的值, 下面的paramName同样

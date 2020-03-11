@@ -5,9 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.Parameter;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.component.Function;
-import com.douglei.business.flow.executer.sql.component.Select;
 import com.douglei.business.flow.executer.sql.component.Table;
 import com.douglei.business.flow.executer.sql.component.Value;
+import com.douglei.business.flow.executer.sql.component.select.Result;
+import com.douglei.business.flow.executer.sql.component.select.Select;
 import com.douglei.tools.utils.StringUtil;
 
 /**
@@ -73,7 +74,9 @@ public abstract class SqlResolver {
 		Value value = new Value();
 		
 		Object object;
-		if((object = valueJSON.get("value")) != null) {
+		if(StringUtil.notEmpty(object = valueJSON.getString("column"))) {
+			value.setColumn(object.toString());
+		}else if((object = valueJSON.get("value")) != null) {
 			value.setValue(object, valueJSON.getBoolean("placeholder"), valueJSON.getByteValue("package"));
 		}else if(StringUtil.notEmpty(object = valueJSON.getString("paramName"))) {
 			value.setParamName(object.toString(), valueJSON.getBoolean("placeholder"), valueJSON.getByteValue("package"));
@@ -100,12 +103,30 @@ public abstract class SqlResolver {
 	}
 	// 解析select
 	private Select parseSelect(JSONObject selectJSON) {
-		Select select = new Select();
+		Select select = new Select(selectJSON.getByteValue("union"));
+		select.setResults(parseResult(selectJSON.getJSONArray("results")));
+		select.setTable(parseTable(selectJSON.getJSONObject("table")));
+		
+		
+		
+		
+		
+		
 		// TODO 
 		
 		
 		
 		return select;
+	}
+	// 解析result
+	private Result[] parseResult(JSONArray resultArray) {
+		JSONObject resultJSON;
+		Result[] results = new Result[resultArray.size()];
+		for(short i=0;i<resultArray.size();i++) {
+			resultJSON = resultArray.getJSONObject(i);
+			results[i] = new Result(resultJSON.getString("alias"), parseValue(resultJSON));
+		}
+		return results;
 	}
 	
 	
