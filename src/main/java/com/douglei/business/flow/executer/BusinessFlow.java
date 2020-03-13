@@ -1,5 +1,7 @@
 package com.douglei.business.flow.executer;
 
+import java.util.Map;
+
 /**
  * 
  * @author DougLei
@@ -22,11 +24,16 @@ public class BusinessFlow {
 		}
 	}
 	
+	public void execute() {
+		execute(null);
+	}
 	
-	public Object execute(Object param) {
-		// TODO 验证输入参数, 然后传入输入参数
-		System.out.println(inputParameters);
-		return startEvent.execute(param);
+	public void execute(Map<String, Object> inputParameterMap) {
+		// TODO 在实际传入的输入参数中找到配置的输入参数和输入输出参数, 并将其存储到ParamContext的输入参数Map中
+		if(inputParameters.length > 0) {
+			
+		}
+		startEvent.execute();
 	}
 	
 	public String getName() {

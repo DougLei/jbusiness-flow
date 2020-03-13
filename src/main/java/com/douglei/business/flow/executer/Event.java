@@ -3,6 +3,7 @@ package com.douglei.business.flow.executer;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import com.douglei.business.flow.executer.action.Action;
 
@@ -61,9 +62,9 @@ public class Event {
 		return description;
 	}
 	
-	public Object execute(Object param) {
-		// TODO 
-		System.out.println(actions);
-		return null;
+	public void execute() {
+		for (Action action : actions) {
+			action.execute();
+		}
 	}
 }
