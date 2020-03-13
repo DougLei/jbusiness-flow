@@ -7,7 +7,11 @@ import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.component.Function;
 import com.douglei.business.flow.executer.sql.component.Table;
 import com.douglei.business.flow.executer.sql.component.Value;
+import com.douglei.business.flow.executer.sql.component.select.CompareType;
+import com.douglei.business.flow.executer.sql.component.select.Condition;
+import com.douglei.business.flow.executer.sql.component.select.ConditionGroup;
 import com.douglei.business.flow.executer.sql.component.select.GroupAndOrder;
+import com.douglei.business.flow.executer.sql.component.select.Join;
 import com.douglei.business.flow.executer.sql.component.select.Result;
 import com.douglei.business.flow.executer.sql.component.select.Select;
 import com.douglei.tools.utils.StringUtil;
@@ -17,6 +21,12 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public abstract class SqlResolver {
+	private static final Select[] EMPTY_SELECT = new Select[0];
+	private static final Join[] EMPTY_JOIN = new Join[0];;
+	private static final ConditionGroup[] EMPTY_CONDITION_GROUP = new ConditionGroup[0];;
+	private static final Condition[] EMPTY_CONDITION = new Condition[0];;
+	private static final GroupAndOrder[] EMPTY_GROUP_AND_ORDER = new GroupAndOrder[0];
+	
 	
 	/**
 	 * 获取类型
@@ -94,7 +104,7 @@ public abstract class SqlResolver {
 	protected Select[] parseSelects(JSONArray selectARRAY) {
 		byte size = selectARRAY ==null?0:(byte) selectARRAY.size();
 		if(size == 0) {
-			return null;
+			return EMPTY_SELECT;
 		}
 		Select[] selects = new Select[size];
 		for(byte i=0;i<size;i++) {
@@ -107,19 +117,11 @@ public abstract class SqlResolver {
 		Select select = new Select(selectJSON.getByteValue("union"));
 		select.setResults(parseResults(selectJSON.getJSONArray("results")));
 		select.setTable(parseTable(selectJSON.getJSONObject("table")));
-		
-		
-		// join
-		// where
+		select.setJoins(parseJoin(selectJSON.getJSONArray("joins")));
+		select.setWhereGroups(parseConditionGroup(selectJSON.getJSONArray("whereGroups")));
 		select.setGroupBys(parseGO(selectJSON.getJSONArray("groupBys")));
-		// having
+		select.setHavings(parseConditionGroup(selectJSON.getJSONArray("havingGroups")));
 		select.setOrderBys(parseGO(selectJSON.getJSONArray("orderBys")));
-		
-		
-		// TODO 
-		
-		
-		
 		return select;
 	}
 	// 解析result
@@ -132,59 +134,78 @@ public abstract class SqlResolver {
 		}
 		return results;
 	}
-	// join
-	// where
-	// having
-	
+	// 解析join
+	private Join[] parseJoin(JSONArray array) {
+		byte size = array==null?0:(byte)array.size();
+		if(size == 0) {
+			return EMPTY_JOIN;
+		}
+		Join[] joins = new Join[size];
+		JSONObject json;
+		for(byte i=0;i<size;i++) {
+			json = array.getJSONObject(i);
+			joins[i] = new Join(json.getByteValue("type"), parseTable(json.getJSONObject("table")), parseConditionGroup(json.getJSONArray("onGroups")));
+		}
+		return joins;
+	}
+	// 解析条件组, 包括where, join中的on, having
+	private ConditionGroup[] parseConditionGroup(JSONArray array) {
+		byte size = array==null?0:(byte)array.size();
+		if(size == 0) {
+			return EMPTY_CONDITION_GROUP;
+		}
+		ConditionGroup[] conditionGroups = new ConditionGroup[size];
+		JSONObject json;
+		for(byte i=0;i<size;i++) {
+			json = array.getJSONObject(i);
+			conditionGroups[i] = new ConditionGroup(parseConditions(json.getJSONArray("conditions")), json.getByteValue("op"));
+		}
+		return conditionGroups;
+	}
+	// 解析具体的conditions
+	private Condition[] parseConditions(JSONArray array) {
+		byte size = array==null?0:(byte)array.size();
+		if(size == 0) {
+			return EMPTY_CONDITION;
+		}
+		Condition[] conditions = new Condition[size];
+		JSONObject json;
+		for(byte i=0;i<size;i++) {
+			json = array.getJSONObject(i);
+			conditions[i] = new Condition(parseValue(json.getJSONObject("left")), CompareType.toValue(json.getString("cop")), json.getByteValue("op"));
+			if(conditions[i].getCop() != CompareType.NULL && conditions[i].getCop() != CompareType.NNULL) {
+				conditions[i].setRights(parseRights(json.getJSONArray("rights")));
+			}
+		}
+		return conditions;
+	}
+	// 解析condition中right部分
+	private Value[] parseRights(JSONArray array) {
+		Value[] rights = new Value[array.size()];
+		for(byte i=0;i<array.size();i++) {
+			rights[i] = parseValue(array.getJSONObject(i));
+		}
+		return rights;
+	}
+
 	// 解析group by和order by
 	private GroupAndOrder[] parseGO(JSONArray array) {
 		byte size = array==null?0:(byte)array.size();
-		if(size > 0) {
-			GroupAndOrder[] gos = new GroupAndOrder[size];
-			JSONObject goJSON;
-			String column;
-			for(byte i=0;i<size;i++) {
-				goJSON = array.getJSONObject(i);
-				gos[i] = new GroupAndOrder(goJSON.getByteValue("sort"));
-				if(StringUtil.notEmpty(column = goJSON.getString("column"))) {
-					gos[i].setColumn(column);
-				}else {
-					gos[i].setFunction(parseFunction(goJSON.getJSONObject("function")));
-				}
-			}
-			return gos;
+		if(size == 0) {
+			return EMPTY_GROUP_AND_ORDER;
 		}
-		return null;
+		GroupAndOrder[] gos = new GroupAndOrder[size];
+		JSONObject goJSON;
+		String column;
+		for(byte i=0;i<size;i++) {
+			goJSON = array.getJSONObject(i);
+			gos[i] = new GroupAndOrder(goJSON.getByteValue("sort"));
+			if(StringUtil.notEmpty(column = goJSON.getString("column"))) {
+				gos[i].setColumn(column);
+			}else {
+				gos[i].setFunction(parseFunction(goJSON.getJSONObject("function")));
+			}
+		}
+		return gos;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

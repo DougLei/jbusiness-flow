@@ -12,7 +12,6 @@ public class Value {
 	private String paramName;
 	private boolean placeholder;
 	private byte package_;
-	
 	private Function function;
 	private Select[] selects;
 	

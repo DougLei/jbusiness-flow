@@ -12,7 +12,9 @@
 	
 	"valuesType":0, // values的类型, 0表示值插入, 1表示子查询插入
 	"values":[{ // 值插入
-		// 优先级排序: value > paramName > function > select
+		// 优先级排序: column > value > paramName > function > select
+		"column":"", // 列名, 在insert中不使用, 在其他地方会使用
+		
 		"value":"", // 固定值
 		
 		"paramName":"", // 从sql中配置的参数params获取指定的参数值
@@ -110,38 +112,30 @@
 			"type":0, // 0.inner join, 1.left join, 2.right join, 3.full join
 			
 			// 以下配置的具体信息参看selects的table配置
-			"name":"",
-			"alias":"",
-			"paramName":"",
-			"function":{}, 
-			"selects":[{}],
-			
+			"table":{},
 			"onGroups":[{ // on条件
-				"ons":[{
-					"op":"", // eq(等于), ne(不等于), gt(大于), ge(大于等于), lt(小于), le(小于等于), btn(在之间), in(包含), like(包含), null(是否为null), 如果在这些操作符前面加上!, 表示反向判断, 例如!eq
-					"left":{ // 主要是列的信息
-						// 优先级排序: column > paramName > function
-						"column":"", // 列名
-						"paramName":"", // 指定参数名的数据, 例如该参数名下存储的是一个列名, 实现动态列名的功能
-						"function":{} // 参看selects的results中的function配置
-					},
-					"right":[{ // 之所以是数组, 是为了满足btn, in这种会有多个值的比较
-						// 参考insert的values
-					}],
-					"nextLogicOp":"and" // 与下一个条件连接的逻辑操作符, and, or, 默认为and
-				}],
-				"nextLogicOp":"and"
+				// 参看select中whereGroups中的配置
 			}]
 		}],
 		"whereGroups":[{ // where
-			// 参看select中join中的on配置
+			"conditions":[{
+				"left":{ // 主要是列的信息
+					// 参考insert的values中的value配置
+				},
+				"rights":[{ // 之所以是数组, 是为了满足btn, in这种会有多个值的比较
+					//参考insert的values中的value配置
+				}],
+				"cop":"", // eq(等于), ne(不等于), gt(大于), ge(大于等于), lt(小于), le(小于等于), btn(在之间), in(包含), like(包含), null(是否为null), 如果在这些操作符前面加上!, 表示反向判断, 例如!eq, 如果是null或!null, 则rights失效
+				"op":0 // 与下一个条件连接的逻辑操作符, 0.and, 1.or, 默认为0
+			}],
+			"op":0
 		}],
 		"groupBys":[{ // group by
 			"column":"", // 列名
 			"function":{} // 参看selects的results中的function配置
 		}],
 		"havingGroups":[{ // having
-			// 参看select中join中的on配置
+			// 参看select中whereGroups中的配置
 		}],
 		"orderBys":[{ // order by
 			// 优先级排序: column > function
