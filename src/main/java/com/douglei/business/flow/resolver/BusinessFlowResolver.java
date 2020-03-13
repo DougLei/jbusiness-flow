@@ -39,7 +39,7 @@ public class BusinessFlowResolver {
 		// 获取起始的事件, 以及所有事件的map集合
 		Map<String, Event> eventMap = new HashMap<String, Event>();
 		Event event;
-		for(short index=0;index<events.size();index++) {
+		for(int index=0;index<events.size();index++) {
 			json = events.getJSONObject(index);
 			event = new Event(json.getByteValue("type"), 
 							  json.getString("name"), 
@@ -53,7 +53,7 @@ public class BusinessFlowResolver {
 		
 		// 通过flow, 将event连接起来
 		Flow flow;
-		for(short index=0;index<flows.size();index++) {
+		for(int index=0;index<flows.size();index++) {
 			json = flows.getJSONObject(index);
 			flow = new Flow(json.getString("description"), 
 							json.getByteValue("type"), 

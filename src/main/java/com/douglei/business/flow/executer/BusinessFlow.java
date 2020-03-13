@@ -23,7 +23,6 @@ public class BusinessFlow {
 	}
 	
 	
-	
 	public Object execute(Object param) {
 		// TODO 验证输入参数, 然后传入输入参数
 		System.out.println(inputParameters);
