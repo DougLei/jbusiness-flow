@@ -117,11 +117,11 @@ public abstract class SqlResolver {
 		Select select = new Select(selectJSON.getByteValue("union"));
 		select.setResults(parseResults(selectJSON.getJSONArray("results")));
 		select.setTable(parseTable(selectJSON.getJSONObject("table")));
-		select.setJoins(parseJoin(selectJSON.getJSONArray("joins")));
-		select.setWhereGroups(parseConditionGroup(selectJSON.getJSONArray("whereGroups")));
-		select.setGroupBys(parseGO(selectJSON.getJSONArray("groupBys")));
-		select.setHavings(parseConditionGroup(selectJSON.getJSONArray("havingGroups")));
-		select.setOrderBys(parseGO(selectJSON.getJSONArray("orderBys")));
+		select.setJoins(parseJoins(selectJSON.getJSONArray("joins")));
+		select.setWhereGroups(parseConditionGroups(selectJSON.getJSONArray("whereGroups")));
+		select.setGroupBys(parseGOs(selectJSON.getJSONArray("groupBys")));
+		select.setHavings(parseConditionGroups(selectJSON.getJSONArray("havingGroups")));
+		select.setOrderBys(parseGOs(selectJSON.getJSONArray("orderBys")));
 		return select;
 	}
 	// 解析result
@@ -135,7 +135,7 @@ public abstract class SqlResolver {
 		return results;
 	}
 	// 解析join
-	private Join[] parseJoin(JSONArray array) {
+	private Join[] parseJoins(JSONArray array) {
 		byte size = array==null?0:(byte)array.size();
 		if(size == 0) {
 			return EMPTY_JOIN;
@@ -144,12 +144,12 @@ public abstract class SqlResolver {
 		JSONObject json;
 		for(byte i=0;i<size;i++) {
 			json = array.getJSONObject(i);
-			joins[i] = new Join(json.getByteValue("type"), parseTable(json.getJSONObject("table")), parseConditionGroup(json.getJSONArray("onGroups")));
+			joins[i] = new Join(json.getByteValue("type"), parseTable(json.getJSONObject("table")), parseConditionGroups(json.getJSONArray("onGroups")));
 		}
 		return joins;
 	}
 	// 解析条件组, 包括where, join中的on, having
-	private ConditionGroup[] parseConditionGroup(JSONArray array) {
+	protected ConditionGroup[] parseConditionGroups(JSONArray array) {
 		byte size = array==null?0:(byte)array.size();
 		if(size == 0) {
 			return EMPTY_CONDITION_GROUP;
@@ -189,7 +189,7 @@ public abstract class SqlResolver {
 	}
 
 	// 解析group by和order by
-	private GroupAndOrder[] parseGO(JSONArray array) {
+	private GroupAndOrder[] parseGOs(JSONArray array) {
 		byte size = array==null?0:(byte)array.size();
 		if(size == 0) {
 			return EMPTY_GROUP_AND_ORDER;

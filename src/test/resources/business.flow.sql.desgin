@@ -61,15 +61,7 @@
 		"name":""
 	}, 
 	"sets":[{
-		"column":"", // 要set的列名
-		
-		// 以下配置的具体信息参看insert的values配置
-		"value":"",
-		"paramName":"",
-		"placeholder":true,
-		"package":0,
-		"function":{},
-		"selects":[{}]
+		... // 配置的具体信息参看insert的values配置
 	}],
 	"whereGroups":[{}] // 条件组, 具体的配置参看select
 }

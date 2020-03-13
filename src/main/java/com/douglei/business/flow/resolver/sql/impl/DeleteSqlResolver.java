@@ -20,10 +20,8 @@ public class DeleteSqlResolver extends SqlResolver{
 	@Override
 	public Sql parse(String name, String description, Parameter[] parameters, JSONObject content) {
 		DeleteSql sql = new DeleteSql(name, description, parameters);
-		
-		
-		
-		
+		sql.setTable(parseTable(content.getJSONObject("table")));
+		sql.setWhereGroups(parseConditionGroups(content.getJSONArray("whereGroups")));
 		return sql;
 	}
 }
