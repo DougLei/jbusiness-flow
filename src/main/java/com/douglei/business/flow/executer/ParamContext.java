@@ -19,10 +19,6 @@ public class ParamContext {
 	 * 全局参数
 	 */
 	public static final ThreadLocal<Map<String, Parameter>> GLOBAL_PARAMETER_MAP = new ThreadLocal<Map<String, Parameter>>();
-	/**
-	 * 本地参数
-	 */
-	public static final ThreadLocal<Map<String, Parameter>> LOCAL_PARAMETER_MAP = new ThreadLocal<Map<String, Parameter>>();
 	
 	
 	
