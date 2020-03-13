@@ -24,12 +24,12 @@ public class BusinessFlow {
 		}
 	}
 	
-	public void execute() {
-		execute(null);
+	public void execute(Object[] inputParameters) {
+		// TODO 按照定义的顺序传入输入参数数组
 	}
 	
 	public void execute(Map<String, Object> inputParameterMap) {
-		// TODO 在实际传入的输入参数中找到配置的输入参数和输入输出参数, 并将其存储到ParamContext的输入参数Map中
+		// TODO 在实际传入的输入参数中找到配置的输入参数和输入输出参数, 并将其存储到ParameterContext的输入参数Map中
 		if(inputParameters.length > 0) {
 			
 		}
