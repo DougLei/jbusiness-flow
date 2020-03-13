@@ -6,7 +6,7 @@ import java.util.Map;
  * 
  * @author DougLei
  */
-public class ParamContext {
+public class ParameterContext {
 	/**
 	 * 输入参数
 	 */
@@ -25,10 +25,4 @@ public class ParamContext {
 	
 	
 	
-	/**
-	 * 销毁
-	 */
-	public void destroy() {
-		INPUT_PARAMETER_MAP.remove();;
-	}
 }
