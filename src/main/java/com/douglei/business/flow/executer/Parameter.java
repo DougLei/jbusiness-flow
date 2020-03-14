@@ -6,7 +6,7 @@ import com.douglei.tools.utils.StringUtil;
  * 参数
  * @author DougLei
  */
-public class Parameter {
+public class Parameter implements Cloneable{
 	public static final byte SCOPE_IN = 1; // 参数范围: 输入
 	public static final byte SCOPE_INOUT = 2; // 参数范围: 输入输出
 	public static final byte SCOPE_OUT = 3; // 参数范围: 输出
@@ -16,10 +16,9 @@ public class Parameter {
 	private String name;
 	private byte scope;
 	private DataType dataType;
-	private boolean required;
+	private boolean required = true;
 	private Object value;
 	private String description;
-	
 	
 	private static boolean validate(String name, byte scope) {
 		return StringUtil.notEmpty(name) && scope >= SCOPE_IN && scope <= SCOPE_LOCAL;
@@ -31,21 +30,29 @@ public class Parameter {
 		}
 		return null;
 	}
-	public static Parameter newInstance(String name, byte scope, String dataType, Boolean required, Object value, String description) {
+	public static Parameter newInstance(String name, byte scope, DataType dataType, Boolean required, Object value, String description) {
 		if(validate(name, scope)) {
-			return new Parameter(name, scope, dataType, required, value, description);
+			return new Parameter(name, scope, dataType, required==null?true:required.booleanValue(), value, description);
 		}
 		return null;
+	}
+	
+	public static Parameter newInstance(Parameter originParameter) {
+		try {
+			return (Parameter) originParameter.clone();
+		} catch (CloneNotSupportedException e) {
+			return new Parameter(originParameter.name, originParameter.scope, originParameter.dataType, originParameter.required, originParameter.value, originParameter.description);
+		}
 	}
 	
 	private Parameter(String name, byte scope) {
 		this.name = name;
 		this.scope = scope;
 	}
-	private Parameter(String name, byte scope, String dataType, Boolean required, Object value, String description) {
+	private Parameter(String name, byte scope, DataType dataType, boolean required, Object value, String description) {
 		this(name, scope);
-		this.dataType = DataType.toValue(dataType);
-		this.required = required==null?true:required;
+		this.dataType = dataType;
+		this.required = required;
 		this.value = value;
 		this.description = description;
 	}
