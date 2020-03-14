@@ -25,7 +25,7 @@ public class ParameterResolver {
 					json.getByteValue("scope"),
 					DataType.toValue(json.getString("dataType")),
 					json.getBoolean("required"),
-					json.get("value"),
+					json.get("defaultValue"),
 					json.getString("description"));
 	}
 	

@@ -8,14 +8,14 @@ import com.douglei.business.flow.executer.action.Action;
  * @author DougLei
  */
 public class Data {
-	private Object value;
+	private Object defaultValue;
 	private Parameter parameter;
 	private DataAction action;
 	private Action method; // FuncMethodAction
 	
 	
-	public Object getValue() {
-		return value;
+	public Object getDefaultValue() {
+		return defaultValue;
 	}
 	public Parameter getParameter() {
 		return parameter;
@@ -26,8 +26,8 @@ public class Data {
 	public Action getMethod() {
 		return method;
 	}
-	public void setValue(Object value) {
-		this.value = value;
+	public void setDefaultValue(Object defaultValue) {
+		this.defaultValue = defaultValue;
 	}
 	public void setParameter(Parameter parameter) {
 		this.parameter = parameter;

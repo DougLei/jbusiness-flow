@@ -24,7 +24,7 @@ public class ParamOpDeclareActionResolver extends ActionResolver {
 	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
 		JSONArray contents = actionJSON.getJSONArray("content");
 		
-		int size = contents.size();
+		byte size = (byte) contents.size();
 		ParamOpDeclareAction action = new ParamOpDeclareAction(size);
 
 		JSONObject content;
@@ -34,7 +34,7 @@ public class ParamOpDeclareActionResolver extends ActionResolver {
 			parameter = ParameterResolver.parse(content);
 			action.addParam(i, parameter);
 			
-			if(parameter.getValue() == null) {
+			if(parameter.getDefaultValue() == null) {
 				action.addRefParam(i, Parameter.newInstance(content.getString("refParamName"), content.getByteValue("refParamScope")));
 			}
 		}

@@ -31,4 +31,37 @@ public enum DataType {
 		}
 		return STRING;
 	}
+
+	/**
+	 * 匹配传入的值与当前类型是否匹配
+	 * 如果当前值为null, 则默认匹配
+	 * @param actualValue
+	 * @return
+	 */
+	public boolean matching(Object actualValue) {
+		if(actualValue == null) {
+			return true;
+		}
+		switch(this) {
+			case STRING:
+				break;
+			case BYTE:
+				break;
+			case STRING:
+				break;
+			case STRING:
+				break;
+			case STRING:
+				break;
+			case STRING:
+				break;
+			case STRING:
+				break;
+			case STRING:
+				break;
+			default:
+				break;
+		}
+		return false;
+	}
 }

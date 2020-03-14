@@ -17,8 +17,10 @@ public class Parameter implements Cloneable{
 	private byte scope;
 	private DataType dataType;
 	private boolean required = true;
-	private Object value;
+	private Object defaultValue;
 	private String description;
+	
+	private Object value; // 实际参数的值
 	
 	private static boolean validate(String name, byte scope) {
 		return StringUtil.notEmpty(name) && scope >= SCOPE_IN && scope <= SCOPE_LOCAL;
@@ -37,26 +39,32 @@ public class Parameter implements Cloneable{
 		return null;
 	}
 	
-	public static Parameter newInstance(Parameter originParameter) {
+	public static Parameter newInstance(Parameter originParameter, Object actualValue) {
+		Parameter actualParameter;
 		try {
-			return (Parameter) originParameter.clone();
+			actualParameter = (Parameter) originParameter.clone();
 		} catch (CloneNotSupportedException e) {
-			return new Parameter(originParameter.name, originParameter.scope, originParameter.dataType, originParameter.required, originParameter.value, originParameter.description);
+			actualParameter = new Parameter(originParameter.name, originParameter.scope, originParameter.dataType, originParameter.required, originParameter.defaultValue, originParameter.description);
 		}
+		actualParameter.value = actualValue==null?actualParameter.defaultValue:actualValue;
+		return actualParameter;
 	}
 	
 	private Parameter(String name, byte scope) {
 		this.name = name;
 		this.scope = scope;
 	}
-	private Parameter(String name, byte scope, DataType dataType, boolean required, Object value, String description) {
+	private Parameter(String name, byte scope, DataType dataType, boolean required, Object defaultValue, String description) {
 		this(name, scope);
 		this.dataType = dataType;
 		this.required = required;
-		this.value = value;
+		this.defaultValue = defaultValue;
 		this.description = description;
 	}
 	
+	public Object getValue() {
+		return value;
+	}
 	public String getName() {
 		return name;
 	}
@@ -69,8 +77,8 @@ public class Parameter implements Cloneable{
 	public boolean isRequired() {
 		return required;
 	}
-	public Object getValue() {
-		return value;
+	public Object getDefaultValue() {
+		return defaultValue;
 	}
 	public String getDescription() {
 		return description;

@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,6 +31,25 @@ public class ParameterContext {
 			throw new RuntimeException("上一轮的输入参数未清空");
 		}
 		INPUT_PARAMETER_MAP.set(inputParameterMap);
+	}
+
+	/**
+	 * 初始化输入参数map
+	 * @param length
+	 */
+	static void initialInputParameterMap(byte length) {
+		if(INPUT_PARAMETER_MAP.get() != null) {
+			INPUT_PARAMETER_MAP.remove();
+		}
+		INPUT_PARAMETER_MAP.set(new HashMap<String, Parameter>(length));
+	}
+
+	/**
+	 * 添加输入参数
+	 * @param parameter
+	 */
+	static void addInputParameter(Parameter parameter) {
+		INPUT_PARAMETER_MAP.get().put(parameter.getName(), parameter);
 	}
 	
 	

@@ -10,7 +10,7 @@ import com.douglei.business.flow.executer.action.Action;
 public class ParamOpDeclareAction extends Action{
 	private ParamDeclare[] declares;
 	
-	public ParamOpDeclareAction(int size) {
+	public ParamOpDeclareAction(byte size) {
 		declares = new ParamDeclare[size];
 	}
 	

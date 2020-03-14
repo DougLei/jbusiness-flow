@@ -21,8 +21,8 @@ public abstract class DataOpResolver extends ActionResolver {
 		Data data = new Data();
 		
 		Object obj = null;
-		if((obj = json.get("value")) != null) {
-			data.setValue(obj);
+		if((obj = json.get("defaultValue")) != null) {
+			data.setDefaultValue(obj);
 		}else if((obj = ParameterResolver.parse(json)) != null) {
 			data.setParameter((Parameter)obj);
 		}else if((obj = json.getJSONObject("action")) != null) {

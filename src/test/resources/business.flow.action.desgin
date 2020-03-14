@@ -73,7 +73,7 @@
 	"content":{
 		"op":"eq", // eq(等于), ne(不等于), gt(大于), ge(大于等于), lt(小于), le(小于等于), bool(表示left的结果就是boolean类型), 如果在这些操作符前加上!, 表示反向判断, 例如!eq
 		"left":{
-			"value":"", // 固定值
+			"defaultValue":"", // 固定值
 			
 			"name":"", // 参数名
 			"scope":4, // 参数范围, 从指定的范围获取指定参数名的值
@@ -90,7 +90,7 @@
 				// 和type=func_method的content中的配置一致, 用最后receive的值进行比较
 			}
 			
-			// 这上面的优先级为: value > name,scope > action > method
+			// 这上面的优先级为: defaultValue > name,scope > action > method
 		},
 		"right":{
 			// 配置内容和left相同, 如果left的结果就是boolean, 则可以不配置right
@@ -104,7 +104,7 @@
 	"type":"data_op_arithmetic",
 	"content":[{
 		// 这几种配置方式, 同data_op_compare中的配置一致
-		"value":"",
+		"defaultValue":"",
 		"name":"",
 		"scope":4,
 		"action":{},
@@ -133,8 +133,8 @@
 		"scope":5, // 参数范围, 默认为5
 		"dataType":"string", // 参数数据类型, 默认为string
 		
-		// value的优先级高于refParamName			
-		"value":"", // 参数初始值
+		// defaultValue的优先级高于refParamName			
+		"defaultValue":"", // 参数初始值
 		
 		// 将范围中其他参数的值赋给当前参数
 		"refParamName":"xx", // 参数名

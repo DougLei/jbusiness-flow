@@ -1,6 +1,5 @@
 package com.douglei.business.flow.executer;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -32,21 +31,28 @@ public class BusinessFlow {
 	public void execute(Map<String, Object> inputValueMap) {
 		// TODO 在实际传入的输入参数中找到配置的输入参数和输入输出参数, 并将其存储到ParameterContext的输入参数Map中
 		if(inputParameters.length > 0) {
-			Map<String, Parameter> inputParameterMap = new HashMap<String, Parameter>(inputParameters.length);
-			
+			ParameterContext.initialInputParameterMap((byte)inputParameters.length);
 			for (Parameter parameter : inputParameters) {
-				
-				inputValueMap.get(parameter.getName());
-				
-				
-				
-				
-				
+				ParameterContext.addInputParameter(getInputParameter(parameter, inputValueMap.get(parameter.getName())));
 			}
-			
-			ParameterContext.setInputParameterMap(inputParameterMap);
 		}
 		startEvent.execute();
+	}
+	
+	/**
+	 * 根据配置的输入参数, 以及实际传入的值, 获取相应的输入参数
+	 * @param configInputParameter
+	 * @param actualValue
+	 * @return
+	 */
+	private Parameter getInputParameter(Parameter configInputParameter, Object actualValue) {
+		if(actualValue == null && configInputParameter.isRequired() && configInputParameter.getDefaultValue() == null) {
+			throw new NullPointerException("输入参数["+configInputParameter.getName()+"]的值不能为空");
+		}
+		if(actualValue != null && !configInputParameter.getDataType().matching(actualValue)) {
+			throw new ClassCastException("输入参数["+configInputParameter.getName()+"]的值应为"+configInputParameter.getDataType().name()+"类型");
+		}
+		return Parameter.newInstance(configInputParameter, actualValue);
 	}
 	
 	public String getName() {
