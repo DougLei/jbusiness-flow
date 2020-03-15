@@ -1,5 +1,9 @@
 package com.douglei.business.flow.executer;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.douglei.tools.utils.StringUtil;
 
 /**
@@ -7,18 +11,25 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public enum DataType {
-	STRING,
-	BYTE,
-	SHORT,
-	INTEGER,
-	LONG,
-	FLOAT,
-	DOUBLE,
-	BOOLEAN,
-	DATE,
+	STRING(null, String.class),
+	NUMBER(0, byte.class, short.class, int.class, long.class, float.class, double.class, Byte.class, Short.class, Integer.class, Long.class, Float.class, Double.class),
+	BOOLEAN(false, boolean.class, Boolean.class),
+	DATE(new Date(), Date.class),
 	ARRAY,
 	LIST,
 	OBJECT;
+	
+	private Object defaultValue; // 默认值
+	private Class<?>[] classes; // 对应的类型
+	
+	private DataType() {}
+	private DataType(Object defaultValue, Class<?>... classes) {
+		this.defaultValue = defaultValue;
+		this.classes = classes;
+		for (Class<?> clz : classes) {
+			DataTypeMapping.CLASS_DATATYPE_MAPPING.put(clz, this);
+		}
+	}
 
 	public static DataType toValue(String value) {
 		if(StringUtil.notEmpty(value)) {
@@ -31,37 +42,20 @@ public enum DataType {
 		}
 		return STRING;
 	}
-
+	
 	/**
-	 * 匹配传入的值与当前类型是否匹配
+	 * 判断传入的值与当前类型是否匹配
 	 * 如果当前值为null, 则默认匹配
 	 * @param actualValue
 	 * @return
 	 */
 	public boolean matching(Object actualValue) {
-		if(actualValue == null) {
+		if(actualValue == null) 
 			return true;
-		}
-		switch(this) {
-			case STRING:
-				break;
-			case BYTE:
-				break;
-			case STRING:
-				break;
-			case STRING:
-				break;
-			case STRING:
-				break;
-			case STRING:
-				break;
-			case STRING:
-				break;
-			case STRING:
-				break;
-			default:
-				break;
-		}
-		return false;
+		return DataTypeMapping.CLASS_DATATYPE_MAPPING.get(actualValue.getClass()) == this;
 	}
+}
+
+class DataTypeMapping {
+	static final Map<Class<?>, DataType> CLASS_DATATYPE_MAPPING = new HashMap<Class<?>, DataType>(32); // class与DataType的映射集合
 }
