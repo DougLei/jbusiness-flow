@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -29,12 +30,14 @@ public class BusinessFlow {
 //	}
 	
 	public void execute(Map<String, Object> inputValueMap) {
-		// TODO 在实际传入的输入参数中找到配置的输入参数和输入输出参数, 并将其存储到ParameterContext的输入参数Map中
 		if(inputParameters.length > 0) {
-			ParameterContext.initialInputParameterMap((byte)inputParameters.length);
+			Map<String, Parameter> inputParameterMap = new HashMap<String, Parameter>(inputParameters.length);
+			Parameter inputParameter;
 			for (Parameter parameter : inputParameters) {
-				ParameterContext.addInputParameter(getInputParameter(parameter, inputValueMap.get(parameter.getName())));
+				inputParameter = getInputParameter(parameter, inputValueMap.get(parameter.getName()));
+				inputParameterMap.put(inputParameter.getName(), inputParameter);
 			}
+			ParameterContext.initialInputParameterMap(inputParameterMap);
 		}
 		startEvent.execute();
 	}
