@@ -28,7 +28,17 @@ public class Flow {
 	public void linkEvent(Event event) {
 		this.event = event;
 	}
+	public Event targetEvent() { // 目标event实例
+		return event;
+	}
 	
+	// 验证condition结果是否为true
+	public boolean validate() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	// 是否是顺序流
 	public boolean isSequence() {
 		return type == FLOW_TYPE_SEQUENCE;
 	}

@@ -51,6 +51,9 @@ public class Event {
 	public boolean isStart() {
 		return type == EVENT_TYPE_START;
 	}
+	public boolean isEnd() {
+		return type == EVENT_TYPE_END;
+	}
 	public byte getType() {
 		return type;
 	}
@@ -65,6 +68,30 @@ public class Event {
 		// TODO 要去看看怎么走到下一个action, 同时看看怎么结束
 		for (Action action : actions) {
 			action.execute();
+		}
+		if(isEnd()) {
+			endBusinessFlow();
+		}else {
+			toNextEvent();
+		}
+	}
+	
+	// 结束业务流
+	private void endBusinessFlow() {
+		// TODO Auto-generated method stub
+	}
+	
+	// 到下一个事件
+	private void toNextEvent() {
+		if(flows.size() == 1) { // 是顺序流
+			flows.get(0).targetEvent().execute();
+		}else { // 条件流
+			flows.forEach(flow -> {
+				if(flow.validate()) {
+					flow.targetEvent().execute();
+					return;
+				}
+			});
 		}
 	}
 }
