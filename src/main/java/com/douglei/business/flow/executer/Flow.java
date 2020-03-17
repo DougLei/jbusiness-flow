@@ -32,12 +32,15 @@ public class Flow {
 		return event;
 	}
 	
-	// 验证condition结果是否为true
+	// 对条件进行验证, 获取结果
 	public boolean validate() {
-		// TODO Auto-generated method stub
-		return false;
+		if(conditionGroups.length == 0) {
+			return true;
+		}
+		return ConditionUtil.validate(conditionGroups, conditionGroups[0].validate(), conditionGroups[0].getOp(), 1);
 	}
-
+	
+	
 	// 是否是顺序流
 	public boolean isSequence() {
 		return type == FLOW_TYPE_SEQUENCE;

@@ -65,7 +65,6 @@ public class Event {
 	}
 	
 	public void execute() {
-		// TODO 要去看看怎么走到下一个action, 同时看看怎么结束
 		for (Action action : actions) {
 			action.execute();
 		}

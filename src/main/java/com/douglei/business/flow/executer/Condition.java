@@ -6,22 +6,20 @@ import com.douglei.business.flow.executer.action.Action;
  * 
  * @author DougLei
  */
-public class Condition {
-	public static final byte CONDITION_AND = 0; // 条件: and
-	public static final byte CONDITION_OR = 1; // 条件: or
-	
+public class Condition extends ConditionBase{
 	private Action dataOpCompareAction;
-	private byte op;
 	
-	public Condition(Action dataOpCompareAction, byte op) {
+	public Condition(boolean inverse, LogicalOP op, Action dataOpCompareAction) {
+		super(inverse, op);
 		this.dataOpCompareAction = dataOpCompareAction;
-		this.op = op;
 	}
 	
-	public Action getDataOpCompareAction() {
-		return dataOpCompareAction;
-	}
-	public byte getOp() {
-		return op;
+	@Override
+	public boolean validate() {
+		boolean result = (boolean) dataOpCompareAction.execute();
+		if(inverse) {
+			return !result;
+		}
+		return result;
 	}
 }

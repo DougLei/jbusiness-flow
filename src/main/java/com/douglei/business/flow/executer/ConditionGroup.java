@@ -4,22 +4,24 @@ package com.douglei.business.flow.executer;
  * 
  * @author DougLei
  */
-public class ConditionGroup {
+public class ConditionGroup extends ConditionBase{
 	private Condition[] conditions;
-	/**
-	 * {@link Condition#CONDITION_AND}
-	 * {@link Condition#CONDITION_OR}
-	 */
-	private byte op; 
 	
-	public ConditionGroup(Condition[] conditions, byte op) {
+	public ConditionGroup(boolean inverse, LogicalOP op, Condition[] conditions) {
+		super(inverse, op);
 		this.conditions = conditions;
-		this.op = op;
 	}
-
-
-	public boolean execute() {
-		// TODO 
-		return false;
+	
+	@Override
+	public boolean validate() {
+		if(conditions.length == 0) {
+			return true;
+		}
+		
+		boolean result = ConditionUtil.validate(conditions, conditions[0].validate(), conditions[0].getOp(), 1);
+		if(inverse) {
+			return !result;
+		}
+		return result;
 	}
 }

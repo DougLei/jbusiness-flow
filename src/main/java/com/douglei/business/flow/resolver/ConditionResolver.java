@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.Condition;
 import com.douglei.business.flow.executer.ConditionGroup;
+import com.douglei.business.flow.executer.LogicalOP;
 import com.douglei.business.flow.resolver.action.ActionResolvers;
 
 /**
@@ -25,7 +26,7 @@ public class ConditionResolver {
 		JSONObject json;
 		for(byte i=0;i<size;i++) {
 			json = array.getJSONObject(i);
-			groups[i] = new ConditionGroup(parseConditions(json.getJSONArray("conditions"), referenceResolver), json.getByteValue("op"));
+			groups[i] = new ConditionGroup(json.getBooleanValue("inverse"), LogicalOP.toValue(json.getByteValue("op")), parseConditions(json.getJSONArray("conditions"), referenceResolver));
 		}
 		return groups;
 	}
@@ -40,7 +41,7 @@ public class ConditionResolver {
 		JSONObject json;
 		for(byte i=0;i<size;i++) {
 			json = array.getJSONObject(i);
-			conditions[i] = new Condition(ActionResolvers.getActionResolver(ACTION_TYPE).parse(json, referenceResolver), json.getByteValue("op"));
+			conditions[i] = new Condition(json.getBooleanValue("inverse"), LogicalOP.toValue(json.getByteValue("op")), ActionResolvers.getActionResolver(ACTION_TYPE).parse(json, referenceResolver));
 		}
 		return conditions;
 	}

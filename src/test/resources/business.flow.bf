@@ -48,7 +48,9 @@
 		"sourceEvent":"", // 起始的事件名 event.name
 		"targetEvent":"", // 目标的事件名 event.name
 		"conditionGroups":[{ // 判断条件组, 默认为空数组, 空数组标识判断结果默认为true
+			"inverse":false, // 是否取反, 默认为false
 			"conditions":[{ // 条件, 空数组标识判断结果默认为true
+				"inverse":false, // 是否取反, 默认为false
 				"content":{
 					...
 				},

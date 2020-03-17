@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.sql.component.select;
 
+import com.douglei.business.flow.executer.LogicalOP;
 import com.douglei.business.flow.executer.sql.component.Value;
 
 /**
@@ -10,13 +11,9 @@ public class Condition {
 	protected Value left;
 	protected Value[] rights;
 	protected CompareType cop;
-	/**
-	 * {@link Condition#CONDITION_AND}
-	 * {@link Condition#CONDITION_OR}
-	 */
-	protected byte op;
+	protected LogicalOP op;
 	
-	public Condition(Value left, CompareType cop, byte op) {
+	public Condition(Value left, CompareType cop, LogicalOP op) {
 		this.left = left;
 		this.cop = cop;
 		this.op = op;

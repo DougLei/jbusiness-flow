@@ -2,6 +2,7 @@ package com.douglei.business.flow.resolver.sql;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.douglei.business.flow.executer.LogicalOP;
 import com.douglei.business.flow.executer.Parameter;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.component.Function;
@@ -158,7 +159,7 @@ public abstract class SqlResolver {
 		JSONObject json;
 		for(byte i=0;i<size;i++) {
 			json = array.getJSONObject(i);
-			conditionGroups[i] = new ConditionGroup(parseConditions(json.getJSONArray("conditions")), json.getByteValue("op"));
+			conditionGroups[i] = new ConditionGroup(parseConditions(json.getJSONArray("conditions")), LogicalOP.toValue(json.getByteValue("op")));
 		}
 		return conditionGroups;
 	}
@@ -172,7 +173,7 @@ public abstract class SqlResolver {
 		JSONObject json;
 		for(byte i=0;i<size;i++) {
 			json = array.getJSONObject(i);
-			conditions[i] = new Condition(parseValue(json.getJSONObject("left")), CompareType.toValue(json.getString("cop")), json.getByteValue("op"));
+			conditions[i] = new Condition(parseValue(json.getJSONObject("left")), CompareType.toValue(json.getString("cop")), LogicalOP.toValue(json.getByteValue("op")));
 			if(conditions[i].getCop() != CompareType.NULL && conditions[i].getCop() != CompareType.NNULL) {
 				conditions[i].setRights(parseRights(json.getJSONArray("rights")));
 			}
