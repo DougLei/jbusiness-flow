@@ -49,6 +49,7 @@
 		"targetEvent":"", // 目标的事件名 event.name
 		"conditionGroups":[{ // 判断条件组, 默认为空数组, 空数组标识判断结果默认为true
 			"inverse":false, // 是否取反, 默认为false
+			"conditionGroups":[{}], // conditionGroups中嵌套conditionGroups, conditionGroups可以和conditions并存
 			"conditions":[{ // 条件, 空数组标识判断结果默认为true
 				"inverse":false, // 是否取反, 默认为false
 				"content":{
@@ -56,6 +57,7 @@
 				},
 				"op":0 // 与下一个条件连接的逻辑操作符, 0.and, 1.or, 默认为0
 			}],
+			"cgcop":0, // conditionGroups与conditions的逻辑操作符, 0.and, 1.or, 默认为0
 			"op":0 // 与下一个条件连接的逻辑操作符, 0.and, 1.or, 默认为0
 		}]
 	}],

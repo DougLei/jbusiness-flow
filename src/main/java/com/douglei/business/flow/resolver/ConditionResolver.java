@@ -26,7 +26,7 @@ public class ConditionResolver {
 		JSONObject json;
 		for(byte i=0;i<size;i++) {
 			json = array.getJSONObject(i);
-			groups[i] = new ConditionGroup(json.getBooleanValue("inverse"), LogicalOP.toValue(json.getByteValue("op")), parseConditions(json.getJSONArray("conditions"), referenceResolver));
+			groups[i] = new ConditionGroup(json.getBooleanValue("inverse"), LogicalOP.toValue(json.getByteValue("op")), parse(json.getJSONArray("conditionGroups"), referenceResolver), parseConditions(json.getJSONArray("conditions"), referenceResolver), LogicalOP.toValue(json.getByteValue("cgcop")));
 		}
 		return groups;
 	}

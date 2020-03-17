@@ -25,7 +25,6 @@ public abstract class ConditionBase {
 	 */
 	protected abstract boolean validate();
 	
-	
 	/**
 	 * 递归验证条件, 获取最终的结果
 	 * @param prevResult 上一个验证的结果
@@ -38,6 +37,14 @@ public abstract class ConditionBase {
 		if(currentIndex == conditions.length) {
 			return prevResult;
 		}
-		return validate(prevOP.operating(prevResult, conditions[currentIndex].validate()), conditions[currentIndex].getOp(), currentIndex+1, conditions);
+		
+		// 短路功能:
+		// 1.如果prevResult=true, 且prevOP=or, 则最终结果就是true, 即prevResult
+		// 2.如果prevResult=false, 且prevOP=and, 则最终结果就是false, 即prevResult
+		if((prevResult && prevOP==LogicalOP.OR) || (!prevResult && prevOP==LogicalOP.AND)) {
+			return validate(prevResult, conditions[currentIndex].getOp(), currentIndex+1, conditions);
+		}else {
+			return validate(prevOP.operating(prevResult, conditions[currentIndex].validate()), conditions[currentIndex].getOp(), currentIndex+1, conditions);
+		}
 	}
 }
