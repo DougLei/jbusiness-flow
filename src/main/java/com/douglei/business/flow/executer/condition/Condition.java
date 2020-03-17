@@ -16,7 +16,7 @@ public class Condition extends ConditionBase{
 	}
 	
 	@Override
-	public boolean validate() {
+	protected boolean validate() {
 		boolean result = (boolean) dataOpCompareAction.execute();
 		if(inverse) {
 			return !result;

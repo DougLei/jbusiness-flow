@@ -20,7 +20,7 @@ public class ConditionGroup extends ConditionBase{
 			return true;
 		}
 		
-		boolean result = ConditionUtil.validate(conditions[0].validate(), conditions[0].getOp(), 1, conditions);
+		boolean result = validate(conditions[0].validate(), conditions[0].getOp(), 1, conditions);
 		if(inverse) {
 			return !result;
 		}
