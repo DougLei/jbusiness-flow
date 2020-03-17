@@ -37,14 +37,10 @@ public abstract class ConditionBase {
 		if(currentIndex == conditions.length) {
 			return prevResult;
 		}
-		
-		// 短路功能:
-		// 1.如果prevResult=true, 且prevOP=or, 则最终结果就是true, 即prevResult
-		// 2.如果prevResult=false, 且prevOP=and, 则最终结果就是false, 即prevResult
-		if((prevResult && prevOP==LogicalOP.OR) || (!prevResult && prevOP==LogicalOP.AND)) {
-			return validate(prevResult, conditions[currentIndex].getOp(), currentIndex+1, conditions);
-		}else {
-			return validate(prevOP.operating(prevResult, conditions[currentIndex].validate()), conditions[currentIndex].getOp(), currentIndex+1, conditions);
+		// 短路功能
+		if((prevResult && prevOP==LogicalOP.AND) || (!prevResult && prevOP==LogicalOP.OR)) {
+			prevResult = prevOP.operating(prevResult, conditions[currentIndex].validate());
 		}
+		return validate(prevResult, conditions[currentIndex].getOp(), currentIndex+1, conditions);
 	}
 }
