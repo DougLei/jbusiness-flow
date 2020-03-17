@@ -1,7 +1,7 @@
 package com.douglei.business.flow.executer.action.impl.func;
 
-import com.douglei.business.flow.executer.ConditionGroup;
 import com.douglei.business.flow.executer.action.Action;
+import com.douglei.business.flow.executer.condition.ConditionGroup;
 
 /**
  * 

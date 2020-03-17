@@ -1,5 +1,6 @@
-package com.douglei.business.flow.executer;
+package com.douglei.business.flow.executer.condition;
 
+import com.douglei.business.flow.executer.LogicalOP;
 import com.douglei.business.flow.executer.action.Action;
 
 /**

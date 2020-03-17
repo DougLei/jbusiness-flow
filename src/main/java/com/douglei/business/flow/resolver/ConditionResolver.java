@@ -2,9 +2,9 @@ package com.douglei.business.flow.resolver;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.douglei.business.flow.executer.Condition;
-import com.douglei.business.flow.executer.ConditionGroup;
 import com.douglei.business.flow.executer.LogicalOP;
+import com.douglei.business.flow.executer.condition.Condition;
+import com.douglei.business.flow.executer.condition.ConditionGroup;
 import com.douglei.business.flow.resolver.action.ActionResolvers;
 
 /**

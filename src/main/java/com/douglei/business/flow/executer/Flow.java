@@ -1,5 +1,8 @@
 package com.douglei.business.flow.executer;
 
+import com.douglei.business.flow.executer.condition.ConditionGroup;
+import com.douglei.business.flow.executer.condition.ConditionUtil;
+
 /**
  * 
  * @author DougLei
@@ -37,9 +40,8 @@ public class Flow {
 		if(conditionGroups.length == 0) {
 			return true;
 		}
-		return ConditionUtil.validate(conditionGroups, conditionGroups[0].validate(), conditionGroups[0].getOp(), 1);
+		return ConditionUtil.validate(conditionGroups[0].validate(), conditionGroups[0].getOp(), 1, conditionGroups);
 	}
-	
 	
 	// 是否是顺序流
 	public boolean isSequence() {

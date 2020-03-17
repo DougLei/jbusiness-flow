@@ -1,4 +1,6 @@
-package com.douglei.business.flow.executer;
+package com.douglei.business.flow.executer.condition;
+
+import com.douglei.business.flow.executer.LogicalOP;
 
 /**
  * 
@@ -18,7 +20,7 @@ public class ConditionGroup extends ConditionBase{
 			return true;
 		}
 		
-		boolean result = ConditionUtil.validate(conditions, conditions[0].validate(), conditions[0].getOp(), 1);
+		boolean result = ConditionUtil.validate(conditions[0].validate(), conditions[0].getOp(), 1, conditions);
 		if(inverse) {
 			return !result;
 		}
