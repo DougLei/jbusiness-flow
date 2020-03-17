@@ -25,9 +25,9 @@ public class DataOpArithmeticActionResolver extends DataOpResolver{
 	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
 		JSONArray contents = actionJSON.getJSONArray("content");
 		
-		byte size = (byte) contents.size();
+		short size = (short) contents.size();
 		DataOpArithmetic[] group = new DataOpArithmetic[size];
-		for(byte i=0;i<size;i++) {
+		for(short i=0;i<size;i++) {
 			group[i] = parse_(contents.getJSONObject(i), referenceResolver);
 		}
 		return new DataOpArithmeticAction(group, getResult(actionJSON));
