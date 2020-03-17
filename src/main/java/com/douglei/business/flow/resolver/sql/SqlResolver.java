@@ -159,7 +159,7 @@ public abstract class SqlResolver {
 		JSONObject json;
 		for(byte i=0;i<size;i++) {
 			json = array.getJSONObject(i);
-			conditionGroups[i] = new ConditionGroup(parseConditions(json.getJSONArray("conditions")), LogicalOP.toValue(json.getByteValue("op")));
+			conditionGroups[i] = new ConditionGroup(parseConditionGroups(json.getJSONArray("conditionGroups")), parseConditions(json.getJSONArray("conditions")), LogicalOP.toValue(json.getByteValue("cgcop")), LogicalOP.toValue(json.getByteValue("op")));
 		}
 		return conditionGroups;
 	}

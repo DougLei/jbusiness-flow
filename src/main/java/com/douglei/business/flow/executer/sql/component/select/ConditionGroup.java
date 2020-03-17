@@ -7,11 +7,16 @@ import com.douglei.business.flow.executer.LogicalOP;
  * @author DougLei
  */
 public class ConditionGroup {
-	protected Condition[] conditions;
-	protected LogicalOP op;
+	private ConditionGroup[] conditionGroups;
+	private Condition[] conditions;
+	private LogicalOP cgcop;
+	private LogicalOP op;
 	
-	public ConditionGroup(Condition[] conditions, LogicalOP op) {
+	
+	public ConditionGroup(ConditionGroup[] conditionGroups, Condition[] conditions, LogicalOP cgcop, LogicalOP op) {
+		this.conditionGroups = conditionGroups;
 		this.conditions = conditions;
+		this.cgcop = cgcop;
 		this.op = op;
 	}
 }

@@ -110,6 +110,7 @@
 			}]
 		}],
 		"whereGroups":[{ // where
+			"conditionGroups":[{}],
 			"conditions":[{
 				"left":{ // 主要是列的信息
 					// 参考insert的values中的value配置
@@ -118,8 +119,9 @@
 					//参考insert的values中的value配置
 				}],
 				"cop":"", // eq(等于), ne(不等于), gt(大于), ge(大于等于), lt(小于), le(小于等于), btn(在之间), in(包含), like(包含), null(是否为null), 如果在这些操作符前面加上!, 表示反向判断, 例如!eq, 如果是null或!null, 则rights失效
-				"op":0 // 与下一个条件连接的逻辑操作符, 0.and, 1.or, 默认为0
+				"op":0 //  与下一个条件连接的逻辑操作符, 0.and, 1.or, 默认为0
 			}],
+			"cgcop":0, // conditionGroups与conditions的逻辑操作符, 0.and, 1.or, 默认为0
 			"op":0
 		}],
 		"groupBys":[{ // group by
