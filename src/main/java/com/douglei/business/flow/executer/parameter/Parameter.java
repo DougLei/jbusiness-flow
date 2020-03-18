@@ -50,6 +50,7 @@ public class Parameter implements Cloneable{
 			actualParameter = (Parameter) configParameter.clone();
 		} catch (CloneNotSupportedException e) {
 			actualParameter = new Parameter(configParameter.name, configParameter.scope, configParameter.dataType, configParameter.required, configParameter.defaultValue, configParameter.description);
+			actualParameter.ognlExpress = configParameter.ognlExpress;
 		}
 		actualParameter.value = actualValue==null?actualParameter.defaultValue:actualValue;
 		return actualParameter;
@@ -75,9 +76,15 @@ public class Parameter implements Cloneable{
 	}
 	
 	public void updateValue(Object newValue) {
+		if(StringUtil.notEmpty(ognlExpress)) {
+			// TODO ognl表达式
+		}
 		this.value = newValue;
 	}
 	public Object getValue() {
+		if(StringUtil.notEmpty(ognlExpress)) {
+			// TODO ognl表达式
+		}
 		return value;
 	}
 	public String getName() {
