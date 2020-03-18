@@ -9,6 +9,7 @@ import com.douglei.tools.utils.StringUtil;
  */
 public class Parameter implements Cloneable{
 	private String name;
+	private String ognlExpress; // ognl表达式, 例如name=zhangsan.age, 其中zhangsan为name值, 后面的则是ognl表达式
 	private Scope scope;
 	private DataType dataType;
 	private boolean required = true;
@@ -30,21 +31,41 @@ public class Parameter implements Cloneable{
 		return null;
 	}
 	
-	public static Parameter newInstance(Parameter originParameter, Object actualValue) {
+	/**
+	 * 根据配置的参数以及实际值, 获取一个实参实例
+	 * @param configParameter 配置的参数
+	 * @param actualValue 实际值
+	 * @return
+	 */
+	public static Parameter getActualParameter(Parameter configParameter, Object actualValue) {
+		if(actualValue == null && configParameter.required && configParameter.defaultValue == null) {
+			throw new NullPointerException(configParameter.scope.getDescription() + "["+configParameter.name+"]的值不能为空");
+		}
+		if(actualValue != null && !configParameter.dataType.matching(actualValue)) {
+			throw new ClassCastException(configParameter.scope.getDescription() + "["+configParameter.name+"]的值应为"+configParameter.dataType.name()+"类型");
+		}
+		
 		Parameter actualParameter;
 		try {
-			actualParameter = (Parameter) originParameter.clone();
+			actualParameter = (Parameter) configParameter.clone();
 		} catch (CloneNotSupportedException e) {
-			actualParameter = new Parameter(originParameter.name, originParameter.scope, originParameter.dataType, originParameter.required, originParameter.defaultValue, originParameter.description);
+			actualParameter = new Parameter(configParameter.name, configParameter.scope, configParameter.dataType, configParameter.required, configParameter.defaultValue, configParameter.description);
 		}
 		actualParameter.value = actualValue==null?actualParameter.defaultValue:actualValue;
 		return actualParameter;
 	}
 	
 	private Parameter(String name, Scope scope) {
-		this.name = name;
+		short dot = (short) name.indexOf(".");
+		if(dot > -1) { // 证明是ognl表达式
+			this.name = name.substring(0, dot);
+			this.ognlExpress = name.substring(dot+1);
+		}else {
+			this.name = name;
+		}
 		this.scope = scope;
 	}
+	
 	private Parameter(String name, Scope scope, DataType dataType, boolean required, Object defaultValue, String description) {
 		this(name, scope);
 		this.dataType = dataType;
@@ -53,7 +74,9 @@ public class Parameter implements Cloneable{
 		this.description = description;
 	}
 	
-	
+	public void updateValue(Object newValue) {
+		this.value = newValue;
+	}
 	public Object getValue() {
 		return value;
 	}
@@ -74,10 +97,5 @@ public class Parameter implements Cloneable{
 	}
 	public String getDescription() {
 		return description;
-	}
-
-	// 是否是输入输出参数
-	public boolean isInputOutParameter() {
-		return scope == Scope.INOUT;
 	}
 }

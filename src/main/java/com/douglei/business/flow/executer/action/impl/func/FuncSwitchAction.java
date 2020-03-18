@@ -1,11 +1,8 @@
 package com.douglei.business.flow.executer.action.impl.func;
 
-import java.util.Map;
-
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.condition.ConditionBase;
 import com.douglei.business.flow.executer.condition.ConditionGroup;
-import com.douglei.business.flow.executer.parameter.Parameter;
 
 /**
  * 
@@ -23,10 +20,10 @@ public class FuncSwitchAction extends Action {
 
 
 	@Override
-	public Object execute(Map<String, Parameter> localParameterMap) {
+	public Object execute() {
 		for (SwitchGroup switch_ : groups) {
-			if(switch_.validate(localParameterMap)) {
-				return switch_.execute(localParameterMap);
+			if(switch_.validate()) {
+				return switch_.execute();
 			}
 		}
 		return null;
@@ -41,13 +38,13 @@ public class FuncSwitchAction extends Action {
 			this.actions = actions;
 		}
 
-		boolean validate(Map<String, Parameter> localParameterMap) {
-			return ConditionBase.validate(conditionGroups[0].validate(localParameterMap), conditionGroups[0].getOp(), 1, conditionGroups, localParameterMap);
+		boolean validate() {
+			return ConditionBase.validate(conditionGroups[0].validate(), conditionGroups[0].getOp(), 1, conditionGroups);
 		}
 
-		Object execute(Map<String, Parameter> localParameterMap) {
+		Object execute() {
 			for (Action action : actions) {
-				action.execute(localParameterMap);
+				action.execute();
 			}
 			return null;
 		}

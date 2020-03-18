@@ -1,10 +1,7 @@
 package com.douglei.business.flow.executer.condition;
 
-import java.util.Map;
-
 import com.douglei.business.flow.executer.LogicalOP;
 import com.douglei.business.flow.executer.action.Action;
-import com.douglei.business.flow.executer.parameter.Parameter;
 
 /**
  * 
@@ -19,8 +16,8 @@ public class Condition extends ConditionBase{
 	}
 	
 	@Override
-	protected boolean validate(Map<String, Parameter> localParameterMap) {
-		boolean result = (boolean) dataOpCompareAction.execute(localParameterMap);
+	protected boolean validate() {
+		boolean result = (boolean) dataOpCompareAction.execute();
 		if(inverse) {
 			return !result;
 		}

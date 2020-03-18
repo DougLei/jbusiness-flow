@@ -1,7 +1,5 @@
 package com.douglei.business.flow.executer.action.impl.data.op.arithmetic;
 
-import java.util.Map;
-
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.Parameter;
 
@@ -18,7 +16,7 @@ public class DataOpArithmeticAction extends Action {
 	}
 
 	@Override
-	public Object execute(Map<String, Parameter> localParameterMap) {
+	public Object execute() {
 		// TODO Auto-generated method stub
 		
 		return null;

@@ -21,7 +21,7 @@ public class SqlAction extends Action {
 	}
 
 	@Override
-	public Object execute(Map<String, Parameter> localParameterMap) {
+	public Object execute() {
 		// TODO Auto-generated method stub
 		return null;
 	}

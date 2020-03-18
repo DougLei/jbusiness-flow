@@ -2,12 +2,10 @@ package com.douglei.business.flow.executer;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.douglei.business.flow.executer.action.Action;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.ParameterContext;
 
 /**
  * 
@@ -65,9 +63,9 @@ public class Event {
 	}
 	
 	public void execute() {
-		Map<String, Parameter> localParameterMap = new HashMap<String, Parameter>();
+		ParameterContext.resetLocalParameterMap();
 		for (Action action : actions) {
-			action.execute(localParameterMap);
+			action.execute();
 		}
 		if(type == EVENT_TYPE_NORMAL)
 			toNextEvent();
@@ -78,9 +76,9 @@ public class Event {
 		if(flows.size() == 1) { // 顺序流
 			flows.get(0).targetEvent().execute();
 		}else { // 条件流
-			final Map<String, Parameter> localParameterMap = new HashMap<String, Parameter>();
+			ParameterContext.resetLocalParameterMap();
 			flows.forEach(flow -> {
-				if(flow.validate(localParameterMap)) {
+				if(flow.validate()) {
 					flow.targetEvent().execute();
 					return;
 				}

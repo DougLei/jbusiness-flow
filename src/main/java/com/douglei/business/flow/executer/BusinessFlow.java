@@ -27,29 +27,14 @@ public class BusinessFlow {
 		}
 	}
 	
-	public void execute(Map<String, Object> inputValueMap) {
+	public Map<String, Object> execute(Map<String, Object> inputValueMap) {
 		if(inputParameters.length > 0) {
 			for (Parameter parameter : inputParameters) {
-				ParameterContext.addInputParameter(getInputParameter(parameter, inputValueMap.get(parameter.getName())));
+				ParameterContext.addParameter(Parameter.getActualParameter(parameter, inputValueMap.get(parameter.getName())));
 			}
 		}
 		startEvent.execute();
-	}
-	
-	/**
-	 * 根据配置的输入参数, 以及实际传入的值, 获取相应的输入参数
-	 * @param configInputParameter
-	 * @param actualValue
-	 * @return
-	 */
-	private Parameter getInputParameter(Parameter configInputParameter, Object actualValue) {
-		if(actualValue == null && configInputParameter.isRequired() && configInputParameter.getDefaultValue() == null) {
-			throw new NullPointerException("输入参数["+configInputParameter.getName()+"]的值不能为空");
-		}
-		if(actualValue != null && !configInputParameter.getDataType().matching(actualValue)) {
-			throw new ClassCastException("输入参数["+configInputParameter.getName()+"]的值应为"+configInputParameter.getDataType().name()+"类型");
-		}
-		return Parameter.newInstance(configInputParameter, actualValue);
+		return ParameterContext.getOutputValueMap();
 	}
 	
 	public String getName() {

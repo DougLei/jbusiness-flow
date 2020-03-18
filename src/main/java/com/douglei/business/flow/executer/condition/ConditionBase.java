@@ -1,9 +1,6 @@
 package com.douglei.business.flow.executer.condition;
 
-import java.util.Map;
-
 import com.douglei.business.flow.executer.LogicalOP;
-import com.douglei.business.flow.executer.parameter.Parameter;
 
 /**
  * 
@@ -24,10 +21,9 @@ public abstract class ConditionBase {
 
 	/**
 	 * 对条件进行验证, 返回结果: true/false
-	 * @param localParameterMap
 	 * @return
 	 */
-	protected abstract boolean validate(Map<String, Parameter> localParameterMap);
+	protected abstract boolean validate();
 	
 	/**
 	 * 递归验证条件, 获取最终的结果
@@ -35,17 +31,16 @@ public abstract class ConditionBase {
 	 * @param prevOP 上一个验证后的逻辑操作符: and/or
 	 * @param currentIndex 当前要进行验证的下标
 	 * @param conditions 要验证的条件数组
-	 * @param localParameterMap 存储本地参数的map
 	 * @return
 	 */
-	public static final boolean validate(boolean prevResult, LogicalOP prevOP, int currentIndex, ConditionBase[] conditions, Map<String, Parameter> localParameterMap) {
+	public static final boolean validate(boolean prevResult, LogicalOP prevOP, int currentIndex, ConditionBase[] conditions) {
 		if(currentIndex == conditions.length) {
 			return prevResult;
 		}
 		// 短路功能
 		if((prevResult && prevOP==LogicalOP.AND) || (!prevResult && prevOP==LogicalOP.OR)) {
-			prevResult = prevOP.operating(prevResult, conditions[currentIndex].validate(localParameterMap));
+			prevResult = prevOP.operating(prevResult, conditions[currentIndex].validate());
 		}
-		return validate(prevResult, conditions[currentIndex].getOp(), currentIndex+1, conditions, localParameterMap);
+		return validate(prevResult, conditions[currentIndex].getOp(), currentIndex+1, conditions);
 	}
 }

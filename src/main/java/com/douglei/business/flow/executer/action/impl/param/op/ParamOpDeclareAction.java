@@ -1,9 +1,8 @@
 package com.douglei.business.flow.executer.action.impl.param.op;
 
-import java.util.Map;
-
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.ParameterContext;
 
 /**
  * 
@@ -24,12 +23,12 @@ public class ParamOpDeclareAction extends Action{
 			declares[index].setRefParameter(refParameter);
 		}
 	}
-	
-
 
 	@Override
-	public Object execute(Map<String, Parameter> localParameterMap) {
-		// TODO Auto-generated method stub
+	public Object execute() {
+		for (ParamDeclare paramDeclare : declares) {
+			ParameterContext.addParameter(paramDeclare.getActualParameter());
+		}
 		return null;
 	}
 	
@@ -38,11 +37,21 @@ public class ParamOpDeclareAction extends Action{
 		private Parameter parameter;
 		private Parameter refParameter;
 		
-		public ParamDeclare(Parameter parameter) {
+		ParamDeclare(Parameter parameter) {
 			this.parameter = parameter;
 		}
-		public void setRefParameter(Parameter refParameter) {
+		void setRefParameter(Parameter refParameter) {
 			this.refParameter = refParameter;
+		}
+		
+		Parameter getActualParameter() {
+			Object actualValue;
+			if(refParameter == null) {
+				actualValue = parameter.getDefaultValue();
+			}else {
+				actualValue = ParameterContext.getValue(refParameter);
+			}
+			return Parameter.getActualParameter(parameter, actualValue);
 		}
 	}
 }

@@ -52,7 +52,7 @@ public enum DataType {
 	public boolean matching(Object actualValue) {
 		if(actualValue == null) 
 			return true;
-		return DataTypeMapping.CLASS_DATATYPE_MAPPING.get(actualValue.getClass()) == this;
+		return (actualValue.getClass().isArray() && this == ARRAY) || DataTypeMapping.CLASS_DATATYPE_MAPPING.get(actualValue.getClass()) == this;
 	}
 }
 
