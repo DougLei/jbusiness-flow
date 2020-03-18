@@ -93,7 +93,6 @@ public class ParameterContext {
 				break;
 		}
 	}
-	
 	// 给指定的ThreadLocal中添加参数
 	private static void addParameter(Parameter actualParameter, ThreadLocal<Map<String, Parameter>> parameterMapThreadLocal) {
 		Map<String, Parameter> parameterMap;
@@ -123,7 +122,6 @@ public class ParameterContext {
 		}
 		return null;
 	}
-	
 	// 获取指定参数的值
 	private static Object getValue(Parameter configParameter, ThreadLocal<Map<String, Parameter>> parameterMapThreadLocal) {
 		Map<String, Parameter> parameterMap;
@@ -155,7 +153,6 @@ public class ParameterContext {
 		if(actualParameter != null)
 			actualParameter.updateValue(newActualValue);
 	}
-	
 	// 获取指定的参数
 	private static Parameter getActualParameter(Parameter configParameter, ThreadLocal<Map<String, Parameter>> parameterMapThreadLocal) {
 		Map<String, Parameter> parameterMap;
