@@ -1,6 +1,6 @@
 package com.douglei.business.flow.executer.action.impl.func.method;
 
-import com.douglei.business.flow.executer.Parameter;
+import com.douglei.business.flow.executer.parameter.Parameter;
 
 /**
  * 

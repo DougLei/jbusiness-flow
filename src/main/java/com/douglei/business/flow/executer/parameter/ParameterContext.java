@@ -1,4 +1,4 @@
-package com.douglei.business.flow.executer;
+package com.douglei.business.flow.executer.parameter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,20 +23,10 @@ public class ParameterContext {
 	
 	
 	/**
-	 * 初始化输入参数map
-	 * @param inputParameterMap
-	 */
-	static void initialInputParameterMap(Map<String, Parameter> inputParameterMap) {
-		if(INPUT_PARAMETER_MAP.get() != null)
-			INPUT_PARAMETER_MAP.remove();
-		INPUT_PARAMETER_MAP.set(inputParameterMap);
-	}
-
-	/**
 	 * 添加输入参数
 	 * @param inputParameter
 	 */
-	static void addInputParameter(Parameter inputParameter) {
+	public static void addInputParameter(Parameter inputParameter) {
 		Map<String, Parameter> inputParameterMap;
 		if((inputParameterMap = INPUT_PARAMETER_MAP.get()) == null) {
 			inputParameterMap = new HashMap<String, Parameter>();

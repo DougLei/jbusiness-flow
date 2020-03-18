@@ -2,9 +2,9 @@ package com.douglei.business.flow.executer.action.impl.func.method;
 
 import java.util.Map;
 
-import com.douglei.business.flow.executer.Parameter;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.method.Method;
+import com.douglei.business.flow.executer.parameter.Parameter;
 
 /**
  * 

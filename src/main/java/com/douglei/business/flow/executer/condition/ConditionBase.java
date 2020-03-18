@@ -3,7 +3,7 @@ package com.douglei.business.flow.executer.condition;
 import java.util.Map;
 
 import com.douglei.business.flow.executer.LogicalOP;
-import com.douglei.business.flow.executer.Parameter;
+import com.douglei.business.flow.executer.parameter.Parameter;
 
 /**
  * 
@@ -35,7 +35,7 @@ public abstract class ConditionBase {
 	 * @param prevOP 上一个验证后的逻辑操作符: and/or
 	 * @param currentIndex 当前要进行验证的下标
 	 * @param conditions 要验证的条件数组
-	 * @param localParameterMap 本地参数map
+	 * @param localParameterMap 存储本地参数的map
 	 * @return
 	 */
 	public static final boolean validate(boolean prevResult, LogicalOP prevOP, int currentIndex, ConditionBase[] conditions, Map<String, Parameter> localParameterMap) {

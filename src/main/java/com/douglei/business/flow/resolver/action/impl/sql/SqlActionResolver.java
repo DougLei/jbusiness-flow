@@ -1,9 +1,9 @@
 package com.douglei.business.flow.resolver.action.impl.sql;
 
 import com.alibaba.fastjson.JSONObject;
-import com.douglei.business.flow.executer.Parameter;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.sql.SqlAction;
+import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.resolver.ParameterResolver;
 import com.douglei.business.flow.resolver.ReferenceResolver;

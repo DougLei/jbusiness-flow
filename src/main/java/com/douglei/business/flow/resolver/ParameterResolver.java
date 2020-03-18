@@ -3,7 +3,8 @@ package com.douglei.business.flow.resolver;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.DataType;
-import com.douglei.business.flow.executer.Parameter;
+import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.Scope;
 
 /**
  * 
@@ -22,7 +23,7 @@ public class ParameterResolver {
 			return null;
 		}
 		return Parameter.newInstance(json.getString("name"),
-					json.getByteValue("scope"),
+					Scope.toValue(json.getByteValue("scope")),
 					DataType.toValue(json.getString("dataType")),
 					json.getBoolean("required"),
 					json.get("defaultValue"),

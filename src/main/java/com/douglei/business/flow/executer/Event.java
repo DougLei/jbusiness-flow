@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.douglei.business.flow.executer.action.Action;
+import com.douglei.business.flow.executer.parameter.Parameter;
 
 /**
  * 
@@ -74,11 +75,16 @@ public class Event {
 	
 	// 到下一个事件
 	private void toNextEvent() {
-		flows.forEach(flow -> {
-			if(flow.validate()) {
-				flow.targetEvent().execute();
-				return;
-			}
-		});
+		if(flows.size() == 1) { // 顺序流
+			flows.get(0).targetEvent().execute();
+		}else { // 条件流
+			final Map<String, Parameter> localParameterMap = new HashMap<String, Parameter>();
+			flows.forEach(flow -> {
+				if(flow.validate(localParameterMap)) {
+					flow.targetEvent().execute();
+					return;
+				}
+			});
+		}
 	}
 }

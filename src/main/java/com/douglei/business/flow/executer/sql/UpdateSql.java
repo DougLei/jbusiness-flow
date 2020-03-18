@@ -1,6 +1,6 @@
 package com.douglei.business.flow.executer.sql;
 
-import com.douglei.business.flow.executer.Parameter;
+import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.component.Table;
 import com.douglei.business.flow.executer.sql.component.Value;
 import com.douglei.business.flow.executer.sql.component.select.ConditionGroup;

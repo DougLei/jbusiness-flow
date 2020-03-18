@@ -1,5 +1,6 @@
-package com.douglei.business.flow.executer;
+package com.douglei.business.flow.executer.parameter;
 
+import com.douglei.business.flow.executer.DataType;
 import com.douglei.tools.utils.StringUtil;
 
 /**
@@ -7,14 +8,8 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public class Parameter implements Cloneable{
-	public static final byte SCOPE_IN = 1; // 参数范围: 输入
-	public static final byte SCOPE_INOUT = 2; // 参数范围: 输入输出
-	public static final byte SCOPE_OUT = 3; // 参数范围: 输出
-	public static final byte SCOPE_GLOBAL = 4; // 参数范围: 全局
-	public static final byte SCOPE_LOCAL = 5; // 参数范围: 本地
-	
 	private String name;
-	private byte scope;
+	private Scope scope;
 	private DataType dataType;
 	private boolean required = true;
 	private Object defaultValue;
@@ -22,18 +17,14 @@ public class Parameter implements Cloneable{
 	
 	private Object value; // 实际参数的值
 	
-	private static boolean validate(String name, byte scope) {
-		return StringUtil.notEmpty(name) && scope >= SCOPE_IN && scope <= SCOPE_LOCAL;
-	}
-	
-	public static Parameter newInstance(String name, byte scope) {
-		if(validate(name, scope)) {
+	public static Parameter newInstance(String name, Scope scope) {
+		if(StringUtil.notEmpty(name)) {
 			return new Parameter(name, scope);
 		}
 		return null;
 	}
-	public static Parameter newInstance(String name, byte scope, DataType dataType, Boolean required, Object value, String description) {
-		if(validate(name, scope)) {
+	public static Parameter newInstance(String name, Scope scope, DataType dataType, Boolean required, Object value, String description) {
+		if(StringUtil.notEmpty(name)) {
 			return new Parameter(name, scope, dataType, required==null?true:required.booleanValue(), value, description);
 		}
 		return null;
@@ -50,11 +41,11 @@ public class Parameter implements Cloneable{
 		return actualParameter;
 	}
 	
-	private Parameter(String name, byte scope) {
+	private Parameter(String name, Scope scope) {
 		this.name = name;
 		this.scope = scope;
 	}
-	private Parameter(String name, byte scope, DataType dataType, boolean required, Object defaultValue, String description) {
+	private Parameter(String name, Scope scope, DataType dataType, boolean required, Object defaultValue, String description) {
 		this(name, scope);
 		this.dataType = dataType;
 		this.required = required;
@@ -69,7 +60,7 @@ public class Parameter implements Cloneable{
 	public String getName() {
 		return name;
 	}
-	public byte getScope() {
+	public Scope getScope() {
 		return scope;
 	}
 	public DataType getDataType() {
@@ -87,6 +78,6 @@ public class Parameter implements Cloneable{
 
 	// 是否是输入输出参数
 	public boolean isInputOutParameter() {
-		return scope == SCOPE_INOUT;
+		return scope == Scope.INOUT;
 	}
 }

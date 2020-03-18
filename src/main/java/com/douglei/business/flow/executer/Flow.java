@@ -1,10 +1,10 @@
 package com.douglei.business.flow.executer;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import com.douglei.business.flow.executer.condition.ConditionBase;
 import com.douglei.business.flow.executer.condition.ConditionGroup;
+import com.douglei.business.flow.executer.parameter.Parameter;
 
 /**
  * 
@@ -39,11 +39,10 @@ public class Flow {
 	}
 	
 	// 对条件进行验证, 获取结果
-	public boolean validate() {
+	public boolean validate(Map<String, Parameter> localParameterMap) {
 		if(conditionGroups.length == 0) {
 			return true;
 		}
-		Map<String, Parameter> localParameterMap = new HashMap<String, Parameter>();
 		return ConditionBase.validate(conditionGroups[0].validate(localParameterMap), conditionGroups[0].getOp(), 1, conditionGroups, localParameterMap);
 	}
 	
