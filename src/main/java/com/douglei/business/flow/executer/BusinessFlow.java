@@ -1,6 +1,5 @@
 package com.douglei.business.flow.executer;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -25,19 +24,11 @@ public class BusinessFlow {
 		}
 	}
 	
-//	public void execute(Object[] inputValues) {
-//		// TODO 按照定义的顺序传入输入参数数组
-//	}
-	
 	public void execute(Map<String, Object> inputValueMap) {
 		if(inputParameters.length > 0) {
-			Map<String, Parameter> inputParameterMap = new HashMap<String, Parameter>(inputParameters.length);
-			Parameter inputParameter;
 			for (Parameter parameter : inputParameters) {
-				inputParameter = getInputParameter(parameter, inputValueMap.get(parameter.getName()));
-				inputParameterMap.put(inputParameter.getName(), inputParameter);
+				ParameterContext.addInputParameter(getInputParameter(parameter, inputValueMap.get(parameter.getName())));
 			}
-			ParameterContext.initialInputParameterMap(inputParameterMap);
 		}
 		startEvent.execute();
 	}

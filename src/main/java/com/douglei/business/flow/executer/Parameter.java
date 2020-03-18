@@ -62,6 +62,7 @@ public class Parameter implements Cloneable{
 		this.description = description;
 	}
 	
+	
 	public Object getValue() {
 		return value;
 	}
@@ -82,5 +83,10 @@ public class Parameter implements Cloneable{
 	}
 	public String getDescription() {
 		return description;
+	}
+
+	// 是否是输入输出参数
+	public boolean isInputOutParameter() {
+		return scope == SCOPE_INOUT;
 	}
 }

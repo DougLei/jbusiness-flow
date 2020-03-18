@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -14,24 +15,13 @@ public class ParameterContext {
 	/**
 	 * 输出参数
 	 */
-	public static final ThreadLocal<Map<String, Parameter>> OUTPUT_PARAMETER_MAP = new ThreadLocal<Map<String, Parameter>>();
+	private static final ThreadLocal<Map<String, Parameter>> OUTPUT_PARAMETER_MAP = new ThreadLocal<Map<String, Parameter>>();
 	/**
 	 * 全局参数
 	 */
-	public static final ThreadLocal<Map<String, Parameter>> GLOBAL_PARAMETER_MAP = new ThreadLocal<Map<String, Parameter>>();
+	private static final ThreadLocal<Map<String, Parameter>> GLOBAL_PARAMETER_MAP = new ThreadLocal<Map<String, Parameter>>();
 	
 	
-	/**
-	 * 记录输入参数map
-	 * @param inputParameterMap
-	 */
-	public static void setInputParameterMap(Map<String, Parameter> inputParameterMap) {
-		if(INPUT_PARAMETER_MAP.get() != null) {
-			throw new RuntimeException("上一轮的输入参数未清空");
-		}
-		INPUT_PARAMETER_MAP.set(inputParameterMap);
-	}
-
 	/**
 	 * 初始化输入参数map
 	 * @param inputParameterMap
@@ -42,9 +32,35 @@ public class ParameterContext {
 		INPUT_PARAMETER_MAP.set(inputParameterMap);
 	}
 
+	/**
+	 * 添加输入参数
+	 * @param inputParameter
+	 */
+	static void addInputParameter(Parameter inputParameter) {
+		Map<String, Parameter> inputParameterMap;
+		if((inputParameterMap = INPUT_PARAMETER_MAP.get()) == null) {
+			inputParameterMap = new HashMap<String, Parameter>();
+			INPUT_PARAMETER_MAP.set(inputParameterMap);
+		}
+		inputParameterMap.put(inputParameter.getName(), inputParameter);
+		
+		if(inputParameter.isInputOutParameter()) {
+			addOutputParameter(inputParameter);
+		}
+	}
 	
-	
-	
-	
+	/**
+	 * 添加输出参数
+	 * @param outputParameter
+	 */
+	public static void addOutputParameter(Parameter outputParameter) {
+		Map<String, Parameter> outputParameterMap;
+		if((outputParameterMap = OUTPUT_PARAMETER_MAP.get()) == null) {
+			outputParameterMap = new HashMap<String, Parameter>();
+			OUTPUT_PARAMETER_MAP.set(outputParameterMap);
+		}
+		outputParameterMap.put(outputParameter.getName(), outputParameter);
+	}
+
 	
 }
