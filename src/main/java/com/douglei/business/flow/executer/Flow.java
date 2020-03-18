@@ -1,5 +1,8 @@
 package com.douglei.business.flow.executer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.douglei.business.flow.executer.condition.ConditionBase;
 import com.douglei.business.flow.executer.condition.ConditionGroup;
 
@@ -40,7 +43,8 @@ public class Flow {
 		if(conditionGroups.length == 0) {
 			return true;
 		}
-		return ConditionBase.validate(conditionGroups[0].validate(), conditionGroups[0].getOp(), 1, conditionGroups);
+		Map<String, Parameter> localParameterMap = new HashMap<String, Parameter>();
+		return ConditionBase.validate(conditionGroups[0].validate(localParameterMap), conditionGroups[0].getOp(), 1, conditionGroups, localParameterMap);
 	}
 	
 	// 是否是顺序流

@@ -2,7 +2,9 @@ package com.douglei.business.flow.executer;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.douglei.business.flow.executer.action.Action;
 
@@ -62,8 +64,9 @@ public class Event {
 	}
 	
 	public void execute() {
+		Map<String, Parameter> localParameterMap = new HashMap<String, Parameter>();
 		for (Action action : actions) {
-			action.execute();
+			action.execute(localParameterMap);
 		}
 		if(type == EVENT_TYPE_NORMAL)
 			toNextEvent();

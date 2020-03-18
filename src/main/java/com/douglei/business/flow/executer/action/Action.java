@@ -1,5 +1,7 @@
 package com.douglei.business.flow.executer.action;
 
+import java.util.Map;
+
 import com.douglei.business.flow.executer.Parameter;
 
 /**
@@ -11,7 +13,8 @@ public abstract class Action {
 	
 	/**
 	 * 
+	 * @param localParameterMap 本地
 	 * @return
 	 */
-	public abstract Object execute();
+	public abstract Object execute(Map<String, Parameter> localParameterMap);
 }

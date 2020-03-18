@@ -1,5 +1,7 @@
 package com.douglei.business.flow.executer.action.impl.param.op;
 
+import java.util.Map;
+
 import com.douglei.business.flow.executer.Parameter;
 import com.douglei.business.flow.executer.action.Action;
 
@@ -26,7 +28,7 @@ public class ParamOpDeclareAction extends Action{
 
 
 	@Override
-	public Object execute() {
+	public Object execute(Map<String, Parameter> localParameterMap) {
 		// TODO Auto-generated method stub
 		return null;
 	}
