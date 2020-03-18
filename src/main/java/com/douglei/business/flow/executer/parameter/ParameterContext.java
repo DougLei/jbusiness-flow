@@ -151,7 +151,7 @@ public class ParameterContext {
 		}
 		
 		if(actualParameter != null)
-			actualParameter.updateValue(newActualValue);
+			actualParameter.setValue(newActualValue);
 	}
 	// 获取指定的参数
 	private static Parameter getActualParameter(Parameter configParameter, ThreadLocal<Map<String, Parameter>> parameterMapThreadLocal) {

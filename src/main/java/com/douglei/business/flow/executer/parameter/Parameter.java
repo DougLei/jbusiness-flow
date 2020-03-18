@@ -1,6 +1,7 @@
 package com.douglei.business.flow.executer.parameter;
 
 import com.douglei.business.flow.executer.DataType;
+import com.douglei.tools.instances.ognl.OgnlHandler;
 import com.douglei.tools.utils.StringUtil;
 
 /**
@@ -9,7 +10,7 @@ import com.douglei.tools.utils.StringUtil;
  */
 public class Parameter implements Cloneable{
 	private String name;
-	private String ognlExpress; // ognl表达式, 例如name=zhangsan.age, 其中zhangsan为name值, 后面的则是ognl表达式
+	private String ognlExpression; // ognl表达式, 例如name=zhangsan.age, 其中zhangsan为name值, 后面的则是ognl表达式
 	private Scope scope;
 	private DataType dataType;
 	private boolean required = true;
@@ -50,9 +51,9 @@ public class Parameter implements Cloneable{
 			actualParameter = (Parameter) configParameter.clone();
 		} catch (CloneNotSupportedException e) {
 			actualParameter = new Parameter(configParameter.name, configParameter.scope, configParameter.dataType, configParameter.required, configParameter.defaultValue, configParameter.description);
-			actualParameter.ognlExpress = configParameter.ognlExpress;
+			actualParameter.ognlExpression = configParameter.ognlExpression;
 		}
-		actualParameter.value = actualValue==null?actualParameter.defaultValue:actualValue;
+		actualParameter.setValue(actualValue);
 		return actualParameter;
 	}
 	
@@ -60,7 +61,7 @@ public class Parameter implements Cloneable{
 		short dot = (short) name.indexOf(".");
 		if(dot > -1) { // 证明是ognl表达式
 			this.name = name.substring(0, dot);
-			this.ognlExpress = name.substring(dot+1);
+			this.ognlExpression = name.substring(dot+1);
 		}else {
 			this.name = name;
 		}
@@ -75,16 +76,21 @@ public class Parameter implements Cloneable{
 		this.description = description;
 	}
 	
-	public void updateValue(Object newValue) {
-		if(StringUtil.notEmpty(ognlExpress)) {
-			// TODO ognl表达式
+	/**
+	 * 设置实际值
+	 * @param actualValue
+	 */
+	public void setValue(Object value) {
+		if(value == null) {
+			value = defaultValue;
 		}
-		this.value = newValue;
+		if(value != null && StringUtil.notEmpty(ognlExpression)) {
+			// TODO 使用OGNL表达式
+//			actualValue = OGNL
+		}
+		this.value = value;
 	}
 	public Object getValue() {
-		if(StringUtil.notEmpty(ognlExpress)) {
-			// TODO ognl表达式
-		}
 		return value;
 	}
 	public String getName() {
