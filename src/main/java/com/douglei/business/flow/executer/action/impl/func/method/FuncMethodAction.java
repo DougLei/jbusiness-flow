@@ -1,5 +1,7 @@
 package com.douglei.business.flow.executer.action.impl.func.method;
 
+import java.util.Map;
+
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.method.Method;
 import com.douglei.business.flow.executer.parameter.Parameter;
@@ -22,10 +24,19 @@ public class FuncMethodAction extends Action {
 
 	@Override
 	public Object execute() {
-		Object[] actualValues = ParameterContext.getActualValues(parameters);
+		Object[] values = ParameterContext.getValues(parameters);
+		Map<String, Parameter> returnValues = method.invoke(values);
 		
-		method.invoke(actualParameters);
+		// 开始接收参数
+		// 1.receives
+		if(receives != null) {
+			
+		}
 		
+		// 2.receiveAll
+		if(receiveAll != null) {
+			
+		}
 		
 		
 		return null;

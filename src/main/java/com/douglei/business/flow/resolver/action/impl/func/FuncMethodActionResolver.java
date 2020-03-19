@@ -43,18 +43,18 @@ public class FuncMethodActionResolver extends ActionResolver {
 			action.setReceives(receives);
 		}
 		
-		String[] excludeNames = null; 
 		json = content.getJSONObject("receiveAll");
-		array = json.getJSONArray("excludeNames");
-		size = array==null?0:array.size();
-		if(size > 0) {
-			excludeNames = new String[size];
-			array.toArray(excludeNames);
+		if(json != null) {
+			String[] excludeNames = null; 
+			array = json.getJSONArray("excludeNames");
+			size = array==null?0:array.size();
+			if(size > 0) {
+				excludeNames = new String[size];
+				array.toArray(excludeNames);
+			}
+			
+			action.setReceiveAll(new ReceiveAll(excludeNames, ParameterResolver.parse(json)));
 		}
-		
-		action.setReceiveAll(new ReceiveAll(
-				excludeNames,
-				ParameterResolver.parse(json)));
 		return action;
 	}
 }

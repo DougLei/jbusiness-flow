@@ -1,5 +1,7 @@
 package com.douglei.business.flow.executer.method;
 
+import java.util.Map;
+
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.Parameter;
 
@@ -20,5 +22,10 @@ public class Method {
 		this.parameters = parameters;
 		this.actions = actions;
 		this.return_ = return_;
+	}
+
+	public Map<String, Parameter> invoke(Object[] values) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
