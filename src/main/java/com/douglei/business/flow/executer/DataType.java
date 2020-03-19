@@ -31,6 +31,10 @@ public enum DataType {
 			DataTypeMapping.CLASS_DATATYPE_MAPPING.put(clz, this);
 		}
 	}
+	
+	public Object defaultValue() {
+		return defaultValue;
+	}
 
 	public static DataType toValue(String value) {
 		if(StringUtil.notEmpty(value)) {

@@ -32,6 +32,32 @@ public class Parameter implements Cloneable{
 		return null;
 	}
 	
+	// 验证参数的值是否为空
+	private static void validateValueIsNull(Parameter parameter, Object value) {
+		if(parameter.required && value == null && parameter.defaultValue == null && parameter.dataType.defaultValue() == null) {
+			throw new NullPointerException(parameter.scope.getDescription() + "["+parameter.name+"]的值不能为空");
+		}
+	}
+	// 验证参数的值类型是否和配置的匹配
+	private static void validateValueDataType(Parameter parameter, Object value) {
+		if(value != null && !parameter.dataType.matching(value)) {
+			throw new ClassCastException(parameter.scope.getDescription() + "["+parameter.name+"]的值应为"+parameter.dataType.name()+"类型");
+		}
+	}
+	
+	/**
+	 * 获取OGNL表达式的值
+	 * @param parameter
+	 * @param value
+	 * @return
+	 */
+	private static Object getOGNLValue(Parameter parameter, Object value) {
+		if(value != null && StringUtil.notEmpty(parameter.ognlExpression)) {
+			return OgnlHandler.singleInstance().getObjectValue(parameter.ognlExpression, value);
+		}
+		return value;
+	}
+	
 	/**
 	 * 根据配置的参数以及实际值, 获取一个实参实例
 	 * @param configParameter 配置的参数
@@ -39,6 +65,10 @@ public class Parameter implements Cloneable{
 	 * @return
 	 */
 	static Parameter getActualParameter(Parameter configParameter, Object actualValue) {
+		actualValue = getOGNLValue(configParameter, actualValue);
+		validateValueIsNull(configParameter, actualValue);
+		validateValueDataType(configParameter, actualValue);
+		
 		Parameter actualParameter;
 		try {
 			actualParameter = (Parameter) configParameter.clone();
@@ -47,7 +77,12 @@ public class Parameter implements Cloneable{
 			actualParameter = new Parameter(configParameter.name, configParameter.scope, configParameter.dataType, configParameter.required, configParameter.defaultValue, configParameter.description);
 			actualParameter.ognlExpression = configParameter.ognlExpression;
 		}
-		actualParameter.setValue(actualValue);
+		
+		if(actualValue == null)
+			actualValue = actualParameter.defaultValue;
+		if(actualValue == null) 
+			actualValue = actualParameter.dataType.defaultValue();
+		actualParameter.value = actualValue;
 		return actualParameter;
 	}
 	
@@ -71,27 +106,13 @@ public class Parameter implements Cloneable{
 	}
 	
 	/**
-	 * 设置实际值
+	 * 修改实际值
 	 * @param actualValue
 	 */
-	public void setValue(Object value) {
-		validateValue(value);
-		if(value == null) {
-			value = defaultValue;
-		}
-		if(value != null && StringUtil.notEmpty(ognlExpression)) {
-			value = OgnlHandler.singleInstance().getObjectValue(ognlExpression, value);
-		}
+	public void updateValue(Object value) {
+		value = getOGNLValue(this, value);
+		validateValueDataType(this, value);
 		this.value = value;
-	}
-	// 验证值
-	private void validateValue(Object value) {
-		if(value == null && this.required && this.defaultValue == null) {
-			throw new NullPointerException(this.scope.getDescription() + "["+this.name+"]的值不能为空");
-		}
-		if(value != null && !this.dataType.matching(value)) {
-			throw new ClassCastException(this.scope.getDescription() + "["+this.name+"]的值应为"+this.dataType.name()+"类型");
-		}
 	}
 	
 	public Object getValue() {

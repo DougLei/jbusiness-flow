@@ -13,11 +13,9 @@ import com.douglei.tools.utils.CollectionUtil;
  */
 public abstract class ParameterScope {
 	
-	/**
-	 * 
-	 * @return
-	 */
-	protected abstract ThreadLocal<Map<String, Parameter>> threadLocalParameterMap();
+	protected ThreadLocal<Map<String, Parameter>> threadLocalParameterMap(){
+		return null;
+	}
 	
 	/**
 	 * 清空本范围内的参数
@@ -42,7 +40,7 @@ public abstract class ParameterScope {
 	 * @param configParameter
 	 * @param actualValue
 	 */
-	public final void addParameter(Parameter configParameter, Object actualValue) {
+	public void addParameter(Parameter configParameter, Object actualValue) {
 		Parameter actualParameter = Parameter.getActualParameter(configParameter, actualValue);
 				
 		Map<String, Parameter> parameterMap = threadLocalParameterMap().get();
@@ -95,7 +93,7 @@ public abstract class ParameterScope {
 		if(CollectionUtil.unEmpty(parameterMap)) {
 			Parameter p = parameterMap.get(parameter.getName());
 			if(p != null) {
-				p.setValue(newValue);
+				p.updateValue(newValue);
 			}
 		}
 	}
