@@ -3,6 +3,7 @@ package com.douglei.business.flow.executer.action.impl.func.method;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.method.Method;
 import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.ParameterContext;
 
 /**
  * 
@@ -21,7 +22,12 @@ public class FuncMethodAction extends Action {
 
 	@Override
 	public Object execute() {
-		// TODO Auto-generated method stub
+		Object[] actualValues = ParameterContext.getActualValues(parameters);
+		
+		method.invoke(actualParameters);
+		
+		
+		
 		return null;
 	}
 	

@@ -30,11 +30,11 @@ public class BusinessFlow {
 	public Map<String, Object> execute(Map<String, Object> inputValueMap) {
 		if(inputParameters.length > 0) {
 			for (Parameter parameter : inputParameters) {
-				ParameterContext.addParameter(Parameter.getActualParameter(parameter, inputValueMap.get(parameter.getName())));
+				ParameterContext.addParameter(parameter, inputValueMap.get(parameter.getName()));
 			}
 		}
 		startEvent.execute();
-		return ParameterContext.getOutputValueMap();
+		return ParameterContext.getOutValueMap();
 	}
 	
 	public String getName() {

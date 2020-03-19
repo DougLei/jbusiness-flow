@@ -38,18 +38,12 @@ public class Parameter implements Cloneable{
 	 * @param actualValue 实际值
 	 * @return
 	 */
-	public static Parameter getActualParameter(Parameter configParameter, Object actualValue) {
-		if(actualValue == null && configParameter.required && configParameter.defaultValue == null) {
-			throw new NullPointerException(configParameter.scope.getDescription() + "["+configParameter.name+"]的值不能为空");
-		}
-		if(actualValue != null && !configParameter.dataType.matching(actualValue)) {
-			throw new ClassCastException(configParameter.scope.getDescription() + "["+configParameter.name+"]的值应为"+configParameter.dataType.name()+"类型");
-		}
-		
+	static Parameter getActualParameter(Parameter configParameter, Object actualValue) {
 		Parameter actualParameter;
 		try {
 			actualParameter = (Parameter) configParameter.clone();
 		} catch (CloneNotSupportedException e) {
+			// 手动clone
 			actualParameter = new Parameter(configParameter.name, configParameter.scope, configParameter.dataType, configParameter.required, configParameter.defaultValue, configParameter.description);
 			actualParameter.ognlExpression = configParameter.ognlExpression;
 		}
@@ -81,6 +75,7 @@ public class Parameter implements Cloneable{
 	 * @param actualValue
 	 */
 	public void setValue(Object value) {
+		validateValue(value);
 		if(value == null) {
 			value = defaultValue;
 		}
@@ -89,7 +84,15 @@ public class Parameter implements Cloneable{
 		}
 		this.value = value;
 	}
-	
+	// 验证值
+	private void validateValue(Object value) {
+		if(value == null && this.required && this.defaultValue == null) {
+			throw new NullPointerException(this.scope.getDescription() + "["+this.name+"]的值不能为空");
+		}
+		if(value != null && !this.dataType.matching(value)) {
+			throw new ClassCastException(this.scope.getDescription() + "["+this.name+"]的值应为"+this.dataType.name()+"类型");
+		}
+	}
 	
 	public Object getValue() {
 		return value;

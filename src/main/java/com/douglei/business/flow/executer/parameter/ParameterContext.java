@@ -1,164 +1,84 @@
 package com.douglei.business.flow.executer.parameter;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
+
+import com.douglei.business.flow.executer.parameter.ps.impl.GlobalParameterScope;
+import com.douglei.business.flow.executer.parameter.ps.impl.InParameterScope;
+import com.douglei.business.flow.executer.parameter.ps.impl.LocalParameterScope;
+import com.douglei.business.flow.executer.parameter.ps.impl.OutParameterScope;
 
 /**
  * 
  * @author DougLei
  */
 public class ParameterContext {
-	/**
-	 * 输入参数
-	 */
-	private static final ThreadLocal<Map<String, Parameter>> INPUT_PARAMETER_MAP = new ThreadLocal<Map<String, Parameter>>();
-	/**
-	 * 输出参数
-	 */
-	private static final ThreadLocal<Map<String, Parameter>> OUTPUT_PARAMETER_MAP = new ThreadLocal<Map<String, Parameter>>();
-	/**
-	 * 全局参数
-	 */
-	private static final ThreadLocal<Map<String, Parameter>> GLOBAL_PARAMETER_MAP = new ThreadLocal<Map<String, Parameter>>();
-	/**
-	 * 本地参数
-	 */
-	private static final ThreadLocal<Map<String, Parameter>> LOCAL_PARAMETER_MAP = new ThreadLocal<Map<String, Parameter>>();
+	private static final Map<Scope, ParameterScope> PARAMETER_SCOPE_MAP = new HashMap<Scope, ParameterScope>(8);
+	static {
+		PARAMETER_SCOPE_MAP.put(Scope.IN, new InParameterScope());
+		PARAMETER_SCOPE_MAP.put(Scope.OUT, new OutParameterScope());
+		PARAMETER_SCOPE_MAP.put(Scope.GLOBAL, new GlobalParameterScope());
+		PARAMETER_SCOPE_MAP.put(Scope.LOCAL, new LocalParameterScope());
+	}
 	
 	/**
 	 * 获取输出值map, 同时会置空所有参数
 	 */
-	public static Map<String, Object> getOutputValueMap() {
-		Map<String, Object> outputValueMap;
-		
-		Map<String, Parameter> outputParameterMap = OUTPUT_PARAMETER_MAP.get();
-		if(outputParameterMap == null) {
-			outputValueMap = Collections.emptyMap();
-		}else {
-			outputValueMap = new HashMap<String, Object>(outputParameterMap.size());
-			for(Entry<String, Parameter> entry : outputParameterMap.entrySet()) {
-				outputValueMap.put(entry.getKey(), entry.getValue().getValue());
-			}
-		}
-		
+	public static Map<String, Object> getOutValueMap() {
+		Map<String, Object> outValueMap = PARAMETER_SCOPE_MAP.get(Scope.OUT).getValueMap();
 		clearAll();
-		return outputValueMap;
+		return outValueMap;
 	}
 	
 	/**
 	 * 置空所有参数
 	 */
 	public static void clearAll() {
-		if(INPUT_PARAMETER_MAP.get() != null) 
-			INPUT_PARAMETER_MAP.remove();
-		if(OUTPUT_PARAMETER_MAP.get() != null) 
-			OUTPUT_PARAMETER_MAP.remove();
-		if(GLOBAL_PARAMETER_MAP.get() != null) 
-			GLOBAL_PARAMETER_MAP.remove();
-		if(LOCAL_PARAMETER_MAP.get() != null) 
-			LOCAL_PARAMETER_MAP.remove();
+		for(ParameterScope parameterScope: PARAMETER_SCOPE_MAP.values())
+			parameterScope.clear();
 	}
 	
 	/**
 	 * 重置本地参数map
 	 */
 	public static void resetLocalParameterMap() {
-		if(LOCAL_PARAMETER_MAP.get() != null) {
-			LOCAL_PARAMETER_MAP.remove();
-		}
-		LOCAL_PARAMETER_MAP.set(new HashMap<String, Parameter>());
+		PARAMETER_SCOPE_MAP.get(Scope.LOCAL).reset();
 	}
 	
 	/**
-	 * 添加参数
-	 * @param actualParameter 实参
-	 */
-	public static void addParameter(Parameter actualParameter) {
-		switch(actualParameter.getScope()) {
-			case IN:
-				addParameter(actualParameter, INPUT_PARAMETER_MAP);
-				break;
-			case INOUT:
-				addParameter(actualParameter, INPUT_PARAMETER_MAP);
-			case OUT:
-				addParameter(actualParameter, OUTPUT_PARAMETER_MAP);
-				break;
-			case GLOBAL:
-				addParameter(actualParameter, GLOBAL_PARAMETER_MAP);
-				break;
-			case LOCAL:
-				addParameter(actualParameter, LOCAL_PARAMETER_MAP);
-				break;
-		}
-	}
-	// 给指定的ThreadLocal中添加参数
-	private static void addParameter(Parameter actualParameter, ThreadLocal<Map<String, Parameter>> parameterMapThreadLocal) {
-		Map<String, Parameter> parameterMap;
-		if((parameterMap = parameterMapThreadLocal.get()) == null) {
-			parameterMap = new HashMap<String, Parameter>();
-			parameterMapThreadLocal.set(parameterMap);
-		}
-		parameterMap.put(actualParameter.getName(), actualParameter);
-	}
-	
-	/**
-	 * 根据配置的参数, 获取对应的值
+	 * 根据配置的参数以及实际值, 添加参数(实参)
 	 * @param configParameter
+	 * @param actualValue
+	 */
+	public static void addParameter(Parameter configParameter, Object actualValue) {
+		PARAMETER_SCOPE_MAP.get(configParameter.getScope()).addParameter(configParameter, actualValue);
+	}
+	
+	/**
+	 * 根据参数, 获取对应的值
+	 * @param parameter
 	 * @return 
 	 */
-	public static Object getValue(Parameter configParameter) {
-		switch(configParameter.getScope()) {
-			case IN:
-			case INOUT:
-				return getValue(configParameter, INPUT_PARAMETER_MAP);
-			case OUT:
-				return getValue(configParameter, OUTPUT_PARAMETER_MAP);
-			case GLOBAL:
-				return getValue(configParameter, GLOBAL_PARAMETER_MAP);
-			case LOCAL:
-				return getValue(configParameter, LOCAL_PARAMETER_MAP);
-		}
-		return null;
-	}
-	// 获取指定参数的值
-	private static Object getValue(Parameter configParameter, ThreadLocal<Map<String, Parameter>> parameterMapThreadLocal) {
-		Map<String, Parameter> parameterMap;
-		if((parameterMap = parameterMapThreadLocal.get()) == null) {
-			return null;
-		}
-		return parameterMap.get(configParameter.getName()).getValue();
+	public static Object getValue(Parameter parameter) {
+		return PARAMETER_SCOPE_MAP.get(parameter.getScope()).getValue(parameter);
 	}
 	
 	/**
-	 * 根据配置的参数, 修改对应的值
-	 * @param configParameter
-	 * @param newActualValue
+	 * 根据参数, 获取对应的值数组
+	 * @param parameters
+	 * @return
 	 */
-	public static void updateValue(Parameter configParameter, Object newActualValue) {
-		Parameter actualParameter = null;
-		switch(configParameter.getScope()) {
-			case IN:
-			case INOUT:
-				actualParameter = getActualParameter(configParameter, INPUT_PARAMETER_MAP);
-			case OUT:
-				actualParameter = getActualParameter(configParameter, OUTPUT_PARAMETER_MAP);
-			case GLOBAL:
-				actualParameter = getActualParameter(configParameter, GLOBAL_PARAMETER_MAP);
-			case LOCAL:
-				actualParameter = getActualParameter(configParameter, LOCAL_PARAMETER_MAP);
-		}
-		
-		if(actualParameter != null)
-			actualParameter.setValue(newActualValue);
+	public static Object[] getActualValues(Parameter[] parameters) {
+		// TODO 
+		return null;
 	}
-	// 获取指定的参数
-	private static Parameter getActualParameter(Parameter configParameter, ThreadLocal<Map<String, Parameter>> parameterMapThreadLocal) {
-		Map<String, Parameter> parameterMap;
-		if((parameterMap = parameterMapThreadLocal.get()) == null) {
-			return null;
-		}
-		return parameterMap.get(configParameter.getName());
+
+	/**
+	 * 根据参数, 修改对应的值
+	 * @param parameter
+	 * @param newValue
+	 */
+	public static void updateValue(Parameter parameter, Object newValue) {
+		PARAMETER_SCOPE_MAP.get(parameter.getScope()).updateValue(parameter, newValue);
 	}
 }

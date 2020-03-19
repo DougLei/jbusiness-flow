@@ -3,6 +3,7 @@ package com.douglei.business.flow.executer;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
 
 import com.douglei.tools.utils.StringUtil;
 
@@ -16,7 +17,7 @@ public enum DataType {
 	BOOLEAN(false, boolean.class, Boolean.class),
 	DATE(new Date(), Date.class),
 	ARRAY,
-	LIST,
+	LIST(null, ArrayList.class),
 	OBJECT;
 	
 	private Object defaultValue; // 默认值
@@ -50,7 +51,7 @@ public enum DataType {
 	 * @return
 	 */
 	public boolean matching(Object actualValue) {
-		if(actualValue == null) 
+		if(actualValue == null || this == OBJECT) 
 			return true;
 		return (actualValue.getClass().isArray() && this == ARRAY) || DataTypeMapping.CLASS_DATATYPE_MAPPING.get(actualValue.getClass()) == this;
 	}

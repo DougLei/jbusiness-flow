@@ -27,7 +27,7 @@ public class ParamOpDeclareAction extends Action{
 	@Override
 	public Object execute() {
 		for (ParamDeclare paramDeclare : declares) {
-			ParameterContext.addParameter(paramDeclare.getActualParameter());
+			ParameterContext.addParameter(paramDeclare.parameter, paramDeclare.getActualValue());
 		}
 		return null;
 	}
@@ -44,14 +44,14 @@ public class ParamOpDeclareAction extends Action{
 			this.refParameter = refParameter;
 		}
 		
-		Parameter getActualParameter() {
+		Object getActualValue() {
 			Object actualValue;
 			if(refParameter == null) {
 				actualValue = parameter.getDefaultValue();
 			}else {
 				actualValue = ParameterContext.getValue(refParameter);
 			}
-			return Parameter.getActualParameter(parameter, actualValue);
+			return actualValue;
 		}
 	}
 }

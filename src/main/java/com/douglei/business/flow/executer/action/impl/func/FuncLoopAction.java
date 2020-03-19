@@ -38,7 +38,7 @@ public class FuncLoopAction extends Action {
 	// 集合
 	private void executeList(Collection<Object> list) {
 		if(list.size() > 0) {
-			ParameterContext.addParameter(Parameter.getActualParameter(alias, null));
+			ParameterContext.addParameter(alias, null);
 			for (Object object : list) {
 				executeCore(object);
 			}
@@ -48,7 +48,7 @@ public class FuncLoopAction extends Action {
 	// 数组
 	private void executeArray(Object[] array) {
 		if(array.length > 0) {
-			ParameterContext.addParameter(Parameter.getActualParameter(alias, null));
+			ParameterContext.addParameter(alias, null);
 			for (Object object : array) {
 				executeCore(object);
 			}
