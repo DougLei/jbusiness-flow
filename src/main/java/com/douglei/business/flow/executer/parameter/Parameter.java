@@ -1,6 +1,7 @@
 package com.douglei.business.flow.executer.parameter;
 
 import com.douglei.business.flow.executer.DataType;
+import com.douglei.tools.instances.ognl.OgnlHandler;
 import com.douglei.tools.utils.StringUtil;
 
 /**
@@ -12,7 +13,7 @@ public class Parameter implements Cloneable{
 	private String ognlExpression; // ognl表达式, 例如name=zhangsan.age, 其中zhangsan为name值, 后面的则是ognl表达式
 	private Scope scope;
 	private DataType dataType;
-	private boolean required = true;
+	private boolean required;
 	private Object defaultValue;
 	private String description;
 	
@@ -84,11 +85,12 @@ public class Parameter implements Cloneable{
 			value = defaultValue;
 		}
 		if(value != null && StringUtil.notEmpty(ognlExpression)) {
-			// TODO 使用OGNL表达式
-//			actualValue = OGNL
+			value = OgnlHandler.singleInstance().getObjectValue(ognlExpression, value);
 		}
 		this.value = value;
 	}
+	
+	
 	public Object getValue() {
 		return value;
 	}
