@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.parameter;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,21 +67,21 @@ public class ParameterContext {
 		return PARAMETER_SCOPE_MAP.get(parameter.getScope()).getValue(parameter);
 	}
 	
-	/**
-	 * 根据参数, 获取对应的值数组
-	 * @param parameters
-	 * @return
-	 */
-	public static Object[] getValues(Parameter[] parameters) {
-		if(parameters.length == 0) {
-			return CollectionUtil.emptyObjectArray();
-		}
-		Object[] values = new Object[parameters.length];
-		for(byte i=0;i<parameters.length;i++) {
-			values[i] = getValue(parameters[i]);
-		}
-		return values;
-	}
+//	/**
+//	 * 根据参数, 获取对应的值数组
+//	 * @param parameters
+//	 * @return
+//	 */
+//	public static Object[] getValues(Parameter[] parameters) {
+//		if(parameters.length == 0) {
+//			return CollectionUtil.emptyObjectArray();
+//		}
+//		Object[] values = new Object[parameters.length];
+//		for(byte i=0;i<parameters.length;i++) {
+//			values[i] = getValue(parameters[i]);
+//		}
+//		return values;
+//	}
 
 	/**
 	 * 根据参数, 修改对应的值
@@ -89,5 +90,21 @@ public class ParameterContext {
 	 */
 	public static void updateValue(Parameter parameter, Object newValue) {
 		PARAMETER_SCOPE_MAP.get(parameter.getScope()).updateValue(parameter, newValue);
+	}
+	
+	/**
+	 * 根据参数, 获取对应的实参数组
+	 * @param parameters
+	 * @return
+	 */
+	public static Map<String, Parameter> getActualParameters(Parameter[] parameters) {
+		if(parameters.length == 0) {
+			return Collections.emptyMap();
+		}
+		Map<String, Parameter> actualParameters = new HashMap<String, Parameter>(parameters.length);
+		
+		
+		
+		return actualParameters;
 	}
 }

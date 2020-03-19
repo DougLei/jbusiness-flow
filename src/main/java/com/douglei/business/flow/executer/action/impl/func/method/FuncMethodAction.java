@@ -6,6 +6,7 @@ import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.method.Method;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.ParameterContext;
+import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 
@@ -24,21 +25,22 @@ public class FuncMethodAction extends Action {
 
 	@Override
 	public Object execute() {
-		Object[] values = ParameterContext.getValues(parameters);
-		Map<String, Parameter> returnValues = method.invoke(values);
-		
-		// 开始接收参数
-		// 1.receives
-		if(receives != null) {
+		Map<String, Parameter> actualParameters = ParameterContext.getActualParameters(parameters);
+		Map<String, Object> returnValues = method.invoke(actualParameters);
+		if(CollectionUtil.unEmpty(returnValues)) { // 开始接收参数
+			// 1.receives
+			if(receives != null) {
+				for (Receive receive : receives) {
+					ParameterContext.addParameter(receive.getParameter(), returnValues.get(receive.getReturnName()));
+				}
+			}
 			
+			// 2.receiveAll
+			if(receiveAll != null) {
+				receiveAll.excludeValues(returnValues);
+				ParameterContext.addParameter(receiveAll.getParameter(), returnValues);
+			}
 		}
-		
-		// 2.receiveAll
-		if(receiveAll != null) {
-			
-		}
-		
-		
 		return null;
 	}
 	

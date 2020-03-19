@@ -64,7 +64,7 @@ public class Parameter implements Cloneable{
 	 * @param actualValue 实际值
 	 * @return
 	 */
-	static Parameter getActualParameter(Parameter configParameter, Object actualValue) {
+	public static Parameter getActualParameter(Parameter configParameter, Object actualValue) {
 		actualValue = getOGNLValue(configParameter, actualValue);
 		validateValueIsNull(configParameter, actualValue);
 		validateValueDataType(configParameter, actualValue);

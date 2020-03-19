@@ -14,4 +14,11 @@ public class Receive {
 		this.returnName = returnName;
 		this.parameter = parameter;
 	}
+
+	public String getReturnName() {
+		return returnName;
+	}
+	public Parameter getParameter() {
+		return parameter;
+	}
 }

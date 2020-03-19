@@ -23,8 +23,13 @@ public class Method {
 		this.actions = actions;
 		this.return_ = return_;
 	}
-
-	public Map<String, Parameter> invoke(Object[] values) {
+	
+	/**
+	 * 调用方法
+	 * @param actualParameters 实参
+	 * @return
+	 */
+	public Map<String, Object> invoke(Map<String, Parameter> actualParameters) {
 		// TODO Auto-generated method stub
 		return null;
 	}
