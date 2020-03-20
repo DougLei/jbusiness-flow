@@ -130,14 +130,17 @@ public class ReferenceResolver {
 			Parameter[] parameters = ParameterResolver.parse(methodJSON.getJSONArray("params"));
 			Action[] actions = parseAction_(methodJSON.getJSONArray("actions"));
 			
+			Return return_ = null;
 			JSONObject returnJSON = methodJSON.getJSONObject("return");
-			String[] names = null;
-			JSONArray array = returnJSON.getJSONArray("names");
-			if(array != null && array.size() > 0) {
-				names = new String[array.size()];
-				array.toArray(names);
+			if(returnJSON != null) {
+				String[] names = null;
+				JSONArray array = returnJSON.getJSONArray("names");
+				if(array != null && array.size() > 0) {
+					names = new String[array.size()];
+					array.toArray(names);
+				}
+				return_ = new Return(returnJSON.getBooleanValue("all"), names);
 			}
-			Return return_ = new Return(returnJSON.getBooleanValue("all"), names);
 			
 			method = new Method(name, parameters, actions, return_);
 			container.putMethod(method);

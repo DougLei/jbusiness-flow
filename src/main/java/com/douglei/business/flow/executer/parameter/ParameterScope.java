@@ -17,6 +17,7 @@ public abstract class ParameterScope {
 		return null;
 	}
 	
+
 	/**
 	 * 清空本范围内的参数
 	 */
@@ -29,9 +30,7 @@ public abstract class ParameterScope {
 	 * 重置本范围内的参数
 	 */
 	public final void reset() {
-		if(threadLocalParameterMap().get() != null) {
-			threadLocalParameterMap().remove();
-		}
+		clear();
 		threadLocalParameterMap().set(new HashMap<String, Parameter>());
 	}
 	
@@ -54,6 +53,16 @@ public abstract class ParameterScope {
 		}else {
 			p.updateValue(parameter.getValue());
 		}
+	}
+	
+	
+	
+	/**
+	 * 获取本范围内的参数map
+	 * @return
+	 */
+	public final Map<String, Parameter> getParameterMap() {
+		return threadLocalParameterMap().get();
 	}
 	
 	/**

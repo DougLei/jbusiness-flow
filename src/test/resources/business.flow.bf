@@ -1,6 +1,6 @@
 // 统一说明
 // 1.数据类型: string, byte, short, integer, long, float, double, boolean, date, array, list, object(使用map实现), 每种类型会有自己的默认初始值(和java的标准一致)
-// 2.参数范围: 1(输入参数), 2(输入输出参数), 3(输出参数), 4(全局参数), 5(本地参数, 遵循java变量的生命周期), 6(方法内参数, 在方法中的参数范围, 其本质和5是一样的), 参数的范围从大到小排序为: 1=2=3>4>5(=6)
+// 2.参数范围: 1(输入参数), 2(输入输出参数), 3(输出参数), 4(全局参数), 5(本地参数, 遵循java变量的生命周期), 参数的范围从大到小排序为: 1=2=3>4>5
 // 3.在给定参数名和参数的范围时, 参数名可以通过使用xxx.xx形式, 例如scope=1, paramName=user.name表示, 取输入参数中, 参数名为user数据的name属性值, 其他还例如 users.size, 表示取users集合或数组的长度, 等等
 // 4.在配置defaultValue(固定值)时, 其值的类型可能是string, integer, date, boolean, 所以defaultValue后的双引号可有可无, 具体根据用户配置的值决定
 // 5.在配置actions时, 如果需要配置具体的内容, 则用数组配置("actions":[{}]); 如果是引用commonActions中的, 则直接配置对应的name即可("actions":"xxxxName"); 即一个属性有不同的配置方式, 和defaultValue的配置相似(参看第4条统一说明)
@@ -82,7 +82,7 @@
 		"actions":[{ // 具体的action
 			// 所有的结果参数都属于本地map, 在return中决定返回哪些参数
 		}], 
-		"return":{ // 方法的返回值, 可有可无, 返回多个, 就返回map; 返回单个, 就直接返回值
+		"return":{ // 方法的返回值, 可有可无
 			"all":false, // 是否返回全部数据, 默认false
 			"names":["", ""] // all=false时, 返回指定name的参数(可为空); all=true时, 排除指定name的参数不返回, 剩下的参数都返回(可为空)
 		}

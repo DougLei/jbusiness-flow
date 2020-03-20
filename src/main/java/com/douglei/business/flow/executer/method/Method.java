@@ -6,6 +6,7 @@ import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.ParameterContext;
 import com.douglei.business.flow.executer.parameter.Scope;
+import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 
@@ -25,13 +26,20 @@ public class Method {
 	}
 	
 	/**
+	 * 方法是否有参数
+	 * @return
+	 */
+	public boolean parameterNotEmpty() {
+		return parameters.length > 0;
+	}
+	
+	/**
 	 * 调用方法
 	 * @param values 实参
 	 * @return
 	 */
 	public Map<String, Parameter> invoke(Object[] values) {
-		ParameterContext.resetParameterMap(Scope.METHOD);
-		if(parameters.length > 0) {
+		if(parameterNotEmpty()) {
 			for (int i = 0; i < parameters.length; i++) {
 				ParameterContext.addParameter(parameters[i], values[i]);
 			}
@@ -41,10 +49,10 @@ public class Method {
 		}
 		
 		
-		
-		
-		
-		
+		Map<String, Parameter> parameterMap = ParameterContext.clear(Scope.LOCAL);
+		if(CollectionUtil.unEmpty(parameterMap) && return_ != null) {
+			return return_.filter(parameterMap);
+		}
 		return null;
 	}
 

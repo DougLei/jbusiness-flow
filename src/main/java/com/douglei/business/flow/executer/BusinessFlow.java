@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.ParameterContext;
+import com.douglei.business.flow.executer.parameter.Scope;
 
 /**
  * 
@@ -28,13 +29,17 @@ public class BusinessFlow {
 	}
 	
 	public Map<String, Object> execute(Map<String, Object> inputValueMap) {
-		if(inputParameters.length > 0) {
-			for (Parameter parameter : inputParameters) {
-				ParameterContext.addParameter(parameter, inputValueMap.get(parameter.getName()));
+		try {
+			if(inputParameters.length > 0) {
+				for (Parameter parameter : inputParameters) {
+					ParameterContext.addParameter(parameter, inputValueMap.get(parameter.getName()));
+				}
 			}
+			startEvent.execute();
+			return ParameterContext.getValueMap(Scope.OUT);
+		} finally {
+			ParameterContext.clearAll();
 		}
-		startEvent.execute();
-		return ParameterContext.getOutValueMap();
 	}
 	
 	public String getName() {

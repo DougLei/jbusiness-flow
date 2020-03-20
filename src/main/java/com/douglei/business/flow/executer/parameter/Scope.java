@@ -14,9 +14,7 @@ public enum Scope {
 	// 4
 	GLOBAL("全局参数"),
 	// 5
-	LOCAL("本地参数"),
-	// 6
-	METHOD("方法参数");
+	LOCAL("本地参数");
 
 	private String description;
 	private Scope(String description) {
@@ -38,8 +36,6 @@ public enum Scope {
 				return OUT;
 			case 4:
 				return GLOBAL;
-			case 6:
-				return METHOD;
 			default:
 				return LOCAL;
 		}

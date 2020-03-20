@@ -31,7 +31,7 @@ public class FuncMethodAction extends Action {
 		 * 
 		 * 至于方法的返回值, 直接返回parameter, 因为可以直接修改其范围, 进入到新的范围, 而且后续不需要再修改回原范围
 		 */
-		Object[] values = ParameterContext.getValues(parameters);
+		Object[] values = method.parameterNotEmpty()?ParameterContext.getValues(parameters):CollectionUtil.emptyObjectArray();
 		Map<String, Parameter> returnParameters = method.invoke(values);
 		if(CollectionUtil.unEmpty(returnParameters)) { // 开始接收参数
 			// 1.receives
