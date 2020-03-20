@@ -48,7 +48,6 @@ public class Method {
 			action.execute();
 		}
 		
-		
 		Map<String, Parameter> parameterMap = ParameterContext.clear(Scope.LOCAL);
 		if(CollectionUtil.unEmpty(parameterMap) && return_ != null) {
 			return return_.filter(parameterMap);

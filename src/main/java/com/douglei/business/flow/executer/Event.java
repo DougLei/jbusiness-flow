@@ -64,12 +64,13 @@ public class Event {
 	}
 	
 	public void execute() {
-		ParameterContext.resetParameterMap(Scope.LOCAL);
 		for (Action action : actions) {
 			action.execute();
 		}
-		if(type == EVENT_TYPE_NORMAL)
+		if(type == EVENT_TYPE_NORMAL) {
+			ParameterContext.clear(Scope.LOCAL); // 清空执行action时产生的本地参数
 			toNextEvent();
+		}
 	}
 	
 	// 到下一个事件
@@ -77,9 +78,9 @@ public class Event {
 		if(flows.size() == 1) { // 顺序流
 			flows.get(0).targetEvent().execute();
 		}else { // 条件流
-			ParameterContext.resetParameterMap(Scope.LOCAL);
 			flows.forEach(flow -> {
 				if(flow.validate()) {
+					ParameterContext.clear(Scope.LOCAL); // 清空flow验证时产生的本地参数
 					flow.targetEvent().execute();
 					return;
 				}

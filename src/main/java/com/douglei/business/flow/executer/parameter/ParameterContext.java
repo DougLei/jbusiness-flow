@@ -25,14 +25,6 @@ public class ParameterContext {
 	}
 	
 	/**
-	 * 重置指定范围的参数map
-	 * @param scope
-	 */
-	public static void resetParameterMap(Scope scope) {
-		PARAMETER_SCOPE_MAP.get(scope).reset();
-	}
-	
-	/**
 	 * 清空指定范围的参数map
 	 * @param scope
 	 * @return 返回被清空的参数map

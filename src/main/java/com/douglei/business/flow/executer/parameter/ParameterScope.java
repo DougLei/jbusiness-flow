@@ -27,14 +27,6 @@ public abstract class ParameterScope {
 	}
 	
 	/**
-	 * 重置本范围内的参数
-	 */
-	public final void reset() {
-		clear();
-		threadLocalParameterMap().set(new HashMap<String, Parameter>());
-	}
-	
-	/**
 	 * 添加参数(实参)
 	 * @param parameter
 	 */
