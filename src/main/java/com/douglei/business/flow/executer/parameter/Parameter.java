@@ -13,9 +13,9 @@ public class Parameter implements Cloneable{
 	private String ognlExpression; // ognl表达式, 例如name=zhangsan.age, 其中zhangsan为name值, 后面的则是ognl表达式
 	private Scope scope;
 	private DataType dataType;
-	private boolean required;
 	private Object defaultValue;
-	private String description;
+	private boolean required;
+	private boolean stack;
 	
 	private Object value; // 实际参数的值
 	
@@ -25,9 +25,9 @@ public class Parameter implements Cloneable{
 		}
 		return null;
 	}
-	public static Parameter newInstance(String name, Scope scope, DataType dataType, Boolean required, Object value, String description) {
+	public static Parameter newInstance(String name, Scope scope, DataType dataType, Object value, boolean required, boolean stack) {
 		if(StringUtil.notEmpty(name)) {
-			return new Parameter(name, scope, dataType, required==null?true:required.booleanValue(), value, description);
+			return new Parameter(name, scope, dataType, value, required, stack);
 		}
 		return null;
 	}
@@ -74,7 +74,7 @@ public class Parameter implements Cloneable{
 			actualParameter = (Parameter) configParameter.clone();
 		} catch (CloneNotSupportedException e) {
 			// 手动clone
-			actualParameter = new Parameter(configParameter.name, configParameter.scope, configParameter.dataType, configParameter.required, configParameter.defaultValue, configParameter.description);
+			actualParameter = new Parameter(configParameter.name, configParameter.scope, configParameter.dataType, configParameter.defaultValue, configParameter.required, configParameter.stack);
 			actualParameter.ognlExpression = configParameter.ognlExpression;
 		}
 		
@@ -97,12 +97,12 @@ public class Parameter implements Cloneable{
 		this.scope = scope;
 	}
 	
-	private Parameter(String name, Scope scope, DataType dataType, boolean required, Object defaultValue, String description) {
+	private Parameter(String name, Scope scope, DataType dataType, Object defaultValue, boolean required, boolean stack) {
 		this(name, scope);
 		this.dataType = dataType;
-		this.required = required;
 		this.defaultValue = defaultValue;
-		this.description = description;
+		this.required = required;
+		this.stack = stack;
 	}
 	
 	// 修改实际值
@@ -132,13 +132,13 @@ public class Parameter implements Cloneable{
 	public DataType getDataType() {
 		return dataType;
 	}
-	public boolean isRequired() {
-		return required;
-	}
 	public Object getDefaultValue() {
 		return defaultValue;
 	}
-	public String getDescription() {
-		return description;
+	public boolean isRequired() {
+		return required;
+	}
+	public boolean isStack() {
+		return stack;
 	}
 }
