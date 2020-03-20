@@ -12,7 +12,7 @@ import com.douglei.business.flow.executer.parameter.ps.ParameterScope;
  */
 public class LocalParameterScope extends ParameterScope {
 	private static final ThreadLocal<Map<String, Parameter>> LOCAL_PARAMETER_MAP = new ThreadLocal<Map<String,Parameter>>();
-	private static final ThreadLocal<ParameterStack> LOCAL_PARAMETER_STACK = new ThreadLocal<ParameterStack>();
+	private static final ThreadLocal<Stack<Map<String, Parameter>>> LOCAL_PARAMETER_STACK = new ThreadLocal<Stack<Map<String, Parameter>>>(); 
 	
 	@Override
 	protected ThreadLocal<Map<String, Parameter>> threadLocalParameterMap() {
@@ -56,14 +56,4 @@ public class LocalParameterScope extends ParameterScope {
 		// TODO Auto-generated method stub
 		super.updateValue(parameter, newValue);
 	}
-	
-	
-	
-	// 参数堆
-	private class ParameterStack{
-		private boolean activated; // 是否被激活
-		private Stack<Map<String, Parameter>> stack;
-		
-	}
-	
 }
