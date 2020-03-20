@@ -17,8 +17,8 @@ public class InsertSql extends Sql {
 	private byte valuesType;
 	private Object values; // 可能是value数组, 也可能是select
 	
-	public InsertSql(String name, String description, Parameter[] parameters, byte valuesType) {
-		super(name, description, parameters);
+	public InsertSql(String name, Parameter[] parameters, byte valuesType) {
+		super(name, parameters);
 		this.valuesType = valuesType;
 	}
 	

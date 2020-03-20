@@ -20,8 +20,8 @@ public class UpdateSqlResolver extends SqlResolver{
 	}
 
 	@Override
-	public Sql parse(String name, String description, Parameter[] parameters, JSONObject content) {
-		UpdateSql sql = new UpdateSql(name, description, parameters);
+	public Sql parse(String name, Parameter[] parameters, JSONObject content) {
+		UpdateSql sql = new UpdateSql(name, parameters);
 		sql.setTable(parseTable(content.getJSONObject("table")));
 		
 		JSONArray array = content.getJSONArray("sets");

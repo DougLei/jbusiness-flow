@@ -41,7 +41,7 @@ public class ReferenceResolver {
 		JSONObject json;
 		for(short i=0;i<array.size();i++) {
 			json = array.getJSONObject(i);
-			map.put(json.getString("name"), new CommonActionWrapper(json.getString("description"), json.getJSONArray("actions")));
+			map.put(json.getString("name"), new CommonActionWrapper(json.getJSONArray("actions")));
 		}
 		return map;
 	}
@@ -85,11 +85,9 @@ public class ReferenceResolver {
 	
 	// CommonAction的包装类
 	private class CommonActionWrapper{
-		String description;
 		JSONArray confActions; // 配置的action数组
 		Action[] actions; // 解析后的action数组
-		CommonActionWrapper(String description, JSONArray confActions) {
-			this.description = description;
+		CommonActionWrapper(JSONArray confActions) {
 			this.confActions = confActions;
 		}
 		
@@ -141,7 +139,7 @@ public class ReferenceResolver {
 			}
 			Return return_ = new Return(returnJSON.getBooleanValue("all"), names);
 			
-			method = new Method(name, methodJSON.getString("description"), parameters, actions, return_);
+			method = new Method(name, parameters, actions, return_);
 			container.putMethod(method);
 		}
 		return method;

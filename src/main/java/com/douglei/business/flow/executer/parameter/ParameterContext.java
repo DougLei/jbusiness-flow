@@ -7,6 +7,7 @@ import com.douglei.business.flow.executer.parameter.ps.impl.GlobalParameterScope
 import com.douglei.business.flow.executer.parameter.ps.impl.InOutParameterScope;
 import com.douglei.business.flow.executer.parameter.ps.impl.InParameterScope;
 import com.douglei.business.flow.executer.parameter.ps.impl.LocalParameterScope;
+import com.douglei.business.flow.executer.parameter.ps.impl.MethodParameterScope;
 import com.douglei.business.flow.executer.parameter.ps.impl.OutParameterScope;
 import com.douglei.tools.utils.CollectionUtil;
 
@@ -22,6 +23,7 @@ public class ParameterContext {
 		PARAMETER_SCOPE_MAP.put(Scope.GLOBAL, new GlobalParameterScope());
 		PARAMETER_SCOPE_MAP.put(Scope.LOCAL, new LocalParameterScope());
 		PARAMETER_SCOPE_MAP.put(Scope.INOUT, new InOutParameterScope(PARAMETER_SCOPE_MAP.get(Scope.IN), PARAMETER_SCOPE_MAP.get(Scope.OUT)));
+		PARAMETER_SCOPE_MAP.put(Scope.METHOD, new MethodParameterScope());
 	}
 	
 	/**
@@ -42,10 +44,11 @@ public class ParameterContext {
 	}
 	
 	/**
-	 * 重置本地参数map
+	 * 重置指定范围的参数map
+	 * @param scope
 	 */
-	public static void resetLocalParameterMap() {
-		PARAMETER_SCOPE_MAP.get(Scope.LOCAL).reset();
+	public static void resetParameterMap(Scope scope) {
+		PARAMETER_SCOPE_MAP.get(scope).reset();
 	}
 	
 	/**

@@ -16,8 +16,8 @@ public class UpdateSql extends Sql {
 	private Value[] sets;
 	private ConditionGroup[] whereGroups;
 	
-	public UpdateSql(String name, String description, Parameter[] parameters) {
-		super(name, description, parameters);
+	public UpdateSql(String name, Parameter[] parameters) {
+		super(name, parameters);
 	}
 
 	public void setTable(Table table) {

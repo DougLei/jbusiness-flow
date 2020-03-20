@@ -53,7 +53,6 @@ public class SqlResolvers {
 	public static Sql parse(String name, JSONObject sqlJSON) {
 		return MAP.get(sqlJSON.getByte("type")).parse(
 				   name, 
-				   sqlJSON.getString("description"), 
 				   ParameterResolver.parse(sqlJSON.getJSONArray("params")), 
 				   sqlJSON.getJSONObject("content"));
 	}

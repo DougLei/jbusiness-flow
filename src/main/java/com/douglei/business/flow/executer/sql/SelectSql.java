@@ -14,8 +14,8 @@ public class SelectSql extends Sql {
 	private With[] withs;
 	private Select[] selects;
 	
-	public SelectSql(String name, String description, Parameter[] parameters) {
-		super(name, description, parameters);
+	public SelectSql(String name, Parameter[] parameters) {
+		super(name, parameters);
 	}
 
 	

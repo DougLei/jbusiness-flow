@@ -14,8 +14,8 @@ public class DeleteSql extends Sql {
 	private Table table;
 	private ConditionGroup[] whereGroups;
 	
-	public DeleteSql(String name, String description, Parameter[] parameters) {
-		super(name, description, parameters);
+	public DeleteSql(String name, Parameter[] parameters) {
+		super(name, parameters);
 	}
 
 	public void setTable(Table table) {

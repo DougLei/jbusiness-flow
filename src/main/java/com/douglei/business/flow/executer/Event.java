@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.ParameterContext;
+import com.douglei.business.flow.executer.parameter.Scope;
 
 /**
  * 
@@ -63,7 +64,7 @@ public class Event {
 	}
 	
 	public void execute() {
-		ParameterContext.resetLocalParameterMap();
+		ParameterContext.resetParameterMap(Scope.LOCAL);
 		for (Action action : actions) {
 			action.execute();
 		}
@@ -76,7 +77,7 @@ public class Event {
 		if(flows.size() == 1) { // 顺序流
 			flows.get(0).targetEvent().execute();
 		}else { // 条件流
-			ParameterContext.resetLocalParameterMap();
+			ParameterContext.resetParameterMap(Scope.LOCAL);
 			flows.forEach(flow -> {
 				if(flow.validate()) {
 					flow.targetEvent().execute();

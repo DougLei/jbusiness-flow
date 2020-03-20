@@ -20,8 +20,8 @@ public class SelectSqlResolver extends SqlResolver{
 	}
 
 	@Override
-	public Sql parse(String name, String description, Parameter[] parameters, JSONObject content) {
-		SelectSql sql = new SelectSql(name, description, parameters);
+	public Sql parse(String name, Parameter[] parameters, JSONObject content) {
+		SelectSql sql = new SelectSql(name, parameters);
 		
 		JSONArray array = content.getJSONArray("withs");
 		byte size = array==null?0:(byte)array.size();

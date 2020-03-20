@@ -20,8 +20,8 @@ public class InsertSqlResolver extends SqlResolver{
 	}
 
 	@Override
-	public Sql parse(String name, String description, Parameter[] parameters, JSONObject content) {
-		InsertSql sql = new InsertSql(name, description, parameters, content.getByteValue("valuesType"));
+	public Sql parse(String name, Parameter[] parameters, JSONObject content) {
+		InsertSql sql = new InsertSql(name, parameters, content.getByteValue("valuesType"));
 		sql.setTable(parseTable(content.getJSONObject("table")));
 		
 		JSONArray array = content.getJSONArray("columns");
