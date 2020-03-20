@@ -1,7 +1,7 @@
 package com.douglei.business.flow.executer.parameter.ps.impl;
 
 import com.douglei.business.flow.executer.parameter.Parameter;
-import com.douglei.business.flow.executer.parameter.ParameterScope;
+import com.douglei.business.flow.executer.parameter.ps.ParameterScope;
 
 /**
  * 

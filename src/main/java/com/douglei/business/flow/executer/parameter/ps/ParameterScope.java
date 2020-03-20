@@ -1,10 +1,11 @@
-package com.douglei.business.flow.executer.parameter;
+package com.douglei.business.flow.executer.parameter.ps;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.tools.utils.CollectionUtil;
 
 /**
@@ -21,7 +22,7 @@ public abstract class ParameterScope {
 	/**
 	 * 清空本范围内的参数
 	 */
-	public final void clear() {
+	public void clear() {
 		if(threadLocalParameterMap().get() != null) 
 			threadLocalParameterMap().remove();
 	}
@@ -53,7 +54,7 @@ public abstract class ParameterScope {
 	 * 获取本范围内的参数map
 	 * @return
 	 */
-	public final Map<String, Parameter> getParameterMap() {
+	public Map<String, Parameter> getParameterMap() {
 		return threadLocalParameterMap().get();
 	}
 	
@@ -62,7 +63,7 @@ public abstract class ParameterScope {
 	 * @param parameter
 	 * @return
 	 */
-	public final Object getValue(Parameter parameter) {
+	public Object getValue(Parameter parameter) {
 		if(threadLocalParameterMap().get() == null) {
 			return null;
 		}
@@ -77,7 +78,7 @@ public abstract class ParameterScope {
 	 * 获取本范围内的值map
 	 * @return
 	 */
-	public final Map<String, Object> getValueMap() {
+	public Map<String, Object> getValueMap() {
 		Map<String, Object> valueMap = Collections.emptyMap();
 		Map<String, Parameter> parameterMap = threadLocalParameterMap().get();
 		if(CollectionUtil.unEmpty(parameterMap)) {
@@ -94,7 +95,7 @@ public abstract class ParameterScope {
 	 * @param parameter
 	 * @param newValue
 	 */
-	public final void updateValue(Parameter parameter, Object newValue) {
+	public void updateValue(Parameter parameter, Object newValue) {
 		Map<String, Parameter> parameterMap = threadLocalParameterMap().get();
 		if(CollectionUtil.unEmpty(parameterMap)) {
 			Parameter p = parameterMap.get(parameter.getName());

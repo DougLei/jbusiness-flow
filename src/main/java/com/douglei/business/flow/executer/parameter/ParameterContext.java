@@ -3,6 +3,7 @@ package com.douglei.business.flow.executer.parameter;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.douglei.business.flow.executer.parameter.ps.ParameterScope;
 import com.douglei.business.flow.executer.parameter.ps.impl.GlobalParameterScope;
 import com.douglei.business.flow.executer.parameter.ps.impl.InOutParameterScope;
 import com.douglei.business.flow.executer.parameter.ps.impl.InParameterScope;
