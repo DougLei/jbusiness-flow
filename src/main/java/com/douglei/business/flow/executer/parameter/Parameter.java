@@ -105,14 +105,19 @@ public class Parameter implements Cloneable{
 		this.description = description;
 	}
 	
-	/**
-	 * 修改实际值
-	 * @param actualValue
-	 */
+	// 修改实际值
 	public void updateValue(Object value) {
 		value = getOGNLValue(this, value);
 		validateValueDataType(this, value);
 		this.value = value;
+	}
+	// 修改名字
+	public void updateName(String name) {
+		this.name = name;
+	}
+	// 修改范围
+	public void updateScope(Scope scope) {
+		this.scope = scope;
 	}
 	
 	public Object getValue() {

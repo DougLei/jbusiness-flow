@@ -36,19 +36,24 @@ public abstract class ParameterScope {
 	}
 	
 	/**
-	 * 根据配置的参数以及实际值, 添加参数(实参)
-	 * @param configParameter
-	 * @param actualValue
+	 * 添加参数(实参)
+	 * @param parameter
 	 */
-	public void addParameter(Parameter configParameter, Object actualValue) {
-		Parameter actualParameter = Parameter.getActualParameter(configParameter, actualValue);
-				
+	public void addParameter(Parameter parameter) {
+		Parameter p = null;
 		Map<String, Parameter> parameterMap = threadLocalParameterMap().get();
 		if(parameterMap == null) {
 			parameterMap = new HashMap<String, Parameter>();
 			threadLocalParameterMap().set(parameterMap);
+		}else {
+			p = parameterMap.get(parameter.getName());
 		}
-		parameterMap.put(actualParameter.getName(), actualParameter);
+		
+		if(p == null) {
+			parameterMap.put(parameter.getName(), parameter);
+		}else {
+			p.updateValue(parameter.getValue());
+		}
 	}
 	
 	/**

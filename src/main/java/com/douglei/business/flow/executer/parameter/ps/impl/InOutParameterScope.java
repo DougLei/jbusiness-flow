@@ -17,8 +17,8 @@ public class InOutParameterScope extends ParameterScope{
 	}
 
 	@Override
-	public void addParameter(Parameter configParameter, Object actualValue) {
-		in.addParameter(configParameter, actualValue);
-		out.addParameter(configParameter, actualValue);
+	public void addParameter(Parameter parameter) {
+		in.addParameter(parameter);
+		out.addParameter(parameter);
 	}
 }

@@ -26,10 +26,10 @@ public class Method {
 	
 	/**
 	 * 调用方法
-	 * @param actualParameters 实参
+	 * @param values 实参
 	 * @return
 	 */
-	public Map<String, Object> invoke(Map<String, Parameter> actualParameters) {
+	public Map<String, Parameter> invoke(Object[] values) {
 		// TODO Auto-generated method stub
 		return null;
 	}

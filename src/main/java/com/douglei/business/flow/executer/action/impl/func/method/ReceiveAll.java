@@ -1,6 +1,8 @@
 package com.douglei.business.flow.executer.action.impl.func.method;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.douglei.business.flow.executer.parameter.Parameter;
 
@@ -19,14 +21,21 @@ public class ReceiveAll {
 	
 	/**
 	 * 排除多余的值
-	 * @param values
+	 * @param returnParameters
+	 * @return 
 	 */
-	public void excludeValues(Map<String, Object> values) {
+	public Map<String, Object> excludeValues(Map<String, Parameter> returnParameters) {
 		if(excludeNames != null) {
 			for (String name : excludeNames) {
-				values.remove(name);
+				returnParameters.remove(name);
 			}
 		}
+		
+		Map<String, Object> values = new HashMap<String, Object>(returnParameters.size());
+		for(Entry<String, Parameter> entry: returnParameters.entrySet()) {
+			values.put(entry.getKey(), entry.getValue().getValue());
+		}
+		return values;
 	}
 
 	public Parameter getParameter() {

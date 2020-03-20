@@ -6,6 +6,7 @@ import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.func.method.FuncMethodAction;
 import com.douglei.business.flow.executer.action.impl.func.method.Receive;
 import com.douglei.business.flow.executer.action.impl.func.method.ReceiveAll;
+import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.resolver.ParameterResolver;
 import com.douglei.business.flow.resolver.ReferenceResolver;
 import com.douglei.business.flow.resolver.action.ActionResolver;
@@ -38,7 +39,8 @@ public class FuncMethodActionResolver extends ActionResolver {
 				json = array.getJSONObject(i);
 				receives[i] = new Receive(
 						json.getString("returnName"),
-						ParameterResolver.parse(json));
+						json.getString("name"),
+						Scope.toValue(json.getByteValue("scope")));
 			}
 			action.setReceives(receives);
 		}
