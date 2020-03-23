@@ -30,17 +30,17 @@ public abstract class ConditionBase {
 	 * @param prevResult 上一个验证的结果
 	 * @param prevOP 上一个验证后的逻辑操作符: and/or
 	 * @param currentIndex 当前要进行验证的下标
-	 * @param conditions 要验证的条件数组
+	 * @param conditionBases 要验证的条件数组
 	 * @return
 	 */
-	public static final boolean validate(boolean prevResult, LogicalOP prevOP, int currentIndex, ConditionBase[] conditions) {
-		if(currentIndex == conditions.length) {
+	public static final boolean validate(boolean prevResult, LogicalOP prevOP, int currentIndex, ConditionBase[] conditionBases) {
+		if(currentIndex == conditionBases.length) {
 			return prevResult;
 		}
 		// 短路功能
 		if((prevResult && prevOP==LogicalOP.AND) || (!prevResult && prevOP==LogicalOP.OR)) {
-			prevResult = prevOP.operating(prevResult, conditions[currentIndex].validate());
+			prevResult = prevOP.operating(prevResult, conditionBases[currentIndex].validate());
 		}
-		return validate(prevResult, conditions[currentIndex].getOp(), currentIndex+1, conditions);
+		return validate(prevResult, conditionBases[currentIndex].getOp(), currentIndex+1, conditionBases);
 	}
 }
