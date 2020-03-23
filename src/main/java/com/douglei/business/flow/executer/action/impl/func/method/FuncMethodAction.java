@@ -47,7 +47,7 @@ public class FuncMethodAction extends Action {
 				ParameterContext.addParameter(receiveAll.getParameter(), returnValues);
 			}
 		}
-		return null;
+		return null; // TODO 这里要怎么返回啊啊啊啊啊啊啊啊啊啊啊
 	}
 	
 	
