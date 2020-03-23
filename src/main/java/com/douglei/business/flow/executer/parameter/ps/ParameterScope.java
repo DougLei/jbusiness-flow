@@ -1,9 +1,7 @@
 package com.douglei.business.flow.executer.parameter.ps;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import com.douglei.business.flow.executer.parameter.Parameter;
 
@@ -26,7 +24,7 @@ public abstract class ParameterScope {
 	 */
 	public Map<String, Parameter> clear(){
 		parameterMap.clear();
-		return parameterMap;
+		return null;
 	}
 	
 	// 给指定的参数map中添加参数
@@ -63,22 +61,6 @@ public abstract class ParameterScope {
 	 */
 	public Object getValue(Parameter parameter) {
 		return getValue(parameter, parameterMap);
-	}
-	
-	/**
-	 * 获取本范围内的值map
-	 * @return
-	 */
-	public Map<String, Object> getValueMap() {
-		if(parameterMap.isEmpty()) {
-			return Collections.emptyMap();
-		}
-		
-		Map<String, Object> valueMap = new HashMap<String, Object>(parameterMap.size());
-		for(Entry<String, Parameter> entry : parameterMap.entrySet()) {
-			valueMap.put(entry.getKey(), entry.getValue().getValue());
-		}
-		return valueMap;
 	}
 	
 	// 更新指定参数map中, 指定参数的值

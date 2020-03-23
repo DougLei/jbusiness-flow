@@ -100,7 +100,7 @@ public class ParameterContext {
 	 * @return
 	 */
 	public static Map<String, Object> getOutValueMap() {
-		return PARAMETER_SCOPES.get().get(Scope.OUT).getValueMap();
+		return ((OutParameterScope) PARAMETER_SCOPES.get().get(Scope.OUT)).getValueMap();
 	}
 	
 	/**
