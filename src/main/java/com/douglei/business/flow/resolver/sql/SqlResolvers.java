@@ -56,13 +56,4 @@ public class SqlResolvers {
 				   ParameterResolver.parse(sqlJSON.getJSONArray("params")), 
 				   sqlJSON.getJSONObject("content"));
 	}
-	
-	/**
-	 * 获取指定类型的sql解析器
-	 * @param type
-	 * @return
-	 */
-	public static SqlResolver getSqlResolver(byte type) {
-		return MAP.get(type);
-	}
 }

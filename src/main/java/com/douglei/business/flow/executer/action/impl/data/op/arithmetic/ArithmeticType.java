@@ -7,12 +7,17 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public enum ArithmeticType {
-	ADD,
-	SUB,
-	MUL,
-	DIV,
-	MOD;
+	AD('+'),
+	SUB('-'),
+	MUL('*'),
+	DIV('/'),
+	MOD('%');
 	
+	private char operator; // 运算符
+	private ArithmeticType(char operator) {
+		this.operator = operator;
+	}
+
 	public static ArithmeticType toValue(String value) {
 		if(StringUtil.notEmpty(value)) {
 			value = value.trim().toUpperCase();
@@ -23,5 +28,9 @@ public enum ArithmeticType {
 			}
 		}
 		throw new ArithmeticTypeMatchingException(value);
+	}
+
+	public char getOperator() {
+		return operator;
 	}
 }

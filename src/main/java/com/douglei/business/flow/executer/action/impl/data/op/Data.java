@@ -13,19 +13,6 @@ public class Data {
 	private DataAction action;
 	private Action method; // FuncMethodAction
 	
-	
-	public Object getDefaultValue() {
-		return defaultValue;
-	}
-	public Parameter getParameter() {
-		return parameter;
-	}
-	public DataAction getAction() {
-		return action;
-	}
-	public Action getMethod() {
-		return method;
-	}
 	public void setDefaultValue(Object defaultValue) {
 		this.defaultValue = defaultValue;
 	}
@@ -38,7 +25,6 @@ public class Data {
 	public void setMethod(Action method) {
 		this.method = method;
 	}
-
 
 	private class DataAction {
 		private Action[] actions;
@@ -58,5 +44,10 @@ public class Data {
 			this.names = names;
 		}
 		
+	}
+
+	public DataValue getValue() {
+		// TODO 获取值
+		return null;
 	}
 }

@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.action.impl.data.op.compare;
 
+import com.douglei.business.flow.executer.action.impl.data.op.DataValue;
 import com.douglei.tools.utils.StringUtil;
 
 /**
@@ -7,14 +8,26 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public enum CompareType {
-	EQ("NE"),
+	EQ("NE"){
+		
+	},
 	NE("EQ"),
 	GT("LT"),
 	GE("LE"),
 	LT("GT"),
 	LE("GE"),
-	BOOL("NBOOL"),
-	NBOOL(null); // BOOL的取反值, 其没有取反值
+	BOOL("NBOOL"){
+		@Override
+		public boolean compare(DataValue v1, DataValue v2) {
+			return (boolean) v1.getValue();
+		}
+	},
+	NBOOL("BOOL"){
+		@Override
+		public boolean compare(DataValue v1, DataValue v2) {
+			return !((boolean) v1.getValue());
+		}
+	};
 	
 	private String inversion;
 	private CompareType(String inversion) {
@@ -40,4 +53,12 @@ public enum CompareType {
 		}
 		throw new CompareTypeMatchingException(value);
 	}
+	
+	/**
+	 * 进行比较
+	 * @param v1
+	 * @param v2
+	 * @return
+	 */
+	public abstract boolean compare(DataValue v1, DataValue v2);
 }

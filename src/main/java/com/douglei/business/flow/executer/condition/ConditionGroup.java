@@ -24,17 +24,15 @@ public class ConditionGroup extends ConditionBase{
 			return true;
 		}
 		
-		boolean conditionGroupResult = true;
+		boolean result = true;
 		if(conditionGroups.length > 0) {
-			conditionGroupResult = validate(conditionGroups[0].validate(), conditionGroups[0].getOp(), 1, conditionGroups);
+			result = validate(conditionGroups[0].validate(), conditionGroups[0].getOp(), 1, conditionGroups);
 		}
 		
-		boolean conditionResult = true;
 		if(conditions.length > 0) {
-			conditionResult = validate(conditions[0].validate(), conditions[0].getOp(), 1, conditions);
+			result = validate(result, cgcop, 0, conditions);
 		}
 		
-		boolean result = cgcop.operating(conditionGroupResult, conditionResult);
 		if(inverse) {
 			return !result;
 		}

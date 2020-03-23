@@ -1,7 +1,5 @@
 package com.douglei.business.flow.executer.action.impl.sql;
 
-import java.util.Map;
-
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.Sql;
@@ -17,12 +15,14 @@ public class SqlAction extends Action {
 	public SqlAction(Sql sql, Parameter[] parameters, Parameter result) {
 		this.sql = sql;
 		this.parameters = parameters;
-		this.result = result;
+		super.result = result;
 	}
 
 	@Override
 	public Object execute() {
 		// TODO Auto-generated method stub
+		
+		setResult(null);
 		return null;
 	}
 }
