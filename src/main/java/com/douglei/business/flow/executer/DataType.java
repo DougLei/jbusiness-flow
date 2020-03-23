@@ -21,12 +21,10 @@ public enum DataType {
 	OBJECT;
 	
 	private Object defaultValue; // 默认值
-	private Class<?>[] classes; // 对应的类型
 	
 	private DataType() {}
 	private DataType(Object defaultValue, Class<?>... classes) {
 		this.defaultValue = defaultValue;
-		this.classes = classes;
 		for (Class<?> clz : classes) {
 			DataTypeMapping.CLASS_DATATYPE_MAPPING.put(clz, this);
 		}

@@ -21,8 +21,7 @@
 		"scope":1, // 参数范围
 		"dataType":"string", // 参数数据类型, 默认为string
 		"defaultValue":"", // 参数默认值,  默认为null
-		"required":true, // 参数是否必须, 默认为false
-		"stack":false // 标识字段, 是否进入堆状态, 默认为false, 目前只是针对本地参数设计的, 即如果在调用方法时, 方法中产生的本地参数与event的action产生的本地参数形成堆的形式
+		"required":true // 参数是否必须, 默认为false
 	}],
 	
 	// 事件配置
@@ -78,8 +77,7 @@
 			"scope":5, // 参数范围, 这里不用配置, 直接使用5做为固定值
 			"dataType":"string", // 参数数据类型, 默认为string *
 			"defaultValue":"", // 参数默认值, 默认为null
-			"required":true, // 参数是否必须, 这里不用配置, 直接使用true做为固定值
-			"stack":true
+			"required":true // 参数是否必须, 这里不用配置, 直接使用true做为固定值
 		}],
 		"actions":[{ // 具体的action
 			// 所有的结果参数都属于本地map, 在return中决定返回哪些参数
@@ -100,8 +98,7 @@
 			"scope":5, // 参数范围, 这里不用配置, 直接使用5做为固定值
 			"dataType":"string", // 参数数据类型, 默认为string *
 			"defaultValue":"", // 参数默认值, 默认为null
-			"required":true, // 参数是否必须, 这里不用配置, 直接使用true做为固定值
-			"stack":true
+			"required":true // 参数是否必须, 这里不用配置, 直接使用true做为固定值
 		}],
 		"content":{ // sql内容配置
 			... // 具体参看business.flow.sql.desgin中不同type的配置结构

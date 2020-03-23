@@ -26,8 +26,7 @@ public class ParameterResolver {
 					Scope.toValue(json.getByteValue("scope")),
 					DataType.toValue(json.getString("dataType")),
 					json.get("defaultValue"),
-					json.getBooleanValue("required"),
-					json.getBooleanValue("stack"));
+					json.getBooleanValue("required"));
 	}
 	
 	/**

@@ -6,56 +6,54 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.douglei.business.flow.executer.parameter.Parameter;
-import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 
  * @author DougLei
  */
 public abstract class ParameterScope {
+	protected final Map<String, Parameter> parameterMap = new HashMap<String, Parameter>();
 	
-	protected ThreadLocal<Map<String, Parameter>> threadLocalParameterMap(){
-		return null;
-	}
-	
-
 	/**
-	 * 清空本范围内的参数
+	 * 激活当前范围的参数堆栈
 	 */
-	public void clear() {
-		if(threadLocalParameterMap().get() != null) 
-			threadLocalParameterMap().remove();
+	public void activateStack() {
 	}
 	
 	/**
-	 * 添加参数(实参)
-	 * @param parameter
+	 * 清空当前范围的参数
+	 * @return
 	 */
-	public void addParameter(Parameter parameter) {
-		Parameter p = null;
-		Map<String, Parameter> parameterMap = threadLocalParameterMap().get();
-		if(parameterMap == null) {
-			parameterMap = new HashMap<String, Parameter>();
-			threadLocalParameterMap().set(parameterMap);
-		}else {
-			p = parameterMap.get(parameter.getName());
-		}
-		
+	public Map<String, Parameter> clear(){
+		parameterMap.clear();
+		return parameterMap;
+	}
+	
+	// 给指定的参数map中添加参数
+	protected void addParamter(Parameter parameter, Map<String, Parameter> pm) {
+		Parameter p = pm.get(parameter.getName());
 		if(p == null) {
-			parameterMap.put(parameter.getName(), parameter);
+			pm.put(parameter.getName(), parameter);
 		}else {
 			p.updateValue(parameter.getValue());
 		}
 	}
 	
-	
-	
 	/**
-	 * 获取本范围内的参数map
-	 * @return
+	 * 添加参数
+	 * @param parameter
 	 */
-	public Map<String, Parameter> getParameterMap() {
-		return threadLocalParameterMap().get();
+	public void addParameter(Parameter parameter) {
+		addParamter(parameter, parameterMap);
+	}
+	
+	// 从指定的参数map中获取值
+	protected Object getValue(Parameter parameter, Map<String, Parameter> pm) {
+		Parameter p = pm.get(parameter.getName());
+		if(p == null) {
+			return null;
+		}
+		return p.getValue();
 	}
 	
 	/**
@@ -64,14 +62,7 @@ public abstract class ParameterScope {
 	 * @return
 	 */
 	public Object getValue(Parameter parameter) {
-		if(threadLocalParameterMap().get() == null) {
-			return null;
-		}
-		Parameter p = threadLocalParameterMap().get().get(parameter.getName());
-		if(p == null) {
-			return null;
-		}
-		return p.getValue();
+		return getValue(parameter, parameterMap);
 	}
 	
 	/**
@@ -79,15 +70,23 @@ public abstract class ParameterScope {
 	 * @return
 	 */
 	public Map<String, Object> getValueMap() {
-		Map<String, Object> valueMap = Collections.emptyMap();
-		Map<String, Parameter> parameterMap = threadLocalParameterMap().get();
-		if(CollectionUtil.unEmpty(parameterMap)) {
-			valueMap = new HashMap<String, Object>(parameterMap.size());
-			for(Entry<String, Parameter> entry : parameterMap.entrySet()) {
-				valueMap.put(entry.getKey(), entry.getValue().getValue());
-			}
+		if(parameterMap.isEmpty()) {
+			return Collections.emptyMap();
+		}
+		
+		Map<String, Object> valueMap = new HashMap<String, Object>(parameterMap.size());
+		for(Entry<String, Parameter> entry : parameterMap.entrySet()) {
+			valueMap.put(entry.getKey(), entry.getValue().getValue());
 		}
 		return valueMap;
+	}
+	
+	// 更新指定参数map中, 指定参数的值
+	protected void updateValue(Parameter parameter, Object newValue, Map<String, Parameter> pm) {
+		Parameter p = pm.get(parameter.getName());
+		if(p != null) {
+			p.updateValue(newValue);
+		}
 	}
 	
 	/**
@@ -96,12 +95,6 @@ public abstract class ParameterScope {
 	 * @param newValue
 	 */
 	public void updateValue(Parameter parameter, Object newValue) {
-		Map<String, Parameter> parameterMap = threadLocalParameterMap().get();
-		if(CollectionUtil.unEmpty(parameterMap)) {
-			Parameter p = parameterMap.get(parameter.getName());
-			if(p != null) {
-				p.updateValue(newValue);
-			}
-		}
+		updateValue(parameter, newValue, parameterMap);
 	}
 }

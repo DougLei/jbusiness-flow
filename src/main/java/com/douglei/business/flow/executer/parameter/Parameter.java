@@ -15,7 +15,6 @@ public class Parameter implements Cloneable{
 	private DataType dataType;
 	private Object defaultValue;
 	private boolean required;
-	private boolean stack;
 	
 	private Object value; // 实际参数的值
 	
@@ -25,9 +24,9 @@ public class Parameter implements Cloneable{
 		}
 		return null;
 	}
-	public static Parameter newInstance(String name, Scope scope, DataType dataType, Object value, boolean required, boolean stack) {
+	public static Parameter newInstance(String name, Scope scope, DataType dataType, Object value, boolean required) {
 		if(StringUtil.notEmpty(name)) {
-			return new Parameter(name, scope, dataType, value, required, stack);
+			return new Parameter(name, scope, dataType, value, required);
 		}
 		return null;
 	}
@@ -74,7 +73,7 @@ public class Parameter implements Cloneable{
 			actualParameter = (Parameter) configParameter.clone();
 		} catch (CloneNotSupportedException e) {
 			// 手动clone
-			actualParameter = new Parameter(configParameter.name, configParameter.scope, configParameter.dataType, configParameter.defaultValue, configParameter.required, configParameter.stack);
+			actualParameter = new Parameter(configParameter.name, configParameter.scope, configParameter.dataType, configParameter.defaultValue, configParameter.required);
 			actualParameter.ognlExpression = configParameter.ognlExpression;
 		}
 		
@@ -97,12 +96,11 @@ public class Parameter implements Cloneable{
 		this.scope = scope;
 	}
 	
-	private Parameter(String name, Scope scope, DataType dataType, Object defaultValue, boolean required, boolean stack) {
+	private Parameter(String name, Scope scope, DataType dataType, Object defaultValue, boolean required) {
 		this(name, scope);
 		this.dataType = dataType;
 		this.defaultValue = defaultValue;
 		this.required = required;
-		this.stack = stack;
 	}
 	
 	// 修改实际值
@@ -137,8 +135,5 @@ public class Parameter implements Cloneable{
 	}
 	public boolean isRequired() {
 		return required;
-	}
-	public boolean isStack() {
-		return stack;
 	}
 }

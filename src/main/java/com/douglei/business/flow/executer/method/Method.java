@@ -2,9 +2,9 @@ package com.douglei.business.flow.executer.method;
 
 import java.util.Map;
 
+import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.Parameter;
-import com.douglei.business.flow.executer.parameter.ParameterContext;
 import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.tools.utils.CollectionUtil;
 
@@ -39,6 +39,7 @@ public class Method {
 	 * @return
 	 */
 	public Map<String, Parameter> invoke(Object[] values) {
+		ParameterContext.activateStack(Scope.LOCAL);
 		if(parameterNotEmpty()) {
 			for (int i = 0; i < parameters.length; i++) {
 				ParameterContext.addParameter(parameters[i], values[i]);
