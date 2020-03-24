@@ -22,6 +22,6 @@ public class DataOpCompareAction extends Action {
 
 	@Override
 	public Object execute() {
-		return setResult(op.compare(left.getValue(), right.getValue()));
+		return setResult(op.compare(left.getValue(), right==null?null:right.getValue()));
 	}
 }

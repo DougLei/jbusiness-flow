@@ -40,6 +40,24 @@ public class DataValue {
 		this.dataType = dataType;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null || getClass() != obj.getClass())
+			return false;
+		DataValue other = (DataValue) obj;
+		
+		
+		
+		
+		
+		
+		
+		
+		return true;
+	}
+	
 	/**
 	 * 获取数字值
 	 * @return
