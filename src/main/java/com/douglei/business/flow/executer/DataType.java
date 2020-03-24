@@ -48,7 +48,7 @@ public enum DataType {
 	
 	/**
 	 * 根据值匹配对应的DataType
-	 * @param value
+	 * @param value 传入非null的值
 	 * @return
 	 */
 	public static DataType toValue(Object value) {
@@ -66,14 +66,11 @@ public enum DataType {
 	
 	/**
 	 * 判断传入的值与当前类型是否匹配
-	 * 如果当前值为null, 则默认匹配
-	 * @param actualValue
+	 * @param value 传入非null的值
 	 * @return
 	 */
-	public boolean matching(Object actualValue) {
-		if(actualValue == null || this == OBJECT) 
-			return true;
-		return toValue(actualValue) == this;
+	public boolean matching(Object value) {
+		return toValue(value) == this;
 	}
 }
 

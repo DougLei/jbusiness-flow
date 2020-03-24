@@ -2,7 +2,6 @@ package com.douglei.business.flow.executer.action.impl.data.op;
 
 import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.parameter.Parameter;
-import com.douglei.tools.utils.ObjectUtil;
 
 /**
  * 
@@ -27,7 +26,6 @@ public class DataValue {
 	
 	private void setValue(Object value, DataType dataType) {
 		if(value == null) {
-			value = ObjectUtil.emptyObject();
 			dataType = DataType.OBJECT;
 		}
 		this.value = value;
@@ -47,11 +45,15 @@ public class DataValue {
 		if (obj == null || getClass() != obj.getClass())
 			return false;
 		DataValue other = (DataValue) obj;
+		if((dataType != other.dataType) || ((value == null && other.value != null) || (value != null && other.value == null))) 
+			return false;
+		if(value == other.value)
+			return true;
 		
-		
-		
-		
-		
+		if(dataType == DataType.NUMBER) {
+			return getNumberValue() == other.getNumberValue();
+		}
+		if(dataType == DataType.BOOLEAN)
 		
 		
 		
@@ -63,7 +65,7 @@ public class DataValue {
 	 * @return
 	 */
 	public double getNumberValue() {
-		if(value == ObjectUtil.emptyObject() || dataType != DataType.NUMBER) {
+		if(value == null || dataType != DataType.NUMBER) {
 			return 0;
 		}
 		return Double.parseDouble(value.toString());
@@ -74,7 +76,7 @@ public class DataValue {
 	 * @return
 	 */
 	public boolean getBooleanValue() {
-		if(value == ObjectUtil.emptyObject() || dataType != DataType.BOOLEAN) {
+		if(value == null || dataType != DataType.BOOLEAN) {
 			return false;
 		}
 		return Boolean.parseBoolean(value.toString());
@@ -85,7 +87,7 @@ public class DataValue {
 	 * @return
 	 */
 	public String getStringValue() {
-		if(value == ObjectUtil.emptyObject()) {
+		if(value == null) {
 			return "";
 		}
 		if(dataType == DataType.NUMBER) {
