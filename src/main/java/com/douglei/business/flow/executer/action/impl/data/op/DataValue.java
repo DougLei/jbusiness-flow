@@ -49,15 +49,11 @@ public class DataValue {
 			return false;
 		if(value == other.value)
 			return true;
-		
-		if(dataType == DataType.NUMBER) {
-			return getNumberValue() == other.getNumberValue();
-		}
+		if(dataType == DataType.NUMBER)
+			return  Double.parseDouble(value.toString()) ==  Double.parseDouble(other.value.toString());
 		if(dataType == DataType.BOOLEAN)
-		
-		
-		
-		return true;
+			return (boolean)value == (boolean)other.value;
+		return value.equals(other.value);
 	}
 	
 	/**
@@ -79,7 +75,7 @@ public class DataValue {
 		if(value == null || dataType != DataType.BOOLEAN) {
 			return false;
 		}
-		return Boolean.parseBoolean(value.toString());
+		return (boolean) value;
 	}
 	
 	/**

@@ -12,7 +12,7 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public enum DataType {
-	STRING(null, String.class, char.class, Character.class),
+	STRING(null, String.class),
 	NUMBER(0, byte.class, short.class, int.class, long.class, float.class, double.class, Byte.class, Short.class, Integer.class, Long.class, Float.class, Double.class),
 	BOOLEAN(false, boolean.class, Boolean.class),
 	DATE(new Date(), Date.class),
@@ -21,7 +21,6 @@ public enum DataType {
 	OBJECT;
 	
 	private Object defaultValue; // 默认值
-	
 	private DataType() {}
 	private DataType(Object defaultValue, Class<?>... classes) {
 		this.defaultValue = defaultValue;
@@ -29,11 +28,15 @@ public enum DataType {
 			DataTypeMapping.CLASS_DATATYPE_MAPPING.put(clz, this);
 		}
 	}
-	
 	public Object defaultValue() {
 		return defaultValue;
 	}
 
+	/**
+	 * 根据配置的字符串匹配对应的DataType
+	 * @param value
+	 * @return
+	 */
 	public static DataType toValue(String value) {
 		if(StringUtil.notEmpty(value)) {
 			value = value.trim().toUpperCase();
