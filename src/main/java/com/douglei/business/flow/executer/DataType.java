@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.douglei.tools.utils.StringUtil;
+import com.douglei.tools.utils.datatype.VerifyTypeMatchUtil;
+import com.douglei.tools.utils.datatype.dateformat.DateFormatUtil;
 
 /**
  * 
@@ -60,9 +62,7 @@ public enum DataType {
 		if(dt == null) {
 			if(valueClass.isArray()) {
 				dt = ARRAY;
-			}else {
-				dt = OBJECT;
-			}
+			}else if(DateFormatUtil.verifyIsDate(object))
 		}
 		return dt;
 	}
