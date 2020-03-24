@@ -5,10 +5,10 @@ import java.util.Map;
 
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
+import com.douglei.business.flow.executer.action.impl.data.op.DataValue;
 import com.douglei.business.flow.executer.method.Method;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.tools.utils.CollectionUtil;
-import com.douglei.tools.utils.ObjectUtil;
 
 /**
  * 
@@ -56,7 +56,7 @@ public class FuncMethodAction extends Action {
 	 * 返回执行结果, 不会将返回的参数合并到当前业务流的参数范围中
 	 * @return
 	 */
-	public Object returnExecuteResult() {
+	public DataValue returnExecuteResult() {
 		Map<String, Parameter> returnParameters = invokeMethod();
 		if(CollectionUtil.unEmpty(returnParameters)) {
 			Map<String, Object> valueMap = null;
@@ -75,12 +75,12 @@ public class FuncMethodAction extends Action {
 			
 			if(CollectionUtil.unEmpty(valueMap)) {
 				if(valueMap.size() == 1) {
-					return valueMap.values().iterator().next();
+					return new DataValue(valueMap.values().iterator().next());
 				}
-				return valueMap;
+				return new DataValue(valueMap);
 			}
 		}
-		return ObjectUtil.emptyObject();
+		return new DataValue();
 	}
 	
 	public void setReceives(Receive[] receives) {

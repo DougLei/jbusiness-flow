@@ -1,9 +1,9 @@
 package com.douglei.business.flow.executer;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ArrayList;
 
 import com.douglei.tools.utils.StringUtil;
 
@@ -12,7 +12,7 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public enum DataType {
-	STRING(null, String.class),
+	STRING(null, String.class, char.class, Character.class),
 	NUMBER(0, byte.class, short.class, int.class, long.class, float.class, double.class, Byte.class, Short.class, Integer.class, Long.class, Float.class, Double.class),
 	BOOLEAN(false, boolean.class, Boolean.class),
 	DATE(new Date(), Date.class),
@@ -43,7 +43,25 @@ public enum DataType {
 				}
 			}
 		}
-		return STRING;
+		return OBJECT;
+	}
+	
+	/**
+	 * 根据值匹配对应的DataType
+	 * @param value
+	 * @return
+	 */
+	public static DataType toValue(Object value) {
+		Class<?> valueClass = value.getClass();
+		DataType dt = DataTypeMapping.CLASS_DATATYPE_MAPPING.get(valueClass);
+		if(dt == null) {
+			if(valueClass.isArray()) {
+				dt = ARRAY;
+			}else {
+				dt = OBJECT;
+			}
+		}
+		return dt;
 	}
 	
 	/**
@@ -55,7 +73,7 @@ public enum DataType {
 	public boolean matching(Object actualValue) {
 		if(actualValue == null || this == OBJECT) 
 			return true;
-		return (actualValue.getClass().isArray() && this == ARRAY) || DataTypeMapping.CLASS_DATATYPE_MAPPING.get(actualValue.getClass()) == this;
+		return toValue(actualValue) == this;
 	}
 }
 

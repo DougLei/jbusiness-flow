@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.Parameter;
-import com.douglei.tools.instances.expression.resolver.ExpressionResolver;
+import com.douglei.tools.instances.ognl.OgnlHandler;
 
 
 /**
@@ -20,12 +20,12 @@ public class DataOpArithmeticAction extends Action {
 		this.group = group;
 		this.result = result;
 	}
-
+	
 	@Override
 	public Object execute() {
 		StringBuilder formula = new StringBuilder(40);
 		ArithmeticUtil.append(formula, group);
 		logger.debug("获取的运算表达式为: {}", formula);
-		return setResult(new ExpressionResolver(formula.toString()).resolve());
+		return setResult(OgnlHandler.singleInstance().getObjectValue(formula.toString()));
 	}
 }

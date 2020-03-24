@@ -56,6 +56,14 @@ public class LocalParameterScope extends ParameterScope {
 	}
 	
 	@Override
+	public Parameter getParameter(String parameterName) {
+		if(stackActivated) {
+			return parameterStack.peek().get(parameterName);
+		}
+		return super.getParameter(parameterName);
+	}
+
+	@Override
 	public void updateValue(Parameter parameter, Object newValue) {
 		if(stackActivated) {
 			updateValue(parameter, newValue, parameterStack.peek());

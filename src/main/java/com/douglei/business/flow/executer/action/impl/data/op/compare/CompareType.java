@@ -9,23 +9,51 @@ import com.douglei.tools.utils.StringUtil;
  */
 public enum CompareType {
 	EQ("NE"){
-		
+		@Override
+		public boolean compare(DataValue v1, DataValue v2) {
+			return v1.equals(v2);
+		}
 	},
-	NE("EQ"),
-	GT("LT"),
-	GE("LE"),
-	LT("GT"),
-	LE("GE"),
+	NE("EQ") {
+		@Override
+		public boolean compare(DataValue v1, DataValue v2) {
+			return !v1.equals(v2);
+		}
+	},
+	GT("LT") {
+		@Override
+		public boolean compare(DataValue v1, DataValue v2) {
+			return v1.getNumberValue() > v2.getNumberValue();
+		}
+	},
+	GE("LE") {
+		@Override
+		public boolean compare(DataValue v1, DataValue v2) {
+			return v1.getNumberValue() >= v2.getNumberValue();
+		}
+	},
+	LT("GT") {
+		@Override
+		public boolean compare(DataValue v1, DataValue v2) {
+			return v1.getNumberValue() < v2.getNumberValue();
+		}
+	},
+	LE("GE") {
+		@Override
+		public boolean compare(DataValue v1, DataValue v2) {
+			return v1.getNumberValue() <= v2.getNumberValue();
+		}
+	},
 	BOOL("NBOOL"){
 		@Override
 		public boolean compare(DataValue v1, DataValue v2) {
-			return (boolean) v1.getValue();
+			return v1.getBooleanValue();
 		}
 	},
 	NBOOL("BOOL"){
 		@Override
 		public boolean compare(DataValue v1, DataValue v2) {
-			return !((boolean) v1.getValue());
+			return !v1.getBooleanValue();
 		}
 	};
 	

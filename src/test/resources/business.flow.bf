@@ -19,7 +19,7 @@
 		"name":"", // 参数名(英文)
 		"description":"", // 参数描述, 默认为null
 		"scope":1, // 参数范围
-		"dataType":"string", // 参数数据类型, 默认为string
+		"dataType":"string", // 参数数据类型, 默认为object
 		"defaultValue":"", // 参数默认值,  默认为null
 		"required":true // 参数是否必须, 默认为false
 	}],

@@ -31,7 +31,7 @@ public class DataOpArithmetic {
 			ArithmeticUtil.append(formula, group);
 			formula.append(")");
 		}else {
-			formula.append(data.getValue().toString());
+			formula.append(data.getValue().getStringValue());
 		}
 	}
 }

@@ -9,6 +9,8 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public class Parameter implements Cloneable{
+	private static final Parameter EMPTY_PARAMETER = new Parameter();
+	
 	private String name;
 	private String ognlExpression; // ognl表达式, 例如name=zhangsan.age, 其中zhangsan为name值, 后面的则是ognl表达式
 	private Scope scope;
@@ -17,6 +19,11 @@ public class Parameter implements Cloneable{
 	private boolean required;
 	
 	private Object value; // 实际参数的值
+	
+	
+	public static Parameter emptyParameter() {
+		return EMPTY_PARAMETER;
+	}
 	
 	public static Parameter newInstance(String name, Scope scope) {
 		if(StringUtil.notEmpty(name)) {
@@ -34,7 +41,7 @@ public class Parameter implements Cloneable{
 	// 验证参数的值是否为空
 	private static void validateValueIsNull(Parameter parameter, Object value) {
 		if(parameter.required && value == null && parameter.defaultValue == null && parameter.dataType.defaultValue() == null) {
-			throw new NullPointerException(parameter.scope.getDescription() + "["+parameter.name+"]的值不能为空");
+			throw new NullPointerException(parameter.scope.getDescription() + "["+parameter.name+"]的初始值不能为空");
 		}
 	}
 	// 验证参数的值类型是否和配置的匹配
@@ -85,6 +92,10 @@ public class Parameter implements Cloneable{
 		return actualParameter;
 	}
 	
+	
+	
+	private Parameter() {
+	}
 	private Parameter(String name, Scope scope) {
 		short dot = (short) name.indexOf(".");
 		if(dot > -1) { // 证明是ognl表达式
@@ -95,7 +106,6 @@ public class Parameter implements Cloneable{
 		}
 		this.scope = scope;
 	}
-	
 	private Parameter(String name, Scope scope, DataType dataType, Object defaultValue, boolean required) {
 		this(name, scope);
 		this.dataType = dataType;

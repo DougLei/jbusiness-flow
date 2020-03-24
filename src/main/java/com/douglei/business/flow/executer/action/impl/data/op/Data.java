@@ -9,7 +9,6 @@ import com.douglei.business.flow.executer.action.impl.func.method.FuncMethodActi
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.tools.utils.CollectionUtil;
-import com.douglei.tools.utils.ObjectUtil;
 
 /**
  * 
@@ -43,7 +42,7 @@ public class Data {
 			this.resultPick = new DataActionResultPick(resultPick_all, resultPick_names);
 		}
 
-		public Object execute() {
+		public DataValue execute() {
 			for (Action action : actions) {
 				action.execute();
 			}
@@ -59,7 +58,7 @@ public class Data {
 			this.names = names;
 		}
 		
-		public Object pickValue() {
+		public DataValue pickValue() {
 			Map<String, Object> valueMap = null;
 			if(all) {
 				valueMap = ParameterContext.getValueMap(Scope.LOCAL, names); 
@@ -75,25 +74,23 @@ public class Data {
 			}
 			
 			if(CollectionUtil.isEmpty(valueMap)) {
-				return ObjectUtil.emptyObject();
+				return new DataValue();
 			}else if(valueMap.size() == 1) {
-				return valueMap.values().iterator().next();
+				return new DataValue(valueMap.values().iterator().next());
 			}
-			return valueMap;
+			return new DataValue(valueMap);
 		}
 	}
 	
 	public DataValue getValue() {
-		DataValue dataValue = new DataValue();
 		if(value != null) {
-			dataValue.setValue(value);
+			return new DataValue(value);
 		}else if(parameter != null) {
-			dataValue.setValue(ParameterContext.getValue(parameter));
+			return new DataValue(ParameterContext.getParameter(parameter));
 		}else if(action != null) {
-			dataValue.setValue(action.execute());
+			return action.execute();
 		}else {
-			dataValue.setValue(method.returnExecuteResult());
+			return method.returnExecuteResult();
 		}
-		return dataValue;
 	}
 }

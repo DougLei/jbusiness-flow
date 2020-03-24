@@ -71,6 +71,15 @@ public class ParameterContext {
 	}
 	
 	/**
+	 * 获取指定的参数
+	 * @param parameter
+	 * @return
+	 */
+	public static Parameter getParameter(Parameter parameter) {
+		return PARAMETER_SCOPES.get().get(parameter.getScope()).getParameter(parameter.getName());
+	}
+	
+	/**
 	 * 根据参数, 获取对应的值
 	 * @param parameter
 	 * @return 

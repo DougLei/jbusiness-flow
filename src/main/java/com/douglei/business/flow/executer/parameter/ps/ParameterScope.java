@@ -64,6 +64,15 @@ public abstract class ParameterScope {
 		return getValue(parameter, parameterMap);
 	}
 	
+	/**
+	 * 获取指定name的参数
+	 * @param parameterName
+	 * @return
+	 */
+	public Parameter getParameter(String parameterName) {
+		return parameterMap.get(parameterName);
+	}
+	
 	// 更新指定参数map中, 指定参数的值
 	protected void updateValue(Parameter parameter, Object newValue, Map<String, Parameter> pm) {
 		Parameter p = pm.get(parameter.getName());
