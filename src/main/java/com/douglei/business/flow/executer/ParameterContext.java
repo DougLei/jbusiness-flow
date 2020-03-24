@@ -96,11 +96,13 @@ public class ParameterContext {
 	}
 	
 	/**
-	 * 获取输出参数map的值map
+	 * 获取指定范围的参数map的值map
+	 * @param scope
+	 * @param excludeNames 排除这些名字不获取
 	 * @return
 	 */
-	public static Map<String, Object> getOutValueMap() {
-		return ((OutParameterScope) PARAMETER_SCOPES.get().get(Scope.OUT)).getValueMap();
+	public static Map<String, Object> getValueMap(Scope scope, String... excludeNames) {
+		return PARAMETER_SCOPES.get().get(scope).getValueMap(excludeNames);
 	}
 	
 	/**

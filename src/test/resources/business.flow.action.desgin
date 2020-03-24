@@ -51,7 +51,7 @@
 			"scope":1 // 参数所在的范围(当前业务流中)
 		}],
 		
-		// receives和receiveAll可以共存
+		// receives和receiveAll是互斥的, receives的优先级高于receiveAll
 		"receives":[{ // 接收方法返回的数据
 			"returnName":"", 方法返回值中的参数名
 			"name":"", // 参数名(和result中的含义一致), 将returnName的值赋给当前业务流中, 指定范围中指定name的参数, 如果returnName和name一致, 则可以不配置name
@@ -87,7 +87,7 @@
 			},
 			
 			"method":{ // 执行method
-				// 和type=func_method的content中的配置一致, 用最后receive的值进行比较
+				// 和type=func_method的content中的配置一致, 用最后接收的值进行操作
 			}
 			
 			// 这上面的优先级为: value > name,scope > action > method

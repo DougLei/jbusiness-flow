@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.parameter.ps;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,5 +79,41 @@ public abstract class ParameterScope {
 	 */
 	public void updateValue(Parameter parameter, Object newValue) {
 		updateValue(parameter, newValue, parameterMap);
+	}
+	
+	// 判断names中是否存在name
+	private boolean exists(String name, String[] names) {
+		if(names.length > 0) {
+			for (String name_ : names) {
+				if(name_.equals(name)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	// 从指定的参数map中, 获取值map
+	protected Map<String, Object> getValueMap(Map<String, Parameter> pm, String[] excludeNames){
+		if(pm.isEmpty()) {
+			return Collections.emptyMap();
+		}
+		
+		Map<String, Object> valueMap = new HashMap<String, Object>(pm.size() - excludeNames.length);
+		for(Parameter entry : pm.values()) {
+			if(!exists(entry.getName(), excludeNames)) {
+				valueMap.put(entry.getName(), entry.getValue());
+			}
+		}
+		return valueMap;
+	}
+	
+	/**
+	 * 获取本范围内的值map
+	 * @param excludeNames 排除这些名字不获取
+	 * @return
+	 */
+	public Map<String, Object> getValueMap(String... excludeNames) {
+		return getValueMap(parameterMap, excludeNames);
 	}
 }

@@ -2,7 +2,6 @@ package com.douglei.business.flow.executer.action.impl.func.method;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import com.douglei.business.flow.executer.parameter.Parameter;
 
@@ -32,8 +31,8 @@ public class ReceiveAll {
 		}
 		
 		Map<String, Object> values = new HashMap<String, Object>(returnParameters.size());
-		for(Entry<String, Parameter> entry: returnParameters.entrySet()) {
-			values.put(entry.getKey(), entry.getValue().getValue());
+		for(Parameter parameter: returnParameters.values()) {
+			values.put(parameter.getName(), parameter.getValue());
 		}
 		return values;
 	}

@@ -63,4 +63,12 @@ public class LocalParameterScope extends ParameterScope {
 		}
 		super.updateValue(parameter, newValue);
 	}
+
+	@Override
+	public Map<String, Object> getValueMap(String... excludeNames) {
+		if(stackActivated) {
+			return getValueMap(parameterStack.peek(), excludeNames);
+		}
+		return super.getValueMap(excludeNames);
+	}
 }

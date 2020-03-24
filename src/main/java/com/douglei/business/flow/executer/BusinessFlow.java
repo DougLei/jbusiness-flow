@@ -3,6 +3,7 @@ package com.douglei.business.flow.executer;
 import java.util.Map;
 
 import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.Scope;
 
 /**
  * 
@@ -35,7 +36,7 @@ public class BusinessFlow {
 				}
 			}
 			startEvent.execute();
-			return ParameterContext.getOutValueMap();
+			return ParameterContext.getValueMap(Scope.OUT);
 		} finally {
 			ParameterContext.destory();
 		}
