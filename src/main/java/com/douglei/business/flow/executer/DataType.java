@@ -2,8 +2,6 @@ package com.douglei.business.flow.executer;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.douglei.tools.utils.StringUtil;
@@ -15,15 +13,20 @@ import com.douglei.tools.utils.datatype.dateformat.DateFormatUtil;
  * @author DougLei
  */
 public enum DataType {
-	STRING(null, String.class, char.class, Character.class){
+	STRING(){
 		@Override
 		public Object convert(Object value) {
 			if(value == null)
 				return null;
 			return value.toString();
 		}
+
+		@Override
+		protected boolean isInstanceOf(Object value) {
+			return value instanceof String || value instanceof Character;
+		}
 	},
-	INTEGER(0, byte.class, short.class, int.class, long.class, Byte.class, Short.class, Integer.class, Long.class){
+	INTEGER(0){
 		@Override
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
@@ -44,8 +47,13 @@ public enum DataType {
 		public boolean isNumber() {
 			return true;
 		}
+		
+		@Override
+		protected boolean isInstanceOf(Object value) {
+			return value instanceof Integer || value instanceof Short || value instanceof Long || value instanceof Byte;
+		}
 	},
-	DOUBLE(0, float.class, double.class, Float.class, Double.class){
+	DOUBLE(0){
 		@Override
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
@@ -66,8 +74,13 @@ public enum DataType {
 		public boolean isNumber() {
 			return true;
 		}
+		
+		@Override
+		protected boolean isInstanceOf(Object value) {
+			return value instanceof Float || value instanceof Double;
+		}
 	},
-	BOOLEAN(false, boolean.class, Boolean.class){
+	BOOLEAN(false){
 		@Override
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
@@ -83,8 +96,13 @@ public enum DataType {
 				return null;
 			return Boolean.parseBoolean(value.toString());
 		}
+		
+		@Override
+		protected boolean isInstanceOf(Object value) {
+			return value instanceof Boolean;
+		}
 	},
-	DATE(Date.class){
+	DATE(){
 		@Override
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
@@ -100,8 +118,13 @@ public enum DataType {
 				return null;
 			return DateFormatUtil.parseDate(value);
 		}
+		
+		@Override
+		protected boolean isInstanceOf(Object value) {
+			return value instanceof Date;
+		}
 	},
-	ARRAY(List.class){
+	ARRAY(){
 		@Override
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
@@ -110,23 +133,28 @@ public enum DataType {
 			}
 			return result;
 		}
+		
+		@Override
+		protected boolean isInstanceOf(Object value) {
+			return value instanceof Collection;
+		}
 	},
-	OBJECT(Map.class){
+	OBJECT(){
 		@Override
 		public boolean matching(Object value) {
 			return true;
+		}
+		
+		@Override
+		protected boolean isInstanceOf(Object value) {
+			return value instanceof Map || value instanceof Object;
 		}
 	};
 	
 	private Object defaultValue; // 默认值
 	private DataType() {}
-	private DataType(Class<?>... classes) {
-		this(null, classes);
-	}
-	private DataType(Object defaultValue, Class<?>... classes) {
+	private DataType(Object defaultValue) {
 		this.defaultValue = defaultValue;
-		for (Class<?> clz : classes)
-			DataTypeMapping.CLASS_DATATYPE_MAPPING.put(clz, this);
 	}
 	
 	public Object defaultValue() {
@@ -156,13 +184,12 @@ public enum DataType {
 	 * @return
 	 */
 	public static DataType toValue(Object value) {
-		if(DateFormatUtil.verifyIsDate(value)) {
-			return DATE;
+		for (DataType dt: DataType.values()) {
+			if(dt.matching(value)) {
+				return dt;
+			}
 		}
-		DataType dt = DataTypeMapping.CLASS_DATATYPE_MAPPING.get(value.getClass());
-		if(dt == null)
-			dt = OBJECT;
-		return dt;
+		return OBJECT;
 	}
 	
 	/**
@@ -173,8 +200,15 @@ public enum DataType {
 	public boolean matching(Object value) {
 		if(value == null)
 			return true;
-		return DataTypeMapping.CLASS_DATATYPE_MAPPING.get(value.getClass()) == this;
+		return isInstanceOf(value);
 	}
+	
+	/**
+	 * 判断value是否当前类型的实例
+	 * @param value
+	 * @return
+	 */
+	protected abstract boolean isInstanceOf(Object value);
 	
 	/**
 	 * 将值转换为当前类型的数据
@@ -193,8 +227,4 @@ public enum DataType {
 	public boolean isNumber() {
 		return false;
 	}
-}
-
-class DataTypeMapping {
-	static final Map<Class<?>, DataType> CLASS_DATATYPE_MAPPING = new HashMap<Class<?>, DataType>(32); // class与DataType的映射集合
 }

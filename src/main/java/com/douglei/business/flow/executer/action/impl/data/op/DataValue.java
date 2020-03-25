@@ -1,5 +1,7 @@
 package com.douglei.business.flow.executer.action.impl.data.op;
 
+import java.util.Date;
+
 import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.parameter.Parameter;
 
@@ -87,6 +89,9 @@ public class DataValue {
 		}
 		if(dataType.isNumber()) {
 			return value.toString();
+		}
+		if(dataType == DataType.DATE) {
+			return ((Date)value).getTime()+"";
 		}
 		return "\"" + value.toString() + "\"";
 	}
