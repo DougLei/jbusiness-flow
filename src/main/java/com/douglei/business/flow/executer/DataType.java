@@ -13,19 +13,6 @@ import com.douglei.tools.utils.datatype.dateformat.DateFormatUtil;
  * @author DougLei
  */
 public enum DataType {
-	STRING(){
-		@Override
-		public Object convert(Object value) {
-			if(value == null)
-				return null;
-			return value.toString();
-		}
-
-		@Override
-		protected boolean isInstanceOf(Object value) {
-			return value instanceof String || value instanceof Character;
-		}
-	},
 	INTEGER(0){
 		@Override
 		public boolean matching(Object value) {
@@ -124,6 +111,19 @@ public enum DataType {
 			return value instanceof Date;
 		}
 	},
+	STRING(){
+		@Override
+		public Object convert(Object value) {
+			if(value == null)
+				return null;
+			return value.toString();
+		}
+
+		@Override
+		protected boolean isInstanceOf(Object value) {
+			return value instanceof String || value instanceof Character;
+		}
+	},
 	ARRAY(){
 		@Override
 		public boolean matching(Object value) {
@@ -184,9 +184,10 @@ public enum DataType {
 	 * @return
 	 */
 	public static DataType toValue(Object value) {
-		for (DataType dt: DataType.values()) {
-			if(dt.matching(value)) {
-				return dt;
+		if(value != null) {
+			for (DataType dt: DataType.values()) {
+				if(dt.matching(value))
+					return dt;
 			}
 		}
 		return OBJECT;
