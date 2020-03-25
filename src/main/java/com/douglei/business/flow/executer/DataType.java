@@ -1,9 +1,9 @@
 package com.douglei.business.flow.executer;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.douglei.tools.utils.StringUtil;
@@ -39,6 +39,11 @@ public enum DataType {
 				return null;
 			return Long.parseLong(value.toString());
 		}
+
+		@Override
+		public boolean isNumber() {
+			return true;
+		}
 	},
 	DOUBLE(0, float.class, double.class, Float.class, Double.class){
 		@Override
@@ -55,6 +60,11 @@ public enum DataType {
 			if(value == null)
 				return null;
 			return Double.parseDouble(value.toString());
+		}
+
+		@Override
+		public boolean isNumber() {
+			return true;
 		}
 	},
 	BOOLEAN(false, boolean.class, Boolean.class){
@@ -74,7 +84,7 @@ public enum DataType {
 			return Boolean.parseBoolean(value.toString());
 		}
 	},
-	DATE(Date.class, java.sql.Date.class, java.sql.Timestamp.class){
+	DATE(Date.class){
 		@Override
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
@@ -91,7 +101,7 @@ public enum DataType {
 			return DateFormatUtil.parseDate(value);
 		}
 	},
-	ARRAY(ArrayList.class){
+	ARRAY(List.class){
 		@Override
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
@@ -101,7 +111,7 @@ public enum DataType {
 			return result;
 		}
 	},
-	OBJECT{
+	OBJECT(Map.class){
 		@Override
 		public boolean matching(Object value) {
 			return true;
@@ -140,27 +150,20 @@ public enum DataType {
 		return OBJECT;
 	}
 	
-//	/**
-//	 * 根据值匹配对应的DataType
-//	 * @param value 传入非null的值
-//	 * @return
-//	 */
-//	public static DataType toValue(Object value) {
-//		if(DateFormatUtil.verifyIsDate(value)) {
-//			return DATE;
-//		}
-//		
-//		Class<?> valueClass = value.getClass();
-//		DataType dt = DataTypeMapping.CLASS_DATATYPE_MAPPING.get(valueClass);
-//		if(dt == null) {
-//			if(valueClass.isArray()) {
-//				dt = ARRAY;
-//			}else if(DateFormatUtil.verifyIsDate(value)) {
-//				dt = DATE;
-//			}
-//		}
-//		return dt;
-//	}
+	/**
+	 * 根据值匹配对应的DataType
+	 * @param value 传入非null的值
+	 * @return
+	 */
+	public static DataType toValue(Object value) {
+		if(DateFormatUtil.verifyIsDate(value)) {
+			return DATE;
+		}
+		DataType dt = DataTypeMapping.CLASS_DATATYPE_MAPPING.get(value.getClass());
+		if(dt == null)
+			dt = OBJECT;
+		return dt;
+	}
 	
 	/**
 	 * 判断传入的值与当前类型是否匹配
@@ -181,6 +184,14 @@ public enum DataType {
 	 */
 	public Object convert(Object value) {
 		return value;
+	}
+	
+	/**
+	 * 是否是数字类型
+	 * @return
+	 */
+	public boolean isNumber() {
+		return false;
 	}
 }
 

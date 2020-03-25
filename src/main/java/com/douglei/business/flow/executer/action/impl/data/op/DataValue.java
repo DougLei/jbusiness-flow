@@ -44,15 +44,14 @@ public class DataValue {
 			return true;
 		if (obj == null || getClass() != obj.getClass())
 			return false;
+		
 		DataValue other = (DataValue) obj;
-		if((dataType != other.dataType) || ((value == null && other.value != null) || (value != null && other.value == null))) 
+		if((value == null && other.value != null) || (value != null && other.value == null)) 
 			return false;
 		if(value == other.value)
 			return true;
-		if(dataType == DataType.NUMBER)
+		if(dataType.isNumber())
 			return  Double.parseDouble(value.toString()) ==  Double.parseDouble(other.value.toString());
-		if(dataType == DataType.BOOLEAN)
-			return (boolean)value == (boolean)other.value;
 		return value.equals(other.value);
 	}
 	
@@ -61,7 +60,7 @@ public class DataValue {
 	 * @return
 	 */
 	public double getNumberValue() {
-		if(value == null || dataType != DataType.NUMBER) {
+		if(value == null || !dataType.isNumber()) {
 			return 0;
 		}
 		return Double.parseDouble(value.toString());
@@ -86,7 +85,7 @@ public class DataValue {
 		if(value == null) {
 			return "";
 		}
-		if(dataType == DataType.NUMBER) {
+		if(dataType.isNumber()) {
 			return value.toString();
 		}
 		return "\"" + value.toString() + "\"";
