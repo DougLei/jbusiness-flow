@@ -36,7 +36,7 @@ public enum DataType {
 		}
 		
 		@Override
-		protected boolean isInstanceOf(Object value) {
+		protected boolean isInstance(Object value) {
 			return value instanceof Integer || value instanceof Short || value instanceof Long || value instanceof Byte;
 		}
 	},
@@ -63,7 +63,7 @@ public enum DataType {
 		}
 		
 		@Override
-		protected boolean isInstanceOf(Object value) {
+		protected boolean isInstance(Object value) {
 			return value instanceof Float || value instanceof Double;
 		}
 	},
@@ -85,7 +85,7 @@ public enum DataType {
 		}
 		
 		@Override
-		protected boolean isInstanceOf(Object value) {
+		protected boolean isInstance(Object value) {
 			return value instanceof Boolean;
 		}
 	},
@@ -107,7 +107,7 @@ public enum DataType {
 		}
 		
 		@Override
-		protected boolean isInstanceOf(Object value) {
+		protected boolean isInstance(Object value) {
 			return value instanceof Date;
 		}
 	},
@@ -120,7 +120,7 @@ public enum DataType {
 		}
 
 		@Override
-		protected boolean isInstanceOf(Object value) {
+		protected boolean isInstance(Object value) {
 			return value instanceof String || value instanceof Character;
 		}
 	},
@@ -135,7 +135,7 @@ public enum DataType {
 		}
 		
 		@Override
-		protected boolean isInstanceOf(Object value) {
+		protected boolean isInstance(Object value) {
 			return value instanceof Collection;
 		}
 	},
@@ -146,7 +146,7 @@ public enum DataType {
 		}
 		
 		@Override
-		protected boolean isInstanceOf(Object value) {
+		protected boolean isInstance(Object value) {
 			return value instanceof Map || value instanceof Object;
 		}
 	};
@@ -201,7 +201,7 @@ public enum DataType {
 	public boolean matching(Object value) {
 		if(value == null)
 			return true;
-		return isInstanceOf(value);
+		return isInstance(value);
 	}
 	
 	/**
@@ -209,7 +209,7 @@ public enum DataType {
 	 * @param value
 	 * @return
 	 */
-	protected abstract boolean isInstanceOf(Object value);
+	protected abstract boolean isInstance(Object value);
 	
 	/**
 	 * 将值转换为当前类型的数据

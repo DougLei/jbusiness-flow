@@ -1,8 +1,8 @@
 package com.douglei.business.flow.executer.action.impl.func;
 
 import com.douglei.business.flow.executer.action.Action;
-import com.douglei.business.flow.executer.condition.ConditionBase;
 import com.douglei.business.flow.executer.condition.ConditionGroup;
+import com.douglei.business.flow.executer.condition.ConditionValidator;
 
 /**
  * 
@@ -18,10 +18,9 @@ public class FuncSwitchAction extends Action {
 		this.groups[i] = new SwitchGroup(conditionGroups, actions);
 	}
 
-
 	@Override
 	public Object execute() {
-		for (SwitchGroup switch_ : groups) {
+		for(SwitchGroup switch_ : groups) {
 			if(switch_.validate()) {
 				return switch_.execute();
 			}
@@ -39,7 +38,7 @@ public class FuncSwitchAction extends Action {
 		}
 
 		boolean validate() {
-			return ConditionBase.validate(conditionGroups[0].validate(), conditionGroups[0].getOp(), 1, conditionGroups);
+			return new ConditionValidator(conditionGroups).validate();
 		}
 
 		Object execute() {
