@@ -28,41 +28,19 @@ public class FuncLoopAction extends Action {
 		if(value != null) {
 			if(value instanceof Collection<?>) {
 				executeList((Collection<Object>)value);
-			}else if (value.getClass().isArray()){
-				executeArray((Object[])value);
 			}
 		}
 		return null;
 	}
-	
-	// 集合
 	private void executeList(Collection<Object> list) {
 		if(list.size() > 0) {
 			ParameterContext.addParameter(alias, null);
-			for (Object object : list) {
-				executeCore(object);
+			for (Object value : list) {
+				ParameterContext.updateValue(alias, value);
+				for (Action action : actions) {
+					action.execute();
+				}
 			}
-		}
-	}
-
-	// 数组
-	private void executeArray(Object[] array) {
-		if(array.length > 0) {
-			ParameterContext.addParameter(alias, null);
-			for (Object object : array) {
-				executeCore(object);
-			}
-		}
-	}
-	
-	/**
-	 * 执行的核心
-	 * @param acutalAliasValue 别名参数的实际值
-	 */
-	private void executeCore(Object acutalAliasValue) {
-		ParameterContext.updateValue(alias, acutalAliasValue);
-		for (Action action : actions) {
-			action.execute();
 		}
 	}
 }
