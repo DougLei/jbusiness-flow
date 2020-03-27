@@ -9,12 +9,24 @@ import com.douglei.business.flow.executer.LogicalOP;
 public class ConditionValidator {
 	private boolean inverse;
 	private ConditionValidator left;
-	private Condition right;
+	private ConditionValidator right;
 	private LogicalOP op;
 	
+	/**
+	 * 设置右边的值
+	 * @param op
+	 * @param right
+	 * @return
+	 */
+	public ConditionValidator setRight(LogicalOP op, ConditionValidator right) {
+		return new ConditionValidator(this, op, right);
+	}
 	
-	public ConditionValidator setRight(LogicalOP op, Condition right) {
-		
+	/**
+	 * 取反
+	 */
+	public void invert() {
+		this.inverse = true;
 	}
 	
 
@@ -48,10 +60,10 @@ public class ConditionValidator {
 		return DEFAULT_VALIDATOR;
 	}
 	protected ConditionValidator() {}
-	protected ConditionValidator(Condition left, Condition right, LogicalOP op) {
+	protected ConditionValidator(ConditionValidator left, LogicalOP op, ConditionValidator right) {
 		this.left = left;
-		this.right = right;
 		this.op = op;
+		this.right = right;
 	}
 	private static final ConditionValidator DEFAULT_VALIDATOR = new ConditionValidator();
 }

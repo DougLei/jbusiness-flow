@@ -1,6 +1,5 @@
 package com.douglei.business.flow.executer.condition;
 
-import com.douglei.business.flow.executer.LogicalOP;
 import com.douglei.business.flow.executer.action.Action;
 
 /**
@@ -16,8 +15,4 @@ public class Condition extends ConditionValidator{
 		this.dataOpCompareAction = dataOpCompareAction;
 	}
 
-	@Override
-	public ConditionValidator setRight(LogicalOP op, Condition right) {
-		return new ConditionValidator(this, right, op);
-	}
 }

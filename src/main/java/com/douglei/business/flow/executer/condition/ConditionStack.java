@@ -25,15 +25,20 @@ public class ConditionStack {
 		if(opStack.isEmpty() ) {
 			opStack.push(op);
 		} else if(op == LogicalOP.RIGHT_PARENTHESES) {
-			
-			
-			
+			LogicalOP top;
+			while((top = opStack.pop()) != LogicalOP.LEFT_PARENTHESES) {
+				stack.push(stack.pop().setRight(top, stack.pop()));
+			}
+			if(!opStack.isEmpty() && opStack.peek() == LogicalOP.NOT) {
+				opStack.pop();
+				stack.peek().invert();
+			}
 		}else {
 			LogicalOP top = opStack.peek();
 			if(top.getPriority() > op.getPriority() && top != LogicalOP.LEFT_PARENTHESES) {
 				do {
 					top = opStack.pop();
-					stack.push(stack.pop().setRight(top, (Condition)stack.pop()));
+					stack.push(stack.pop().setRight(top, stack.pop()));
 				}while(!opStack.isEmpty() && (top = opStack.peek()) != LogicalOP.LEFT_PARENTHESES && top.getPriority() > op.getPriority());
 			}
 			opStack.push(op);
@@ -53,8 +58,6 @@ public class ConditionStack {
 	 * @return
 	 */
 	public ConditionValidator getConditionValidator() {
-		opStack = null;
-		stack = null;
-		return null; // TODO 
+		return stack.pop(); 
 	}
 }
