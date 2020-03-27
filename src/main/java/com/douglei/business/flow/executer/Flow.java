@@ -1,6 +1,5 @@
 package com.douglei.business.flow.executer;
 
-import com.douglei.business.flow.executer.condition.ConditionGroup;
 import com.douglei.business.flow.executer.condition.ConditionValidator;
 
 /**
@@ -16,15 +15,15 @@ public class Flow {
 	private byte order;
 	private String sourceEvent;
 	private String targetEvent;
-	private ConditionGroup[] conditionGroups;
+	private ConditionValidator conditionValidator;
 	
-	public Flow(String description, byte type, byte order, String sourceEvent, String targetEvent, ConditionGroup[] conditionGroups) {
+	public Flow(String description, byte type, byte order, String sourceEvent, String targetEvent, ConditionValidator conditionValidator) {
 		this.description = description;
 		this.type = type;
 		this.order = order;
 		this.sourceEvent = sourceEvent;
 		this.targetEvent = targetEvent;
-		this.conditionGroups = conditionGroups;
+		this.conditionValidator = conditionValidator;
 	}
 	
 	private Event event;
@@ -37,7 +36,7 @@ public class Flow {
 	
 	// 对条件进行验证, 获取结果
 	public boolean validate() {
-		return new ConditionValidator(conditionGroups).validate();
+		return conditionValidator.validate();
 	}
 	
 	// 是否是顺序流

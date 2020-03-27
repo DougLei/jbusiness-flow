@@ -1,7 +1,6 @@
 package com.douglei.business.flow.executer.action.impl.func;
 
 import com.douglei.business.flow.executer.action.Action;
-import com.douglei.business.flow.executer.condition.ConditionGroup;
 import com.douglei.business.flow.executer.condition.ConditionValidator;
 
 /**
@@ -14,8 +13,8 @@ public class FuncSwitchAction extends Action {
 	public FuncSwitchAction(int size) {
 		this.groups = new SwitchGroup[size];
 	}
-	public void add(byte i, ConditionGroup[] conditionGroups, Action[] actions) {
-		this.groups[i] = new SwitchGroup(conditionGroups, actions);
+	public void add(byte i, ConditionValidator conditionValidator, Action[] actions) {
+		this.groups[i] = new SwitchGroup(conditionValidator, actions);
 	}
 
 	@Override
@@ -29,16 +28,16 @@ public class FuncSwitchAction extends Action {
 	}
 	
 	private class SwitchGroup{
-		private ConditionGroup[] conditionGroups;
+		private ConditionValidator conditionValidator;
 		private Action[] actions;
 		
-		SwitchGroup(ConditionGroup[] conditionGroups, Action[] actions) {
-			this.conditionGroups = conditionGroups;
+		SwitchGroup(ConditionValidator conditionValidator, Action[] actions) {
+			this.conditionValidator = conditionValidator;
 			this.actions = actions;
 		}
 
 		boolean validate() {
-			return new ConditionValidator(conditionGroups).validate();
+			return conditionValidator.validate();
 		}
 
 		Object execute() {

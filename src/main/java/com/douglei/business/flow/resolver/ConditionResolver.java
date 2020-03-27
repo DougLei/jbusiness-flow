@@ -4,45 +4,68 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.LogicalOP;
 import com.douglei.business.flow.executer.condition.Condition;
-import com.douglei.business.flow.executer.condition.ConditionGroup;
+import com.douglei.business.flow.executer.condition.ConditionStack;
+import com.douglei.business.flow.executer.condition.ConditionValidator;
 import com.douglei.business.flow.resolver.action.ActionResolvers;
+import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 
  * @author DougLei
  */
 public class ConditionResolver {
-	private static final ConditionGroup[] EMPTY_CONDITION_GROUPS = new ConditionGroup[0]; // 空的条件组数组
-	private static final Condition[] EMPTY_CONDITIONS = new Condition[0]; // 空的条件数组
 	private static final String ACTION_TYPE = "data_op_compare";
 	
-	public static ConditionGroup[] parse(JSONArray array, ReferenceResolver referenceResolver) {
-		int size = array==null?0:array.size();
-		if(size == 0) {
-			return EMPTY_CONDITION_GROUPS;
+	/**
+	 * 解析条件组
+	 * @param conditionGroups
+	 * @param referenceResolver
+	 * @return
+	 */
+	public static ConditionValidator parse(JSONArray conditionGroups, ReferenceResolver referenceResolver) {
+		if(CollectionUtil.isEmpty(conditionGroups)) {
+			return ConditionValidator.defaultValidator();
 		}
 		
-		ConditionGroup[] groups = new ConditionGroup[size];
-		JSONObject json;
-		for(byte i=0;i<size;i++) {
-			json = array.getJSONObject(i);
-			groups[i] = new ConditionGroup(json.getBooleanValue("inverse"), LogicalOP.toValue(json.getByteValue("op")), parse(json.getJSONArray("conditionGroups"), referenceResolver), parseConditions(json.getJSONArray("conditions"), referenceResolver), LogicalOP.toValue(json.getByteValue("cgcop")));
-		}
-		return groups;
+		ConditionStack stack = new ConditionStack();
+		pushConditionGroups(stack, referenceResolver, conditionGroups);
+		return stack.getConditionValidator();
 	}
-
-	private static Condition[] parseConditions(JSONArray array, ReferenceResolver referenceResolver) {
-		int size = array==null?0: array.size();
-		if(size == 0) {
-			return EMPTY_CONDITIONS;
+	
+	private static boolean pushConditionGroups(ConditionStack stack, ReferenceResolver referenceResolver, JSONArray conditionGroups) {
+		if(CollectionUtil.unEmpty(conditionGroups)) {
+			JSONObject conditionGroup;
+			for(int i=0;i<conditionGroups.size();i++) {
+				conditionGroup = conditionGroups.getJSONObject(i);
+				
+				if(conditionGroup.getBooleanValue("inverse"))
+					stack.pushLogicalOP(LogicalOP.NOT);
+				stack.pushLogicalOP(LogicalOP.LEFT_PARENTHESES);
+				pushConditions(stack, referenceResolver, 
+						pushConditionGroups(stack, referenceResolver, conditionGroup.getJSONArray("conditionGroups"))?LogicalOP.toValue(conditionGroup.getByteValue("cgcop")):null, 
+								conditionGroup.getJSONArray("conditions"));
+				stack.pushLogicalOP(LogicalOP.RIGHT_PARENTHESES);
+				if(i<conditionGroups.size()-1)
+					stack.pushLogicalOP(LogicalOP.toValue(conditionGroup.getByteValue("op")));
+			}
+			return true;
 		}
-		
-		Condition[] conditions = new Condition[size];
-		JSONObject json;
-		for(byte i=0;i<size;i++) {
-			json = array.getJSONObject(i);
-			conditions[i] = new Condition(json.getBooleanValue("inverse"), LogicalOP.toValue(json.getByteValue("op")), ActionResolvers.getActionResolver(ACTION_TYPE).parse(json, referenceResolver));
+		return false;
+	}
+	
+	private static void pushConditions(ConditionStack stack, ReferenceResolver referenceResolver, LogicalOP cgcop, JSONArray conditions) {
+		if(CollectionUtil.unEmpty(conditions)) {
+			if(cgcop != null)
+				stack.pushLogicalOP(cgcop);
+			
+			JSONObject condition;
+			for(int i=0;i<conditions.size();i++) {
+				condition = conditions.getJSONObject(i);
+				
+				stack.pushCondition(new Condition(condition.getBooleanValue("inverse"), ActionResolvers.getActionResolver(ACTION_TYPE).parse(condition, referenceResolver)));
+				if(i<conditions.size()-1)
+					stack.pushLogicalOP(LogicalOP.toValue(condition.getByteValue("op")));
+			}
 		}
-		return conditions;
 	}
 }

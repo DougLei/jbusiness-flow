@@ -7,20 +7,17 @@ import com.douglei.business.flow.executer.action.Action;
  * 
  * @author DougLei
  */
-public class Condition extends ConditionBase{
+public class Condition extends ConditionValidator{
+	private boolean inverse;
 	private Action dataOpCompareAction;
 	
-	public Condition(boolean inverse, LogicalOP op, Action dataOpCompareAction) {
-		super(inverse, op);
+	public Condition(boolean inverse, Action dataOpCompareAction) {
+		this.inverse = inverse;
 		this.dataOpCompareAction = dataOpCompareAction;
 	}
-	
+
 	@Override
-	protected boolean validate() {
-		boolean result = (boolean) dataOpCompareAction.execute();
-		if(inverse) {
-			return !result;
-		}
-		return result;
+	public ConditionValidator setRight(LogicalOP op, Condition right) {
+		return new ConditionValidator(this, right, op);
 	}
 }
