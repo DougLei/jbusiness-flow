@@ -1,5 +1,7 @@
 package com.douglei.business.flow.executer.condition;
 
+import java.util.List;
+
 import com.douglei.business.flow.executer.LogicalOP;
 
 /**
@@ -7,10 +9,7 @@ import com.douglei.business.flow.executer.LogicalOP;
  * @author DougLei
  */
 public class ConditionValidator {
-	private boolean inverse;
-	private ConditionValidator left;
-	private ConditionValidator right;
-	private LogicalOP op;
+	private List<ConditionGroup> group;
 	
 	/**
 	 * 设置右边的值
@@ -59,11 +58,6 @@ public class ConditionValidator {
 	public static final ConditionValidator defaultValidator() {
 		return DEFAULT_VALIDATOR;
 	}
-	protected ConditionValidator() {}
-	protected ConditionValidator(ConditionValidator left, LogicalOP op, ConditionValidator right) {
-		this.left = left;
-		this.op = op;
-		this.right = right;
-	}
+	ConditionValidator() {}
 	private static final ConditionValidator DEFAULT_VALIDATOR = new ConditionValidator();
 }
