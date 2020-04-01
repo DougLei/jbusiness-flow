@@ -34,10 +34,10 @@ public class ConditionChunk {
 		chunkList.add(chunk);
 	}
 	public void pushChunk(Condition condition) {
-		if(chunkList.isEmpty()) {
-			chunkList.add(condition);
+		if(!chunkList.isEmpty() && chunkList.getLast().getNextOP() == LogicalOP.AND) {
+			chunkList.getLast().pushChunk(condition);
 		}else {
-			
+			chunkList.add(condition);
 		}
 	}
 	public void pushChunk(byte size, ConditionChunk[] chunks, LogicalOP cgcop) {

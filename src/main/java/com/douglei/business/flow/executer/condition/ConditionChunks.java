@@ -15,4 +15,9 @@ class ConditionChunks extends ConditionChunk{
 		this.chunks = chunks;
 		this.nextOP = nextOP;
 	}
+
+	@Override
+	public void pushChunk(Condition condition) {
+		
+	}
 }
