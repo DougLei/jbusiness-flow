@@ -7,26 +7,23 @@ import com.douglei.business.flow.executer.action.Action;
  * 
  * @author DougLei
  */
-public class Condition {
-	private boolean inverse;
+public class Condition extends ConditionChunk{
 	private Action dataOpCompareAction;
-	private LogicalOP nextOP;
 	
-	public Condition(boolean inverse, Action dataOpCompareAction, LogicalOP nextOP) {
-		this.inverse = inverse;
+	public Condition(boolean inverse, LogicalOP nextOP, Action dataOpCompareAction) {
+		super(inverse, nextOP);
 		this.dataOpCompareAction = dataOpCompareAction;
-		this.nextOP = nextOP;
 	}
 	
 	/**
 	 * 验证并获取最终的结果(boolean类型)
 	 * @return
 	 */
-	public boolean validate() {
+	@Override
+	public ConditionResult validate() {
 		boolean result = (boolean) dataOpCompareAction.execute();
-		if(inverse) {
-			return !result;
-		}
-		return result;
+		if(inverse)
+			return null;
+		return null;
 	}
 }

@@ -9,6 +9,7 @@ import com.douglei.business.flow.container.reference.ReferenceContainer;
 import com.douglei.business.flow.executer.BusinessFlow;
 import com.douglei.business.flow.executer.Event;
 import com.douglei.business.flow.executer.Flow;
+import com.douglei.business.flow.resolver.condition.ConditionResolver;
 
 /**
  * 业务流解析器
@@ -52,6 +53,7 @@ public class BusinessFlowResolver {
 		}
 		
 		// 通过flow, 将event连接起来
+		ConditionResolver conditionResolver = new ConditionResolver(referenceResolver);
 		Flow flow;
 		for(int index=0;index<flows.size();index++) {
 			json = flows.getJSONObject(index);
@@ -60,7 +62,7 @@ public class BusinessFlowResolver {
 							json.getByteValue("order"), 
 							json.getString("sourceEvent"), 
 							json.getString("targetEvent"),
-							ConditionResolver.parse(json.getJSONArray("conditionGroups"), referenceResolver));
+							conditionResolver.parse(json.getJSONArray("conditionGroups")));
 			eventMap.get(flow.getSourceEvent()).linkFlows(flow);// 将sourceEvent和flow关联
 			flow.linkEvent(eventMap.get(flow.getTargetEvent()));// 将targetEvent和flow关联
 		}

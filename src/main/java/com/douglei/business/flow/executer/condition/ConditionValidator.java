@@ -1,56 +1,34 @@
 package com.douglei.business.flow.executer.condition;
 
-import java.util.List;
-
-import com.douglei.business.flow.executer.LogicalOP;
-
 /**
  * 
  * @author DougLei
  */
 public class ConditionValidator {
-	private List<ConditionGroup> group;
+	private byte size;
+	private ConditionChunk[] chunks;
 	
-	/**
-	 * 设置右边的值
-	 * @param op
-	 * @param right
-	 * @return
-	 */
-	public ConditionValidator setRight(LogicalOP op, ConditionValidator right) {
-		return new ConditionValidator(this, op, right);
+	public ConditionValidator(byte size, ConditionChunk[] chunks) {
+		this.size = size;
+		this.chunks = chunks;
 	}
 	
-	/**
-	 * 取反
-	 */
-	public void invert() {
-		this.inverse = true;
-	}
-	
-
-	/**
-	 * 
-	 * @return
-	 */
 	public boolean validate() {
-		// TODO Auto-generated method stub
-		return false;
+		if(size == 0) 
+			return true;
+		ConditionResult result = chunks[0].validate();
+		if(size == 1)
+			return result.getBooleanValue();
+		
+		byte index = 1;
+		do {
+			result.merge(chunks[index]);
+		}while(++index < size);
+		return result.getBooleanValue();
 	}
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	private ConditionValidator() {}
+	private static final ConditionValidator DEFAULT_VALIDATOR = new ConditionValidator();
 	/**
 	 * 获取默认的验证器
 	 * @return
@@ -58,6 +36,4 @@ public class ConditionValidator {
 	public static final ConditionValidator defaultValidator() {
 		return DEFAULT_VALIDATOR;
 	}
-	ConditionValidator() {}
-	private static final ConditionValidator DEFAULT_VALIDATOR = new ConditionValidator();
 }
