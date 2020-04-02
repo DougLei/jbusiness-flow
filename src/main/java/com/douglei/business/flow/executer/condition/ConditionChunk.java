@@ -9,7 +9,7 @@ import com.douglei.business.flow.executer.LogicalOP;
  * @author DougLei
  */
 public class ConditionChunk {
-	private LinkedList<ConditionChunk> chunkList;
+	protected LinkedList<ConditionChunk> chunkList;
 	protected boolean inverse;
 	protected LogicalOP nextOP;
 	

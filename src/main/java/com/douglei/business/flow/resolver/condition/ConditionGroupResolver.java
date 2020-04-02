@@ -23,12 +23,13 @@ class ConditionGroupResolver {
 
 	public ConditionChunk parse(JSONObject conditionGroup, boolean isEnd) {
 		ConditionChunk chunk = new ConditionChunk(conditionGroup.getBooleanValue("inverse"), isEnd?null:LogicalOP.toValue(conditionGroup.getByteValue("op")));
-		parseConditionGroups(conditionGroup.getJSONArray("conditionGroups"), LogicalOP.toValue(conditionGroup.getByteValue("cgcop")), chunk);
+		parseConditionGroups(conditionGroup, chunk);
 		parseConditions(conditionGroup.getJSONArray("conditions"), chunk);
 		return chunk;
 	}
 	
-	private void parseConditionGroups(JSONArray conditionGroups, LogicalOP cgcop, ConditionChunk topChunk) {
+	private void parseConditionGroups(JSONObject conditionGroup, ConditionChunk topChunk) {
+		JSONArray conditionGroups = conditionGroup.getJSONArray("conditionGroups");
 		if(CollectionUtil.isEmpty(conditionGroups))
 			return;
 		
@@ -44,7 +45,7 @@ class ConditionGroupResolver {
 				chunks[index++] = chunk;
 			}
 		}
-		topChunk.pushChunk(index, chunks, cgcop);
+		topChunk.pushChunk(index, chunks, LogicalOP.toValue(conditionGroup.getByteValue("cgcop")));
 	}
 	
 	private void parseConditions(JSONArray conditions, ConditionChunk topChunk) {
