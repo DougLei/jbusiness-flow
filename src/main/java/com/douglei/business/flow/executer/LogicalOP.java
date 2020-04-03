@@ -5,15 +5,30 @@ package com.douglei.business.flow.executer;
  * @author DougLei
  */
 public enum LogicalOP {
-	AND,
-	OR;
+	AND {
+		@Override
+		public boolean operating(boolean bool1, boolean bool2) {
+			return bool1 && bool2;
+		}
+	},
+	OR {
+		@Override
+		public boolean operating(boolean bool1, boolean bool2) {
+			return bool1 || bool2;
+		}
+	};
 	
-	/**
-	 * 获取对应的逻辑操作符
-	 * @param value
-	 * @return
-	 */
+	
 	public static LogicalOP toValue(byte value) {
 		return value==0?AND:OR;
 	}
+
+	
+	/**
+	 * 对bool1和bool2的值进行and/or的运算操作
+	 * @param bool1
+	 * @param bool2
+	 * @return
+	 */
+	public abstract boolean operating(boolean bool1, boolean bool2);
 }

@@ -1,7 +1,6 @@
 package com.douglei.business.flow.resolver.condition;
 
 import com.alibaba.fastjson.JSONArray;
-import com.douglei.business.flow.executer.LogicalOP;
 import com.douglei.business.flow.executer.condition.ConditionChunk;
 import com.douglei.business.flow.executer.condition.ConditionValidator;
 import com.douglei.business.flow.resolver.ReferenceResolver;
@@ -27,18 +26,7 @@ public class ConditionResolver {
 		if(CollectionUtil.isEmpty(conditionGroups))
 			return ConditionValidator.defaultValidator();
 		
-		ConditionChunk[] chunks = new ConditionChunk[conditionGroups.size()];
-		byte index = 0;
-		ConditionChunk chunk;
-		for(int i=0;i<conditionGroups.size();i++) {
-			chunk = conditionGroupResolver.parse(conditionGroups.getJSONObject(i), i==conditionGroups.size()-1);
-			
-			if(index > 0 && chunks[index-1].getNextOP() == LogicalOP.AND) {
-				chunks[index-1].pushChunk(chunk);
-			}else {
-				chunks[index++] = chunk;
-			}
-		}
-		return new ConditionValidator(index, chunks);
+		ConditionChunk[] chunks = conditionGroupResolver.parse(conditionGroups);
+		return new ConditionValidator(chunks);
 	}
 }

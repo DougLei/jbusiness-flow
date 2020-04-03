@@ -8,8 +8,12 @@ public class ConditionValidator {
 	private byte size;
 	private ConditionChunk[] chunks;
 	
-	public ConditionValidator(byte size, ConditionChunk[] chunks) {
-		this.size = size;
+	public ConditionValidator(ConditionChunk[] chunks) {
+		for (ConditionChunk chunk : chunks) {
+			if(chunk == null)
+				break;
+			this.size++;
+		}
 		this.chunks = chunks;
 	}
 	

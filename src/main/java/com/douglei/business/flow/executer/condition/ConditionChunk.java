@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.condition;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import com.douglei.business.flow.executer.LogicalOP;
@@ -9,38 +10,60 @@ import com.douglei.business.flow.executer.LogicalOP;
  * @author DougLei
  */
 public class ConditionChunk {
-	protected LinkedList<ConditionChunk> chunkList;
+	protected LinkedList<ConditionChunk> list;
 	protected boolean inverse;
 	protected LogicalOP nextOP;
 	
 	public ConditionChunk() {}
 	public ConditionChunk(boolean inverse, LogicalOP nextOP) {
-		this.chunkList = new LinkedList<ConditionChunk>();
+		this.list = new LinkedList<ConditionChunk>();
 		this.inverse = inverse;
 		this.nextOP = nextOP;
 	}
 
 	public LogicalOP getNextOP() {
+		if(list.getLast().getClass() == ConditionChunk.class)
+			return list.getLast().getNextOP();
 		return nextOP;
 	}
 
-	public ConditionResult validate() {
-		// TODO Auto-generated method stub
-		return null;
+	public final void appendChunk(ConditionChunk chunk) {
+		list.add(chunk);
 	}
-
-	
-	public void pushChunk(ConditionChunk chunk) {
-		chunkList.add(chunk);
+	public final void appendChunk(ConditionChunk[] chunks, LogicalOP cgcop) {
+		list.add(new ConditionChunks(chunks, cgcop));
 	}
-	public void pushChunk(Condition condition) {
-		if(!chunkList.isEmpty() && chunkList.getLast().getNextOP() == LogicalOP.AND) {
-			chunkList.getLast().pushChunk(condition);
+	public void appendChunk(Condition condition) {
+		if(!list.isEmpty() && list.getLast().getNextOP() == LogicalOP.AND) {
+			list.getLast().appendChunk(condition);
 		}else {
-			chunkList.add(condition);
+			list.add(condition);
 		}
 	}
-	public void pushChunk(byte size, ConditionChunk[] chunks, LogicalOP cgcop) {
-		chunkList.add(new ConditionChunks(size, chunks, cgcop));
+	
+	public ConditionResult validate() {
+		Iterator<ConditionChunk> iterator = list.iterator();
+		
+		ConditionResult result = iterator.next().validate();
+		ConditionChunk chunk = null;
+		while(iterator.hasNext()) {
+			chunk = iterator.next();
+			if(chunk.getClass() == ConditionChunk.class)
+				break;
+			result.merge(chunk);
+		}
+		result.update(inverse, nextOP);
+		
+		if(chunk != null && chunk.getClass() == ConditionChunk.class) {
+			do {
+				result.merge(chunk);
+				if(iterator.hasNext()) {
+					chunk = iterator.next();
+				}else {
+					break;
+				}
+			}while(true);
+		}
+		return result;
 	}
 }

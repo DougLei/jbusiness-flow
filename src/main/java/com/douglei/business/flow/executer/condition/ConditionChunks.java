@@ -11,25 +11,42 @@ import com.douglei.business.flow.executer.LogicalOP;
 class ConditionChunks extends ConditionChunk{
 	private byte size;
 	private ConditionChunk[] chunks;
-	private LogicalOP cgcop;
 	
-	public ConditionChunks(byte size, ConditionChunk[] chunks, LogicalOP cgcop) {
-		this.size = size;
+	public ConditionChunks(ConditionChunk[] chunks, LogicalOP cgcop) {
+		for (ConditionChunk chunk : chunks) {
+			if(chunk == null)
+				break;
+			this.size++;
+		}
 		this.chunks = chunks;
-		this.cgcop = cgcop;
+		this.nextOP = cgcop;
 	}
 	
 	@Override
 	public LogicalOP getNextOP() {
-		if(chunkList == null)
-			return cgcop;
-		return chunkList.getLast().getNextOP();
+		if(list == null)
+			return nextOP;
+		return list.getLast().getNextOP();
 	}
 	
 	@Override
-	public void pushChunk(Condition condition) {
-		if(chunkList == null)
-			chunkList = new LinkedList<ConditionChunk>();
-		chunkList.add(condition);
+	public void appendChunk(Condition condition) {
+		if(list == null)
+			list = new LinkedList<ConditionChunk>();
+		list.add(condition);
+	}
+
+	@Override
+	public ConditionResult validate() {
+		ConditionResult result = chunks[0].validate();
+		if(size > 1) {
+			byte index = 1;
+			do {
+				result.merge(chunks[index]);
+			}while(++index < size);
+		}
+		if(list != null) 
+			list.forEach(l -> result.merge(l));
+		return result;
 	}
 }

@@ -19,27 +19,26 @@ public class Condition extends ConditionChunk{
 	
 	@Override
 	public LogicalOP getNextOP() {
-		if(chunkList == null)
+		if(list == null)
 			return nextOP;
-		return chunkList.getLast().getNextOP();
+		return list.getLast().getNextOP();
 	}
 	
 	@Override
-	public void pushChunk(Condition condition) {
-		if(chunkList == null) 
-			chunkList = new LinkedList<ConditionChunk>();
-		chunkList.add(condition);
+	public void appendChunk(Condition condition) {
+		if(list == null) 
+			list = new LinkedList<ConditionChunk>();
+		list.add(condition);
 	}
 	
-	/**
-	 * 验证并获取最终的结果(boolean类型)
-	 * @return
-	 */
 	@Override
 	public ConditionResult validate() {
 		boolean result = (boolean) dataOpCompareAction.execute();
 		if(inverse)
-			return null;
-		return null;
+			result = !result;
+		ConditionResult cr = new ConditionResult(result, nextOP);
+		if(list != null) 
+			list.forEach(l -> cr.merge(l));
+		return cr;
 	}
 }
