@@ -55,14 +55,14 @@ public class ConditionChunk {
 		result.update(inverse, nextOP);
 		
 		if(chunk != null && chunk.getClass() == ConditionChunk.class) {
-			do {
+			while(true) {
 				result.merge(chunk);
 				if(iterator.hasNext()) {
 					chunk = iterator.next();
 				}else {
 					break;
 				}
-			}while(true);
+			}
 		}
 		return result;
 	}
