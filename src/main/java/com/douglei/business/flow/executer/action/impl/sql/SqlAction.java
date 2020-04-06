@@ -20,9 +20,7 @@ public class SqlAction extends Action {
 
 	@Override
 	public Object execute() {
-		// TODO Auto-generated method stub
-		
-		setResult(null);
+		setResult(sql.execute(sql.getValues(parameters)));
 		return null;
 	}
 }

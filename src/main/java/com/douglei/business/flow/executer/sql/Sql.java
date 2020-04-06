@@ -1,21 +1,23 @@
 package com.douglei.business.flow.executer.sql;
 
+import java.util.Map;
+
+import com.douglei.business.flow.executer.method.Method;
 import com.douglei.business.flow.executer.parameter.Parameter;
 
 /**
  * 
  * @author DougLei
  */
-public abstract class Sql {
-	protected String name;
-	protected Parameter[] parameters;
+public abstract class Sql extends Method{
 	
 	protected Sql(String name, Parameter[] parameters) {
 		this.name = name;
 		this.parameters = parameters;
 	}
 
-	public String getName() {
-		return name;
+	public Map<String, Parameter> execute(Object[] values) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

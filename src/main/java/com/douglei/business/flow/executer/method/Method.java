@@ -13,11 +13,12 @@ import com.douglei.tools.utils.CollectionUtil;
  * @author DougLei
  */
 public class Method {
-	private String name;
-	private Parameter[] parameters;
+	protected String name;
+	protected Parameter[] parameters;
 	private Action[] actions;
 	private Return return_;
 	
+	public Method() {}
 	public Method(String name, Parameter[] parameters, Action[] actions, Return return_) {
 		this.name = name;
 		this.parameters = parameters;
@@ -56,6 +57,13 @@ public class Method {
 		return null;
 	}
 
+	public Object[] getValues(Parameter[] parameters) {
+		if(parameterNotEmpty()) {
+			return ParameterContext.getValues(parameters);
+		}
+		return CollectionUtil.emptyObjectArray();
+	}
+	
 	public String getName() {
 		return name;
 	}

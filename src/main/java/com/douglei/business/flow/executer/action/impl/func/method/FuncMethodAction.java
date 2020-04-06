@@ -32,8 +32,7 @@ public class FuncMethodAction extends Action {
 		 * 
 		 * 至于方法的返回值, 直接返回parameter, 因为可以直接修改其范围, 进入到新的范围, 而且后续不需要再修改回原范围
 		 */
-		Object[] values = method.parameterNotEmpty()?ParameterContext.getValues(parameters):CollectionUtil.emptyObjectArray();
-		return method.invoke(values);
+		return method.invoke(method.getValues(parameters));
 	}
 	
 	@Override

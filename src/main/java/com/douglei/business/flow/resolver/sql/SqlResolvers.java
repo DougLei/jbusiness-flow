@@ -24,14 +24,12 @@ public class SqlResolvers {
 		List<String> classPaths = cs.scan(SqlResolvers.class.getPackage().getName() + ".impl");
 		
 		Class<?> clz;
-		SqlResolver sqlResolver;
 		for (String cp : classPaths) {
 			clz = ClassLoadUtil.loadClass(cp);
 			if(Modifier.isAbstract(clz.getModifiers()) || !ValidationUtil.isImplementInterface(clz, SqlResolver.class)) {
 				continue;
 			}
-			sqlResolver= (SqlResolver) ConstructorUtil.newInstance(clz);
-			registerSqlResolver(sqlResolver);
+			registerSqlResolver((SqlResolver) ConstructorUtil.newInstance(clz));
 		}
 		cs.destroy();
 	}
