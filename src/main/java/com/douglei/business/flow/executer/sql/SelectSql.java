@@ -1,8 +1,8 @@
 package com.douglei.business.flow.executer.sql;
 
 import com.douglei.business.flow.executer.parameter.Parameter;
-import com.douglei.business.flow.executer.sql.component.With;
 import com.douglei.business.flow.executer.sql.component.select.Select;
+import com.douglei.business.flow.executer.sql.component.select.With;
 
 /**
  * 
@@ -29,10 +29,25 @@ public class SelectSql extends Sql {
 	@Override
 	protected Object invokeCore() {
 		SqlData sqlData = new SqlData();
+		appendWiths2SqlData(sqlData);
+		appendSelects2SqlData(sqlData);
+		
+		// TODO 具体的jdbc执行SqlData
+		sqlData.getSql();
+		sqlData.getParameterValues();
+		return null;
+	}
+
+
+	private void appendWiths2SqlData(SqlData sqlData) {
+		if(withs != null) {
+			sqlData.appendSql("with ");
+			
+		}
+	}
+
+	private void appendSelects2SqlData(SqlData sqlData) {
 		// TODO Auto-generated method stub
 		
-		
-		
-		return null;
 	}
 }

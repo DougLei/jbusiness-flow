@@ -1,10 +1,12 @@
 package com.douglei.business.flow.executer.sql.component;
 
+import com.douglei.business.flow.executer.sql.SqlData;
+
 /**
  * 
  * @author DougLei
  */
-public class Function {
+public class Function implements Component{
 	private String name; // 函数名
 	private Value[] values;
 	
@@ -13,5 +15,11 @@ public class Function {
 	}
 	public void setValues(Value[] values) {
 		this.values = values;
+	}
+	
+	@Override
+	public void append2SqlData(SqlData sqlData) {
+		// TODO Auto-generated method stub
+		
 	}
 }

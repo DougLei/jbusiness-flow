@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.UpdateSql;
-import com.douglei.business.flow.executer.sql.component.Value;
+import com.douglei.business.flow.executer.sql.component.update.Set;
 import com.douglei.business.flow.resolver.sql.SqlResolver;
 
 /**
@@ -25,9 +25,11 @@ public class UpdateSqlResolver extends SqlResolver{
 		sql.setTable(parseTable(content.getJSONObject("table")));
 		
 		JSONArray array = content.getJSONArray("sets");
-		Value[] sets = new Value[array.size()];
+		Set[] sets = new Set[array.size()];
+		JSONObject json;
 		for(int i=0;i<array.size();i++) {
-			sets[i] = parseValue(array.getJSONObject(i));
+			json = array.getJSONObject(i);
+			sets[i] = new Set(json.getString("column"), parseValue(json.getJSONObject("value")));
 		}
 		sql.setSets(sets);
 				

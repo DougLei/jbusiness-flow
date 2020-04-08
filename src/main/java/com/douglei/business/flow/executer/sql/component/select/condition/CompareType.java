@@ -1,4 +1,4 @@
-package com.douglei.business.flow.executer.sql.component.select;
+package com.douglei.business.flow.executer.sql.component.select.condition;
 
 import com.douglei.business.flow.executer.action.impl.data.op.compare.CompareTypeMatchingException;
 import com.douglei.tools.utils.StringUtil;

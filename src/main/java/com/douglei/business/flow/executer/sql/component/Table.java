@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.sql.component;
 
+import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.select.Select;
 import com.douglei.tools.utils.StringUtil;
 
@@ -7,7 +8,7 @@ import com.douglei.tools.utils.StringUtil;
  * 
  * @author DougLei
  */
-public class Table {
+public class Table implements Component{
 	private String alias;
 	private String name;
 	
@@ -32,5 +33,11 @@ public class Table {
 	}
 	public void setSelects(Select[] selects) {
 		this.selects = selects;
+	}
+
+	@Override
+	public void append2SqlData(SqlData sqlData) {
+		// TODO Auto-generated method stub
+		
 	}
 }

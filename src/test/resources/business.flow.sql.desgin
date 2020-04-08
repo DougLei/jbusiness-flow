@@ -61,7 +61,10 @@
 		"name":""
 	}, 
 	"sets":[{
-		... // 配置的具体信息参看insert的values配置
+		"column":"", // 列名
+		"value":{
+			... // 配置的具体信息参看insert的value配置
+		}
 	}],
 	"whereGroups":[{}] // 条件组, 具体的配置参看select
 }

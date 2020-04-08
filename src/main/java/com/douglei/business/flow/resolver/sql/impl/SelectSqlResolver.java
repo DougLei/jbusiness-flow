@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.SelectSql;
 import com.douglei.business.flow.executer.sql.Sql;
-import com.douglei.business.flow.executer.sql.component.With;
+import com.douglei.business.flow.executer.sql.component.select.With;
 import com.douglei.business.flow.resolver.sql.SqlResolver;
 
 /**

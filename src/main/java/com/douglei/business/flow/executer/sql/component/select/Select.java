@@ -1,12 +1,15 @@
 package com.douglei.business.flow.executer.sql.component.select;
 
+import com.douglei.business.flow.executer.sql.SqlData;
+import com.douglei.business.flow.executer.sql.component.Component;
 import com.douglei.business.flow.executer.sql.component.Table;
+import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroups;
 
 /**
  * 
  * @author DougLei
  */
-public class Select {
+public class Select implements Component{
 	public static final byte UNION = 0;
 	public static final byte UNION_ALL = 1;
 	
@@ -43,5 +46,11 @@ public class Select {
 	}
 	public void setOrderBys(GroupAndOrder[] orderBys) {
 		this.orderBys = orderBys;
+	}
+
+	@Override
+	public void append2SqlData(SqlData sqlData) {
+		// TODO Auto-generated method stub
+		
 	}
 }

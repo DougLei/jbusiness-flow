@@ -8,14 +8,14 @@ import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.component.Function;
 import com.douglei.business.flow.executer.sql.component.Table;
 import com.douglei.business.flow.executer.sql.component.Value;
-import com.douglei.business.flow.executer.sql.component.select.CompareType;
-import com.douglei.business.flow.executer.sql.component.select.Condition;
-import com.douglei.business.flow.executer.sql.component.select.ConditionGroup;
-import com.douglei.business.flow.executer.sql.component.select.ConditionGroups;
 import com.douglei.business.flow.executer.sql.component.select.GroupAndOrder;
 import com.douglei.business.flow.executer.sql.component.select.Join;
 import com.douglei.business.flow.executer.sql.component.select.Result;
 import com.douglei.business.flow.executer.sql.component.select.Select;
+import com.douglei.business.flow.executer.sql.component.select.condition.CompareType;
+import com.douglei.business.flow.executer.sql.component.select.condition.Condition;
+import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroup;
+import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroups;
 import com.douglei.tools.utils.StringUtil;
 
 /**

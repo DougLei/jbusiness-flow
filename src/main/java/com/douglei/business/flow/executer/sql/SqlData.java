@@ -17,11 +17,13 @@ public class SqlData {
 		sql.append(s);
 	}
 	
-	public void appendSql(char c) {
+	public SqlData appendSql(char c) {
 		sql.append(c);
+		return this;
 	}
-	public void appendSql(String s) {
+	public SqlData appendSql(String s) {
 		sql.append(s);
+		return this;
 	}
 	
 	private List<Object> parameterValues;

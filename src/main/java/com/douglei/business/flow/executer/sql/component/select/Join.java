@@ -1,6 +1,7 @@
 package com.douglei.business.flow.executer.sql.component.select;
 
 import com.douglei.business.flow.executer.sql.component.Table;
+import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroups;
 
 /**
  * 

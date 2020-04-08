@@ -2,8 +2,8 @@ package com.douglei.business.flow.executer.sql;
 
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.component.Table;
-import com.douglei.business.flow.executer.sql.component.Value;
-import com.douglei.business.flow.executer.sql.component.select.ConditionGroups;
+import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroups;
+import com.douglei.business.flow.executer.sql.component.update.Set;
 
 /**
  * 
@@ -13,7 +13,7 @@ public class UpdateSql extends Sql {
 	public static final byte TYPE = 3; // sql类型: update
 
 	private Table table;
-	private Value[] sets;
+	private Set[] sets;
 	private ConditionGroups whereGroups;
 	
 	public UpdateSql(String name, Parameter[] parameters) {
@@ -23,7 +23,7 @@ public class UpdateSql extends Sql {
 	public void setTable(Table table) {
 		this.table = table;
 	}
-	public void setSets(Value[] sets) {
+	public void setSets(Set[] sets) {
 		this.sets = sets;
 	}
 	public void setWhereGroups(ConditionGroups whereGroups) {
@@ -32,11 +32,23 @@ public class UpdateSql extends Sql {
 
 	@Override
 	protected Object invokeCore() {
-		SqlData sqlData = new SqlData();
-		// TODO Auto-generated method stub
+		SqlData sqlData = new SqlData("update ");
+		table.append2SqlData(sqlData);
+		appendSets2SqlData(sqlData);
+		whereGroups.append2SqlData(sqlData);
 		
-		
-		
+		// TODO 具体的jdbc执行SqlData
+		sqlData.getSql();
+		sqlData.getParameterValues();
 		return null;
+	}
+
+	private void appendSets2SqlData(SqlData sqlData) {
+		sqlData.appendSql(" set ");
+		for(int i=0;i<sets.length;i++) {
+			sets[i].append2SqlData(sqlData);
+			if(i < sets.length-1)
+				sqlData.appendSql(',');
+		}
 	}
 }

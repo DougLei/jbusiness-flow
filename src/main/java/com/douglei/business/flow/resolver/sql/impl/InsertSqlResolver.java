@@ -7,6 +7,7 @@ import com.douglei.business.flow.executer.sql.InsertSql;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.component.Value;
 import com.douglei.business.flow.resolver.sql.SqlResolver;
+import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 
@@ -25,7 +26,9 @@ public class InsertSqlResolver extends SqlResolver{
 		sql.setTable(parseTable(content.getJSONObject("table")));
 		
 		JSONArray array = content.getJSONArray("columns");
-		sql.setColumns(array.toArray(new String[array.size()]));
+		if(CollectionUtil.unEmpty(array)) {
+			sql.setColumns(array.toArray(new String[array.size()]));
+		}
 		
 		array = content.getJSONArray("values");
 		switch(sql.getValuesType()) {

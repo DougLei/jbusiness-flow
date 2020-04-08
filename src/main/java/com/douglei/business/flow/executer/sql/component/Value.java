@@ -1,12 +1,13 @@
 package com.douglei.business.flow.executer.sql.component;
 
+import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.select.Select;
 
 /**
  * 
  * @author DougLei
  */
-public class Value {
+public class Value implements Component{
 	private String column;
 	private Object value; 
 	private String paramName;
@@ -32,5 +33,11 @@ public class Value {
 	}
 	public void setSelects(Select[] selects) {
 		this.selects = selects;
+	}
+	
+	@Override
+	public void append2SqlData(SqlData sqlData) {
+		// TODO Auto-generated method stub
+		
 	}
 }
