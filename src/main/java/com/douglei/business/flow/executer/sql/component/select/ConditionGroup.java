@@ -12,7 +12,6 @@ public class ConditionGroup {
 	private LogicalOP cgcop;
 	private LogicalOP op;
 	
-	
 	public ConditionGroup(ConditionGroup[] conditionGroups, Condition[] conditions, LogicalOP cgcop, LogicalOP op) {
 		this.conditionGroups = conditionGroups;
 		this.conditions = conditions;

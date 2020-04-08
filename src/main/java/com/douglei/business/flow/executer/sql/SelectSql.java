@@ -25,4 +25,14 @@ public class SelectSql extends Sql {
 	public void setSelects(Select[] selects) {
 		this.selects = selects;
 	}
+
+	@Override
+	protected Object invokeCore() {
+		SqlData sqlData = new SqlData();
+		// TODO Auto-generated method stub
+		
+		
+		
+		return null;
+	}
 }

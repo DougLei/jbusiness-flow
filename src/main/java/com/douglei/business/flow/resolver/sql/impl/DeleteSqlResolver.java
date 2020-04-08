@@ -21,7 +21,7 @@ public class DeleteSqlResolver extends SqlResolver{
 	public Sql parse(String name, Parameter[] parameters, JSONObject content) {
 		DeleteSql sql = new DeleteSql(name, parameters);
 		sql.setTable(parseTable(content.getJSONObject("table")));
-		sql.setWhereGroups(parseConditionGroups(content.getJSONArray("whereGroups")));
+		sql.setWhereGroups(parseConditionGroups(CONDITION_SQL_KEY_WORD_WHERE, content));
 		return sql;
 	}
 }

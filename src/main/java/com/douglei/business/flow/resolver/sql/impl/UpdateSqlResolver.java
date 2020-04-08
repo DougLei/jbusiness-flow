@@ -31,7 +31,7 @@ public class UpdateSqlResolver extends SqlResolver{
 		}
 		sql.setSets(sets);
 				
-		sql.setWhereGroups(parseConditionGroups(content.getJSONArray("whereGroups")));
+		sql.setWhereGroups(parseConditionGroups(CONDITION_SQL_KEY_WORD_WHERE, content));
 		return sql;
 	}
 }

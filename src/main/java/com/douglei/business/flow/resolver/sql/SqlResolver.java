@@ -11,6 +11,7 @@ import com.douglei.business.flow.executer.sql.component.Value;
 import com.douglei.business.flow.executer.sql.component.select.CompareType;
 import com.douglei.business.flow.executer.sql.component.select.Condition;
 import com.douglei.business.flow.executer.sql.component.select.ConditionGroup;
+import com.douglei.business.flow.executer.sql.component.select.ConditionGroups;
 import com.douglei.business.flow.executer.sql.component.select.GroupAndOrder;
 import com.douglei.business.flow.executer.sql.component.select.Join;
 import com.douglei.business.flow.executer.sql.component.select.Result;
@@ -27,7 +28,9 @@ public abstract class SqlResolver {
 	private static final ConditionGroup[] EMPTY_CONDITION_GROUP = new ConditionGroup[0];;
 	private static final Condition[] EMPTY_CONDITION = new Condition[0];;
 	private static final GroupAndOrder[] EMPTY_GROUP_AND_ORDER = new GroupAndOrder[0];
-	
+	protected static final String CONDITION_SQL_KEY_WORD_ON = "on ";
+	protected static final String CONDITION_SQL_KEY_WORD_WHERE = "where ";
+	protected static final String CONDITION_SQL_KEY_WORD_HAVING = "having ";
 	
 	/**
 	 * 获取类型
@@ -118,9 +121,9 @@ public abstract class SqlResolver {
 		select.setResults(parseResults(selectJSON.getJSONArray("results")));
 		select.setTable(parseTable(selectJSON.getJSONObject("table")));
 		select.setJoins(parseJoins(selectJSON.getJSONArray("joins")));
-		select.setWhereGroups(parseConditionGroups(selectJSON.getJSONArray("whereGroups")));
+		select.setWhereGroups(parseConditionGroups(CONDITION_SQL_KEY_WORD_WHERE, selectJSON));
 		select.setGroupBys(parseGOs(selectJSON.getJSONArray("groupBys")));
-		select.setHavings(parseConditionGroups(selectJSON.getJSONArray("havingGroups")));
+		select.setHavingGroups(parseConditionGroups(CONDITION_SQL_KEY_WORD_HAVING, selectJSON));
 		select.setOrderBys(parseGOs(selectJSON.getJSONArray("orderBys")));
 		return select;
 	}
@@ -144,12 +147,23 @@ public abstract class SqlResolver {
 		JSONObject json;
 		for(byte i=0;i<size;i++) {
 			json = array.getJSONObject(i);
-			joins[i] = new Join(json.getByteValue("type"), parseTable(json.getJSONObject("table")), parseConditionGroups(json.getJSONArray("onGroups")));
+			joins[i] = new Join(json.getByteValue("type"), parseTable(json.getJSONObject("table")), parseConditionGroups(CONDITION_SQL_KEY_WORD_ON, json));
 		}
 		return joins;
 	}
 	// 解析条件组, 包括where, join中的on, having
-	protected ConditionGroup[] parseConditionGroups(JSONArray array) {
+	protected ConditionGroups parseConditionGroups(String conditionSqlKeyword, JSONObject content) {
+		switch(conditionSqlKeyword) {
+			case CONDITION_SQL_KEY_WORD_ON:
+				return new ConditionGroups(CONDITION_SQL_KEY_WORD_ON, parseConditionGroups_(content.getJSONArray("onGroups")));
+			case CONDITION_SQL_KEY_WORD_WHERE:
+				return new ConditionGroups(CONDITION_SQL_KEY_WORD_WHERE, parseConditionGroups_(content.getJSONArray("whereGroups")));
+			case CONDITION_SQL_KEY_WORD_HAVING:
+				return new ConditionGroups(CONDITION_SQL_KEY_WORD_HAVING, parseConditionGroups_(content.getJSONArray("havingGroups")));
+		}
+		throw new IllegalArgumentException("解析条件组时, 传入的conditionSqlKeyword值错误");
+	}
+	private ConditionGroup[] parseConditionGroups_(JSONArray array) {
 		byte size = array==null?0:(byte)array.size();
 		if(size == 0) {
 			return EMPTY_CONDITION_GROUP;
@@ -158,7 +172,7 @@ public abstract class SqlResolver {
 		JSONObject json;
 		for(byte i=0;i<size;i++) {
 			json = array.getJSONObject(i);
-			conditionGroups[i] = new ConditionGroup(parseConditionGroups(json.getJSONArray("conditionGroups")), parseConditions(json.getJSONArray("conditions")), LogicalOP.toValue(json.getByteValue("cgcop")), LogicalOP.toValue(json.getByteValue("op")));
+			conditionGroups[i] = new ConditionGroup(parseConditionGroups_(json.getJSONArray("conditionGroups")), parseConditions(json.getJSONArray("conditions")), LogicalOP.toValue(json.getByteValue("cgcop")), LogicalOP.toValue(json.getByteValue("op")));
 		}
 		return conditionGroups;
 	}

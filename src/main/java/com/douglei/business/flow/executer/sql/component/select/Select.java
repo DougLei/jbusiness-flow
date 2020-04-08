@@ -13,9 +13,9 @@ public class Select {
 	private Result[] results;
 	private Table table;
 	private Join[] joins;
-	private ConditionGroup[] whereGroups;
+	private ConditionGroups whereGroups;
 	private GroupAndOrder[] groupBys;
-	private ConditionGroup[] havings;
+	private ConditionGroups havingGroups;
 	private GroupAndOrder[] orderBys;
 	private byte union;
 
@@ -32,14 +32,14 @@ public class Select {
 	public void setJoins(Join[] joins) {
 		this.joins = joins;
 	}
-	public void setWhereGroups(ConditionGroup[] whereGroups) {
+	public void setWhereGroups(ConditionGroups whereGroups) {
 		this.whereGroups = whereGroups;
 	}
 	public void setGroupBys(GroupAndOrder[] groupBys) {
 		this.groupBys = groupBys;
 	}
-	public void setHavings(ConditionGroup[] havings) {
-		this.havings = havings;
+	public void setHavingGroups(ConditionGroups havingGroups) {
+		this.havingGroups = havingGroups;
 	}
 	public void setOrderBys(GroupAndOrder[] orderBys) {
 		this.orderBys = orderBys;

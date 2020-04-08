@@ -34,4 +34,14 @@ public class InsertSql extends Sql {
 	public byte getValuesType() {
 		return valuesType;
 	}
+
+	@Override
+	protected Object invokeCore() {
+		SqlData sqlData = new SqlData();
+		// TODO Auto-generated method stub
+		
+		
+		
+		return null;
+	}
 }

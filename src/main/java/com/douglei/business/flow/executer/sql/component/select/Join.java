@@ -14,9 +14,9 @@ public class Join {
 	
 	private byte type;
 	private Table table;
-	private ConditionGroup[] onGroups;
+	private ConditionGroups onGroups;
 	
-	public Join(byte type, Table table, ConditionGroup[] onGroups) {
+	public Join(byte type, Table table, ConditionGroups onGroups) {
 		this.type = type;
 		this.table = table;
 		this.onGroups = onGroups;

@@ -3,7 +3,7 @@ package com.douglei.business.flow.executer.sql;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.component.Table;
 import com.douglei.business.flow.executer.sql.component.Value;
-import com.douglei.business.flow.executer.sql.component.select.ConditionGroup;
+import com.douglei.business.flow.executer.sql.component.select.ConditionGroups;
 
 /**
  * 
@@ -14,7 +14,7 @@ public class UpdateSql extends Sql {
 
 	private Table table;
 	private Value[] sets;
-	private ConditionGroup[] whereGroups;
+	private ConditionGroups whereGroups;
 	
 	public UpdateSql(String name, Parameter[] parameters) {
 		super(name, parameters);
@@ -26,7 +26,17 @@ public class UpdateSql extends Sql {
 	public void setSets(Value[] sets) {
 		this.sets = sets;
 	}
-	public void setWhereGroups(ConditionGroup[] whereGroups) {
+	public void setWhereGroups(ConditionGroups whereGroups) {
 		this.whereGroups = whereGroups;
+	}
+
+	@Override
+	protected Object invokeCore() {
+		SqlData sqlData = new SqlData();
+		// TODO Auto-generated method stub
+		
+		
+		
+		return null;
 	}
 }
