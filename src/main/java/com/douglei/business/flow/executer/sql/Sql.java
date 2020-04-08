@@ -8,20 +8,22 @@ import com.douglei.business.flow.executer.parameter.Parameter;
  * @author DougLei
  */
 public abstract class Sql extends Method{
+	protected SqlExecutor sqlExecutor;
 	
 	protected Sql(String name, Parameter[] parameters) {
 		super.name = name;
 		super.parameters = parameters;
+		this.sqlExecutor = new SqlExecutor();
 	}
 
 	@Override
 	protected Object invokeCore() {
-		return getSqlExecutor().execute();
+		appendData2SqlExecutor();
+		return sqlExecutor.execute();
 	}
 	
 	/**
-	 * 获取sql执行器
-	 * @return
+	 * 给sql执行器中追加相关的数据
 	 */
-	protected abstract SqlExecutor getSqlExecutor();
+	protected abstract void appendData2SqlExecutor();
 }
