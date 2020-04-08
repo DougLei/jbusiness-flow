@@ -1,7 +1,5 @@
 package com.douglei.business.flow.executer.sql;
 
-import java.util.Map;
-
 import com.douglei.business.flow.executer.method.Method;
 import com.douglei.business.flow.executer.parameter.Parameter;
 
@@ -12,12 +10,18 @@ import com.douglei.business.flow.executer.parameter.Parameter;
 public abstract class Sql extends Method{
 	
 	protected Sql(String name, Parameter[] parameters) {
-		this.name = name;
-		this.parameters = parameters;
+		super.name = name;
+		super.parameters = parameters;
 	}
 
-	public Map<String, Parameter> execute(Object[] values) {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	protected Object invokeCore() {
+		return getSqlExecutor().execute();
 	}
+	
+	/**
+	 * 获取sql执行器
+	 * @return
+	 */
+	protected abstract SqlExecutor getSqlExecutor();
 }

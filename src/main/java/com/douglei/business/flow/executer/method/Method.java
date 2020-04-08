@@ -27,25 +27,24 @@ public class Method {
 	}
 	
 	/**
-	 * 方法是否有参数
-	 * @return
+	 * 调用前的预处理
+	 * @param definedParameters
 	 */
-	public boolean parameterNotEmpty() {
-		return parameters.length > 0;
-	}
-	
-	/**
-	 * 调用方法
-	 * @param values 实参
-	 * @return
-	 */
-	public Map<String, Parameter> invoke(Object[] values) {
+	private void preInvoke(Parameter[] definedParameters) {
 		ParameterContext.activateStack(Scope.LOCAL);
-		if(parameterNotEmpty()) {
+		if(parameters.length > 0) {
+			Object[] values = ParameterContext.getValues(definedParameters);
 			for (int i = 0; i < parameters.length; i++) {
 				ParameterContext.addParameter(parameters[i], values[i]);
 			}
 		}
+	}
+	
+	/**
+	 * 调用的核心方法
+	 * @return
+	 */
+	protected Object invokeCore() { 
 		for (Action action : actions) {
 			action.execute();
 		}
@@ -56,12 +55,15 @@ public class Method {
 		}
 		return null;
 	}
-
-	public Object[] getValues(Parameter[] parameters) {
-		if(parameterNotEmpty()) {
-			return ParameterContext.getValues(parameters);
-		}
-		return CollectionUtil.emptyObjectArray();
+	
+	/**
+	 * 调用方法
+	 * @param definedParameters 实参
+	 * @return
+	 */
+	public final Object invoke(Parameter[] definedParameters) {
+		preInvoke(definedParameters);
+		return invokeCore();
 	}
 	
 	public String getName() {
