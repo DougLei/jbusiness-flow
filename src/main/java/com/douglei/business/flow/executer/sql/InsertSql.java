@@ -62,15 +62,12 @@ public class InsertSql extends Sql {
 	
 	private void appendValues2SqlData(SqlData sqlData) {
 		sqlData.appendSql(' ');
-		switch(valuesType) {
-			case VALUES_TYPE_VALUE:
-				sqlData.appendSql("values(");
-				Component.appendComponents2SqlData(values, sqlData);
-				sqlData.appendSql(')');
-				break;
-			case VALUES_TYPE_SELECT:
-				Component.appendComponents2SqlData(values, sqlData);
-				break;
+		if(valuesType == VALUES_TYPE_VALUE) {
+			sqlData.appendSql("values(");
+			Component.appendComponents2SqlData(values, sqlData);
+			sqlData.appendSql(')');
+		}else if(valuesType == VALUES_TYPE_SELECT && values != null) {
+			Component.appendComponents2SqlData(values, sqlData);
 		}
 	}
 }
