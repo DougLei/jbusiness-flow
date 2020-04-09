@@ -19,7 +19,8 @@ public class Function implements Component{
 	
 	@Override
 	public void append2SqlData(SqlData sqlData) {
-		// TODO Auto-generated method stub
-		
+		sqlData.appendSql(name).appendSql('(');
+		Component.appendComponents2SqlData(values, sqlData);
+		sqlData.appendSql(')');
 	}
 }

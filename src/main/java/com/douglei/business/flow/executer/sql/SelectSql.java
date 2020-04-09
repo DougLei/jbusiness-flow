@@ -1,6 +1,7 @@
 package com.douglei.business.flow.executer.sql;
 
 import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.sql.component.Component;
 import com.douglei.business.flow.executer.sql.component.select.Select;
 import com.douglei.business.flow.executer.sql.component.select.With;
 
@@ -29,7 +30,7 @@ public class SelectSql extends Sql {
 	protected Object invokeCore() {
 		SqlData sqlData = new SqlData();
 		appendWiths2SqlData(sqlData);
-		appendComponents2SqlData(selects, sqlData);
+		Component.appendComponents2SqlData(selects, sqlData);
 		
 		// TODO 具体的jdbc执行SqlData
 		sqlData.getSql();
@@ -40,7 +41,7 @@ public class SelectSql extends Sql {
 	private void appendWiths2SqlData(SqlData sqlData) {
 		if(withs != null) {
 			sqlData.appendSql("WITH ");
-			appendComponents2SqlData(withs, sqlData);
+			Component.appendComponents2SqlData(withs, sqlData);
 		}
 	}
 }

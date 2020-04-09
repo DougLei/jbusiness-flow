@@ -25,6 +25,10 @@ public class SqlData {
 		sql.append(s);
 		return this;
 	}
+	public SqlData appendSql(Object o) {
+		sql.append(o);
+		return this;
+	}
 	
 	private List<Object> parameterValues;
 	public void addParameterValue(Object parameterValue) {

@@ -19,7 +19,7 @@ public class Set implements Component{
 
 	@Override
 	public void append2SqlData(SqlData sqlData) {
-		// TODO Auto-generated method stub
-		
+		sqlData.appendSql(column).appendSql("=");
+		value.append2SqlData(sqlData);
 	}
 }

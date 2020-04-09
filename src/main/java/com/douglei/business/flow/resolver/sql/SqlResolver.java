@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.LogicalOP;
 import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.component.Function;
 import com.douglei.business.flow.executer.sql.component.Table;
@@ -23,14 +24,9 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public abstract class SqlResolver {
-	private static final Select[] EMPTY_SELECT = new Select[0];
-	private static final Join[] EMPTY_JOIN = new Join[0];;
-	private static final ConditionGroup[] EMPTY_CONDITION_GROUP = new ConditionGroup[0];;
-	private static final Condition[] EMPTY_CONDITION = new Condition[0];;
-	private static final GroupAndOrder[] EMPTY_GROUP_AND_ORDER = new GroupAndOrder[0];
-	protected static final String CONDITION_SQL_KEY_WORD_ON = "on ";
-	protected static final String CONDITION_SQL_KEY_WORD_WHERE = "where ";
-	protected static final String CONDITION_SQL_KEY_WORD_HAVING = "having ";
+	protected static final String CONDITION_SQL_KEY_WORD_ON = " ON ";
+	protected static final String CONDITION_SQL_KEY_WORD_WHERE = " WHERE ";
+	protected static final String CONDITION_SQL_KEY_WORD_HAVING = " HAVING ";
 	
 	/**
 	 * 获取类型
@@ -74,7 +70,7 @@ public abstract class SqlResolver {
 		if(StringUtil.notEmpty(object = tableJSON.getString("name"))) {
 			table.setName(object.toString());
 		}else if(StringUtil.notEmpty(object = tableJSON.getString("paramName"))) {
-			table.setParamName(object.toString());
+			table.setParameter(Parameter.newInstance(object.toString(), Scope.LOCAL));
 		}else if((object = tableJSON.getJSONObject("function")) != null) {
 			table.setFunction(parseFunction((JSONObject)object));
 		}else if((object = tableJSON.getJSONArray("selects")) != null) {
@@ -107,7 +103,7 @@ public abstract class SqlResolver {
 	protected Select[] parseSelects(JSONArray selectARRAY) {
 		byte size = selectARRAY ==null?0:(byte) selectARRAY.size();
 		if(size == 0) {
-			return EMPTY_SELECT;
+			return null;
 		}
 		Select[] selects = new Select[size];
 		for(byte i=0;i<size;i++) {
@@ -141,7 +137,7 @@ public abstract class SqlResolver {
 	private Join[] parseJoins(JSONArray array) {
 		byte size = array==null?0:(byte)array.size();
 		if(size == 0) {
-			return EMPTY_JOIN;
+			return null;
 		}
 		Join[] joins = new Join[size];
 		JSONObject json;
@@ -166,7 +162,7 @@ public abstract class SqlResolver {
 	private ConditionGroup[] parseConditionGroups_(JSONArray array) {
 		byte size = array==null?0:(byte)array.size();
 		if(size == 0) {
-			return EMPTY_CONDITION_GROUP;
+			return null;
 		}
 		ConditionGroup[] conditionGroups = new ConditionGroup[size];
 		JSONObject json;
@@ -180,14 +176,14 @@ public abstract class SqlResolver {
 	private Condition[] parseConditions(JSONArray array) {
 		byte size = array==null?0:(byte)array.size();
 		if(size == 0) {
-			return EMPTY_CONDITION;
+			return null;
 		}
 		Condition[] conditions = new Condition[size];
 		JSONObject json;
 		for(byte i=0;i<size;i++) {
 			json = array.getJSONObject(i);
 			conditions[i] = new Condition(parseValue(json.getJSONObject("left")), CompareType.toValue(json.getString("cop")), LogicalOP.toValue(json.getByteValue("op")));
-			if(conditions[i].getCop() != CompareType.NULL && conditions[i].getCop() != CompareType.NNULL) {
+			if(conditions[i].opIsNULL()) {
 				conditions[i].setRights(parseRights(json.getJSONArray("rights")));
 			}
 		}
@@ -206,7 +202,7 @@ public abstract class SqlResolver {
 	private GroupAndOrder[] parseGOs(JSONArray array) {
 		byte size = array==null?0:(byte)array.size();
 		if(size == 0) {
-			return EMPTY_GROUP_AND_ORDER;
+			return null;
 		}
 		GroupAndOrder[] gos = new GroupAndOrder[size];
 		JSONObject goJSON;

@@ -1,6 +1,7 @@
 package com.douglei.business.flow.executer.sql;
 
 import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.sql.component.Component;
 import com.douglei.business.flow.executer.sql.component.Table;
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroups;
 import com.douglei.business.flow.executer.sql.component.update.Set;
@@ -45,6 +46,6 @@ public class UpdateSql extends Sql {
 
 	private void appendSets2SqlData(SqlData sqlData) {
 		sqlData.appendSql(" SET ");
-		appendComponents2SqlData(sets, sqlData);
+		Component.appendComponents2SqlData(sets, sqlData);
 	}
 }

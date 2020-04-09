@@ -21,4 +21,17 @@ public interface Component {
 	default String linkSymbol() {
 		return ",";
 	}
+	
+	/**
+	 * 追加组件数据到SqlData实例中
+	 * @param components
+	 * @param sqlData
+	 */
+	static void appendComponents2SqlData(Component[] components, SqlData sqlData) {
+		for(int i=0;i<components.length;i++) {
+			components[i].append2SqlData(sqlData);
+			if(i < components.length-1)
+				sqlData.appendSql(components[i].linkSymbol());
+		}
+	}
 }

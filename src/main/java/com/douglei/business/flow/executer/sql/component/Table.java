@@ -1,5 +1,7 @@
 package com.douglei.business.flow.executer.sql.component;
 
+import com.douglei.business.flow.executer.ParameterContext;
+import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.select.Select;
 import com.douglei.tools.utils.StringUtil;
@@ -12,7 +14,7 @@ public class Table implements Component{
 	private String alias;
 	private String name;
 	
-	private String paramName;
+	private Parameter parameter;
 	private Function function;
 	private Select[] selects;
 	
@@ -25,8 +27,8 @@ public class Table implements Component{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public void setParamName(String paramName) {
-		this.paramName = paramName;
+	public void setParameter(Parameter parameter) {
+		this.parameter = parameter;
 	}
 	public void setFunction(Function function) {
 		this.function = function;
@@ -37,7 +39,20 @@ public class Table implements Component{
 
 	@Override
 	public void append2SqlData(SqlData sqlData) {
-		// TODO Auto-generated method stub
+		if(name != null) {
+			sqlData.appendSql(name);
+		}else if(parameter != null) {
+			sqlData.appendSql(ParameterContext.getValue(parameter));
+		}else if(function != null) {
+			function.append2SqlData(sqlData);
+		}else if(selects != null) {
+			sqlData.appendSql('(');
+			Component.appendComponents2SqlData(selects, sqlData);
+			sqlData.appendSql(')');
+		}
 		
+		if(alias != null) {
+			sqlData.appendSql(" AS ").appendSql(alias);
+		}
 	}
 }

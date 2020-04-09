@@ -18,7 +18,7 @@ public class ConditionGroups implements Component {
 
 	@Override
 	public void append2SqlData(SqlData sqlData) {
-		// TODO Auto-generated method stub
-		
+		sqlData.appendSql(prefixSql);
+		Component.appendComponents2SqlData(groups, sqlData);
 	}
 }
