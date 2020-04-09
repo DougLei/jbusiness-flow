@@ -20,11 +20,10 @@
 		"paramName":"", // 从sql中配置的参数params获取指定的参数值
 		"placeholder":true, // 是否使用占位符, 默认为true
 		
-		// 是否包裹固定值, 0未配置, 1包裹, 2不包裹
+		// 是否包裹固定值, 0未配置, 1包裹, 2不包裹,    且在placeholder=false才有效
 		// => 针对value
 		// 首先判断如果value是数字类型, 则package默认为2, 否则package默认为1, 再判断用户是否配置了该属性值, 如果配置了则使用用户配置的值, 否则使用默认值
 		// => 针对paramName
-		// placeholder=false才有效
 		// 首先判断如果paramName对应的值是数字类型, 则package默认为2, 否则package默认为1, 再判断用户是否配置了该属性值, 如果配置了则使用用户配置的值, 否则使用默认值
 		"package":0,
 		

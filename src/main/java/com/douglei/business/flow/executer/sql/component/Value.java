@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.sql.component;
 
+import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.select.Select;
 
@@ -10,23 +11,34 @@ import com.douglei.business.flow.executer.sql.component.select.Select;
 public class Value implements Component{
 	private String column;
 	private Object value; 
-	private String paramName;
+	private Parameter parameter;
 	private boolean placeholder;
 	private byte package_;
 	private Function function;
 	private Select[] selects;
-	
 	
 	public void setColumn(String column) {
 		this.column = column;
 	}
 	public void setValue(Object value, Boolean placeholder, byte package_) {
 		this.value = value;
-		// TODO 这里要根据值去决定placeholder和package_的值, 下面的paramName同样
+		setPlaceholder(placeholder);
+		setPackage(package_);
 	}
-	public void setParamName(String paramName, Boolean placeholder, byte package_) {
-		this.paramName = paramName;
-		// TODO
+	public void setParameter(Parameter parameter, Boolean placeholder, byte package_) {
+		this.parameter = parameter;
+		setPlaceholder(placeholder);
+		setPackage(package_);
+	}
+	private void setPlaceholder(Boolean placeholder) {
+		if(placeholder == null)
+			placeholder = true;
+		this.placeholder = placeholder;
+	}
+	private void setPackage(byte package_) {
+		if(!this.placeholder) {
+			
+		}
 	}
 	public void setFunction(Function function) {
 		this.function = function;
@@ -37,7 +49,18 @@ public class Value implements Component{
 	
 	@Override
 	public void append2SqlData(SqlData sqlData) {
-		// TODO Auto-generated method stub
-		
+		if(column != null) {
+			sqlData.appendSql(column);
+		}else if(value != null) {
+			
+		}else if(parameter != null) {
+			
+		}else if(function != null) {
+			function.append2SqlData(sqlData);
+		}else if(selects != null) {
+			sqlData.appendSql('(');
+			Component.appendComponents2SqlData(selects, sqlData);
+			sqlData.appendSql(')');
+		}
 	}
 }

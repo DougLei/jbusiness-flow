@@ -88,7 +88,7 @@ public abstract class SqlResolver {
 		}else if((object = valueJSON.get("value")) != null) {
 			value.setValue(object, valueJSON.getBoolean("placeholder"), valueJSON.getByteValue("package"));
 		}else if(StringUtil.notEmpty(object = valueJSON.getString("paramName"))) {
-			value.setParamName(object.toString(), valueJSON.getBoolean("placeholder"), valueJSON.getByteValue("package"));
+			value.setParameter(Parameter.newInstance(object.toString(), Scope.LOCAL), valueJSON.getBoolean("placeholder"), valueJSON.getByteValue("package"));
 		}else if((object = valueJSON.getJSONObject("function")) != null) {
 			value.setFunction(parseFunction((JSONObject)object));
 		}else if((object = valueJSON.getJSONArray("selects")) != null) {
