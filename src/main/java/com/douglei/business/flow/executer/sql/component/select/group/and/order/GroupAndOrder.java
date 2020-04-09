@@ -1,4 +1,4 @@
-package com.douglei.business.flow.executer.sql.component.select.go;
+package com.douglei.business.flow.executer.sql.component.select.group.and.order;
 
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.Component;
@@ -42,12 +42,12 @@ class GroupAndOrder implements Component{
 }
 
 enum Sort{
-	ASC,
-	DESC;
+	ASC(" ASC "),
+	DESC(" DESC ");
 	
 	private String sql;
-	private Sort() {
-		this.sql = " "+name()+" ";
+	private Sort(String sql) {
+		this.sql = sql;
 	}
 
 	public static Sort toValue(byte sort) {

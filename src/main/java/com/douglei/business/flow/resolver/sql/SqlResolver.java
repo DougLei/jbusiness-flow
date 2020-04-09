@@ -17,8 +17,8 @@ import com.douglei.business.flow.executer.sql.component.select.condition.Conditi
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroup;
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroups;
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionType;
-import com.douglei.business.flow.executer.sql.component.select.go.GOType;
-import com.douglei.business.flow.executer.sql.component.select.go.GroupAndOrders;
+import com.douglei.business.flow.executer.sql.component.select.group.and.order.GroupAndOrderType;
+import com.douglei.business.flow.executer.sql.component.select.group.and.order.GroupAndOrders;
 import com.douglei.tools.utils.StringUtil;
 
 /**
@@ -117,9 +117,9 @@ public abstract class SqlResolver {
 		select.setTable(parseTable(selectJSON.getJSONObject("table")));
 		select.setJoins(parseJoins(selectJSON.getJSONArray("joins")));
 		select.setWhereGroups(parseConditionGroups(ConditionType.WHERE, selectJSON));
-		select.setGroupBys(parseGroupAndOrders(GOType.GROUP_BY, selectJSON));
+		select.setGroupBys(parseGroupAndOrders(GroupAndOrderType.GROUP_BY, selectJSON));
 		select.setHavingGroups(parseConditionGroups(ConditionType.HAVING, selectJSON));
-		select.setOrderBys(parseGroupAndOrders(GOType.ORDER_BY, selectJSON));
+		select.setOrderBys(parseGroupAndOrders(GroupAndOrderType.ORDER_BY, selectJSON));
 		return select;
 	}
 	// 解析result
@@ -195,25 +195,25 @@ public abstract class SqlResolver {
 	}
 
 	// 解析group by和order by
-	private GroupAndOrders parseGroupAndOrders(GOType type, JSONObject selectJSON) {
+	private GroupAndOrders parseGroupAndOrders(GroupAndOrderType type, JSONObject selectJSON) {
 		JSONArray array = selectJSON.getJSONArray(type.getJsonKey());
 		byte size = array==null?0:(byte)array.size();
 		if(size == 0) {
 			return null;
 		}
-		GroupAndOrders gos = new GroupAndOrders(type.getPrefixSql(), size);
+		GroupAndOrders groupAndOrders = new GroupAndOrders(type.getPrefixSql(), size);
 		
 		JSONObject goJSON;
 		String column;
 		for(byte i=0;i<size;i++) {
 			goJSON = array.getJSONObject(i);
-			gos.initialGroupAndOrder(i, goJSON.getByte("sort"));
+			groupAndOrders.initialGroupAndOrder(i, goJSON.getByte("sort"));
 			if(StringUtil.notEmpty(column = goJSON.getString("column"))) {
-				gos.setColumn(i, column);
+				groupAndOrders.setColumn(i, column);
 			}else {
-				gos.setFunction(i, parseFunction(goJSON.getJSONObject("function")));
+				groupAndOrders.setFunction(i, parseFunction(goJSON.getJSONObject("function")));
 			}
 		}
-		return gos;
+		return groupAndOrders;
 	}
 }
