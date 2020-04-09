@@ -20,7 +20,21 @@ public class With implements Component{
 
 	@Override
 	public void append2SqlData(SqlData sqlData) {
-		// TODO Auto-generated method stub
+		sqlData.appendSql(alias);
 		
+		if(columns != null) {
+			sqlData.appendSql('(');
+			for(int i=0;i<columns.length;i++) {
+				sqlData.appendSql(columns[i]);
+				if(i<columns.length-1) {
+					sqlData.appendSql(',');
+				}
+			}
+			sqlData.appendSql(')');
+		}
+		
+		sqlData.appendSql(" AS (");
+		Component.appendComponents2SqlData(selects, sqlData);
+		sqlData.appendSql(')');
 	}
 }
