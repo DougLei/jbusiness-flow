@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.DeleteSql;
 import com.douglei.business.flow.executer.sql.Sql;
+import com.douglei.business.flow.executer.sql.component.select.condition.ConditionType;
 import com.douglei.business.flow.resolver.sql.SqlResolver;
 
 /**
@@ -21,7 +22,7 @@ public class DeleteSqlResolver extends SqlResolver{
 	public Sql parse(String name, Parameter[] parameters, JSONObject content) {
 		DeleteSql sql = new DeleteSql(name, parameters);
 		sql.setTable(parseTable(content.getJSONObject("table")));
-		sql.setWhereGroups(parseConditionGroups(CONDITION_SQL_KEY_WORD_WHERE, content));
+		sql.setWhereGroups(parseConditionGroups(ConditionType.WHERE, content));
 		return sql;
 	}
 }

@@ -139,7 +139,7 @@
 			// 优先级排序: column > function
 			"column":"", // 列名
 			"function":{}, // 参看selects的results中的function配置
-			"sort":0 // 排序方式, 0为asc, 1为desc, 默认为0
+			"sort":0 // 排序方式, 0为asc, 1为desc, 不提供默认值
 		}],
 		"union":0 // 是否union, 默认为0, 0表示union, 1表示union all, 如果之下再没有配置select, 则该项配置无效
 	}]

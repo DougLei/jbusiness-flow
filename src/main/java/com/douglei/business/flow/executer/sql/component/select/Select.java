@@ -4,28 +4,25 @@ import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.Component;
 import com.douglei.business.flow.executer.sql.component.Table;
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroups;
+import com.douglei.business.flow.executer.sql.component.select.go.GroupAndOrders;
 
 /**
  * 
  * @author DougLei
  */
 public class Select implements Component{
-	private static final byte UNION = 0;
-	private static final String UNION_ = " UNION ";
-	private static final byte UNION_ALL = 1;
-	private static final String UNION_ALL_ = " UNION ALL ";
-	
 	private Result[] results;
 	private Table table;
+	
 	private Join[] joins;
 	private ConditionGroups whereGroups;
-	private GroupAndOrder[] groupBys;
+	private GroupAndOrders groupBys;
 	private ConditionGroups havingGroups;
-	private GroupAndOrder[] orderBys;
-	private byte union;
+	private GroupAndOrders orderBys;
 
+	private UnionType union;
 	public Select(byte union) {
-		this.union = union;
+		this.union = UnionType.toValue(union);
 	}
 
 	public void setResults(Result[] results) {
@@ -40,28 +37,62 @@ public class Select implements Component{
 	public void setWhereGroups(ConditionGroups whereGroups) {
 		this.whereGroups = whereGroups;
 	}
-	public void setGroupBys(GroupAndOrder[] groupBys) {
+	public void setGroupBys(GroupAndOrders groupBys) {
 		this.groupBys = groupBys;
 	}
 	public void setHavingGroups(ConditionGroups havingGroups) {
 		this.havingGroups = havingGroups;
 	}
-	public void setOrderBys(GroupAndOrder[] orderBys) {
+	public void setOrderBys(GroupAndOrders orderBys) {
 		this.orderBys = orderBys;
 	}
 
 	@Override
 	public void append2SqlData(SqlData sqlData) {
-		// TODO Auto-generated method stub
+		sqlData.appendSql(" SELECT ");
+		Component.appendComponents2SqlData(results, sqlData);
+		sqlData.appendSql(" FROM ");
+		table.append2SqlData(sqlData);
 		
+		if(joins != null)
+			Component.appendComponents2SqlData(joins, sqlData);
+		if(whereGroups != null)
+			whereGroups.append2SqlData(sqlData);
+		if(groupBys != null)
+			groupBys.append2SqlData(sqlData);
+		if(havingGroups != null)
+			havingGroups.append2SqlData(sqlData);
+		if(orderBys != null)
+			orderBys.append2SqlData(sqlData);
 	}
 
 	@Override
 	public String linkSymbol() {
-		if(union == UNION)
-			return UNION_;
-		if(union == UNION_ALL)
-			return UNION_ALL_;
-		return Component.super.linkSymbol();
+		return union.sql();
+	}
+}
+
+
+/**
+ * 
+ * @author DougLei
+ */
+enum UnionType{
+	UNION(" UNION "),
+	UNION_ALL(" UNION ALL ");
+	
+	private String sql;
+	private UnionType(String sql) {
+		this.sql = sql;
+	}
+
+	static UnionType toValue(byte value) {
+		if(value == 1)
+			return UNION_ALL;
+		return UNION;
+	}
+
+	public String sql() {
+		return sql;
 	}
 }

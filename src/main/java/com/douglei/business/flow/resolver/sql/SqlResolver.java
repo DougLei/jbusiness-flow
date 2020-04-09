@@ -9,7 +9,6 @@ import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.component.Function;
 import com.douglei.business.flow.executer.sql.component.Table;
 import com.douglei.business.flow.executer.sql.component.Value;
-import com.douglei.business.flow.executer.sql.component.select.GroupAndOrder;
 import com.douglei.business.flow.executer.sql.component.select.Join;
 import com.douglei.business.flow.executer.sql.component.select.Result;
 import com.douglei.business.flow.executer.sql.component.select.Select;
@@ -17,6 +16,9 @@ import com.douglei.business.flow.executer.sql.component.select.condition.Compare
 import com.douglei.business.flow.executer.sql.component.select.condition.Condition;
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroup;
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroups;
+import com.douglei.business.flow.executer.sql.component.select.condition.ConditionType;
+import com.douglei.business.flow.executer.sql.component.select.go.GOType;
+import com.douglei.business.flow.executer.sql.component.select.go.GroupAndOrders;
 import com.douglei.tools.utils.StringUtil;
 
 /**
@@ -24,10 +26,7 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public abstract class SqlResolver {
-	protected static final String CONDITION_SQL_KEY_WORD_ON = " ON ";
-	protected static final String CONDITION_SQL_KEY_WORD_WHERE = " WHERE ";
-	protected static final String CONDITION_SQL_KEY_WORD_HAVING = " HAVING ";
-	
+
 	/**
 	 * 获取类型
 	 * @return
@@ -117,10 +116,10 @@ public abstract class SqlResolver {
 		select.setResults(parseResults(selectJSON.getJSONArray("results")));
 		select.setTable(parseTable(selectJSON.getJSONObject("table")));
 		select.setJoins(parseJoins(selectJSON.getJSONArray("joins")));
-		select.setWhereGroups(parseConditionGroups(CONDITION_SQL_KEY_WORD_WHERE, selectJSON));
-		select.setGroupBys(parseGOs(selectJSON.getJSONArray("groupBys")));
-		select.setHavingGroups(parseConditionGroups(CONDITION_SQL_KEY_WORD_HAVING, selectJSON));
-		select.setOrderBys(parseGOs(selectJSON.getJSONArray("orderBys")));
+		select.setWhereGroups(parseConditionGroups(ConditionType.WHERE, selectJSON));
+		select.setGroupBys(parseGroupAndOrders(GOType.GROUP_BY, selectJSON));
+		select.setHavingGroups(parseConditionGroups(ConditionType.HAVING, selectJSON));
+		select.setOrderBys(parseGroupAndOrders(GOType.ORDER_BY, selectJSON));
 		return select;
 	}
 	// 解析result
@@ -143,21 +142,18 @@ public abstract class SqlResolver {
 		JSONObject json;
 		for(byte i=0;i<size;i++) {
 			json = array.getJSONObject(i);
-			joins[i] = new Join(json.getByteValue("type"), parseTable(json.getJSONObject("table")), parseConditionGroups(CONDITION_SQL_KEY_WORD_ON, json));
+			joins[i] = new Join(json.getByteValue("type"), parseTable(json.getJSONObject("table")), parseConditionGroups(ConditionType.ON, json));
 		}
 		return joins;
 	}
+	
 	// 解析条件组, 包括where, join中的on, having
-	protected ConditionGroups parseConditionGroups(String conditionSqlKeyword, JSONObject content) {
-		switch(conditionSqlKeyword) {
-			case CONDITION_SQL_KEY_WORD_ON:
-				return new ConditionGroups(CONDITION_SQL_KEY_WORD_ON, parseConditionGroups_(content.getJSONArray("onGroups")));
-			case CONDITION_SQL_KEY_WORD_WHERE:
-				return new ConditionGroups(CONDITION_SQL_KEY_WORD_WHERE, parseConditionGroups_(content.getJSONArray("whereGroups")));
-			case CONDITION_SQL_KEY_WORD_HAVING:
-				return new ConditionGroups(CONDITION_SQL_KEY_WORD_HAVING, parseConditionGroups_(content.getJSONArray("havingGroups")));
+	protected ConditionGroups parseConditionGroups(ConditionType type, JSONObject content) {
+		ConditionGroup[] array = parseConditionGroups_(content.getJSONArray(type.getJsonKey()));
+		if(array == null) {
+			return null;
 		}
-		throw new IllegalArgumentException("解析条件组时, 传入的conditionSqlKeyword值错误");
+		return new ConditionGroups(type.getPrefixSql(), array);
 	}
 	private ConditionGroup[] parseConditionGroups_(JSONArray array) {
 		byte size = array==null?0:(byte)array.size();
@@ -199,21 +195,23 @@ public abstract class SqlResolver {
 	}
 
 	// 解析group by和order by
-	private GroupAndOrder[] parseGOs(JSONArray array) {
+	private GroupAndOrders parseGroupAndOrders(GOType type, JSONObject selectJSON) {
+		JSONArray array = selectJSON.getJSONArray(type.getJsonKey());
 		byte size = array==null?0:(byte)array.size();
 		if(size == 0) {
 			return null;
 		}
-		GroupAndOrder[] gos = new GroupAndOrder[size];
+		GroupAndOrders gos = new GroupAndOrders(type.getPrefixSql(), size);
+		
 		JSONObject goJSON;
 		String column;
 		for(byte i=0;i<size;i++) {
 			goJSON = array.getJSONObject(i);
-			gos[i] = new GroupAndOrder(goJSON.getByteValue("sort"));
+			gos.initialGroupAndOrder(i, goJSON.getByte("sort"));
 			if(StringUtil.notEmpty(column = goJSON.getString("column"))) {
-				gos[i].setColumn(column);
+				gos.setColumn(i, column);
 			}else {
-				gos[i].setFunction(parseFunction(goJSON.getJSONObject("function")));
+				gos.setFunction(i, parseFunction(goJSON.getJSONObject("function")));
 			}
 		}
 		return gos;

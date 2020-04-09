@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.UpdateSql;
+import com.douglei.business.flow.executer.sql.component.select.condition.ConditionType;
 import com.douglei.business.flow.executer.sql.component.update.Set;
 import com.douglei.business.flow.resolver.sql.SqlResolver;
 
@@ -33,7 +34,7 @@ public class UpdateSqlResolver extends SqlResolver{
 		}
 		sql.setSets(sets);
 				
-		sql.setWhereGroups(parseConditionGroups(CONDITION_SQL_KEY_WORD_WHERE, content));
+		sql.setWhereGroups(parseConditionGroups(ConditionType.WHERE, content));
 		return sql;
 	}
 }
