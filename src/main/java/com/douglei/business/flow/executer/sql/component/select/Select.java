@@ -10,8 +10,10 @@ import com.douglei.business.flow.executer.sql.component.select.condition.Conditi
  * @author DougLei
  */
 public class Select implements Component{
-	public static final byte UNION = 0;
-	public static final byte UNION_ALL = 1;
+	private static final byte UNION = 0;
+	private static final String UNION_ = " UNION ";
+	private static final byte UNION_ALL = 1;
+	private static final String UNION_ALL_ = " UNION ALL ";
 	
 	private Result[] results;
 	private Table table;
@@ -52,5 +54,14 @@ public class Select implements Component{
 	public void append2SqlData(SqlData sqlData) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String linkSymbol() {
+		if(union == UNION)
+			return UNION_;
+		if(union == UNION_ALL)
+			return UNION_ALL_;
+		return Component.super.linkSymbol();
 	}
 }

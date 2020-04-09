@@ -38,7 +38,7 @@ public class InsertSql extends Sql {
 
 	@Override
 	protected Object invokeCore() {
-		SqlData sqlData = new SqlData("insert into ");
+		SqlData sqlData = new SqlData("INSERT INTO ");
 		table.append2SqlData(sqlData);
 		appendColumns2SqlData(sqlData);
 		appendValues2SqlData(sqlData);
@@ -64,22 +64,13 @@ public class InsertSql extends Sql {
 		sqlData.appendSql(' ');
 		switch(valuesType) {
 			case VALUES_TYPE_VALUE:
-				sqlData.appendSql("values");
-				appendValues2SqlData_(sqlData);
+				sqlData.appendSql("values(");
+				appendComponents2SqlData(values, sqlData);
+				sqlData.appendSql(')');
 				break;
 			case VALUES_TYPE_SELECT:
-				appendValues2SqlData_(sqlData);
+				appendComponents2SqlData(values, sqlData);
 				break;
 		}
-	}
-	
-	private void appendValues2SqlData_(SqlData sqlData) {
-		sqlData.appendSql('(');
-		for(int i=0;i<values.length;i++) {
-			values[i].append2SqlData(sqlData);
-			if(i < values.length-1)
-				sqlData.appendSql(',');
-		}
-		sqlData.appendSql(')');
 	}
 }

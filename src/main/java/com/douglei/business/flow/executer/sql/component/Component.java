@@ -13,4 +13,12 @@ public interface Component {
 	 * @param sqlData
 	 */
 	void append2SqlData(SqlData sqlData);
+	
+	/**
+	 * 组件数组时, 组件间相连的连接符, 默认为,
+	 * @return
+	 */
+	default String linkSymbol() {
+		return ",";
+	}
 }

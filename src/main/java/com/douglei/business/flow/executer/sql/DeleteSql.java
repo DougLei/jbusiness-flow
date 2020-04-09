@@ -27,7 +27,7 @@ public class DeleteSql extends Sql {
 
 	@Override
 	protected Object invokeCore() {
-		SqlData sqlData = new SqlData("delete ");
+		SqlData sqlData = new SqlData("DELETE ");
 		table.append2SqlData(sqlData);
 		whereGroups.append2SqlData(sqlData);
 		

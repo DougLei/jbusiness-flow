@@ -18,7 +18,6 @@ public class SelectSql extends Sql {
 		super(name, parameters);
 	}
 
-	
 	public void setWiths(With[] withs) {
 		this.withs = withs;
 	}
@@ -30,7 +29,7 @@ public class SelectSql extends Sql {
 	protected Object invokeCore() {
 		SqlData sqlData = new SqlData();
 		appendWiths2SqlData(sqlData);
-		appendSelects2SqlData(sqlData);
+		appendComponents2SqlData(selects, sqlData);
 		
 		// TODO 具体的jdbc执行SqlData
 		sqlData.getSql();
@@ -38,16 +37,10 @@ public class SelectSql extends Sql {
 		return null;
 	}
 
-
 	private void appendWiths2SqlData(SqlData sqlData) {
 		if(withs != null) {
-			sqlData.appendSql("with ");
-			
+			sqlData.appendSql("WITH ");
+			appendComponents2SqlData(withs, sqlData);
 		}
-	}
-
-	private void appendSelects2SqlData(SqlData sqlData) {
-		// TODO Auto-generated method stub
-		
 	}
 }

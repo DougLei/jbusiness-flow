@@ -73,6 +73,7 @@
 {
 	"withs":[{ // with字句, 非必须配置
 		"alias":"", // 对with查询定义的别名,
+		"columns":["", ""], // 针对with查询的列名定义
 		"selects":[{}] // 具体的查询语句
 	}],
 	"selects":[{

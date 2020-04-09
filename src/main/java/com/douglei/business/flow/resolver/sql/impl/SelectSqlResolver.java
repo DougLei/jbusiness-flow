@@ -7,6 +7,7 @@ import com.douglei.business.flow.executer.sql.SelectSql;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.component.select.With;
 import com.douglei.business.flow.resolver.sql.SqlResolver;
+import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 
@@ -31,13 +32,19 @@ public class SelectSqlResolver extends SqlResolver{
 			JSONObject withJSON;
 			for(byte i=0;i<size;i++) {
 				withJSON = array.getJSONObject(i);
-				withs[i] = new With(withJSON.getString("alias"), parseSelects(withJSON.getJSONArray("selects")));
+				withs[i] = new With(withJSON.getString("alias"), parseColumns(withJSON.getJSONArray("columns")), parseSelects(withJSON.getJSONArray("selects")));
 			}
 			sql.setWiths(withs);
 		}
 		
 		sql.setSelects(parseSelects(content.getJSONArray("selects")));
 		return sql;
+	}
+
+	private String[] parseColumns(JSONArray array) {
+		if(CollectionUtil.unEmpty(array))
+			return array.toArray(new String[array.size()]);
+		return null;
 	}
 }
  

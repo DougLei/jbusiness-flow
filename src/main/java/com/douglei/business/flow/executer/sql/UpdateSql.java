@@ -32,7 +32,7 @@ public class UpdateSql extends Sql {
 
 	@Override
 	protected Object invokeCore() {
-		SqlData sqlData = new SqlData("update ");
+		SqlData sqlData = new SqlData("UPDATE ");
 		table.append2SqlData(sqlData);
 		appendSets2SqlData(sqlData);
 		whereGroups.append2SqlData(sqlData);
@@ -44,11 +44,7 @@ public class UpdateSql extends Sql {
 	}
 
 	private void appendSets2SqlData(SqlData sqlData) {
-		sqlData.appendSql(" set ");
-		for(int i=0;i<sets.length;i++) {
-			sets[i].append2SqlData(sqlData);
-			if(i < sets.length-1)
-				sqlData.appendSql(',');
-		}
+		sqlData.appendSql(" SET ");
+		appendComponents2SqlData(sets, sqlData);
 	}
 }
