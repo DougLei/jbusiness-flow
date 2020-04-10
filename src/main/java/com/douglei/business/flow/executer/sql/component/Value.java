@@ -8,6 +8,7 @@ import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.select.Select;
 import com.douglei.business.flow.resolver.action.impl.sql.SqlDefinedParameterContext;
+import com.douglei.tools.utils.StringUtil;
 import com.douglei.tools.utils.datatype.dateformat.DateFormatUtil;
 
 /**
@@ -36,26 +37,23 @@ public class Value implements Component{
 		this.placeholder = placeholder == null?true:placeholder;
 		setValuePrefixAndSuffix(valuePrefix, valueSuffix, dataType);
 		this.format = format;
-		this.value = getFinalValue(dataType.convert(value));
+		if(this.placeholder) {
+			this.value = dataType.convert(value);
+		}else {
+			this.value = value;
+		}
 	}
 	public void setParameter(Parameter parameter, Boolean placeholder, String valuePrefix, String valueSuffix, String format) {
 		this.parameter = parameter;
 		this.placeholder = placeholder == null?true:placeholder;
 		setValuePrefixAndSuffix(valuePrefix, valueSuffix, SqlDefinedParameterContext.get(parameter.getName()).getDataType());
-		this.format = format;
+		this.format = StringUtil.isEmpty(format)?"yyyy-MM-dd":format;
 	}
 	private void setValuePrefixAndSuffix(String valuePrefix, String valueSuffix, DataType dataType) {
 		if(!this.placeholder) {
 			this.valuePrefix = valuePrefix==null?(dataType.isNumber()?"":"'"):valuePrefix;
 			this.valueSuffix = valueSuffix==null?(dataType.isNumber()?"":"'"):valueSuffix;
 		}
-	}
-	// 获取最终的value值
-	private Object getFinalValue(Object value) {
-		if(!placeholder && dataType == DataType.DATE) {
-			return DateFormatUtil.format((Date)value, format);
-		}
-		return value;
 	}
 	public void setFunction(Function function) {
 		this.function = function;
@@ -73,7 +71,7 @@ public class Value implements Component{
 				sqlData.appendSql('?');
 				sqlData.addParameterValue(value);
 			}else {
-				sqlData.appendSql(valuePrefix).appendSql(value).appendSql(valueSuffix);
+				sqlData.appendSql(valuePrefix).appendSql((dataType==DataType.DATE && StringUtil.notEmpty(format))?DateFormatUtil.format(DateFormatUtil.parseDate(value), format):value).appendSql(valueSuffix);
 			}
 		}else if(parameter != null) {
 			Object parameterValue = ParameterContext.getValue(parameter);
@@ -81,7 +79,7 @@ public class Value implements Component{
 				sqlData.appendSql('?');
 				sqlData.addParameterValue(parameterValue);
 			}else {
-				sqlData.appendSql(valuePrefix).appendSql(getFinalValue(parameterValue)).appendSql(valueSuffix);
+				sqlData.appendSql(valuePrefix).appendSql(dataType==DataType.DATE?DateFormatUtil.format((Date)parameterValue, format):parameterValue).appendSql(valueSuffix);
 			}
 		}else if(function != null) {
 			function.append2SqlData(sqlData);
