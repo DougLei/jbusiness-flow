@@ -19,6 +19,7 @@ import com.douglei.business.flow.executer.sql.component.select.condition.Conditi
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionType;
 import com.douglei.business.flow.executer.sql.component.select.group.and.order.GroupAndOrderType;
 import com.douglei.business.flow.executer.sql.component.select.group.and.order.GroupAndOrders;
+import com.douglei.business.flow.resolver.action.impl.sql.SqlDefinedParameterContext;
 import com.douglei.tools.utils.StringUtil;
 
 /**
@@ -69,7 +70,7 @@ public abstract class SqlResolver {
 		if(StringUtil.notEmpty(object = tableJSON.getString("name"))) {
 			table.setName(object.toString());
 		}else if(StringUtil.notEmpty(object = tableJSON.getString("paramName"))) {
-			table.setParameter(Parameter.newInstance(object.toString(), Scope.LOCAL));
+			table.setParameter(SqlDefinedParameterContext.get(object.toString()));
 		}else if((object = tableJSON.getJSONObject("function")) != null) {
 			table.setFunction(parseFunction((JSONObject)object));
 		}else if((object = tableJSON.getJSONArray("selects")) != null) {
@@ -86,9 +87,9 @@ public abstract class SqlResolver {
 		if(StringUtil.notEmpty(object = valueJSON.getString("column"))) {
 			value.setColumn(object.toString());
 		}else if((object = valueJSON.get("value")) != null) {
-			value.setValue(object, valueJSON.getBoolean("placeholder"), valueJSON.getByteValue("package"));
+			value.setValue(object, valueJSON.getBoolean("placeholder"), valueJSON.getString("valuePrefix"), valueJSON.getString("valueSuffix"), valueJSON.getString("format"));
 		}else if(StringUtil.notEmpty(object = valueJSON.getString("paramName"))) {
-			value.setParameter(Parameter.newInstance(object.toString(), Scope.LOCAL), valueJSON.getBoolean("placeholder"), valueJSON.getByteValue("package"));
+			value.setParameter(SqlDefinedParameterContext.get(object.toString()), valueJSON.getBoolean("placeholder"), valueJSON.getString("valuePrefix"), valueJSON.getString("valueSuffix"), valueJSON.getString("format"));
 		}else if((object = valueJSON.getJSONObject("function")) != null) {
 			value.setFunction(parseFunction((JSONObject)object));
 		}else if((object = valueJSON.getJSONArray("selects")) != null) {

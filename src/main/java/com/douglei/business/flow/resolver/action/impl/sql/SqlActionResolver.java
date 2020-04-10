@@ -18,8 +18,8 @@ public abstract class SqlActionResolver extends ActionResolver {
 	@Override
 	public final Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
 		JSONObject content = actionJSON.getJSONObject("content");
+		Parameter[] parameters = SqlDefinedParameterContext.set(ParameterResolver.parse(content.getJSONArray("params")));
 		Sql sql = referenceResolver.parseSql(content.getString("name"));
-		Parameter[] parameters = ParameterResolver.parse(content.getJSONArray("params"));
 		return new SqlAction(sql, parameters, getResult(actionJSON));
 	}
 }

@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
@@ -13,6 +14,30 @@ import com.douglei.tools.utils.datatype.dateformat.DateFormatUtil;
  * @author DougLei
  */
 public enum DataType {
+	DATE(){
+		@Override
+		public boolean matching(Object value) {
+			boolean result = super.matching(value);
+			if(!result && (value instanceof String || value instanceof Long)) {
+				return DateFormatUtil.verifyIsDate(value.toString());
+			}
+			return result;
+		}
+
+		@Override
+		public Object convert(Object value) {
+			if(value == null)
+				return null;
+			if(isInstance(value))
+				return value;
+			return DateFormatUtil.parseDate(value);
+		}
+		
+		@Override
+		protected boolean isInstance(Object value) {
+			return value instanceof Date;
+		}
+	},
 	INTEGER(0){
 		@Override
 		public boolean matching(Object value) {
@@ -27,6 +52,8 @@ public enum DataType {
 		public Object convert(Object value) {
 			if(value == null)
 				return null;
+			if(isInstance(value))
+				return value;
 			return Long.parseLong(value.toString());
 		}
 
@@ -54,6 +81,8 @@ public enum DataType {
 		public Object convert(Object value) {
 			if(value == null)
 				return null;
+			if(isInstance(value))
+				return value;
 			return Double.parseDouble(value.toString());
 		}
 
@@ -64,7 +93,7 @@ public enum DataType {
 		
 		@Override
 		protected boolean isInstance(Object value) {
-			return value instanceof Float || value instanceof Double;
+			return value instanceof Float || value instanceof Double || value instanceof BigDecimal;
 		}
 	},
 	BOOLEAN(false){
@@ -81,6 +110,8 @@ public enum DataType {
 		public Object convert(Object value) {
 			if(value == null)
 				return null;
+			if(isInstance(value))
+				return value;
 			return Boolean.parseBoolean(value.toString());
 		}
 		
@@ -89,33 +120,13 @@ public enum DataType {
 			return value instanceof Boolean;
 		}
 	},
-	DATE(){
-		@Override
-		public boolean matching(Object value) {
-			boolean result = super.matching(value);
-			if(!result && (value instanceof String || value instanceof Long)) {
-				return DateFormatUtil.verifyIsDate(value.toString());
-			}
-			return result;
-		}
-
-		@Override
-		public Object convert(Object value) {
-			if(value == null)
-				return null;
-			return DateFormatUtil.parseDate(value);
-		}
-		
-		@Override
-		protected boolean isInstance(Object value) {
-			return value instanceof Date;
-		}
-	},
 	STRING(){
 		@Override
 		public Object convert(Object value) {
 			if(value == null)
 				return null;
+			if(isInstance(value))
+				return value;
 			return value.toString();
 		}
 
