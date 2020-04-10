@@ -20,7 +20,6 @@ public class Parameter implements Cloneable{
 	
 	private Object value; // 实际参数的值
 	
-	
 	public static Parameter emptyParameter() {
 		return EMPTY_PARAMETER;
 	}

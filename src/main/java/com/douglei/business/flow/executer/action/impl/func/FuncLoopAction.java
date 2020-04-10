@@ -25,22 +25,18 @@ public class FuncLoopAction extends Action {
 	@SuppressWarnings("unchecked")
 	public Object execute() {
 		Object value = ParameterContext.getValue(collection);
-		if(value != null) {
-			if(value instanceof Collection<?>) {
-				executeList((Collection<Object>)value);
-			}
-		}
-		return null;
-	}
-	private void executeList(Collection<Object> list) {
-		if(list.size() > 0) {
-			ParameterContext.addParameter(alias, null);
-			for (Object value : list) {
-				ParameterContext.updateValue(alias, value);
-				for (Action action : actions) {
-					action.execute();
+		if(value != null && value instanceof Collection<?>) {
+			Collection<Object> list = (Collection<Object>)value;
+			if(list.size() > 0) {
+				ParameterContext.addParameter(alias, null);
+				for (Object lv : list) {
+					ParameterContext.updateValue(alias, lv);
+					for (Action action : actions) {
+						action.execute();
+					}
 				}
 			}
 		}
+		return null;
 	}
 }
