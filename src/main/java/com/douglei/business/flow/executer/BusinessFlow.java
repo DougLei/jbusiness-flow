@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.Scope;
+import com.douglei.business.flow.session.SessionPool;
 
 /**
  * 
@@ -13,23 +14,22 @@ public class BusinessFlow {
 	private String name;
 	private String description;
 	private String version;
-	private boolean enabled; 
 	
 	private Parameter[] inputParameters;
 	private Event startEvent;
 	
-	public BusinessFlow(String name, String description, String version, boolean enabled) {
-		if(enabled) {
-			this.name = name;
-			this.description = description;
-			this.version = version;
-			this.enabled = true;
-		}
+	private SessionPool pool;
+	
+	public BusinessFlow(String name, String description, String version, SessionPool pool) {
+		this.name = name;
+		this.description = description;
+		this.version = version;
+		this.pool = pool;
 	}
 	
 	public Map<String, Object> execute(Map<String, Object> inputValueMap) {
 		try {
-			ParameterContext.initial();
+			ParameterContext.initial(pool);
 			if(inputParameters.length > 0) {
 				for (Parameter parameter : inputParameters) {
 					ParameterContext.addParameter(parameter, inputValueMap.get(parameter.getName()));
@@ -37,7 +37,9 @@ public class BusinessFlow {
 			}
 			startEvent.execute();
 			return ParameterContext.getValueMap(Scope.OUT);
-		} finally {
+		} catch(Exception ex){
+			
+		}finally {
 			ParameterContext.destory();
 		}
 	}
@@ -50,9 +52,6 @@ public class BusinessFlow {
 	}
 	public String getVersion() {
 		return version;
-	}
-	public boolean isEnabled() {
-		return enabled;
 	}
 	public void setInputParameters(Parameter[] inputParameters) {
 		this.inputParameters = inputParameters;
