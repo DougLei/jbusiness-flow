@@ -34,4 +34,9 @@ public interface ReferenceContainer {
 	 * @param sql
 	 */
 	void putSql(Sql sql);
+	
+	/**
+	 * 销毁
+	 */
+	void destroy();
 }

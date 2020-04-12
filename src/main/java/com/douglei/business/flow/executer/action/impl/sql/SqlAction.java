@@ -10,17 +10,17 @@ import com.douglei.business.flow.executer.sql.Sql;
  */
 public class SqlAction extends Action {
 	private Sql sql;
-	private Parameter[] definedParameters;
+	private Parameter[] parameters;
 	
 	public SqlAction(Sql sql, Parameter[] parameters, Parameter result) {
 		this.sql = sql;
-		this.definedParameters = parameters;
+		this.parameters = parameters;
 		super.result = result;
 	}
 
 	@Override
 	public Object execute() {
-		setResult(sql.invoke(definedParameters));
+		setResult(sql.invoke(parameters));
 		return null;
 	}
 }

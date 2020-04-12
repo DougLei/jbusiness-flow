@@ -48,7 +48,8 @@ public class InsertSql extends Sql {
 		sqlData.getParameterValues();
 		return null;
 	}
-	private void appendColumns2SqlData(SqlData sqlData) {
+
+	private void appendColumns2SqlData(SqlData sqlData) {
 		if(columns != null) {
 			sqlData.appendSql('(');
 			for(int i=0;i<columns.length;i++) {

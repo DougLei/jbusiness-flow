@@ -16,13 +16,13 @@ import com.douglei.tools.utils.CollectionUtil;
  */
 public class FuncMethodAction extends Action {
 	private Method method;
-	private Parameter[] definedParameters;
+	private Parameter[] parameters;
 	private Receive[] receives;
 	private ReceiveAll receiveAll;
 	
 	public FuncMethodAction(Method method, Parameter[] parameters) {
 		this.method = method;
-		this.definedParameters = parameters;
+		this.parameters = parameters;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -33,7 +33,7 @@ public class FuncMethodAction extends Action {
 		 * 
 		 * 至于方法的返回值, 直接返回parameter, 因为可以直接修改其范围, 进入到新的范围, 而且后续不需要再修改回原范围
 		 */
-		return (Map<String, Parameter>)method.invoke(definedParameters);
+		return (Map<String, Parameter>)method.invoke(parameters);
 	}
 	
 	@Override
