@@ -3,7 +3,7 @@ package com.douglei.business.flow.executer;
 import java.util.Collections;
 import java.util.Map;
 
-import com.douglei.business.flow.db.Session;
+import com.douglei.business.flow.db.SessionWrapper;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 
@@ -33,11 +33,11 @@ public class BusinessFlow {
 		return execute(inputValueMap, null);
 	}
 	
-	public Map<String, Object> execute(Session session) {
+	public Map<String, Object> execute(SessionWrapper session) {
 		return execute(Collections.emptyMap(), session);
 	}
 	
-	public Map<String, Object> execute(Map<String, Object> inputValueMap, Session session) {
+	public Map<String, Object> execute(Map<String, Object> inputValueMap, SessionWrapper session) {
 		try {
 			ParameterContext.initial();
 			if(inputParameters.length > 0) {

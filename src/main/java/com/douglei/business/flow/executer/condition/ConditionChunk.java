@@ -3,7 +3,7 @@ package com.douglei.business.flow.executer.condition;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import com.douglei.business.flow.db.Session;
+import com.douglei.business.flow.db.SessionWrapper;
 import com.douglei.business.flow.executer.LogicalOP;
 
 /**
@@ -42,7 +42,7 @@ public class ConditionChunk {
 		}
 	}
 	
-	public ConditionResult validate(Session session) {
+	public ConditionResult validate(SessionWrapper session) {
 		Iterator<ConditionChunk> iterator = list.iterator();
 		
 		ConditionResult result = iterator.next().validate(session);

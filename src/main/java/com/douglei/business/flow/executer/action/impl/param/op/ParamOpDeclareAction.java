@@ -1,6 +1,6 @@
 package com.douglei.business.flow.executer.action.impl.param.op;
 
-import com.douglei.business.flow.db.Session;
+import com.douglei.business.flow.db.SessionWrapper;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.Parameter;
@@ -26,7 +26,7 @@ public class ParamOpDeclareAction extends Action{
 	}
 
 	@Override
-	public Object execute(Session session) {
+	public Object execute(SessionWrapper session) {
 		for (ParamDeclare paramDeclare : declares) {
 			ParameterContext.addParameter(paramDeclare.parameter, paramDeclare.getActualValue());
 		}

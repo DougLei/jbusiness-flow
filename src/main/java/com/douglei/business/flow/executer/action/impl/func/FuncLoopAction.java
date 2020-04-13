@@ -2,7 +2,7 @@ package com.douglei.business.flow.executer.action.impl.func;
 
 import java.util.Collection;
 
-import com.douglei.business.flow.db.Session;
+import com.douglei.business.flow.db.SessionWrapper;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.Parameter;
@@ -24,7 +24,7 @@ public class FuncLoopAction extends Action {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public Object execute(Session session) {
+	public Object execute(SessionWrapper session) {
 		Object value = ParameterContext.getValue(collection);
 		if(value != null && value instanceof Collection<?>) {
 			Collection<Object> list = (Collection<Object>)value;

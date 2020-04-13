@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
+ * session包装器, 用来包装对数据库访问的实例
  * @author DougLei
  */
-public interface Session {
+public interface SessionWrapper {
 
 	/**
 	 * 插入数据
@@ -40,7 +40,4 @@ public interface Session {
 	 * @return 结果集
 	 */
 	List<Map<String, Object>> query(String sql, List<Object> values);
-	
-	
-	
 }

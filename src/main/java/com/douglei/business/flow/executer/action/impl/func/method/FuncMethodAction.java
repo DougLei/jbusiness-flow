@@ -3,7 +3,7 @@ package com.douglei.business.flow.executer.action.impl.func.method;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.douglei.business.flow.db.Session;
+import com.douglei.business.flow.db.SessionWrapper;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.data.op.DataValue;
@@ -27,7 +27,7 @@ public class FuncMethodAction extends Action {
 	}
 
 	@SuppressWarnings("unchecked")
-	private Map<String, Parameter> invokeMethod(Session session){
+	private Map<String, Parameter> invokeMethod(SessionWrapper session){
 		/*
 		 * 进入方法的时候, 获取对应参数的值, 而不是参数实例
 		 * 是不必修改原参数的范围, 因为一旦修改了范围, 在方法执行结束后, 还需要把范围修改回来, 比较复杂
@@ -38,7 +38,7 @@ public class FuncMethodAction extends Action {
 	}
 	
 	@Override
-	public Object execute(Session session) {
+	public Object execute(SessionWrapper session) {
 		Map<String, Parameter> returnParameters = invokeMethod(session);
 		if(CollectionUtil.unEmpty(returnParameters)) { // 开始接收参数
 			if(receives != null) {
@@ -57,7 +57,7 @@ public class FuncMethodAction extends Action {
 	 * 返回执行结果, 不会将返回的参数合并到当前业务流的参数范围中
 	 * @return
 	 */
-	public DataValue returnExecuteResult(Session session) {
+	public DataValue returnExecuteResult(SessionWrapper session) {
 		Map<String, Parameter> returnParameters = invokeMethod(session);
 		if(CollectionUtil.unEmpty(returnParameters)) {
 			Map<String, Object> valueMap = null;

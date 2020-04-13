@@ -1,6 +1,6 @@
 package com.douglei.business.flow.executer.action.impl.sql;
 
-import com.douglei.business.flow.db.Session;
+import com.douglei.business.flow.db.SessionWrapper;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.Sql;
@@ -20,7 +20,7 @@ public class SqlAction extends Action {
 	}
 
 	@Override
-	public Object execute(Session session) {
+	public Object execute(SessionWrapper session) {
 		setResult(sql.invoke(parameters, session));
 		return null;
 	}

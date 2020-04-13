@@ -1,6 +1,6 @@
 package com.douglei.business.flow.executer.action.impl.func;
 
-import com.douglei.business.flow.db.Session;
+import com.douglei.business.flow.db.SessionWrapper;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.condition.ConditionValidator;
 
@@ -19,7 +19,7 @@ public class FuncSwitchAction extends Action {
 	}
 
 	@Override
-	public Object execute(Session session) {
+	public Object execute(SessionWrapper session) {
 		for(SwitchGroup switch_ : groups) {
 			if(switch_.validate(session)) {
 				return switch_.execute(session);
@@ -37,11 +37,11 @@ public class FuncSwitchAction extends Action {
 			this.actions = actions;
 		}
 
-		boolean validate(Session session) {
+		boolean validate(SessionWrapper session) {
 			return conditionValidator.validate(session);
 		}
 
-		Object execute(Session session) {
+		Object execute(SessionWrapper session) {
 			for (Action action : actions) {
 				action.execute(session);
 			}

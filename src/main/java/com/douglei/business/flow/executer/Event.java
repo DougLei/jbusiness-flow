@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import com.douglei.business.flow.db.Session;
+import com.douglei.business.flow.db.SessionWrapper;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.sql.SqlAction;
 import com.douglei.business.flow.executer.parameter.Scope;
@@ -72,7 +72,7 @@ public class Event {
 		return false;
 	}
 	
-	public void execute(Session session) {
+	public void execute(SessionWrapper session) {
 		for (Action action : actions) {
 			action.execute(session);
 		}
@@ -83,7 +83,7 @@ public class Event {
 	}
 	
 	// 到下一个事件
-	private void toNextEvent(Session session) {
+	private void toNextEvent(SessionWrapper session) {
 		if(flows.size() == 1) { // 顺序流
 			flows.get(0).targetEvent().execute(session);
 		}else { // 条件流

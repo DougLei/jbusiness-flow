@@ -1,6 +1,6 @@
 package com.douglei.business.flow.executer.action.impl.data.op.arithmetic;
 
-import com.douglei.business.flow.db.Session;
+import com.douglei.business.flow.db.SessionWrapper;
 import com.douglei.business.flow.executer.action.impl.data.op.Data;
 
 /**
@@ -26,7 +26,7 @@ public class DataOpArithmetic {
 		return op;
 	}
 
-	public void drawFormula(StringBuilder formula, Session session) {
+	public void drawFormula(StringBuilder formula, SessionWrapper session) {
 		if(group != null) {
 			formula.append("(");
 			ArithmeticUtil.append(formula, group, session);
