@@ -50,10 +50,10 @@ public class Parameter implements Cloneable{
 	 * @return
 	 */
 	public static Parameter newInstance(String name, Scope scope) {
-		if(StringUtil.notEmpty(name)) {
-			return new Parameter(name, scope);
+		if(StringUtil.isEmpty(name)) {
+			throw new NullPointerException("参数名不能为空");
 		}
-		return null;
+		return new Parameter(name, scope);
 	}
 	
 	/**
