@@ -63,10 +63,7 @@ public class Parameter implements Cloneable{
 	 * @return
 	 */
 	public static Parameter newInstance(String name, Scope scope, DataType dataType, Object value, boolean required) {
-		if(StringUtil.notEmpty(name)) {
-			return new Parameter(name, scope, dataType, value, required);
-		}
-		return null;
+		return new Parameter(name, scope, dataType, value, required);
 	}
 	
 	/**
@@ -97,6 +94,7 @@ public class Parameter implements Cloneable{
 		if(StringUtil.isEmpty(name)) {
 			throw new NullPointerException("参数名不能为空");
 		}
+		
 		short dot = (short) name.indexOf(".");
 		if(dot > -1) { // 证明是ognl表达式
 			this.name = name.substring(0, dot);
