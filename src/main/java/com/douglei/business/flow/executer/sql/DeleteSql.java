@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.sql;
 
+import com.douglei.business.flow.db.Session;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.component.Table;
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroups;
@@ -26,7 +27,7 @@ public class DeleteSql extends Sql {
 	}
 
 	@Override
-	protected Object invokeCore() {
+	protected Object invokeCore(Session session) {
 		SqlData sqlData = new SqlData("DELETE ");
 		table.append2SqlData(sqlData);
 		whereGroups.append2SqlData(sqlData);

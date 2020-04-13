@@ -11,7 +11,6 @@ import com.douglei.business.flow.executer.parameter.ps.impl.InOutParameterScope;
 import com.douglei.business.flow.executer.parameter.ps.impl.InParameterScope;
 import com.douglei.business.flow.executer.parameter.ps.impl.LocalParameterScope;
 import com.douglei.business.flow.executer.parameter.ps.impl.OutParameterScope;
-import com.douglei.business.flow.session.SessionPool;
 import com.douglei.tools.utils.CollectionUtil;
 
 /**
@@ -19,11 +18,10 @@ import com.douglei.tools.utils.CollectionUtil;
  * @author DougLei
  */
 public class ParameterContext {
-	private static final ThreadLocal<SessionPool> SESSION_POOL = new ThreadLocal<SessionPool>();
 	private static final ThreadLocal<Map<Scope, ParameterScope>> PARAMETER_SCOPES = new ThreadLocal<Map<Scope,ParameterScope>>();
 	
 	// 初始化
-	static void initial(SessionPool pool) {
+	static void initial() {
 		Map<Scope, ParameterScope> map = new HashMap<Scope, ParameterScope>(8);
 		map.put(Scope.IN, new InParameterScope());
 		map.put(Scope.OUT, new OutParameterScope());
@@ -31,13 +29,11 @@ public class ParameterContext {
 		map.put(Scope.GLOBAL, new GlobalParameterScope());
 		map.put(Scope.LOCAL, new LocalParameterScope());
 		PARAMETER_SCOPES.set(map);
-		SESSION_POOL.set(pool);
 	}
 	
 	// 销毁
 	static void destory() {
 		PARAMETER_SCOPES.remove();
-		SESSION_POOL.remove();
 	}
 	
 	/**

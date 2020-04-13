@@ -3,6 +3,7 @@ package com.douglei.business.flow.executer.condition;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import com.douglei.business.flow.db.Session;
 import com.douglei.business.flow.executer.LogicalOP;
 
 /**
@@ -41,22 +42,22 @@ public class ConditionChunk {
 		}
 	}
 	
-	public ConditionResult validate() {
+	public ConditionResult validate(Session session) {
 		Iterator<ConditionChunk> iterator = list.iterator();
 		
-		ConditionResult result = iterator.next().validate();
+		ConditionResult result = iterator.next().validate(session);
 		ConditionChunk chunk = null;
 		while(iterator.hasNext()) {
 			chunk = iterator.next();
 			if(chunk.getClass() == ConditionChunk.class)
 				break;
-			result.merge(chunk);
+			result.merge(chunk, session);
 		}
 		result.update(inverse, nextOP);
 		
 		if(chunk != null && chunk.getClass() == ConditionChunk.class) {
 			while(true) {
-				result.merge(chunk);
+				result.merge(chunk, session);
 				if(iterator.hasNext()) {
 					chunk = iterator.next();
 				}else {

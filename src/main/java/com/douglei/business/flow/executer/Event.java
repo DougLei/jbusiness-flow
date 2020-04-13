@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import com.douglei.business.flow.db.Session;
 import com.douglei.business.flow.executer.action.Action;
+import com.douglei.business.flow.executer.action.impl.sql.SqlAction;
 import com.douglei.business.flow.executer.parameter.Scope;
 
 /**
@@ -61,26 +63,34 @@ public class Event {
 	public String getDescription() {
 		return description;
 	}
-	
-	public void execute() {
+	public boolean includeSqlAction() {
 		for (Action action : actions) {
-			action.execute();
+			if(action instanceof SqlAction) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void execute(Session session) {
+		for (Action action : actions) {
+			action.execute(session);
 		}
 		if(flows != null && type == EVENT_TYPE_NORMAL) {
 			ParameterContext.clear(Scope.LOCAL); // 清空执行action时产生的本地参数
-			toNextEvent();
+			toNextEvent(session);
 		}
 	}
 	
 	// 到下一个事件
-	private void toNextEvent() {
+	private void toNextEvent(Session session) {
 		if(flows.size() == 1) { // 顺序流
-			flows.get(0).targetEvent().execute();
+			flows.get(0).targetEvent().execute(session);
 		}else { // 条件流
 			flows.forEach(flow -> {
-				if(flow.validate()) {
+				if(flow.validate(session)) {
 					ParameterContext.clear(Scope.LOCAL); // 清空flow验证时产生的本地参数
-					flow.targetEvent().execute();
+					flow.targetEvent().execute(session);
 					return;
 				}
 			});

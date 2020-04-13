@@ -1,10 +1,11 @@
 package com.douglei.business.flow.executer;
 
+import java.util.Collections;
 import java.util.Map;
 
+import com.douglei.business.flow.db.Session;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.Scope;
-import com.douglei.business.flow.session.SessionPool;
 
 /**
  * 
@@ -18,27 +19,37 @@ public class BusinessFlow {
 	private Parameter[] inputParameters;
 	private Event startEvent;
 	
-	private SessionPool pool;
-	
-	public BusinessFlow(String name, String description, String version, SessionPool pool) {
+	public BusinessFlow(String name, String description, String version) {
 		this.name = name;
 		this.description = description;
 		this.version = version;
-		this.pool = pool;
+	}
+	
+	public Map<String, Object> execute() {
+		return execute(Collections.emptyMap(), null);
 	}
 	
 	public Map<String, Object> execute(Map<String, Object> inputValueMap) {
+		return execute(inputValueMap, null);
+	}
+	
+	public Map<String, Object> execute(Session session) {
+		return execute(Collections.emptyMap(), session);
+	}
+	
+	public Map<String, Object> execute(Map<String, Object> inputValueMap, Session session) {
 		try {
-			ParameterContext.initial(pool);
+			ParameterContext.initial();
 			if(inputParameters.length > 0) {
 				for (Parameter parameter : inputParameters) {
 					ParameterContext.addParameter(parameter, inputValueMap.get(parameter.getName()));
 				}
 			}
-			startEvent.execute();
-			return ParameterContext.getValueMap(Scope.OUT);
-		} catch(Exception ex){
 			
+			startEvent.execute(session);
+			return ParameterContext.getValueMap(Scope.OUT);
+		} catch(Exception e){
+			throw new BusinessFlowExecuteException(name, description, e);
 		}finally {
 			ParameterContext.destory();
 		}

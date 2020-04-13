@@ -1,5 +1,7 @@
 package com.douglei.business.flow.executer.condition;
 
+import com.douglei.business.flow.db.Session;
+
 /**
  * 
  * @author DougLei
@@ -17,16 +19,16 @@ public class ConditionValidator {
 		this.chunks = chunks;
 	}
 	
-	public boolean validate() {
+	public boolean validate(Session session) {
 		if(size == 0) 
 			return true;
-		ConditionResult result = chunks[0].validate();
+		ConditionResult result = chunks[0].validate(session);
 		if(size == 1)
 			return result.getBooleanValue();
 		
 		byte index = 1;
 		do {
-			result.merge(chunks[index]);
+			result.merge(chunks[index], session);
 		}while(++index < size);
 		return result.getBooleanValue();
 	}

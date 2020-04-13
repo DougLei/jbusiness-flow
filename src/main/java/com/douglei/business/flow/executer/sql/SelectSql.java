@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.sql;
 
+import com.douglei.business.flow.db.Session;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.component.Component;
 import com.douglei.business.flow.executer.sql.component.select.Select;
@@ -27,7 +28,7 @@ public class SelectSql extends Sql {
 	}
 
 	@Override
-	protected Object invokeCore() {
+	protected Object invokeCore(Session session) {
 		SqlData sqlData = new SqlData();
 		appendWiths2SqlData(sqlData);
 		Component.appendComponents2SqlData(selects, sqlData);

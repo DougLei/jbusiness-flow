@@ -2,6 +2,7 @@ package com.douglei.business.flow.executer.condition;
 
 import java.util.LinkedList;
 
+import com.douglei.business.flow.db.Session;
 import com.douglei.business.flow.executer.LogicalOP;
 
 /**
@@ -37,16 +38,16 @@ class ConditionChunks extends ConditionChunk{
 	}
 
 	@Override
-	public ConditionResult validate() {
-		ConditionResult result = chunks[0].validate();
+	public ConditionResult validate(Session session) {
+		ConditionResult result = chunks[0].validate(session);
 		if(size > 1) {
 			byte index = 1;
 			do {
-				result.merge(chunks[index]);
+				result.merge(chunks[index], session);
 			}while(++index < size);
 		}
 		if(list != null) 
-			list.forEach(l -> result.merge(l));
+			list.forEach(l -> result.merge(l, session));
 		return result;
 	}
 }

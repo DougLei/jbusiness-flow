@@ -1,9 +1,11 @@
-package com.douglei.business.flow.session;
+package com.douglei.business.flow.db;
 
 /**
  * 
  * @author DougLei
  */
 public interface Session {
-
+	
+	
+	
 }

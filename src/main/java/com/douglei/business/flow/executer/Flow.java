@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer;
 
+import com.douglei.business.flow.db.Session;
 import com.douglei.business.flow.executer.condition.ConditionValidator;
 
 /**
@@ -35,8 +36,8 @@ public class Flow {
 	}
 	
 	// 对条件进行验证, 获取结果
-	public boolean validate() {
-		return conditionValidator.validate();
+	public boolean validate(Session session) {
+		return conditionValidator.validate(session);
 	}
 	
 	// 是否是顺序流

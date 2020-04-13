@@ -2,6 +2,7 @@ package com.douglei.business.flow.executer.method;
 
 import java.util.Map;
 
+import com.douglei.business.flow.db.Session;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.Parameter;
@@ -42,11 +43,12 @@ public class Method {
 	
 	/**
 	 * 调用的核心方法
+	 * @param session
 	 * @return
 	 */
-	protected Object invokeCore() {
+	protected Object invokeCore(Session session) {
 		for (Action action : actions)
-			action.execute();
+			action.execute(session);
 		
 		Map<String, Parameter> parameterMap = ParameterContext.clear(Scope.LOCAL);
 		if(CollectionUtil.unEmpty(parameterMap) && return_ != null)
@@ -58,11 +60,12 @@ public class Method {
 	/**
 	 * 调用方法
 	 * @param invokerDefinedParameters 调用方定义的参数数组, 根据该参数数组, 从当前业务流中获取相应的value数组
+	 * @param session
 	 * @return
 	 */
-	public Object invoke(Parameter[] invokerDefinedParameters) {
+	public Object invoke(Parameter[] invokerDefinedParameters, Session session) {
 		invokePre(invokerDefinedParameters);
-		return invokeCore();
+		return invokeCore(session);
 	}
 	
 	public String getName() {

@@ -1,7 +1,7 @@
 package com.douglei.business.flow.resolver;
 
 /**
- * 参数不存在异常
+ * 业务流未激活异常
  * @author DougLei
  */
 public class BusinessFlowDisabledException extends RuntimeException {

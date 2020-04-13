@@ -3,6 +3,7 @@ package com.douglei.business.flow.executer.action.impl.data.op.arithmetic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.douglei.business.flow.db.Session;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.tools.instances.ognl.OgnlHandler;
@@ -22,9 +23,9 @@ public class DataOpArithmeticAction extends Action {
 	}
 	
 	@Override
-	public Object execute() {
+	public Object execute(Session session) {
 		StringBuilder formula = new StringBuilder(40);
-		ArithmeticUtil.append(formula, group);
+		ArithmeticUtil.append(formula, group, session);
 		logger.debug("获取的运算表达式为: {}", formula);
 		return setResult(OgnlHandler.singleInstance().getObjectValue(formula.toString()));
 	}

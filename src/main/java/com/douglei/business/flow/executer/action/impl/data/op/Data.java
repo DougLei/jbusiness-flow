@@ -3,6 +3,7 @@ package com.douglei.business.flow.executer.action.impl.data.op;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.douglei.business.flow.db.Session;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.func.method.FuncMethodAction;
@@ -42,9 +43,9 @@ public class Data {
 			this.resultPick = new DataActionResultPick(resultPick_all, resultPick_names);
 		}
 
-		public DataValue execute() {
+		public DataValue execute(Session session) {
 			for (Action action : actions) {
-				action.execute();
+				action.execute(session);
 			}
 			return resultPick.pickValue();
 		}
@@ -82,15 +83,15 @@ public class Data {
 		}
 	}
 	
-	public DataValue getValue() {
+	public DataValue getValue(Session session) {
 		if(value != null) {
 			return new DataValue(value);
 		}else if(parameter != null) {
 			return new DataValue(ParameterContext.getParameter(parameter));
 		}else if(action != null) {
-			return action.execute();
+			return action.execute(session);
 		}else {
-			return method.returnExecuteResult();
+			return method.returnExecuteResult(session);
 		}
 	}
 }
