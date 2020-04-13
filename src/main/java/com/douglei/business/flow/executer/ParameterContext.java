@@ -53,6 +53,7 @@ public class ParameterContext {
 		return PARAMETER_SCOPES.get().get(scope).clear();
 	}
 	
+	
 	/**
 	 * 添加参数
 	 * @param parameter
@@ -67,25 +68,26 @@ public class ParameterContext {
 	 * @param actualValue
 	 */
 	public static void addParameter(Parameter configParameter, Object actualValue) {
-		PARAMETER_SCOPES.get().get(configParameter.getScope()).addParameter(Parameter.getActualParameter(configParameter, actualValue));
+		PARAMETER_SCOPES.get().get(configParameter.getScope()).addParameter(Parameter.newInstance(configParameter, actualValue));
 	}
 	
+	
 	/**
-	 * 获取指定的参数
-	 * @param parameter
+	 * 根据指定的参数, 获取当前业务流相应范围内同名的参数实例
+	 * @param byParameter
 	 * @return
 	 */
-	public static Parameter getParameter(Parameter parameter) {
-		return PARAMETER_SCOPES.get().get(parameter.getScope()).getParameter(parameter.getName());
+	public static Parameter getParameter(Parameter byParameter) {
+		return PARAMETER_SCOPES.get().get(byParameter.getScope()).getParameter(byParameter.getName());
 	}
 	
 	/**
-	 * 根据参数, 获取对应的值
-	 * @param parameter
-	 * @return 
+	 * 根据指定的参数, 获取当前业务流相应范围内同名参数的值
+	 * @param byParameter
+	 * @return
 	 */
-	public static Object getValue(Parameter parameter) {
-		return PARAMETER_SCOPES.get().get(parameter.getScope()).getValue(parameter);
+	public static Object getValue(Parameter byParameter) {
+		return PARAMETER_SCOPES.get().get(byParameter.getScope()).getValue(byParameter.getName(), byParameter.getOgnlExpression());
 	}
 	
 	/**

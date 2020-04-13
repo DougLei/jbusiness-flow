@@ -9,8 +9,6 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public class Parameter implements Cloneable{
-	private static final Parameter EMPTY_PARAMETER = new Parameter();
-	
 	private String name;
 	private String ognlExpression; // ognl表达式, 例如name=zhangsan.age, 其中zhangsan为name值, 后面的则是ognl表达式
 	private Scope scope;
@@ -19,23 +17,6 @@ public class Parameter implements Cloneable{
 	private boolean required;
 	
 	private Object value; // 实际参数的值
-	
-	public static Parameter emptyParameter() {
-		return EMPTY_PARAMETER;
-	}
-	
-	public static Parameter newInstance(String name, Scope scope) {
-		if(StringUtil.notEmpty(name)) {
-			return new Parameter(name, scope);
-		}
-		return null;
-	}
-	public static Parameter newInstance(String name, Scope scope, DataType dataType, Object value, boolean required) {
-		if(StringUtil.notEmpty(name)) {
-			return new Parameter(name, scope, dataType, value, required);
-		}
-		return null;
-	}
 	
 	// 验证参数的值, 返回验证后的value
 	private static Object validateValue(Parameter parameter, Object value) {
@@ -47,6 +28,7 @@ public class Parameter implements Cloneable{
 			throw new NullPointerException(parameter.scope.getDescription() + "["+parameter.name+"]的初始值不能为空");
 		return validateValueDataType(parameter, value);
 	}
+	
 	// 验证参数的值类型是否和配置的匹配, 返回验证后的value
 	private static Object validateValueDataType(Parameter parameter, Object value) {
 		if(!parameter.dataType.matching(value))
@@ -54,12 +36,7 @@ public class Parameter implements Cloneable{
 		return parameter.dataType.convert(value);
 	}
 	
-	/**
-	 * 获取OGNL表达式的值
-	 * @param parameter
-	 * @param value
-	 * @return
-	 */
+	// 获取OGNL表达式的值
 	private static Object getOGNLValue(Parameter parameter, Object value) {
 		if(value != null && StringUtil.notEmpty(parameter.ognlExpression))
 			return OgnlHandler.singleInstance().getObjectValue(parameter.ognlExpression, value);
@@ -67,14 +44,43 @@ public class Parameter implements Cloneable{
 	}
 	
 	/**
-	 * 根据配置的参数以及实际值, 获取一个实参实例
-	 * @param configParameter 配置的参数
-	 * @param actualValue 实际值
+	 * 根据参数名和参数范围创建参数实例
+	 * @param name
+	 * @param scope
 	 * @return
 	 */
-	public static Parameter getActualParameter(Parameter configParameter, Object actualValue) {
-		actualValue = getOGNLValue(configParameter, actualValue);
-		actualValue = validateValue(configParameter, actualValue);
+	public static Parameter newInstance(String name, Scope scope) {
+		if(StringUtil.notEmpty(name)) {
+			return new Parameter(name, scope);
+		}
+		return null;
+	}
+	
+	/**
+	 * 创建一个有完整信息的参数实例
+	 * @param name
+	 * @param scope
+	 * @param dataType
+	 * @param value
+	 * @param required
+	 * @return
+	 */
+	public static Parameter newInstance(String name, Scope scope, DataType dataType, Object value, boolean required) {
+		if(StringUtil.notEmpty(name)) {
+			return new Parameter(name, scope, dataType, value, required);
+		}
+		return null;
+	}
+	
+	/**
+	 * 根据配置的参数以及实际值, 获取一个实参实例
+	 * @param configParameter 配置的参数
+	 * @param value 实际值
+	 * @return
+	 */
+	public static Parameter newInstance(Parameter configParameter, Object value) {
+		value = getOGNLValue(configParameter, value);
+		value = validateValue(configParameter, value);
 		
 		Parameter actualParameter;
 		try {
@@ -84,14 +90,12 @@ public class Parameter implements Cloneable{
 			actualParameter = new Parameter(configParameter.name, configParameter.scope, configParameter.dataType, configParameter.defaultValue, configParameter.required);
 			actualParameter.ognlExpression = configParameter.ognlExpression;
 		}
-		actualParameter.value = actualValue;
+		actualParameter.value = value;
 		return actualParameter;
 	}
 	
 	
-	
-	private Parameter() {
-	}
+	private Parameter() {}
 	private Parameter(String name, Scope scope) {
 		short dot = (short) name.indexOf(".");
 		if(dot > -1) { // 证明是ognl表达式
@@ -123,11 +127,21 @@ public class Parameter implements Cloneable{
 		this.scope = scope;
 	}
 	
-	public Object getValue() {
+	/**
+	 * 根据ognl表达式, 获取对应的值
+	 * @param ognlExpression 传入null, 则直接获取value值
+	 * @return
+	 */
+	public Object getValue(String ognlExpression) {
+		if(value != null && StringUtil.notEmpty(ognlExpression))
+			return OgnlHandler.singleInstance().getObjectValue(ognlExpression, value);
 		return value;
 	}
 	public String getName() {
 		return name;
+	}
+	public String getOgnlExpression() {
+		return ognlExpression;
 	}
 	public Scope getScope() {
 		return scope;

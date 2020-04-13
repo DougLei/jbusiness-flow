@@ -43,11 +43,11 @@ public class Data {
 			this.resultPick = new DataActionResultPick(resultPick_all, resultPick_names);
 		}
 
-		public DataValue execute(SessionWrapper session) {
+		public DataValue execute(SessionWrapper session, DataValue defaultDataValue) {
 			for (Action action : actions) {
 				action.execute(session);
 			}
-			return resultPick.pickValue();
+			return resultPick.pickValue(defaultDataValue);
 		}
 	}
 	
@@ -59,7 +59,7 @@ public class Data {
 			this.names = names;
 		}
 		
-		public DataValue pickValue() {
+		public DataValue pickValue(DataValue defaultDataValue) {
 			Map<String, Object> valueMap = null;
 			if(all) {
 				valueMap = ParameterContext.getValueMap(Scope.LOCAL, names); 
@@ -75,7 +75,7 @@ public class Data {
 			}
 			
 			if(CollectionUtil.isEmpty(valueMap)) {
-				return new DataValue();
+				return defaultDataValue;
 			}else if(valueMap.size() == 1) {
 				return new DataValue(valueMap.values().iterator().next());
 			}
@@ -87,11 +87,13 @@ public class Data {
 		if(value != null) {
 			return new DataValue(value);
 		}else if(parameter != null) {
-			return new DataValue(ParameterContext.getParameter(parameter));
+			Parameter p = ParameterContext.getParameter(parameter);
+			return new DataValue(p.getValue(parameter.getOgnlExpression()), p.getDataType());
 		}else if(action != null) {
-			return action.execute(session);
+			return action.execute(session, NULL_DATA_VALUE);
 		}else {
-			return method.returnExecuteResult(session);
+			return method.returnExecuteResult(session, NULL_DATA_VALUE);
 		}
 	}
+	private static final DataValue NULL_DATA_VALUE = new DataValue();
 }

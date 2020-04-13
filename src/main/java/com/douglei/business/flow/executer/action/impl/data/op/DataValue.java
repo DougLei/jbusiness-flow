@@ -3,7 +3,6 @@ package com.douglei.business.flow.executer.action.impl.data.op;
 import java.util.Date;
 
 import com.douglei.business.flow.executer.DataType;
-import com.douglei.business.flow.executer.parameter.Parameter;
 
 /**
  * 
@@ -13,17 +12,16 @@ public class DataValue {
 	private Object value;
 	private DataType dataType;
 	
-	public DataValue() {
+	DataValue() {
 		setValue(null, null);
 	}
 	public DataValue(Object value) {
 		setValue(value, null);
 	}
-	public DataValue(Parameter parameter) {
-		if(parameter == null) {
-			parameter = Parameter.emptyParameter();
-		}
-		setValue(parameter.getValue(), parameter.getDataType());
+	public DataValue(Object value, DataType dataType) {
+		if(!dataType.matching(value))
+			dataType = null;
+		setValue(value, dataType);
 	}
 	
 	private void setValue(Object value, DataType dataType) {

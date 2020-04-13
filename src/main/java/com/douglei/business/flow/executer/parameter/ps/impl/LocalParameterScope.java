@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Stack;
 
 import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.executer.parameter.ps.ParameterScope;
 
 /**
@@ -14,6 +15,11 @@ import com.douglei.business.flow.executer.parameter.ps.ParameterScope;
 public class LocalParameterScope extends ParameterScope {
 	private boolean stackActivated;
 	private Stack<Map<String, Parameter>> parameterStack;
+	
+	@Override
+	protected Scope belongScope() {
+		return Scope.LOCAL;
+	}
 	
 	@Override
 	public void activateStack() {
@@ -48,11 +54,11 @@ public class LocalParameterScope extends ParameterScope {
 	}
 	
 	@Override
-	public Object getValue(Parameter parameter) {
+	public Object getValue(String parameterName, String ognlExpression) {
 		if(stackActivated) {
-			return getValue(parameter, parameterStack.peek());
+			return getValue(parameterName, ognlExpression, parameterStack.peek());
 		}
-		return super.getValue(parameter);
+		return super.getValue(parameterName, ognlExpression);
 	}
 	
 	@Override

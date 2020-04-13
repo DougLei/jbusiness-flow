@@ -5,19 +5,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.Scope;
 
 /**
  * 
  * @author DougLei
  */
 public abstract class ParameterScope {
-	protected final Map<String, Parameter> parameterMap = new HashMap<String, Parameter>();
+	protected Map<String, Parameter> parameterMap = new HashMap<String, Parameter>();
+	
+	/**
+	 * 所属的范围
+	 * @return
+	 */
+	protected abstract Scope belongScope();
 	
 	/**
 	 * 激活当前范围的参数堆栈
 	 */
-	public void activateStack() {
-	}
+	public void activateStack() {}
 	
 	/**
 	 * 清空当前范围的参数
@@ -25,47 +31,51 @@ public abstract class ParameterScope {
 	 */
 	public Map<String, Parameter> clear(){
 		parameterMap.clear();
+		parameterMap = null;
 		return null;
 	}
 	
 	// 给指定的参数map中添加参数
 	protected void addParamter(Parameter parameter, Map<String, Parameter> pm) {
-		Parameter p = pm.get(parameter.getName());
-		if(p == null) {
+		Parameter oldParameter = pm.get(parameter.getName());
+		if(oldParameter == null) {
 			pm.put(parameter.getName(), parameter);
+		}else if(oldParameter.getDataType() != parameter.getDataType()){
+			throw new ParameterDataTypeUnmatchingException(belongScope(), oldParameter, parameter);
 		}else {
-			p.updateValue(parameter.getValue());
+			oldParameter.updateValue(parameter.getValue(null));
 		}
 	}
 	
 	/**
-	 * 添加参数
+	 * 添加指定的参数
 	 * @param parameter
 	 */
 	public void addParameter(Parameter parameter) {
 		addParamter(parameter, parameterMap);
 	}
 	
-	// 从指定的参数map中获取值
-	protected Object getValue(Parameter parameter, Map<String, Parameter> pm) {
-		Parameter p = pm.get(parameter.getName());
+	// 从指定的参数map中获取指定name和ognl表达式的参数值
+	protected Object getValue(String parameterName, String ognlExpression, Map<String, Parameter> pm) {
+		Parameter p = pm.get(parameterName);
 		if(p == null) {
 			return null;
 		}
-		return p.getValue();
+		return p.getValue(ognlExpression);
 	}
 	
 	/**
-	 * 获取指定参数的value值
-	 * @param parameter
+	 * 获取指定name和ognl表达式的参数value值
+	 * @param parameterName
+	 * @param ognlExpression
 	 * @return
 	 */
-	public Object getValue(Parameter parameter) {
-		return getValue(parameter, parameterMap);
+	public Object getValue(String parameterName, String ognlExpression) {
+		return getValue(parameterName, ognlExpression, parameterMap);
 	}
 	
 	/**
-	 * 获取指定name的参数
+	 * 从当前业务流中获取指定name的参数
 	 * @param parameterName
 	 * @return
 	 */
@@ -111,7 +121,7 @@ public abstract class ParameterScope {
 		Map<String, Object> valueMap = new HashMap<String, Object>(pm.size() - excludeNames.length);
 		for(Parameter entry : pm.values()) {
 			if(!exists(entry.getName(), excludeNames)) {
-				valueMap.put(entry.getName(), entry.getValue());
+				valueMap.put(entry.getName(), entry.getValue(null));
 			}
 		}
 		return valueMap;

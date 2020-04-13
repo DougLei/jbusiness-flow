@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.action.impl.func.method;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,14 +26,15 @@ public class ReceiveAll {
 	 */
 	public Map<String, Object> excludeValues(Map<String, Parameter> returnParameters) {
 		if(excludeNames != null) {
-			for (String name : excludeNames) {
+			for (String name : excludeNames)
 				returnParameters.remove(name);
-			}
 		}
+		if(returnParameters.isEmpty())
+			return Collections.emptyMap();
 		
 		Map<String, Object> values = new HashMap<String, Object>(returnParameters.size());
 		for(Parameter parameter: returnParameters.values()) {
-			values.put(parameter.getName(), parameter.getValue());
+			values.put(parameter.getName(), parameter.getValue(null));
 		}
 		return values;
 	}

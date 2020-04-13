@@ -21,7 +21,7 @@ public interface SessionWrapper {
 	/**
 	 * 查询数据
 	 * @param sqlData
-	 * @return 结果集
+	 * @return 结果集, Map中, key为列名, value为对应的值
 	 */
 	List<Map<String, Object>> query(SqlData sqlData);
 }

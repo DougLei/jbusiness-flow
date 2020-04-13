@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.douglei.business.flow.db.SessionWrapper;
+import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.data.op.DataValue;
@@ -55,33 +56,35 @@ public class FuncMethodAction extends Action {
 	
 	/**
 	 * 返回执行结果, 不会将返回的参数合并到当前业务流的参数范围中
+	 * @param session
+	 * @param defaultDataValue
 	 * @return
 	 */
-	public DataValue returnExecuteResult(SessionWrapper session) {
+	public DataValue returnExecuteResult(SessionWrapper session, DataValue defaultDataValue) {
 		Map<String, Parameter> returnParameters = invokeMethod(session);
 		if(CollectionUtil.unEmpty(returnParameters)) {
 			Map<String, Object> valueMap = null;
 			if(receives != null) {
-				valueMap = new HashMap<String, Object>(receives.length);
 				Parameter p;
-				for (Receive receive : receives) {
-					p = returnParameters.get(receive.getReturnName());
-					valueMap.put(p.getName(), p.getValue());
+				if(receives.length == 1) {
+					p = returnParameters.get(receives[0].getReturnName());
+					return new DataValue(p.getValue(null), p.getDataType());
+				}else {
+					valueMap = new HashMap<String, Object>(receives.length);
+					for (Receive receive : receives) {
+						p = returnParameters.get(receive.getReturnName());
+						valueMap.put(p.getName(), p.getValue(null));
+					}
+					return new DataValue(valueMap, DataType.OBJECT);
 				}
 			}else if(receiveAll != null) {
 				valueMap = new HashMap<String, Object>(2);
 				Map<String, Object> returnValues = receiveAll.excludeValues(returnParameters);
 				valueMap.put(receiveAll.getParameter().getName(), returnValues);
-			}
-			
-			if(CollectionUtil.unEmpty(valueMap)) {
-				if(valueMap.size() == 1) {
-					return new DataValue(valueMap.values().iterator().next());
-				}
-				return new DataValue(valueMap);
+				return new DataValue(valueMap, DataType.OBJECT);
 			}
 		}
-		return new DataValue();
+		return defaultDataValue;
 	}
 	
 	public void setReceives(Receive[] receives) {
