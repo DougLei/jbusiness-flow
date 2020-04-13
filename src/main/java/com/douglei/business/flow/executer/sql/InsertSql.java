@@ -43,7 +43,7 @@ public class InsertSql extends Sql {
 		table.append2SqlData(sqlData);
 		appendColumns2SqlData(sqlData);
 		appendValues2SqlData(sqlData);
-		return session.insert(sqlData.getSql(), sqlData.getParameterValues());
+		return session.executeUpdate(sqlData);
 	}
 
 	private void appendColumns2SqlData(SqlData sqlData) {
