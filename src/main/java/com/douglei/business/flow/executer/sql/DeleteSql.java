@@ -32,9 +32,6 @@ public class DeleteSql extends Sql {
 		table.append2SqlData(sqlData);
 		whereGroups.append2SqlData(sqlData);
 		
-		// TODO 具体的jdbc执行SqlData
-		sqlData.getSql();
-		sqlData.getParameterValues();
-		return null;
+		return session.delete(sqlData.getSql(), sqlData.getParameterValues());
 	}
 }

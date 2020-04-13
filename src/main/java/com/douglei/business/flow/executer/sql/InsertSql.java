@@ -44,10 +44,7 @@ public class InsertSql extends Sql {
 		appendColumns2SqlData(sqlData);
 		appendValues2SqlData(sqlData);
 
-		// TODO 具体的jdbc执行SqlData
-		sqlData.getSql();
-		sqlData.getParameterValues();
-		return null;
+		return session.insert(sqlData.getSql(), sqlData.getParameterValues());
 	}
 
 	private void appendColumns2SqlData(SqlData sqlData) {

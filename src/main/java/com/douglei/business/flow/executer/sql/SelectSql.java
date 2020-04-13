@@ -33,10 +33,7 @@ public class SelectSql extends Sql {
 		appendWiths2SqlData(sqlData);
 		Component.appendComponents2SqlData(selects, sqlData);
 		
-		// TODO 具体的jdbc执行SqlData
-		sqlData.getSql();
-		sqlData.getParameterValues();
-		return null;
+		return session.query(sqlData.getSql(), sqlData.getParameterValues());
 	}
 
 	private void appendWiths2SqlData(SqlData sqlData) {

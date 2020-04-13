@@ -39,10 +39,7 @@ public class UpdateSql extends Sql {
 		appendSets2SqlData(sqlData);
 		whereGroups.append2SqlData(sqlData);
 		
-		// TODO 具体的jdbc执行SqlData
-		sqlData.getSql();
-		sqlData.getParameterValues();
-		return null;
+		return session.update(sqlData.getSql(), sqlData.getParameterValues());
 	}
 
 	private void appendSets2SqlData(SqlData sqlData) {
