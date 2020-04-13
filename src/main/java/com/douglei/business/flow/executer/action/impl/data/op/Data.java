@@ -18,8 +18,13 @@ import com.douglei.tools.utils.CollectionUtil;
 public class Data {
 	private Object value;
 	private Parameter parameter;
+	private String format;
 	private DataAction action;
 	private FuncMethodAction method; // FuncMethodAction
+	
+	public Data(String format) {
+		this.format = format;
+	}
 	
 	public void setValue(Object value) {
 		this.value = value;
@@ -85,10 +90,10 @@ public class Data {
 	
 	public DataValue getValue(SessionWrapper session) {
 		if(value != null) {
-			return new DataValue(value);
+			return new DataValue(value).setFormat(format);
 		}else if(parameter != null) {
 			Parameter p = ParameterContext.getParameter(parameter);
-			return new DataValue(p.getValue(parameter.getOgnlExpression()), p.getDataType());
+			return new DataValue(p.getValue(parameter.getOgnlExpression()), p.getDataType()).setFormat(format);
 		}else if(action != null) {
 			return action.execute(session, NULL_DATA_VALUE);
 		}else {

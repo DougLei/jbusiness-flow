@@ -18,7 +18,7 @@ public abstract class DataOpResolver extends ActionResolver {
 	private static final String ACTION_TYPE = "func_method";
 	
 	protected Data parseData(JSONObject json, ReferenceResolver referenceResolver) {
-		Data data = new Data();
+		Data data = new Data(json.getString("format"));
 		
 		Object obj = null;
 		if((obj = json.get("value")) != null) {

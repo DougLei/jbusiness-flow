@@ -3,6 +3,8 @@ package com.douglei.business.flow.executer.action.impl.data.op;
 import java.util.Date;
 
 import com.douglei.business.flow.executer.DataType;
+import com.douglei.tools.utils.StringUtil;
+import com.douglei.tools.utils.datatype.dateformat.DateFormatUtil;
 
 /**
  * 
@@ -11,6 +13,7 @@ import com.douglei.business.flow.executer.DataType;
 public class DataValue {
 	private Object value;
 	private DataType dataType;
+	private String format;
 	
 	DataValue() {
 		setValue(null, null);
@@ -36,6 +39,11 @@ public class DataValue {
 			dataType = DataType.toValue(value);
 		}
 		this.dataType = dataType;
+	}
+	
+	public DataValue setFormat(String format) {
+		this.format = format;
+		return this;
 	}
 	
 	@Override
@@ -89,6 +97,8 @@ public class DataValue {
 			return value.toString();
 		}
 		if(dataType == DataType.DATE) {
+			if(StringUtil.notEmpty(format))
+				return DateFormatUtil.format(((Date)value), format);
 			return ((Date)value).getTime()+"";
 		}
 		return "\"" + value.toString() + "\"";

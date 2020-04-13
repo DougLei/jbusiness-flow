@@ -78,6 +78,8 @@
 			"name":"", // 参数名
 			"scope":4, // 参数范围, 从指定的范围获取指定参数名的值
 			
+			"format":"", // 如果是日期类型, 在获取其字符串时, 对其格式化的格式, 没有默认值, 会格式为毫秒数
+			
 			"action":{ // 执行action, 从其result中获取相应的值进行比较, 本质和method的receive是相同的
 				"actions":[{}], 
 				"resultPick":{ // 对actions的结果进行拾取, 用拾取的数据进行操作
@@ -106,6 +108,7 @@
 		"value":"",
 		"name":"",
 		"scope":4,
+		"format":"",
 		"action":{},
 		"method":{},
 		
