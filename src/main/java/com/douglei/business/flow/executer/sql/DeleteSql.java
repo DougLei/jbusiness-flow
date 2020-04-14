@@ -31,6 +31,6 @@ public class DeleteSql extends Sql {
 		SqlData sqlData = new SqlData("DELETE ");
 		table.append2SqlData(sqlData);
 		whereGroups.append2SqlData(sqlData);
-		return session.executeUpdate(sqlData);
+		return session.executeUpdate(sqlData.getSql(), sqlData.getParameterValues());
 	}
 }

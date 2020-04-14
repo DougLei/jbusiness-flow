@@ -36,8 +36,15 @@ public class BusinessFlow {
 	public Map<String, Object> execute(SessionWrapper session) {
 		return execute(Collections.emptyMap(), session);
 	}
-	
+
+	/**
+	 * 执行业务流
+	 * @param inputValueMap 输入值map
+	 * @param session 与数据库的session
+	 * @return
+	 */
 	public Map<String, Object> execute(Map<String, Object> inputValueMap, SessionWrapper session) {
+		boolean autoCommit = (session==null)?false:session.autoCommit();
 		try {
 			ParameterContext.initial();
 			if(inputParameters.length > 0) {
@@ -47,10 +54,17 @@ public class BusinessFlow {
 			}
 			
 			startEvent.execute(session);
-			return ParameterContext.getValueMap(Scope.OUT);
+			Map<String, Object> vm = ParameterContext.getValueMap(Scope.OUT);
+			if(autoCommit)
+				session.commit();
+			return vm;
 		} catch(Exception e){
+			if(autoCommit)
+				session.rollback();
 			throw new BusinessFlowExecuteException(name, description, e);
 		}finally {
+			if(autoCommit)
+				session.close();
 			ParameterContext.destory();
 		}
 	}

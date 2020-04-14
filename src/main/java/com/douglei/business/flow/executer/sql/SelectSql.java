@@ -32,7 +32,7 @@ public class SelectSql extends Sql {
 		SqlData sqlData = new SqlData();
 		appendWiths2SqlData(sqlData);
 		Component.appendComponents2SqlData(selects, sqlData);
-		return session.query(sqlData);
+		return session.query(sqlData.getSql(), sqlData.getParameterValues());
 	}
 
 	private void appendWiths2SqlData(SqlData sqlData) {

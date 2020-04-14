@@ -38,7 +38,7 @@ public class UpdateSql extends Sql {
 		table.append2SqlData(sqlData);
 		appendSets2SqlData(sqlData);
 		whereGroups.append2SqlData(sqlData);
-		return session.executeUpdate(sqlData);
+		return session.executeUpdate(sqlData.getSql(), sqlData.getParameterValues());
 	}
 
 	private void appendSets2SqlData(SqlData sqlData) {
