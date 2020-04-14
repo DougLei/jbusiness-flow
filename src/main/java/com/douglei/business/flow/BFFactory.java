@@ -14,12 +14,17 @@ public class BFFactory {
 	private BusinessFlowResolver resolver;
 	
 	public BFFactory() {
-		this(new ApplicationReferenceContainer(), null);
+		this(null, null);
 	}
 	public BFFactory(ReferenceContainer referenceContainer) {
 		this(referenceContainer, null);
 	}
+	public BFFactory(DBSessionFactory dbSessionFactory) {
+		this(null, dbSessionFactory);
+	}
 	public BFFactory(ReferenceContainer referenceContainer, DBSessionFactory dbSessionFactory) {
+		if(referenceContainer == null)
+			referenceContainer = new ApplicationReferenceContainer();
 		this.resolver = new BusinessFlowResolver(referenceContainer, dbSessionFactory);
 	}
 	

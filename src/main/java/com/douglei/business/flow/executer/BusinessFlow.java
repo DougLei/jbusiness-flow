@@ -28,12 +28,19 @@ public class BusinessFlow {
 		this.dbSessionFactory = dbSessionFactory;
 	}
 	
+	// 构建DBSession, 如果DBSessionFactory为null, 则返回null
+	private DBSession buildDBSession() {
+		if(dbSessionFactory == null)
+			return null;
+		return dbSessionFactory.buildDBSession();
+	}
+	
 	/**
 	 * 执行业务流, 没有输入值, 自动提交事务
 	 * @return
 	 */
 	public Map<String, Object> execute() {
-		return execute(Collections.emptyMap(), true, dbSessionFactory.buildDBSession());		
+		return execute(Collections.emptyMap(), true, buildDBSession());		
 	}
 	
 	/**
@@ -42,7 +49,7 @@ public class BusinessFlow {
 	 * @return
 	 */
 	public Map<String, Object> execute(Map<String, Object> inputValueMap) {
-		return execute(inputValueMap, true, dbSessionFactory.buildDBSession());		
+		return execute(inputValueMap, true, buildDBSession());		
 	}
 	
 	/**
@@ -51,7 +58,7 @@ public class BusinessFlow {
 	 * @return
 	 */
 	public Map<String, Object> execute(boolean autoCommit) {
-		return execute(Collections.emptyMap(), autoCommit, dbSessionFactory.buildDBSession());		
+		return execute(Collections.emptyMap(), autoCommit, buildDBSession());		
 	}
 	
 	/**
@@ -61,7 +68,7 @@ public class BusinessFlow {
 	 * @return
 	 */
 	public Map<String, Object> execute(Map<String, Object> inputValueMap, boolean autoCommit) {
-		return execute(inputValueMap, autoCommit, dbSessionFactory.buildDBSession());		
+		return execute(inputValueMap, autoCommit, buildDBSession());		
 	}
 	
 	/**
@@ -72,6 +79,9 @@ public class BusinessFlow {
 	 * @return
 	 */
 	private Map<String, Object> execute(Map<String, Object> inputValueMap, boolean autoCommit, DBSession session) {
+		if(autoCommit && session == null)
+			autoCommit = false;
+		
 		try {
 			ParameterContext.initial();
 			if(inputParameters.length > 0) {
