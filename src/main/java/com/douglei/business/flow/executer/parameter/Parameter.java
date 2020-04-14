@@ -50,6 +50,8 @@ public class Parameter implements Cloneable{
 	 * @return
 	 */
 	public static Parameter newInstance(String name, Scope scope) {
+		if(StringUtil.isEmpty(name))
+			return null;
 		return new Parameter(name, scope);
 	}
 	
@@ -63,6 +65,8 @@ public class Parameter implements Cloneable{
 	 * @return
 	 */
 	public static Parameter newInstance(String name, Scope scope, DataType dataType, Object value, boolean required) {
+		if(StringUtil.isEmpty(name))
+			return null;
 		return new Parameter(name, scope, dataType, value, required);
 	}
 	
@@ -91,10 +95,6 @@ public class Parameter implements Cloneable{
 	
 	private Parameter() {}
 	private Parameter(String name, Scope scope) {
-		if(StringUtil.isEmpty(name)) {
-			throw new NullPointerException("参数名不能为空");
-		}
-		
 		short dot = (short) name.indexOf(".");
 		if(dot > -1) { // 证明是ognl表达式
 			this.name = name.substring(0, dot);

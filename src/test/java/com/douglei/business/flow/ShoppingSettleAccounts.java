@@ -6,7 +6,7 @@ import com.douglei.business.flow.db.def.impl.JdbOrmDBSessionFactory;
 import com.douglei.business.flow.executer.BusinessFlow;
 import com.douglei.orm.configuration.impl.xml.XmlConfiguration;
 
-public class Shopping {
+public class ShoppingSettleAccounts {
 	
 	@Test
 	public void test() {

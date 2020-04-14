@@ -135,7 +135,7 @@ public enum DataType {
 			return value instanceof String || value instanceof Character;
 		}
 	},
-	ARRAY(){
+	LIST(){
 		@Override
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
