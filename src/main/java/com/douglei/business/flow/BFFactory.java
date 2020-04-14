@@ -37,15 +37,15 @@ public class BFFactory {
 	
 	/**
 	 * 根据指定的文件, 构建业务流对象
-	 * @param bfFile
+	 * @param file
 	 * @return
 	 */
-	public BusinessFlow buildByFile(String bfFile) {
-		File file = new File(bfFile);
-		if(!file.exists())
+	public BusinessFlow buildByFile(String file) {
+		File f = new File(file);
+		if(!f.exists())
 			return null;
 		try {
-			return buildByInputStream(new FileInputStream(file));
+			return buildByInputStream(new FileInputStream(f));
 		} catch (FileNotFoundException e) {
 			return null;
 		}
@@ -53,11 +53,11 @@ public class BFFactory {
 	
 	/**
 	 * 根据指定的资源文件, 构建业务流对象
-	 * @param bfResourceFile
+	 * @param resourceFile
 	 * @return
 	 */
-	public BusinessFlow buildByResourceFile(String bfResourceFile) {
-		return buildByInputStream(BFFactory.class.getClassLoader().getResourceAsStream(bfResourceFile));
+	public BusinessFlow buildByResourceFile(String resourceFile) {
+		return buildByInputStream(BFFactory.class.getClassLoader().getResourceAsStream(resourceFile));
 	}
 	
 	/**
@@ -72,10 +72,10 @@ public class BFFactory {
 	
 	/**
 	 * 根据json字符串, 构建业务流对象
-	 * @param bfjson
+	 * @param json
 	 * @return
 	 */
-	public BusinessFlow build(String bfjson) {
-		return resolver.parse(bfjson);
+	public BusinessFlow build(String json) {
+		return resolver.parse(json);
 	}
 }
