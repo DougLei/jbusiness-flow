@@ -16,6 +16,9 @@ public class JdbOrmSessionWrapper implements SessionWrapper {
 	private Session session;
 	private boolean autoCommit;
 	
+	public JdbOrmSessionWrapper(SessionFactory sessionFactory) {
+		this(sessionFactory, true);
+	}
 	public JdbOrmSessionWrapper(SessionFactory sessionFactory, boolean autoCommit) {
 		this.sessionFactory = sessionFactory;
 		this.autoCommit = autoCommit;
