@@ -1,6 +1,6 @@
 package com.douglei.business.flow.executer.sql;
 
-import com.douglei.business.flow.db.SessionWrapper;
+import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.component.Component;
 import com.douglei.business.flow.executer.sql.component.Table;
@@ -33,7 +33,7 @@ public class UpdateSql extends Sql {
 	}
 
 	@Override
-	protected Object invokeCore(SessionWrapper session) {
+	protected Object invokeCore(DBSession session) {
 		SqlData sqlData = new SqlData("UPDATE ");
 		table.append2SqlData(sqlData);
 		appendSets2SqlData(sqlData);

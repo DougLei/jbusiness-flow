@@ -2,7 +2,7 @@ package com.douglei.business.flow.executer.method;
 
 import java.util.Map;
 
-import com.douglei.business.flow.db.SessionWrapper;
+import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.Parameter;
@@ -46,7 +46,7 @@ public class Method {
 	 * @param session
 	 * @return
 	 */
-	protected Object invokeCore(SessionWrapper session) {
+	protected Object invokeCore(DBSession session) {
 		for (Action action : actions)
 			action.execute(session);
 		
@@ -63,7 +63,7 @@ public class Method {
 	 * @param session
 	 * @return
 	 */
-	public Object invoke(Parameter[] invokerDefinedParameters, SessionWrapper session) {
+	public Object invoke(Parameter[] invokerDefinedParameters, DBSession session) {
 		invokePre(invokerDefinedParameters);
 		return invokeCore(session);
 	}

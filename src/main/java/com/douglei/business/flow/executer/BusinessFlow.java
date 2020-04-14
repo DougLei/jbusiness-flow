@@ -3,7 +3,8 @@ package com.douglei.business.flow.executer;
 import java.util.Collections;
 import java.util.Map;
 
-import com.douglei.business.flow.db.SessionWrapper;
+import com.douglei.business.flow.db.DBSession;
+import com.douglei.business.flow.db.DBSessionFactory;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 
@@ -15,36 +16,62 @@ public class BusinessFlow {
 	private String name;
 	private String description;
 	private String version;
+	private DBSessionFactory dbSessionFactory;
 	
 	private Parameter[] inputParameters;
 	private Event startEvent;
 	
-	public BusinessFlow(String name, String description, String version) {
+	public BusinessFlow(String name, String description, String version, DBSessionFactory dbSessionFactory) {
 		this.name = name;
 		this.description = description;
 		this.version = version;
+		this.dbSessionFactory = dbSessionFactory;
 	}
 	
+	/**
+	 * 执行业务流, 没有输入值, 自动提交事务
+	 * @return
+	 */
 	public Map<String, Object> execute() {
-		return execute(Collections.emptyMap(), null);
+		return execute(Collections.emptyMap(), true, dbSessionFactory.buildDBSession());		
 	}
 	
+	/**
+	 * 执行业务流, 自动提交事务
+	 * @param inputValueMap 输入值map
+	 * @return
+	 */
 	public Map<String, Object> execute(Map<String, Object> inputValueMap) {
-		return execute(inputValueMap, null);
+		return execute(inputValueMap, true, dbSessionFactory.buildDBSession());		
 	}
 	
-	public Map<String, Object> execute(SessionWrapper session) {
-		return execute(Collections.emptyMap(), session);
+	/**
+	 * 执行业务流, 没有输入值
+	 * @param autoCommit 是否自动提交事务
+	 * @return
+	 */
+	public Map<String, Object> execute(boolean autoCommit) {
+		return execute(Collections.emptyMap(), autoCommit, dbSessionFactory.buildDBSession());		
 	}
-
+	
 	/**
 	 * 执行业务流
 	 * @param inputValueMap 输入值map
-	 * @param session 与数据库的session
+	 * @param autoCommit 是否自动提交事务
 	 * @return
 	 */
-	public Map<String, Object> execute(Map<String, Object> inputValueMap, SessionWrapper session) {
-		boolean autoCommit = (session==null)?false:session.autoCommit();
+	public Map<String, Object> execute(Map<String, Object> inputValueMap, boolean autoCommit) {
+		return execute(inputValueMap, autoCommit, dbSessionFactory.buildDBSession());		
+	}
+	
+	/**
+	 * 执行业务流
+	 * @param inputValueMap 输入值map
+	 * @param autoCommit 是否自动提交事务
+	 * @param session 与数据库交互的session
+	 * @return
+	 */
+	private Map<String, Object> execute(Map<String, Object> inputValueMap, boolean autoCommit, DBSession session) {
 		try {
 			ParameterContext.initial();
 			if(inputParameters.length > 0) {

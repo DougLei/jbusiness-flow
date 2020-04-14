@@ -1,6 +1,6 @@
 package com.douglei.business.flow.executer.action.impl.data.op.compare;
 
-import com.douglei.business.flow.db.SessionWrapper;
+import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.data.op.Data;
 import com.douglei.business.flow.executer.parameter.Parameter;
@@ -22,7 +22,7 @@ public class DataOpCompareAction extends Action {
 	}
 
 	@Override
-	public Object execute(SessionWrapper session) {
+	public Object execute(DBSession session) {
 		return setResult(op.compare(left.getValue(session), right==null?null:right.getValue(session)));
 	}
 }

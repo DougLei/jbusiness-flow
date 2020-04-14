@@ -1,6 +1,6 @@
 package com.douglei.business.flow.executer.condition;
 
-import com.douglei.business.flow.db.SessionWrapper;
+import com.douglei.business.flow.db.DBSession;
 
 /**
  * 
@@ -19,7 +19,7 @@ public class ConditionValidator {
 		this.chunks = chunks;
 	}
 	
-	public boolean validate(SessionWrapper session) {
+	public boolean validate(DBSession session) {
 		if(size == 0) 
 			return true;
 		ConditionResult result = chunks[0].validate(session);

@@ -3,7 +3,7 @@ package com.douglei.business.flow.db.def.impl;
 import java.util.List;
 import java.util.Map;
 
-import com.douglei.business.flow.db.SessionWrapper;
+import com.douglei.business.flow.db.DBSession;
 import com.douglei.orm.sessionfactory.SessionFactory;
 import com.douglei.orm.sessionfactory.sessions.Session;
 
@@ -11,17 +11,12 @@ import com.douglei.orm.sessionfactory.sessions.Session;
  * 
  * @author DougLei
  */
-public class JdbOrmSessionWrapper implements SessionWrapper {
+public class JdbOrmDBSession implements DBSession {
 	private SessionFactory sessionFactory;
 	private Session session;
-	private boolean autoCommit;
 	
-	public JdbOrmSessionWrapper(SessionFactory sessionFactory) {
-		this(sessionFactory, true);
-	}
-	public JdbOrmSessionWrapper(SessionFactory sessionFactory, boolean autoCommit) {
+	public JdbOrmDBSession(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
-		this.autoCommit = autoCommit;
 	}
 
 	private Session getSession() {
@@ -29,12 +24,6 @@ public class JdbOrmSessionWrapper implements SessionWrapper {
 			session = sessionFactory.openSession();
 		return session;
 	}
-	
-	@Override
-	public boolean autoCommit() {
-		return autoCommit;
-	}
-	
 	
 	@Override
 	public int executeUpdate(String sql, List<Object> values) {

@@ -2,7 +2,7 @@ package com.douglei.business.flow.executer.condition;
 
 import java.util.LinkedList;
 
-import com.douglei.business.flow.db.SessionWrapper;
+import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.LogicalOP;
 import com.douglei.business.flow.executer.action.Action;
 
@@ -33,7 +33,7 @@ public class Condition extends ConditionChunk{
 	}
 	
 	@Override
-	public ConditionResult validate(SessionWrapper session) {
+	public ConditionResult validate(DBSession session) {
 		boolean result = (boolean) dataOpCompareAction.execute(session);
 		if(inverse)
 			result = !result;

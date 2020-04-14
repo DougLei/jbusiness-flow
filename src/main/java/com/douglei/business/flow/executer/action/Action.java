@@ -1,6 +1,6 @@
 package com.douglei.business.flow.executer.action;
 
-import com.douglei.business.flow.db.SessionWrapper;
+import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.parameter.Parameter;
 
@@ -27,5 +27,5 @@ public abstract class Action {
 	 * @param session
 	 * @return
 	 */
-	public abstract Object execute(SessionWrapper session);
+	public abstract Object execute(DBSession session);
 }

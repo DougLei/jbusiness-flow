@@ -1,6 +1,6 @@
 package com.douglei.business.flow.executer.sql;
 
-import com.douglei.business.flow.db.SessionWrapper;
+import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.method.Method;
 import com.douglei.business.flow.executer.parameter.Parameter;
@@ -18,7 +18,7 @@ public abstract class Sql extends Method{
 	}
 
 	@Override
-	public Object invoke(Parameter[] invokerDefinedParameters, SessionWrapper session) {
+	public Object invoke(Parameter[] invokerDefinedParameters, DBSession session) {
 		Object result = super.invoke(invokerDefinedParameters, session);
 		ParameterContext.clear(Scope.LOCAL);
 		return result;

@@ -4,18 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * session包装器, 用来包装对数据库访问的实例
+ * 
  * @author DougLei
  */
-public interface SessionWrapper {
-	
-	/**
-	 * 是否自动提交, 默认为true
-	 * @return
-	 */
-	default boolean autoCommit() {
-		return true;
-	}
+public interface DBSession {
 	
 	/**
 	 * 增删改数据

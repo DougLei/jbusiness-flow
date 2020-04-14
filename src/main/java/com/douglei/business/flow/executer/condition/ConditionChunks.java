@@ -2,7 +2,7 @@ package com.douglei.business.flow.executer.condition;
 
 import java.util.LinkedList;
 
-import com.douglei.business.flow.db.SessionWrapper;
+import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.LogicalOP;
 
 /**
@@ -38,7 +38,7 @@ class ConditionChunks extends ConditionChunk{
 	}
 
 	@Override
-	public ConditionResult validate(SessionWrapper session) {
+	public ConditionResult validate(DBSession session) {
 		ConditionResult result = chunks[0].validate(session);
 		if(size > 1) {
 			byte index = 1;

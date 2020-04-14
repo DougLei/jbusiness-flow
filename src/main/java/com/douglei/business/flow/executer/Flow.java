@@ -1,6 +1,6 @@
 package com.douglei.business.flow.executer;
 
-import com.douglei.business.flow.db.SessionWrapper;
+import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.condition.ConditionValidator;
 
 /**
@@ -36,7 +36,7 @@ public class Flow {
 	}
 	
 	// 对条件进行验证, 获取结果
-	public boolean validate(SessionWrapper session) {
+	public boolean validate(DBSession session) {
 		return conditionValidator.validate(session);
 	}
 	
