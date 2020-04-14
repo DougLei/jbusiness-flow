@@ -35,6 +35,7 @@ public class JdbOrmSessionWrapper implements SessionWrapper {
 		return autoCommit;
 	}
 	
+	
 	@Override
 	public int executeUpdate(String sql, List<Object> values) {
 		return getSession().getSqlSession().executeUpdate(sql, values);
