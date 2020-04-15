@@ -15,8 +15,8 @@ public class ShoppingSettleAccounts {
 	public void test() {
 		JdbOrmDBSession session = new JdbOrmDBSession(new XmlConfiguration().buildSessionFactory());
 		
-		BFFactory bf = new BFFactory();
-		BusinessFlow shoppingBF = bf.buildByResourceFile("ShoppingSettleAccounts.bf.json");
+		BusinessFlow shoppingBF = new BFFactory().buildByResourceFile("ShoppingSettleAccounts.bf.json");
+		
 		Map<String, Object> inputValueMap = new HashMap<String, Object>();
 		inputValueMap.put("shoppingCarId", "1");
 		Map<String, Object> result = shoppingBF.execute(inputValueMap, session);
