@@ -43,7 +43,7 @@
 		]
 	}, {
 		"name": "XiShuLeiProductCalcPrice",
-		"description": "如果洗漱类用品的总价超过200元，则打8折",
+		"description": "如果洗漱类用品的总价超过200元(包括200元)，则打8折",
 		"actions": [{
 			"type": "param_op_declare",
 			"content": [{
@@ -85,16 +85,68 @@
 								"op": "add"
 							}, {
 								"name": "product.PRODUCT_PRICE",
+								"scope": 5,
+								"op":"mul"
+							},{
+								"name": "product.PRODUCT_COUNT",
 								"scope": 5
 							}],
 							"result": {
 								"name": "XiShuLeiProductTotalPrice",
-								"scope": 3,
+								"scope": 5,
 								"dataType": "double"
 							}
 						}]
 					}]
 				}]
+			}
+		},{
+			"type": "func_switch",
+			"content": [{
+				"conditionGroups": [{
+					"conditions": [{
+						"content": {
+							"op": "ge",
+							"left": {
+								"name": "XiShuLeiProductTotalPrice",
+								"scope": 5
+							},
+							"right": {
+								"value": 200
+							}
+						}
+					}]
+				}],
+				"actions": [{
+					"type": "data_op_arithmetic",
+					"content": [{
+						"name": "XiShuLeiProductTotalPrice",
+						"scope": 5,
+						"op":"mul"
+					},{
+						"value": 0.8
+					}],
+					"result": {
+						"name": "XiShuLeiProductTotalPrice",
+						"scope": 5,
+						"dataType": "double"
+					}
+				}]
+			}]
+		},{
+			"type": "data_op_arithmetic",
+			"content": [{
+				"name": "totalPrice",
+				"scope": 3,
+				"op":"add"
+			},{
+				"name": "XiShuLeiProductTotalPrice",
+				"scope": 5
+			}],
+			"result": {
+				"name": "totalPrice",
+				"scope": 3,
+				"dataType": "double"
 			}
 		}]
 	}],
