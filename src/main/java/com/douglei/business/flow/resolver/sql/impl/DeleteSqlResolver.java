@@ -14,7 +14,7 @@ import com.douglei.business.flow.resolver.sql.SqlResolver;
 public class DeleteSqlResolver extends SqlResolver{
 
 	@Override
-	public byte getType() {
+	public String getType() {
 		return DeleteSql.TYPE;
 	}
 

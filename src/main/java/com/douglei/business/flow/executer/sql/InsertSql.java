@@ -10,7 +10,7 @@ import com.douglei.business.flow.executer.sql.component.Table;
  * @author DougLei
  */
 public class InsertSql extends Sql {
-	public static final byte TYPE = 1;
+	public static final String TYPE = "insert";
 	public static final byte VALUES_TYPE_VALUE = 0; // values的类型: 值
 	public static final byte VALUES_TYPE_SELECT = 1; // values的类型: 子查询
 	

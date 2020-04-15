@@ -16,7 +16,7 @@ import com.douglei.tools.utils.CollectionUtil;
 public class InsertSqlResolver extends SqlResolver{
 
 	@Override
-	public byte getType() {
+	public String getType() {
 		return InsertSql.TYPE;
 	}
 

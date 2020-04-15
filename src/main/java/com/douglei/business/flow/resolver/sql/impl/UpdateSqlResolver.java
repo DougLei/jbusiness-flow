@@ -16,7 +16,7 @@ import com.douglei.business.flow.resolver.sql.SqlResolver;
 public class UpdateSqlResolver extends SqlResolver{
 
 	@Override
-	public byte getType() {
+	public String getType() {
 		return UpdateSql.TYPE;
 	}
 

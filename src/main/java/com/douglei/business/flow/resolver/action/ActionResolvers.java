@@ -23,11 +23,13 @@ public class ActionResolvers {
 		ClassScanner cs = new ClassScanner();
 		List<String> classPaths = cs.scan(ActionResolvers.class.getPackage().getName() + ".impl");
 		
+		classPaths.forEach(p -> System.out.println(p));
+		
 		Class<?> clz;
 		ActionResolver actionResolver;
 		for (String cp : classPaths) {
 			clz = ClassLoadUtil.loadClass(cp);
-			if(Modifier.isAbstract(clz.getModifiers()) || !ValidationUtil.isImplementInterface(clz, ActionResolver.class)) {
+			if(Modifier.isAbstract(clz.getModifiers()) || !ValidationUtil.isExtendClass(clz, ActionResolver.class)) {
 				continue;
 			}
 			actionResolver= (ActionResolver) ConstructorUtil.newInstance(clz);

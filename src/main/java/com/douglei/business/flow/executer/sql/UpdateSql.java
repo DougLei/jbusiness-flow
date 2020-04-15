@@ -12,7 +12,7 @@ import com.douglei.business.flow.executer.sql.component.update.Set;
  * @author DougLei
  */
 public class UpdateSql extends Sql {
-	public static final byte TYPE = 3; // sql类型: update
+	public static final String TYPE = "update"; 
 
 	private Table table;
 	private Set[] sets;

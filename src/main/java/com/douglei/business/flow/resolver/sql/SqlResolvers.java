@@ -18,7 +18,7 @@ import com.douglei.tools.utils.reflect.ValidationUtil;
  * @author DougLei
  */
 public class SqlResolvers {
-	private static final Map<Byte, SqlResolver> MAP = new HashMap<Byte, SqlResolver>(8);
+	private static final Map<String, SqlResolver> MAP = new HashMap<String, SqlResolver>(8);
 	static {
 		ClassScanner cs = new ClassScanner();
 		List<String> classPaths = cs.scan(SqlResolvers.class.getPackage().getName() + ".impl");
@@ -26,7 +26,7 @@ public class SqlResolvers {
 		Class<?> clz;
 		for (String cp : classPaths) {
 			clz = ClassLoadUtil.loadClass(cp);
-			if(Modifier.isAbstract(clz.getModifiers()) || !ValidationUtil.isImplementInterface(clz, SqlResolver.class)) {
+			if(Modifier.isAbstract(clz.getModifiers()) || !ValidationUtil.isExtendClass(clz, SqlResolver.class)) {
 				continue;
 			}
 			registerSqlResolver((SqlResolver) ConstructorUtil.newInstance(clz));
@@ -49,7 +49,7 @@ public class SqlResolvers {
 	 * @return
 	 */
 	public static Sql parse(String name, JSONObject sqlJSON) {
-		return MAP.get(sqlJSON.getByte("type")).parse(
+		return MAP.get(sqlJSON.getString("type")).parse(
 				   name, 
 				   ParameterResolver.parse(sqlJSON.getJSONArray("params")), 
 				   sqlJSON.getJSONObject("content"));

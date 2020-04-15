@@ -2,6 +2,7 @@
 	"name":"ShoppingSettleAccounts",
 	"description":"购物结账",
 	"version":"1",
+	"enabled":true,
 	
 	"params":[{
 		"name":"shoppingCarId",
@@ -11,7 +12,6 @@
 		"required":true
 	}],
 	
-	// 事件配置
 	"events":[{
 		"type":1,
 		"name":"获取商品",
@@ -27,14 +27,14 @@
 			},
 			"result":{
 				"name":"products",
-				"scope":4,
+				"scope":3,
 				"dataType":"list"
 			}
 		}]
 	}],
 	
 	"sqls":[{
-		"type":4,
+		"type":"select",
 		"name":"queryProductsByShoppingCarId",
 		"params":[{
 			"name":"shoppingCarId",
@@ -45,7 +45,29 @@
 		}],
 		"content":{
 			"selects":[{
-				"result"
+				"results":[{
+					"column":"product_name"
+				},{
+					"column":"product_type"
+				},{
+					"column":"product_price"
+				},{
+					"column":"product_count"
+				}],
+				"table":{
+					"name":"shopping_car"
+				},
+				"whereGroups":[{
+					"conditions":[{
+						"left":{
+							"column":"shopping_car_id"
+						},
+						"rights":[{
+							"paramName":"shoppingCarId"
+						}],
+						"cop":"eq"
+					}]
+				}]
 			}]
 		}
 	}]

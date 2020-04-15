@@ -11,6 +11,7 @@ import com.douglei.business.flow.executer.BusinessFlow;
 import com.douglei.business.flow.executer.Event;
 import com.douglei.business.flow.executer.Flow;
 import com.douglei.business.flow.resolver.condition.ConditionResolver;
+import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 业务流解析器
@@ -55,19 +56,21 @@ public class BusinessFlowResolver {
 			eventMap.put(event.getName(), event);
 		}
 		
-		// 通过flow, 将event连接起来
-		ConditionResolver conditionResolver = new ConditionResolver(referenceResolver);
-		Flow flow;
-		for(int index=0;index<flows.size();index++) {
-			json = flows.getJSONObject(index);
-			flow = new Flow(json.getString("description"), 
-							json.getByteValue("type"), 
-							json.getByteValue("order"), 
-							json.getString("sourceEvent"), 
-							json.getString("targetEvent"),
-							conditionResolver.parse(json.getJSONArray("conditionGroups")));
-			eventMap.get(flow.getSourceEvent()).linkFlows(flow);// 将sourceEvent和flow关联
-			flow.linkEvent(eventMap.get(flow.getTargetEvent()));// 将targetEvent和flow关联
+		// 通过flow, 将event连接起来, 如果只有一个节点, 可以没有连线
+		if(CollectionUtil.unEmpty(flows)) {
+			ConditionResolver conditionResolver = new ConditionResolver(referenceResolver);
+			Flow flow;
+			for(int index=0;index<flows.size();index++) {
+				json = flows.getJSONObject(index);
+				flow = new Flow(json.getString("description"), 
+								json.getByteValue("type"), 
+								json.getByteValue("order"), 
+								json.getString("sourceEvent"), 
+								json.getString("targetEvent"),
+								conditionResolver.parse(json.getJSONArray("conditionGroups")));
+				eventMap.get(flow.getSourceEvent()).linkFlows(flow);// 将sourceEvent和flow关联
+				flow.linkEvent(eventMap.get(flow.getTargetEvent()));// 将targetEvent和flow关联
+			}
 		}
 		return startEvent;
 	}

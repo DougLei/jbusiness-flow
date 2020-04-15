@@ -11,7 +11,7 @@ import com.douglei.business.flow.executer.sql.component.select.With;
  * @author DougLei
  */
 public class SelectSql extends Sql {
-	public static final byte TYPE = 4; // sql类型: select
+	public static final String TYPE = "select";
 	
 	private With[] withs;
 	private Select[] selects;

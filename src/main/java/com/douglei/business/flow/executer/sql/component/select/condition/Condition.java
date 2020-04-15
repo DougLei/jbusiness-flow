@@ -24,8 +24,8 @@ public class Condition implements Component{
 	public void setRights(Value[] rights) {
 		this.rights = rights;
 	}
-	public boolean opIsNULL() {
-		return cop == CompareType.NULL || cop == CompareType.NNULL;
+	public boolean opNotNULL() {
+		return cop != CompareType.NULL && cop != CompareType.NNULL;
 	}
 	
 	@Override

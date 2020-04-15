@@ -10,7 +10,7 @@ import com.douglei.business.flow.executer.sql.component.select.condition.Conditi
  * @author DougLei
  */
 public class DeleteSql extends Sql {
-	public static final byte TYPE = 2; // sql类型: delete
+	public static final String TYPE = "delete";
 
 	private Table table;
 	private ConditionGroups whereGroups;

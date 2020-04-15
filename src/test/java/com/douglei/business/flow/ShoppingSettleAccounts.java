@@ -1,5 +1,8 @@
 package com.douglei.business.flow;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 
 import com.douglei.business.flow.db.def.impl.JdbOrmDBSessionFactory;
@@ -11,9 +14,14 @@ public class ShoppingSettleAccounts {
 	@Test
 	public void test() {
 		BFFactory bf = new BFFactory(new JdbOrmDBSessionFactory(new XmlConfiguration().buildSessionFactory()));
-		BusinessFlow shoppingBF = bf.build("shopping.bf");
-		System.out.println(shoppingBF);
+		BusinessFlow shoppingBF = bf.buildByResourceFile("ShoppingSettleAccounts.bf");
 		
+		Map<String, Object> inputValueMap = new HashMap<String, Object>();
+		inputValueMap.put("shoppingCarId", "1");
+		
+		Map<String, Object> result = shoppingBF.execute(inputValueMap );
+		
+		System.out.println(result);
 		
 	}
 }

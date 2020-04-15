@@ -13,6 +13,7 @@
 	"name":"", // 业务流名称(英文), 必填, 全局唯一
 	"description":"", // 业务流描述, 默认为null
 	"version":"1", // 版本控制, 默认为1
+	"enabled":true, // 是否激活, 这个必须配置为true才能正常解析
 	
 	// 参数配置4
 	"params":[{ // 输入参数数组, 默认为空数组
@@ -90,7 +91,7 @@
 	
 	// sql配置, 可复用
 	"sqls":[{
-		"type":1, // 类型, 1(insert), 2(delete), 3(update), 4(select)
+		"type":"select", // 类型, insert, delete, update, select
 		"name":"", // 名称, 全局唯一
 		"params":[{ // sql需要的参数配置
 			"name":"", // 参数名(英文) * 

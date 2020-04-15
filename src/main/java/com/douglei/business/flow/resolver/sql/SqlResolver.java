@@ -31,7 +31,7 @@ public abstract class SqlResolver {
 	 * 获取类型
 	 * @return
 	 */
-	public abstract byte getType();
+	public abstract String getType();
 
 	/**
 	 * 解析sql
@@ -179,7 +179,7 @@ public abstract class SqlResolver {
 		for(byte i=0;i<size;i++) {
 			json = array.getJSONObject(i);
 			conditions[i] = new Condition(parseValue(json.getJSONObject("left")), CompareType.toValue(json.getString("cop")), LogicalOP.toValue(json.getByteValue("op")));
-			if(conditions[i].opIsNULL()) {
+			if(conditions[i].opNotNULL()) {
 				conditions[i].setRights(parseRights(json.getJSONArray("rights")));
 			}
 		}
