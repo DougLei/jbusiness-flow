@@ -14,9 +14,14 @@ import com.douglei.orm.sessionfactory.sessions.Session;
 public class JdbOrmDBSession implements DBSession {
 	private SessionFactory sessionFactory;
 	private Session session;
+	private boolean autoCommit;
 	
 	public JdbOrmDBSession(SessionFactory sessionFactory) {
+		this(sessionFactory, true);
+	}
+	public JdbOrmDBSession(SessionFactory sessionFactory, boolean autoCommit) {
 		this.sessionFactory = sessionFactory;
+		this.autoCommit = autoCommit;
 	}
 
 	private Session getSession() {
@@ -25,6 +30,11 @@ public class JdbOrmDBSession implements DBSession {
 		return session;
 	}
 	
+	@Override
+	public boolean autoCommit() {
+		return autoCommit;
+	}
+
 	@Override
 	public int executeUpdate(String sql, List<Object> values) {
 		return getSession().getSqlSession().executeUpdate(sql, values);

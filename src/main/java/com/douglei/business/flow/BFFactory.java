@@ -8,7 +8,6 @@ import java.nio.charset.StandardCharsets;
 
 import com.douglei.business.flow.container.reference.ReferenceContainer;
 import com.douglei.business.flow.container.reference.impl.ApplicationReferenceContainer;
-import com.douglei.business.flow.db.DBSessionFactory;
 import com.douglei.business.flow.executer.BusinessFlow;
 import com.douglei.business.flow.resolver.BusinessFlowResolver;
 import com.douglei.tools.instances.file.resources.reader.ResourcesReader;
@@ -21,18 +20,12 @@ public class BFFactory {
 	private BusinessFlowResolver resolver;
 	
 	public BFFactory() {
-		this(null, null);
+		this(null);
 	}
 	public BFFactory(ReferenceContainer referenceContainer) {
-		this(referenceContainer, null);
-	}
-	public BFFactory(DBSessionFactory dbSessionFactory) {
-		this(null, dbSessionFactory);
-	}
-	public BFFactory(ReferenceContainer referenceContainer, DBSessionFactory dbSessionFactory) {
 		if(referenceContainer == null)
 			referenceContainer = new ApplicationReferenceContainer();
-		this.resolver = new BusinessFlowResolver(referenceContainer, dbSessionFactory);
+		this.resolver = new BusinessFlowResolver(referenceContainer);
 	}
 	
 	/**

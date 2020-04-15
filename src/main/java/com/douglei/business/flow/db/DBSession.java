@@ -10,6 +10,14 @@ import java.util.Map;
 public interface DBSession {
 	
 	/**
+	 * 是否自动提交
+	 * @return
+	 */
+	default boolean autoCommit() {
+		return true;
+	}
+	
+	/**
 	 * 增删改数据
 	 * @param sql
 	 * @param values
