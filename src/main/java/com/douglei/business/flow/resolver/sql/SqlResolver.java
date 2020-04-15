@@ -179,7 +179,7 @@ public abstract class SqlResolver {
 		for(byte i=0;i<size;i++) {
 			json = array.getJSONObject(i);
 			conditions[i] = new Condition(parseValue(json.getJSONObject("left")), CompareType.toValue(json.getString("cop")), LogicalOP.toValue(json.getByteValue("op")));
-			if(conditions[i].opNotNULL()) {
+			if(conditions[i].unNullCompareOP()) {
 				conditions[i].setRights(parseRights(json.getJSONArray("rights")));
 			}
 		}

@@ -15,9 +15,12 @@ public class DataValue {
 	private DataType dataType;
 	private String format;
 	
-	DataValue() {
+	public static final DataValue NULL_DATA_VALUE = new DataValue();
+	private DataValue() {
 		setValue(null, null);
 	}
+	
+	
 	public DataValue(Object value) {
 		setValue(value, null);
 	}
@@ -28,19 +31,23 @@ public class DataValue {
 	}
 	
 	private void setValue(Object value, DataType dataType) {
+		this.value = value;
+		setDataType(value, dataType);
+	}
+	private void setDataType(Object value, DataType dataType) {
 		if(value == null) {
 			dataType = DataType.OBJECT;
-		}
-		this.value = value;
-		setDataType(dataType);
-	}
-	private void setDataType(DataType dataType) {
-		if(dataType == null) {
+		}else if(dataType == null) {
 			dataType = DataType.toValue(value);
 		}
 		this.dataType = dataType;
 	}
 	
+	/**
+	 * 设置格式
+	 * @param format
+	 * @return
+	 */
 	public DataValue setFormat(String format) {
 		this.format = format;
 		return this;

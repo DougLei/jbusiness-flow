@@ -93,12 +93,11 @@ public class Data {
 			return new DataValue(value).setFormat(format);
 		}else if(parameter != null) {
 			Parameter p = ParameterContext.getParameter(parameter);
-			return new DataValue(p.getValue(parameter.getOgnlExpression()), p.getDataType()).setFormat(format);
+			return new DataValue(p.getValue(parameter.getOgnlExpression())).setFormat(format);
 		}else if(action != null) {
-			return action.execute(session, NULL_DATA_VALUE);
+			return action.execute(session, DataValue.NULL_DATA_VALUE);
 		}else {
-			return method.returnExecuteResult(session, NULL_DATA_VALUE);
+			return method.returnExecuteResult(session, DataValue.NULL_DATA_VALUE);
 		}
 	}
-	private static final DataValue NULL_DATA_VALUE = new DataValue();
 }

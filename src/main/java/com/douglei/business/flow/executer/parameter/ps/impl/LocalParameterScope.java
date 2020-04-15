@@ -36,9 +36,8 @@ public class LocalParameterScope extends ParameterScope {
 	public Map<String, Parameter> clear() {
 		if(stackActivated) {
 			Map<String, Parameter> pm = parameterStack.pop();
-			if(parameterStack.isEmpty()) {
+			if(parameterStack.isEmpty())
 				stackActivated = false;
-			}
 			return pm;
 		}
 		return super.clear();

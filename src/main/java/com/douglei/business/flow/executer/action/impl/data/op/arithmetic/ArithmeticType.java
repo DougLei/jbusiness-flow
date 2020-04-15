@@ -7,7 +7,7 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public enum ArithmeticType {
-	AD('+'),
+	ADD('+'),
 	SUB('-'),
 	MUL('*'),
 	DIV('/'),
@@ -26,8 +26,9 @@ public enum ArithmeticType {
 					return at;
 				}
 			}
+			throw new ArithmeticTypeMatchingException(value);
 		}
-		throw new ArithmeticTypeMatchingException(value);
+		return null;
 	}
 
 	public char getOperator() {

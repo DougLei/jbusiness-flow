@@ -76,7 +76,7 @@ public class Event {
 		for (Action action : actions) {
 			action.execute(session);
 		}
-		if(flows != null && type == EVENT_TYPE_NORMAL) {
+		if(flows != null && type != EVENT_TYPE_END) {
 			ParameterContext.clear(Scope.LOCAL); // 清空执行action时产生的本地参数
 			toNextEvent(session);
 		}

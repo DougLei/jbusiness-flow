@@ -67,7 +67,7 @@ public enum DataType {
 			return value instanceof Integer || value instanceof Short || value instanceof Long || value instanceof Byte;
 		}
 	},
-	DOUBLE(0){
+	DOUBLE((double)0){
 		@Override
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
@@ -93,7 +93,7 @@ public enum DataType {
 		
 		@Override
 		protected boolean isInstance(Object value) {
-			return value instanceof Float || value instanceof Double || value instanceof BigDecimal;
+			return value instanceof Float || value instanceof Double || value instanceof BigDecimal || INTEGER.isInstance(value);
 		}
 	},
 	BOOLEAN(false){

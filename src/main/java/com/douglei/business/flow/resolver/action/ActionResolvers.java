@@ -23,8 +23,6 @@ public class ActionResolvers {
 		ClassScanner cs = new ClassScanner();
 		List<String> classPaths = cs.scan(ActionResolvers.class.getPackage().getName() + ".impl");
 		
-		classPaths.forEach(p -> System.out.println(p));
-		
 		Class<?> clz;
 		ActionResolver actionResolver;
 		for (String cp : classPaths) {
@@ -33,17 +31,9 @@ public class ActionResolvers {
 				continue;
 			}
 			actionResolver= (ActionResolver) ConstructorUtil.newInstance(clz);
-			registerActionResolver(actionResolver);
+			MAP.put(actionResolver.getType(), actionResolver);
 		}
 		cs.destroy();
-	}
-	
-	/**
-	 * 注册新的action解析器
-	 * @param actionResolver
-	 */
-	public static void registerActionResolver(ActionResolver actionResolver) {
-		MAP.put(actionResolver.getType(), actionResolver);
 	}
 	
 	/**

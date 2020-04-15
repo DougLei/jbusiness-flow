@@ -19,6 +19,8 @@ public class ParameterResolver {
 	 * @return
 	 */
 	public static Parameter parse(JSONObject json) {
+		if(json == null)
+			return null;
 		return Parameter.newInstance(json.getString("name"),
 					Scope.toValue(json.getByteValue("scope")),
 					DataType.toValue(json.getString("dataType")),

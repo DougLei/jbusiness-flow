@@ -31,7 +31,6 @@ public abstract class ParameterScope {
 	 */
 	public Map<String, Parameter> clear(){
 		parameterMap.clear();
-		parameterMap = null;
 		return null;
 	}
 	

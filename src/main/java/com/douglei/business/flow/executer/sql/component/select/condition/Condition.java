@@ -24,7 +24,12 @@ public class Condition implements Component{
 	public void setRights(Value[] rights) {
 		this.rights = rights;
 	}
-	public boolean opNotNULL() {
+	
+	/**
+	 * 不是null或not null的比较操作符
+	 * @return
+	 */
+	public boolean unNullCompareOP() {
 		return cop != CompareType.NULL && cop != CompareType.NNULL;
 	}
 	
