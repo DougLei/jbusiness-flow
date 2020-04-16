@@ -13,15 +13,13 @@ import com.douglei.business.flow.executer.parameter.Scope;
  */
 public class BusinessFlow {
 	private String name;
-	private String description;
 	private String version;
 	
 	private Parameter[] inputParameters;
 	private Event startEvent;
 	
-	public BusinessFlow(String name, String description, String version) {
+	public BusinessFlow(String name, String version) {
 		this.name = name;
-		this.description = description;
 		this.version = version;
 	}
 	
@@ -75,7 +73,7 @@ public class BusinessFlow {
 		} catch(Exception e){
 			if(autoCommit)
 				session.rollback();
-			throw new BusinessFlowExecuteException(name, description, e);
+			throw new BusinessFlowExecuteException(name, e);
 		}finally {
 			if(autoCommit)
 				session.close();
@@ -85,9 +83,6 @@ public class BusinessFlow {
 	
 	public String getName() {
 		return name;
-	}
-	public String getDescription() {
-		return description;
 	}
 	public String getVersion() {
 		return version;

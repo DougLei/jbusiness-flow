@@ -17,30 +17,28 @@
 		"name": "getProductsByShoppingCarId",
 		"description": "根据购物车id查询到对应的商品",
 		"actions": [{
-				"type": "sql_op",
-				"content": {
-					"name": "queryProductsByShoppingCarId",
-					"params": [{
-						"name": "shoppingCarId",
-						"scope": 1
+				"type": "func_method",
+				"content":{
+					"methodName":"queryProductsByShoppingCarId",
+					"params":[{
+						"name":"shoppingCarId",
+						"scope":1
+					}],
+					
+					"receives":[{
+						"returnName":"products",
+						"scope":4
 					}]
-				},
-				"result": {
-					"name": "products",
-					"scope": 4,
-					"dataType": "list"
 				}
-			},
-			{
+			},{
 				"type": "param_op_declare",
 				"content": [{
 					"name": "totalPrice",
 					"description": "商品总价",
 					"scope": 3,
 					"dataType": "double"
-				}]
-			}
-		]
+			}]
+		}]
 	}, {
 		"name": "XiShuLeiProductCalcPrice",
 		"description": "如果洗漱类用品的总价超过200元(包括200元)，则打8折",
@@ -148,6 +146,16 @@
 				"scope": 3,
 				"dataType": "double"
 			}
+		},{
+			"type": "param_op_declare",
+			"content": [{
+				"name": "test",
+				"description":"测试声明参数, 并将指定范围的某个参数值赋给当前参数",
+				"scope": 3,
+				"dataType": "double",
+				"refParamName":"XiShuLeiProductTotalPrice",
+				"refParamScope":5
+			}]
 		}]
 	}],
 	
@@ -192,6 +200,34 @@
 					}]
 				}]
 			}]
+		}
+	}],
+	
+	"methods":[{
+		"name":"queryProductsByShoppingCarId",
+		"params":[{ 
+			"name":"shoppingCarId", 
+			"scope":5,
+			"dataType":"string",
+			"required":true
+		}],
+		"actions":[{
+			"type": "sql_op",
+			"content": {
+				"name": "queryProductsByShoppingCarId",
+				"params": [{
+					"name": "shoppingCarId",
+					"scope": 1
+				}]
+			},
+			"result": {
+				"name": "products",
+				"scope": 5,
+				"dataType": "list"
+			}
+		}], 
+		"return":{
+			"all":true
 		}
 	}]
 }

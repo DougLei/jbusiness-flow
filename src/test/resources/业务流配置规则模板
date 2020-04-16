@@ -11,14 +11,12 @@
 {
 	// 基本配置
 	"name":"", // 业务流名称(英文), 必填, 全局唯一
-	"description":"", // 业务流描述, 默认为null
 	"version":"1", // 版本控制, 默认为1
 	"enabled":true, // 是否激活, 这个必须配置为true才能正常解析
 	
 	// 参数配置4
 	"params":[{ // 输入参数数组, 默认为空数组
 		"name":"", // 参数名(英文)
-		"description":"", // 参数描述, 默认为null
 		"scope":1, // 参数范围
 		"dataType":"string", // 参数数据类型, 默认为object
 		"defaultValue":"", // 参数默认值,  默认为null
@@ -29,7 +27,6 @@
 	"events":[{ // 业务流包含的所有事件
 		"type":0, // 事件类型, 0一般事件, 1起始事件(一条业务流中只能有一个), 2结束事件(一条业务流中可有多个), 如果事件后没有其他事件, 默认也就结束了
 		"name":"", // 事件名称(英文), 必填, 业务流唯一
-		"description":"", // 事件描述, 默认为null
 		"actions":[{ // 事件包含的动作, 按顺序执行
 			"type":"", // 动作的类型, 以"类型前缀_描述"的命名规则定义
 			"content":{}, // 动作具体要执行的内容
@@ -43,7 +40,6 @@
 	
 	// 流配置
 	"flows":[{ // 业务流包含的所有流
-		"description":"", // 流描述, 默认为null
 		"type":1, // 流类型, 0顺序流, 1条件流(if-else/if-elsif-else), 默认为0, 在配置了条件流后, 如果没有配置else, 则提供一个默认的end-else结束流程
 		"order":0, // 排序值, 默认为0, 当是条件流时, 如果配置了order值, 则根据order值的顺序, 从大到小依次判断, 碰到判断为true的, 进入到相应的targetEvent, 否则就按照json中配置的顺序依次判断
 		"sourceEvent":"", // 起始的事件名 event.name
@@ -74,7 +70,6 @@
 		"name":"", // 方法名, 全局唯一
 		"params":[{ 
 			"name":"", // 参数名(英文) * 
-			"description":"", // 参数描述, 默认为null
 			"scope":5, // 参数范围, 这里不用配置, 直接使用5做为固定值
 			"dataType":"string", // 参数数据类型, 默认为string *
 			"defaultValue":"", // 参数默认值, 默认为null
@@ -95,7 +90,6 @@
 		"name":"", // 名称, 全局唯一
 		"params":[{ // sql需要的参数配置
 			"name":"", // 参数名(英文) * 
-			"description":"", // 参数描述, 默认为null
 			"scope":5, // 参数范围, 这里不用配置, 直接使用5做为固定值
 			"dataType":"string", // 参数数据类型, 默认为string *
 			"defaultValue":"", // 参数默认值, 默认为null

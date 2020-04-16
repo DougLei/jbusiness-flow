@@ -32,7 +32,7 @@ public class FuncMethodActionResolver extends ActionResolver {
 		
 		byte size;
 		JSONObject json;
-		JSONArray array = content.getJSONArray("receive");
+		JSONArray array = content.getJSONArray("receives");
 		if((size = (byte) (array==null?0:array.size())) > 0) {
 			Receive[] receives = new Receive[size];
 			for(byte i=0;i<size;i++) {

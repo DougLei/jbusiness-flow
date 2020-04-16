@@ -20,13 +20,11 @@ public class Event {
 	
 	private byte type;
 	private String name;
-	private String description;
 	private Action[] actions;
 	
-	public Event(byte type, String name, String description, Action[] actions) {
+	public Event(byte type, String name, Action[] actions) {
 		this.type = type;
 		this.name = name;
-		this.description = description;
 		this.actions = actions;
 	}
 	
@@ -59,9 +57,6 @@ public class Event {
 	}
 	public String getName() {
 		return name;
-	}
-	public String getDescription() {
-		return description;
 	}
 	public boolean includeSqlAction() {
 		for (Action action : actions) {

@@ -27,7 +27,7 @@ public class BusinessFlowResolver {
 		JSONObject json = JSONObject.parseObject(bfjson);
 		if(!json.getBooleanValue("enabled"))
 			throw new BusinessFlowDisabledException(json.getString("name"), json.getString("description"));
-		BusinessFlow bf = new BusinessFlow(json.getString("name"), json.getString("description"), json.getString("version"));
+		BusinessFlow bf = new BusinessFlow(json.getString("name"), json.getString("version"));
 		bf.setInputParameters(ParameterResolver.parse(json.getJSONArray("params")));
 		bf.setStartEvent(buildBFStruct(json.getJSONArray("events"), json.getJSONArray("flows"), new ReferenceResolver(referenceContainer, json.getJSONArray("commonActions"), json.getJSONArray("methods"), json.getJSONArray("sqls"))));
 		return bf;
@@ -45,7 +45,6 @@ public class BusinessFlowResolver {
 			json = events.getJSONObject(index);
 			event = new Event(json.getByteValue("type"), 
 							  json.getString("name"), 
-							  json.getString("description"), 
 							  referenceResolver.parseAction(json.get("actions")));
 			if(event.isStart()) {
 				startEvent = event;
@@ -59,8 +58,7 @@ public class BusinessFlowResolver {
 			Flow flow;
 			for(int index=0;index<flows.size();index++) {
 				json = flows.getJSONObject(index);
-				flow = new Flow(json.getString("description"), 
-								json.getByteValue("type"), 
+				flow = new Flow(json.getByteValue("type"), 
 								json.getByteValue("order"), 
 								json.getString("sourceEvent"), 
 								json.getString("targetEvent"),
