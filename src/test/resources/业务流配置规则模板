@@ -70,7 +70,6 @@
 		"name":"", // 方法名, 全局唯一
 		"params":[{ 
 			"name":"", // 参数名(英文) * 
-			"scope":5, // 参数范围, 这里不用配置, 直接使用5做为固定值
 			"dataType":"string", // 参数数据类型, 默认为string *
 			"defaultValue":"", // 参数默认值, 默认为null
 			"required":true // 参数是否必须, 这里不用配置, 直接使用true做为固定值
@@ -90,7 +89,6 @@
 		"name":"", // 名称, 全局唯一
 		"params":[{ // sql需要的参数配置
 			"name":"", // 参数名(英文) * 
-			"scope":5, // 参数范围, 这里不用配置, 直接使用5做为固定值
 			"dataType":"string", // 参数数据类型, 默认为string *
 			"defaultValue":"", // 参数默认值, 默认为null
 			"required":true // 参数是否必须, 这里不用配置, 直接使用true做为固定值
