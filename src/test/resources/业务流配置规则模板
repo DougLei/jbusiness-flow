@@ -91,7 +91,7 @@
 	
 	// sql配置, 可复用
 	"sqls":[{
-		"type":"select", // 类型, insert, delete, update, select
+		"type":"select", // 类型, 目前包括的值有: insert, delete, update, select
 		"name":"", // 名称, 全局唯一
 		"params":[{ // sql需要的参数配置
 			"name":"", // 参数名(英文) * 

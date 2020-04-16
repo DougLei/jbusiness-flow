@@ -13,10 +13,15 @@ import com.douglei.business.flow.resolver.action.ActionResolver;
  * 
  * @author DougLei
  */
-public abstract class SqlActionResolver extends ActionResolver {
+public class SqlActionResolver extends ActionResolver {
 
 	@Override
-	public final Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
+	public String getType() {
+		return "sql_op";
+	}
+	
+	@Override
+	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
 		JSONObject content = actionJSON.getJSONObject("content");
 		Parameter[] parameters = SqlDefinedParameterContext.set(ParameterResolver.parse(content.getJSONArray("params")));
 		Sql sql = referenceResolver.parseSql(content.getString("name"));

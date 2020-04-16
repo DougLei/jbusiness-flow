@@ -17,7 +17,7 @@
 		"name": "getProductsByShoppingCarId",
 		"description": "根据购物车id查询到对应的商品",
 		"actions": [{
-				"type": "sql_query",
+				"type": "sql_op",
 				"content": {
 					"name": "queryProductsByShoppingCarId",
 					"params": [{

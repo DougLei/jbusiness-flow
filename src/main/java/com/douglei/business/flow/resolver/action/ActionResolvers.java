@@ -31,7 +31,7 @@ public class ActionResolvers {
 				continue;
 			}
 			actionResolver= (ActionResolver) ConstructorUtil.newInstance(clz);
-			MAP.put(actionResolver.getType(), actionResolver);
+			MAP.put(actionResolver.getType().toUpperCase(), actionResolver);
 		}
 		cs.destroy();
 	}
@@ -43,7 +43,7 @@ public class ActionResolvers {
 	 * @return
 	 */
 	public static Action parse(JSONObject action, ReferenceResolver referenceResolver) {
-		return MAP.get(action.getString("type")).parse(action, referenceResolver);
+		return MAP.get(action.getString("type").toUpperCase()).parse(action, referenceResolver);
 	}
 	
 	/**
@@ -52,6 +52,6 @@ public class ActionResolvers {
 	 * @return
 	 */
 	public static ActionResolver getActionResolver(String type) {
-		return MAP.get(type);
+		return MAP.get(type.toUpperCase());
 	}
 }
