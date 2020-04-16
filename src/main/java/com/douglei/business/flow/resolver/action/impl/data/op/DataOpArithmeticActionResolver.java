@@ -30,7 +30,7 @@ public class DataOpArithmeticActionResolver extends DataOpResolver{
 		for(short i=0;i<size;i++) {
 			group[i] = parse_(contents.getJSONObject(i), referenceResolver);
 		}
-		return new DataOpArithmeticAction(group, getResult(actionJSON));
+		return new DataOpArithmeticAction(group, getResult(actionJSON, null));
 	}
 
 	private DataOpArithmetic parse_(JSONObject content, ReferenceResolver referenceResolver) {

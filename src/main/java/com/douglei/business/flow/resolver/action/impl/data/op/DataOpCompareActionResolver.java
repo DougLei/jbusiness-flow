@@ -1,6 +1,7 @@
 package com.douglei.business.flow.resolver.action.impl.data.op;
 
 import com.alibaba.fastjson.JSONObject;
+import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.data.op.Data;
 import com.douglei.business.flow.executer.action.impl.data.op.compare.CompareType;
@@ -25,7 +26,7 @@ public class DataOpCompareActionResolver extends DataOpResolver{
 		CompareType op = CompareType.toValue(content.getString("op"));
 		Data left = parseData(content.getJSONObject("left"), referenceResolver);
 		Data right = (op == CompareType.BOOL || op == CompareType.NBOOL)?null:parseData(content.getJSONObject("right"), referenceResolver);
-		return new DataOpCompareAction(op, left, right, getResult(actionJSON));
+		return new DataOpCompareAction(op, left, right, getResult(actionJSON, DataType.BOOLEAN));
 	}
 }
 

@@ -1,6 +1,7 @@
 package com.douglei.business.flow.executer.sql;
 
 import com.douglei.business.flow.db.DBSession;
+import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.component.Component;
 import com.douglei.business.flow.executer.sql.component.select.Select;
@@ -40,5 +41,10 @@ public class SelectSql extends Sql {
 			sqlData.appendSql("WITH ");
 			Component.appendComponents2SqlData(withs, sqlData);
 		}
+	}
+
+	@Override
+	public DataType resultDataType() {
+		return DataType.LIST;
 	}
 }

@@ -1,6 +1,7 @@
 package com.douglei.business.flow.resolver.action;
 
 import com.alibaba.fastjson.JSONObject;
+import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.resolver.ParameterResolver;
@@ -29,9 +30,15 @@ public abstract class ActionResolver {
 	/**
 	 * 获取配置的result
 	 * @param actionJSON
+	 * @param defaultDataType 强制指定数据类型, 如果传入null, 则使用配置的类型
 	 * @return
 	 */
-	protected final Parameter getResult(JSONObject actionJSON) {
-		return ParameterResolver.parse(actionJSON.getJSONObject("result"));
+	protected final Parameter getResult(JSONObject actionJSON, DataType forceDataType) {
+		JSONObject result = actionJSON.getJSONObject("result");
+		if(result == null)
+			return null;
+		if(forceDataType != null)
+			result.put("dataType", forceDataType.name());
+		return ParameterResolver.parse(result);
 	}
 }

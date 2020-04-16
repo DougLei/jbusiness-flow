@@ -1,6 +1,7 @@
 package com.douglei.business.flow.executer.sql;
 
 import com.douglei.business.flow.db.DBSession;
+import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.method.Method;
 import com.douglei.business.flow.executer.parameter.Parameter;
@@ -16,11 +17,19 @@ public abstract class Sql extends Method{
 		super.name = name;
 		super.parameters = parameters;
 	}
-
+	
 	@Override
 	public Object invoke(Parameter[] invokerDefinedParameters, DBSession session) {
 		Object result = super.invoke(invokerDefinedParameters, session);
 		ParameterContext.clear(Scope.LOCAL);
 		return result;
+	}
+	
+	/**
+	 * 执行结果的数据类型
+	 * @return
+	 */
+	public DataType resultDataType() {
+		return DataType.INTEGER;
 	}
 }
