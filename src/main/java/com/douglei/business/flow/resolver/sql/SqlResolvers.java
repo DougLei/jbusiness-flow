@@ -45,8 +45,8 @@ public class SqlResolvers {
 	 */
 	public static Sql parse(String name, JSONObject sqlJSON) {
 		return MAP.get(sqlJSON.getString("type")).parse(
-				   name, 
-				   ParameterResolver.parse(sqlJSON.getJSONArray("params"), Scope.LOCAL), 
-				   sqlJSON.getJSONObject("content"));
+						   name, 
+						   ParameterResolver.parse(sqlJSON.getJSONArray("params"), Scope.LOCAL), 
+						   sqlJSON.getJSONObject("content"));
 	}
 }

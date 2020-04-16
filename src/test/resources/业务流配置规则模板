@@ -72,7 +72,7 @@
 			"name":"", // 参数名(英文) * 
 			"dataType":"string", // 参数数据类型, 默认为string *
 			"defaultValue":"", // 参数默认值, 默认为null
-			"required":true // 参数是否必须, 这里不用配置, 直接使用true做为固定值
+			"required":true // 参数是否必须, 默认为false
 		}],
 		"actions":[{ // 具体的action
 			// 所有的结果参数都属于本地map, 在return中决定返回哪些参数
@@ -91,7 +91,7 @@
 			"name":"", // 参数名(英文) * 
 			"dataType":"string", // 参数数据类型, 默认为string *
 			"defaultValue":"", // 参数默认值, 默认为null
-			"required":true // 参数是否必须, 这里不用配置, 直接使用true做为固定值
+			"required":true // 参数是否必须, 默认为false
 		}],
 		"content":{ // sql内容配置
 			... // 具体参看business.flow.sql.desgin中不同type的配置结构

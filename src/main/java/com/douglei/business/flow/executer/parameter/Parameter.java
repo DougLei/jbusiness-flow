@@ -20,13 +20,14 @@ public class Parameter implements Cloneable{
 	
 	// 验证参数的值, 返回验证后的value
 	private static Object validateValue(Parameter parameter, Object value) {
-		if(value == null)
-			value = parameter.defaultValue;
-		if(value == null) 
-			value = parameter.dataType.defaultValue();
 		if(parameter.required && value == null)
 			throw new NullPointerException(parameter.scope.getDescription() + "["+parameter.name+"]的初始值不能为空");
-		return validateValueDataType(parameter, value);
+		if(value == null)
+			value = parameter.defaultValue;
+		value =  validateValueDataType(parameter, value);
+		if(value == null) 
+			value = parameter.dataType.defaultValue();
+		return value;
 	}
 	
 	// 验证参数的值类型是否和配置的匹配, 返回验证后的value
