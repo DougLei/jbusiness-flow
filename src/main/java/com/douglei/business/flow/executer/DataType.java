@@ -186,7 +186,7 @@ public enum DataType {
 				}
 			}
 		}
-		return OBJECT;
+		throw new 
 	}
 	
 	/**
