@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
+import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.executer.parameter.ps.ParameterScope;
 import com.douglei.business.flow.executer.parameter.ps.impl.GlobalParameterScope;
@@ -81,12 +82,13 @@ public class ParameterContext {
 		return PARAMETER_SCOPES.get().get(byParameter.getScope()).getParameter(byParameter.getName());
 	}
 	
+	
 	/**
 	 * 根据指定的参数, 获取当前业务流相应范围内同名参数的值
-	 * @param byParameter
+	 * @param parameter
 	 * @return
 	 */
-	public static Object getValue(DeclaredParameter byParameter) {
+	public static Object getValue(Parameter parameter) {
 		return PARAMETER_SCOPES.get().get(byParameter.getScope()).getValue(byParameter.getName(), byParameter.getOgnlExpression());
 	}
 	
@@ -95,7 +97,7 @@ public class ParameterContext {
 	 * @param parameters
 	 * @return
 	 */
-	public static Object[] getValues(DeclaredParameter[] parameters) {
+	public static Object[] getValues(Parameter[] parameters) {
 		if(parameters.length == 0) {
 			return CollectionUtil.emptyObjectArray();
 		}

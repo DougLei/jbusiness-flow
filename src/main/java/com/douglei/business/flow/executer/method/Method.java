@@ -43,7 +43,7 @@ public class Method {
 	 */
 	private void invokePre(DeclaredParameter[] invokerDefinedParameters) {
 		ParameterContext.activateStack(Scope.LOCAL);
-		if(parameters.length > 0) {
+		if(parameters != null) {
 			Object[] values = ParameterContext.getValues(invokerDefinedParameters);
 			for (int i = 0; i < parameters.length; i++)
 				ParameterContext.addParameter(parameters[i], values[i]);
