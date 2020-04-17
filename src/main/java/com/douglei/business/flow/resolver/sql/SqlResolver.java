@@ -18,7 +18,7 @@ import com.douglei.business.flow.executer.sql.component.select.condition.Conditi
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionType;
 import com.douglei.business.flow.executer.sql.component.select.group.and.order.GroupAndOrderType;
 import com.douglei.business.flow.executer.sql.component.select.group.and.order.GroupAndOrders;
-import com.douglei.business.flow.resolver.action.impl.sql.SqlDefinedParameterContext;
+import com.douglei.business.flow.resolver.action.impl.sql.op.SqlDefinedParameterContext;
 import com.douglei.tools.utils.StringUtil;
 
 /**

@@ -6,17 +6,18 @@ import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
+import com.douglei.business.flow.executer.parameter.Parameter;
 
 /**
  * 
  * @author DougLei
  */
 public class FuncLoopAction extends Action {
-	private DeclaredParameter collection;
+	private Parameter collection;
 	private DeclaredParameter alias;
 	private Action[] actions;
 	
-	public FuncLoopAction(DeclaredParameter collection, DeclaredParameter alias, Action[] actions) {
+	public FuncLoopAction(Parameter collection, DeclaredParameter alias, Action[] actions) {
 		this.collection = collection;
 		this.alias = alias;
 		this.actions = actions;

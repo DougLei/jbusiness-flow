@@ -8,6 +8,7 @@ import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.func.method.FuncMethodAction;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
+import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.tools.utils.CollectionUtil;
 
@@ -17,7 +18,7 @@ import com.douglei.tools.utils.CollectionUtil;
  */
 public class Data {
 	private Object value;
-	private DeclaredParameter parameter;
+	private Parameter parameter;
 	private String format;
 	private DataAction action;
 	private FuncMethodAction method; // FuncMethodAction
@@ -29,7 +30,7 @@ public class Data {
 	public void setValue(Object value) {
 		this.value = value;
 	}
-	public void setParameter(DeclaredParameter parameter) {
+	public void setParameter(Parameter parameter) {
 		this.parameter = parameter;
 	}
 	public void setAction(Action[] actions, boolean resultPick_all, String[] resultPick_names) {

@@ -10,9 +10,10 @@ public class Parameter {
 	protected String name;
 	protected String ognlExpression; // ognl表达式, 例如name=zhangsan.age, 其中zhangsan为name值, 后面的则是ognl表达式
 	protected Scope scope;
+	protected Object defaultValue;
 	
 	protected Parameter() {}
-	public Parameter(String name, Scope scope) {
+	public Parameter(String name, Scope scope, Object defaultValue) {
 		if(StringUtil.isEmpty(name))
 			throw new NullPointerException("参数名不能为空");
 		
@@ -24,16 +25,7 @@ public class Parameter {
 			this.name = name;
 		}
 		this.scope = scope;
-	}
-	
-	public final String getName() {
-		return name;
-	}
-	public final String getOgnlExpression() {
-		return ognlExpression;
-	}
-	public final Scope getScope() {
-		return scope;
+		this.defaultValue = defaultValue;
 	}
 	
 	/**
@@ -49,5 +41,18 @@ public class Parameter {
 	 */
 	public final void updateScope(Scope scope) {
 		this.scope = scope;
+	}
+	
+	public final String getName() {
+		return name;
+	}
+	public final String getOgnlExpression() {
+		return ognlExpression;
+	}
+	public final Scope getScope() {
+		return scope;
+	}
+	public Object getDefaultValue() {
+		return defaultValue;
 	}
 }

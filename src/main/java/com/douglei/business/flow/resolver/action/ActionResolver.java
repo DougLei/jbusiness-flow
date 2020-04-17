@@ -4,9 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.ResultParameter;
-import com.douglei.business.flow.executer.parameter.Scope;
+import com.douglei.business.flow.resolver.ParameterResolver;
 import com.douglei.business.flow.resolver.ReferenceResolver;
-import com.douglei.tools.utils.StringUtil;
 
 /**
  * 
@@ -36,14 +35,6 @@ public abstract class ActionResolver {
 	 */
 	protected final ResultParameter getResultParameter(JSONObject actionJSON, DataType assignDataType) {
 		JSONObject result = actionJSON.getJSONObject("result");
-		if(result == null)
-			return null;
-		
-		DataType dataType = assignDataType;
-		if(dataType == null) {
-			String dt = result.getString("dataType");
-			dataType = StringUtil.isEmpty(dt)?null:DataType.toValue(dt);
-		}
-		return new ResultParameter(result.getString("name"), Scope.toValue(result.getByteValue("scope")), dataType);
+		return ParameterResolver.parseResultParameter(result, assignDataType);
 	}
 }

@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.resolver.ParameterResolver;
+import com.douglei.business.flow.resolver.action.impl.sql.op.SqlDefinedParameterContext;
 import com.douglei.tools.instances.scanner.ClassScanner;
 import com.douglei.tools.utils.reflect.ClassLoadUtil;
 import com.douglei.tools.utils.reflect.ConstructorUtil;
@@ -31,7 +33,7 @@ public class SqlResolvers {
 				continue;
 			}
 			sqlResolver = (SqlResolver) ConstructorUtil.newInstance(clz);
-			MAP.put(sqlResolver.getType(), sqlResolver);
+			MAP.put(sqlResolver.getType().toUpperCase(), sqlResolver);
 		}
 		cs.destroy();
 	}
@@ -43,6 +45,7 @@ public class SqlResolvers {
 	 * @return
 	 */
 	public static Sql parse(String name, JSONObject sqlJSON) {
-		return MAP.get(sqlJSON.getString("type")).parse(name, ParameterResolver.parseDeclaredParameters(sqlJSON.getJSONArray("params")), sqlJSON.getJSONObject("content"));
+		DeclaredParameter[] parameters = SqlDefinedParameterContext.set(ParameterResolver.parseDeclaredParameters(sqlJSON.getJSONArray("params")));
+		return MAP.get(sqlJSON.getString("type").toUpperCase()).parse(name, parameters, sqlJSON.getJSONObject("content"));
 	}
 }

@@ -7,7 +7,6 @@ import com.douglei.business.flow.executer.DataType;
  * @author DougLei
  */
 public class DeclaredParameter extends ResultParameter {
-	protected Object defaultValue;
 	protected boolean required;
 	
 	public DeclaredParameter(String name, Scope scope, DataType dataType, Object defaultValue, boolean required) {
@@ -15,7 +14,7 @@ public class DeclaredParameter extends ResultParameter {
 		if(defaultValue != null) {
 			if(!dataType.matching(defaultValue))
 				throw new IllegalArgumentException("在"+scope.getDescription()+"范围中, 名为"+name+"的参数, 其默认值("+defaultValue+")的数据类型与配置的参数数据类型("+dataType.name()+")不匹配");
-			this.defaultValue = dataType.convert(defaultValue);
+			super.defaultValue = dataType.convert(defaultValue);
 		}
 		this.required = required;
 	}
@@ -27,7 +26,7 @@ public class DeclaredParameter extends ResultParameter {
 	 */
 	public ActualParameter toActualParameter(Object value) {
 		ActualParameter ap = new ActualParameter(name, scope, dataType);
-		ap.setValue(required, defaultValue, value);
+		ap.setValue(required, super.defaultValue, value);
 		return ap;
 	}
 }

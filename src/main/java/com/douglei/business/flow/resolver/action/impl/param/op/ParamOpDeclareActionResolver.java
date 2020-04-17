@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.param.op.ParamOpDeclareAction;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
+import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.resolver.ParameterResolver;
 import com.douglei.business.flow.resolver.ReferenceResolver;
@@ -32,11 +33,11 @@ public class ParamOpDeclareActionResolver extends ActionResolver {
 		DeclaredParameter parameter;
 		for(byte i=0;i<size;i++) {
 			content = contents.getJSONObject(i);
-			parameter = ParameterResolver.parse(content);
+			parameter = ParameterResolver.parseDeclaredParameter(content);
 			action.addParam(i, parameter);
 			
 			if(parameter.getDefaultValue() == null) {
-				action.addRefParam(i, DeclaredParameter.newInstance(content.getString("refParamName"), Scope.toValue(content.getByteValue("refParamScope"))));
+				action.addRefParam(i, new Parameter(content.getString("refParamName"), Scope.toValue(content.getByteValue("refParamScope")), null));
 			}
 		}
 		return action;

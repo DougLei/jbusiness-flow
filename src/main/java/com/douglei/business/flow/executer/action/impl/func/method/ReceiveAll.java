@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
+import com.douglei.business.flow.executer.parameter.ResultParameter;
 
 /**
  * 
@@ -12,11 +13,11 @@ import com.douglei.business.flow.executer.parameter.DeclaredParameter;
  */
 public class ReceiveAll {
 	private String[] excludeNames;
-	private DeclaredParameter parameter;
+	private ResultParameter resultParameter;
 	
-	public ReceiveAll(String[] excludeNames, DeclaredParameter parameter) {
+	public ReceiveAll(String[] excludeNames, ResultParameter resultParameter) {
 		this.excludeNames = excludeNames;
-		this.parameter = parameter;
+		this.resultParameter = resultParameter;
 	}
 	
 	/**
@@ -39,7 +40,7 @@ public class ReceiveAll {
 		return values;
 	}
 
-	public DeclaredParameter getParameter() {
-		return parameter;
+	public ResultParameter getParameter() {
+		return resultParameter;
 	}
 }

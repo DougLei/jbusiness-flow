@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.ResultParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
+import com.douglei.tools.utils.StringUtil;
 
 /**
  * 参数解析器
@@ -13,13 +15,14 @@ import com.douglei.business.flow.executer.parameter.Scope;
  */
 public class ParameterResolver {
 	
+	// -----------------------------------------------------------------------------------------------------------
 	/**
-	 * 解析定义的参数
+	 * 解析参数
 	 * @param json
 	 * @return
 	 */
 	public static Parameter parseParameter(JSONObject json) {
-		return new Parameter(json.getString("name"), Scope.toValue(json.getByteValue("scope")));
+		return new Parameter(json.getString("name"), Scope.toValue(json.getByteValue("scope")), json.get("defaultValue"));
 	}
 	
 	/**
@@ -39,13 +42,33 @@ public class ParameterResolver {
 		return parameters;
 	}
 	
-	
+	// -----------------------------------------------------------------------------------------------------------
 	/**
-	 * 解析定义的参数
+	 * 解析结果参数
+	 * @param json
+	 * @param assignDataType 指定的数据类型, 如果传入null, 则使用配置的类型
+	 * @return
+	 */
+	public static ResultParameter parseResultParameter(JSONObject json, DataType assignDataType) {
+		if(json == null)
+			return null;
+		
+		DataType dataType = assignDataType;
+		if(dataType == null) {
+			String dt = json.getString("dataType");
+			dataType = StringUtil.isEmpty(dt)?null:DataType.toValue(dt);
+		}
+		return new ResultParameter(json.getString("name"), Scope.toValue(json.getByteValue("scope")), dataType);
+	}
+	
+	
+	// -----------------------------------------------------------------------------------------------------------
+	/**
+	 * 解析定义参数
 	 * @param json
 	 * @return
 	 */
-	public static DeclaredParameter parseDeclaredParameters(JSONObject json) {
+	public static DeclaredParameter parseDeclaredParameter(JSONObject json) {
 		return new DeclaredParameter(json.getString("name"),
 					Scope.toValue(json.getByteValue("scope")),
 					DataType.toValue(json.getString("dataType")),
@@ -54,7 +77,7 @@ public class ParameterResolver {
 	}
 	
 	/**
-	 * 解析定义的参数
+	 * 解析定义参数
 	 * @param array
 	 * @return
 	 */
@@ -65,7 +88,7 @@ public class ParameterResolver {
 		
 		DeclaredParameter[] parameters = new DeclaredParameter[size];
 		for (byte i=0;i<size;i++) {
-			parameters[i] = parseDeclaredParameters(array.getJSONObject(i));
+			parameters[i] = parseDeclaredParameter(array.getJSONObject(i));
 		}
 		return parameters;
 	}

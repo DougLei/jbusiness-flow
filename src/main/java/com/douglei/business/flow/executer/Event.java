@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.action.Action;
-import com.douglei.business.flow.executer.action.impl.sql.SqlAction;
+import com.douglei.business.flow.executer.action.impl.sql.op.SqlOpAction;
 import com.douglei.business.flow.executer.parameter.Scope;
 
 /**
@@ -60,7 +60,7 @@ public class Event {
 	}
 	public boolean includeSqlAction() {
 		for (Action action : actions) {
-			if(action instanceof SqlAction) {
+			if(action instanceof SqlOpAction) {
 				return true;
 			}
 		}

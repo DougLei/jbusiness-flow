@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.func.FuncLoopAction;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
+import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.resolver.ParameterResolver;
 import com.douglei.business.flow.resolver.ReferenceResolver;
 import com.douglei.business.flow.resolver.action.ActionResolver;
@@ -22,8 +24,13 @@ public class FuncLoopActionResolver extends ActionResolver {
 	@Override
 	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
 		JSONObject content = actionJSON.getJSONObject("content");
-		DeclaredParameter collection = ParameterResolver.parse(content);
-		DeclaredParameter alias = ParameterResolver.parse(content.getJSONObject("alias"));
+		
+		Parameter collection = ParameterResolver.parseParameter(content);
+		
+		DeclaredParameter alias = ParameterResolver.parseDeclaredParameter(content.getJSONObject("alias"));
+		if(alias.getScope() != Scope.LOCAL)
+			alias.updateScope(Scope.LOCAL);
+		
 		Action[] actions = referenceResolver.parseAction(content.get("actions"));
 		return new FuncLoopAction(collection, alias, actions);
 	}
