@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import com.douglei.business.flow.db.DBSession;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 
 /**
@@ -15,7 +15,7 @@ public class BusinessFlow {
 	private String name;
 	private String version;
 	
-	private Parameter[] inputParameters;
+	private DeclaredParameter[] inputParameters;
 	private Event startEvent;
 	
 	public BusinessFlow(String name, String version) {
@@ -60,7 +60,7 @@ public class BusinessFlow {
 		try {
 			ParameterContext.initial();
 			if(inputParameters.length > 0) {
-				for (Parameter parameter : inputParameters) {
+				for (DeclaredParameter parameter : inputParameters) {
 					ParameterContext.addParameter(parameter, inputValueMap.get(parameter.getName()));
 				}
 			}
@@ -87,7 +87,14 @@ public class BusinessFlow {
 	public String getVersion() {
 		return version;
 	}
-	public void setInputParameters(Parameter[] inputParameters) {
+	public void setInputParameters(DeclaredParameter[] inputParameters) {
+		if(inputParameters.length > 0) {
+			// 如果参数的范围不是输入参数或输入输出参数, 则默认改为输入参数
+			for (DeclaredParameter parameter : inputParameters) {
+				if(parameter.getScope() != Scope.IN && parameter.getScope() != Scope.INOUT)
+					parameter.updateScope(Scope.IN);
+			}
+		}
 		this.inputParameters = inputParameters;
 	}
 	public void setStartEvent(Event startEvent) {

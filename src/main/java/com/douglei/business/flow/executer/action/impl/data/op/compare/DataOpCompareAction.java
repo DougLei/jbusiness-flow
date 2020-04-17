@@ -3,7 +3,7 @@ package com.douglei.business.flow.executer.action.impl.data.op.compare;
 import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.data.op.Data;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 
 /**
  * 
@@ -14,7 +14,7 @@ public class DataOpCompareAction extends Action {
 	private Data left;
 	private Data right;
 
-	public DataOpCompareAction(CompareType op, Data left, Data right, Parameter result) {
+	public DataOpCompareAction(CompareType op, Data left, Data right, DeclaredParameter result) {
 		this.op = op;
 		this.left = left;
 		this.right = right;

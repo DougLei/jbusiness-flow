@@ -3,7 +3,7 @@ package com.douglei.business.flow.executer.method;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 
 /**
  * 
@@ -25,7 +25,7 @@ public class Return {
 	 * @param parameterMap
 	 * @return
 	 */
-	public Map<String, Parameter> filter(Map<String, Parameter> parameterMap) {
+	public Map<String, DeclaredParameter> filter(Map<String, DeclaredParameter> parameterMap) {
 		if(all) {
 			if(names != null && names.length > 0) {
 				for (String name : names) {
@@ -35,7 +35,7 @@ public class Return {
 			return parameterMap;
 		}else {
 			if(names != null && names.length > 0) {
-				Map<String, Parameter> returnParameterMap = new HashMap<String, Parameter>(names.length);
+				Map<String, DeclaredParameter> returnParameterMap = new HashMap<String, DeclaredParameter>(names.length);
 				for (String name : names) {
 					returnParameterMap.put(name, parameterMap.get(name));
 				}

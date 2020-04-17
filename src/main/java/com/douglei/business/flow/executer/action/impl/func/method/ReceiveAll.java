@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 
 /**
  * 
@@ -12,9 +12,9 @@ import com.douglei.business.flow.executer.parameter.Parameter;
  */
 public class ReceiveAll {
 	private String[] excludeNames;
-	private Parameter parameter;
+	private DeclaredParameter parameter;
 	
-	public ReceiveAll(String[] excludeNames, Parameter parameter) {
+	public ReceiveAll(String[] excludeNames, DeclaredParameter parameter) {
 		this.excludeNames = excludeNames;
 		this.parameter = parameter;
 	}
@@ -24,7 +24,7 @@ public class ReceiveAll {
 	 * @param returnParameters
 	 * @return 
 	 */
-	public Map<String, Object> excludeValues(Map<String, Parameter> returnParameters) {
+	public Map<String, Object> excludeValues(Map<String, DeclaredParameter> returnParameters) {
 		if(excludeNames != null) {
 			for (String name : excludeNames)
 				returnParameters.remove(name);
@@ -33,13 +33,13 @@ public class ReceiveAll {
 			return Collections.emptyMap();
 		
 		Map<String, Object> values = new HashMap<String, Object>(returnParameters.size());
-		for(Parameter parameter: returnParameters.values()) {
+		for(DeclaredParameter parameter: returnParameters.values()) {
 			values.put(parameter.getName(), parameter.getValue(null));
 		}
 		return values;
 	}
 
-	public Parameter getParameter() {
+	public DeclaredParameter getParameter() {
 		return parameter;
 	}
 }

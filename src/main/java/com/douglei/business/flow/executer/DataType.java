@@ -18,7 +18,7 @@ public enum DataType {
 		@Override
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
-			if(!result && (value instanceof String || value instanceof Long)) {
+			if(!result && (value instanceof String || value instanceof Long || value.getClass() == long.class)) {
 				return DateFormatUtil.verifyIsDate(value.toString());
 			}
 			return result;
@@ -64,10 +64,14 @@ public enum DataType {
 		
 		@Override
 		protected boolean isInstance(Object value) {
-			return value instanceof Integer || value instanceof Short || value instanceof Long || value instanceof Byte;
+			if(!(value instanceof Integer || value instanceof Short || value instanceof Long || value instanceof Byte)) {
+				Class<?> clz = value.getClass();
+				return clz == int.class || clz == short.class || clz == long.class || clz == byte.class; 
+			}
+			return true;
 		}
 	},
-	DOUBLE((double)0){
+	DOUBLE(0.0){
 		@Override
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
@@ -93,7 +97,14 @@ public enum DataType {
 		
 		@Override
 		protected boolean isInstance(Object value) {
-			return value instanceof Float || value instanceof Double || value instanceof BigDecimal || INTEGER.isInstance(value);
+			boolean result = value instanceof Double || value instanceof BigDecimal || value instanceof Float;
+			if(!result) {
+				Class<?> clz = value.getClass();
+				result = (clz == double.class || clz == float.class); 
+			}
+			if(!result)
+				return INTEGER.isInstance(value);
+			return true;
 		}
 	},
 	BOOLEAN(false){
@@ -117,7 +128,7 @@ public enum DataType {
 		
 		@Override
 		protected boolean isInstance(Object value) {
-			return value instanceof Boolean;
+			return value instanceof Boolean || value.getClass() == boolean.class;
 		}
 	},
 	STRING(){
@@ -132,22 +143,13 @@ public enum DataType {
 
 		@Override
 		protected boolean isInstance(Object value) {
-			return value instanceof String || value instanceof Character;
+			return value instanceof String || value instanceof Character || value.getClass() == char.class;
 		}
 	},
 	LIST(){
 		@Override
-		public boolean matching(Object value) {
-			boolean result = super.matching(value);
-			if(!result) {
-				return value instanceof Collection<?>;
-			}
-			return result;
-		}
-		
-		@Override
 		protected boolean isInstance(Object value) {
-			return value instanceof Collection;
+			return value instanceof Collection || value.getClass().isArray();
 		}
 	},
 	OBJECT(){
@@ -185,8 +187,9 @@ public enum DataType {
 					return dt;
 				}
 			}
+			throw new IllegalArgumentException("不存在value="+value+"的dataType值");
 		}
-		throw new 
+		throw new NullPointerException("dataType的值不能为空");
 	}
 	
 	/**

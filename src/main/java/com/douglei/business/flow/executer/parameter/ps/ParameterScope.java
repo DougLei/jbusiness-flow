@@ -4,7 +4,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.ActualParameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 
 /**
@@ -12,7 +13,7 @@ import com.douglei.business.flow.executer.parameter.Scope;
  * @author DougLei
  */
 public abstract class ParameterScope {
-	protected Map<String, Parameter> parameterMap = new HashMap<String, Parameter>();
+	protected Map<String, ActualParameter> parameterMap = new HashMap<String, ActualParameter>();
 	
 	/**
 	 * 所属的范围
@@ -29,14 +30,14 @@ public abstract class ParameterScope {
 	 * 清空当前范围的参数
 	 * @return
 	 */
-	public Map<String, Parameter> clear(){
+	public Map<String, DeclaredParameter> clear(){
 		parameterMap.clear();
 		return null;
 	}
 	
-	// 给指定的参数map中添加参数
-	protected void addParamter(Parameter parameter, Map<String, Parameter> pm) {
-		Parameter oldParameter = pm.get(parameter.getName());
+	// 给指定的参数map中添加实参
+	protected void addParamter(ActualParameter parameter, Map<String, ActualParameter> pm) {
+		ActualParameter oldParameter = pm.get(parameter.getName());
 		if(oldParameter == null) {
 			pm.put(parameter.getName(), parameter);
 		}else if(oldParameter.getDataType() != parameter.getDataType()){
@@ -47,16 +48,16 @@ public abstract class ParameterScope {
 	}
 	
 	/**
-	 * 添加指定的参数
+	 * 添加实参
 	 * @param parameter
 	 */
-	public void addParameter(Parameter parameter) {
+	public void addParameter(ActualParameter parameter) {
 		addParamter(parameter, parameterMap);
 	}
 	
 	// 从指定的参数map中获取指定name和ognl表达式的参数值
-	protected Object getValue(String parameterName, String ognlExpression, Map<String, Parameter> pm) {
-		Parameter p = pm.get(parameterName);
+	protected Object getValue(String parameterName, String ognlExpression, Map<String, DeclaredParameter> pm) {
+		DeclaredParameter p = pm.get(parameterName);
 		if(p == null) {
 			return null;
 		}
@@ -78,13 +79,13 @@ public abstract class ParameterScope {
 	 * @param parameterName
 	 * @return
 	 */
-	public Parameter getParameter(String parameterName) {
+	public DeclaredParameter getParameter(String parameterName) {
 		return parameterMap.get(parameterName);
 	}
 	
 	// 更新指定参数map中, 指定参数的值
-	protected void updateValue(Parameter parameter, Object newValue, Map<String, Parameter> pm) {
-		Parameter p = pm.get(parameter.getName());
+	protected void updateValue(DeclaredParameter parameter, Object newValue, Map<String, DeclaredParameter> pm) {
+		DeclaredParameter p = pm.get(parameter.getName());
 		if(p != null) {
 			p.updateValue(newValue);
 		}
@@ -95,7 +96,7 @@ public abstract class ParameterScope {
 	 * @param parameter
 	 * @param newValue
 	 */
-	public void updateValue(Parameter parameter, Object newValue) {
+	public void updateValue(DeclaredParameter parameter, Object newValue) {
 		updateValue(parameter, newValue, parameterMap);
 	}
 	
@@ -112,13 +113,13 @@ public abstract class ParameterScope {
 	}
 	
 	// 从指定的参数map中, 获取值map
-	protected Map<String, Object> getValueMap(Map<String, Parameter> pm, String[] excludeNames){
+	protected Map<String, Object> getValueMap(Map<String, DeclaredParameter> pm, String[] excludeNames){
 		if(pm.isEmpty()) {
 			return Collections.emptyMap();
 		}
 		
 		Map<String, Object> valueMap = new HashMap<String, Object>(pm.size() - excludeNames.length);
-		for(Parameter entry : pm.values()) {
+		for(DeclaredParameter entry : pm.values()) {
 			if(!exists(entry.getName(), excludeNames)) {
 				valueMap.put(entry.getName(), entry.getValue(null));
 			}

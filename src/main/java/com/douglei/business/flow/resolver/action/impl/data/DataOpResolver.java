@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.data.op.Data;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.resolver.ParameterResolver;
 import com.douglei.business.flow.resolver.ReferenceResolver;
 import com.douglei.business.flow.resolver.action.ActionResolver;
@@ -24,7 +24,7 @@ public abstract class DataOpResolver extends ActionResolver {
 		if((obj = json.get("value")) != null) {
 			data.setValue(obj);
 		}else if((obj = ParameterResolver.parse(json)) != null) {
-			data.setParameter((Parameter)obj);
+			data.setParameter((DeclaredParameter)obj);
 		}else if((obj = json.getJSONObject("action")) != null) {
 			JSONObject action = (JSONObject) obj;
 			Action[] actions = referenceResolver.parseAction(action.get("actions"));

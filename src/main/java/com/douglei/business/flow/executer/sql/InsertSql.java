@@ -1,7 +1,7 @@
 package com.douglei.business.flow.executer.sql;
 
 import com.douglei.business.flow.db.DBSession;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.component.Component;
 import com.douglei.business.flow.executer.sql.component.Table;
 
@@ -19,7 +19,7 @@ public class InsertSql extends Sql {
 	private byte valuesType;
 	private Component[] values; // 可能是value数组, 也可能是select
 	
-	public InsertSql(String name, Parameter[] parameters, byte valuesType) {
+	public InsertSql(String name, DeclaredParameter[] parameters, byte valuesType) {
 		super(name, parameters);
 		this.valuesType = valuesType;
 	}

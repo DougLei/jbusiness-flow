@@ -1,6 +1,6 @@
 package com.douglei.business.flow.executer.action.impl.func.method;
 
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.tools.utils.StringUtil;
 
@@ -23,7 +23,7 @@ public class Receive {
 		return returnName;
 	}
 
-	public Parameter updateParameter(Parameter parameter) {
+	public DeclaredParameter updateParameter(DeclaredParameter parameter) {
 		if(returnName != parameterName) {
 			parameter.updateName(parameterName);
 		}

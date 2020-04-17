@@ -3,7 +3,7 @@ package com.douglei.business.flow.resolver.sql;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.LogicalOP;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.component.Function;
 import com.douglei.business.flow.executer.sql.component.Table;
@@ -40,7 +40,7 @@ public abstract class SqlResolver {
 	 * @param content
 	 * @return
 	 */
-	public abstract Sql parse(String name, Parameter[] parameters, JSONObject content);
+	public abstract Sql parse(String name, DeclaredParameter[] parameters, JSONObject content);
 	
 	
 	// 解析Function

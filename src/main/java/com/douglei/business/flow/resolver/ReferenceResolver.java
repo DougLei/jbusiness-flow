@@ -10,8 +10,7 @@ import com.douglei.business.flow.container.reference.ReferenceContainer;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.method.Method;
 import com.douglei.business.flow.executer.method.Return;
-import com.douglei.business.flow.executer.parameter.Parameter;
-import com.douglei.business.flow.executer.parameter.Scope;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.resolver.action.ActionResolvers;
 import com.douglei.business.flow.resolver.sql.SqlResolvers;
@@ -128,7 +127,7 @@ public class ReferenceResolver {
 		if(method == null) {
 			JSONObject methodJSON = methodMap.get(name);
 			
-			Parameter[] parameters = ParameterResolver.parse(methodJSON.getJSONArray("params"), Scope.LOCAL);
+			DeclaredParameter[] parameters = ParameterResolver.parse(methodJSON.getJSONArray("params"));
 			Action[] actions = parseAction_(methodJSON.getJSONArray("actions"));
 			
 			Return return_ = null;

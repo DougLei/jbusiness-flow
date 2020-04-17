@@ -1,7 +1,7 @@
 package com.douglei.business.flow.executer.sql.component;
 
 import com.douglei.business.flow.executer.ParameterContext;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.select.Select;
 import com.douglei.tools.utils.StringUtil;
@@ -14,7 +14,7 @@ public class Table implements Component{
 	private String alias;
 	private String name;
 	
-	private Parameter parameter;
+	private DeclaredParameter parameter;
 	private Function function;
 	private Select[] selects;
 	
@@ -27,7 +27,7 @@ public class Table implements Component{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public void setParameter(Parameter parameter) {
+	public void setParameter(DeclaredParameter parameter) {
 		this.parameter = parameter;
 	}
 	public void setFunction(Function function) {

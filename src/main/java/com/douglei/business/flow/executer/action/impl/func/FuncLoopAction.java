@@ -5,18 +5,18 @@ import java.util.Collection;
 import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 
 /**
  * 
  * @author DougLei
  */
 public class FuncLoopAction extends Action {
-	private Parameter collection;
-	private Parameter alias;
+	private DeclaredParameter collection;
+	private DeclaredParameter alias;
 	private Action[] actions;
 	
-	public FuncLoopAction(Parameter collection, Parameter alias, Action[] actions) {
+	public FuncLoopAction(DeclaredParameter collection, DeclaredParameter alias, Action[] actions) {
 		this.collection = collection;
 		this.alias = alias;
 		this.actions = actions;
@@ -26,18 +26,29 @@ public class FuncLoopAction extends Action {
 	@SuppressWarnings("unchecked")
 	public Object execute(DBSession session) {
 		Object value = ParameterContext.getValue(collection);
-		if(value != null && value instanceof Collection<?>) {
-			Collection<Object> list = (Collection<Object>)value;
-			if(list.size() > 0) {
-				ParameterContext.addParameter(alias, null);
-				for (Object lv : list) {
-					ParameterContext.updateValue(alias, lv);
-					for (Action action : actions) {
-						action.execute(session);
-					}
+		if(value != null) {
+			if(value instanceof Collection) {
+				Collection<Object> list = (Collection<Object>)value;
+				if(list.size() > 0) {
+					ParameterContext.addParameter(alias, null);
+					for (Object lv : list)
+						executeCore(lv, session);
+				}
+			}else  if(value.getClass().isArray()) {
+				Object[] list = (Object[]) value;
+				if(list.length > 0) {
+					ParameterContext.addParameter(alias, null);
+					for (Object lv : list)
+						executeCore(lv, session);
 				}
 			}
 		}
 		return null;
+	}
+	private void executeCore(Object lv, DBSession session) {
+		ParameterContext.updateValue(alias, lv);
+		for (Action action : actions) {
+			action.execute(session);
+		}
 	}
 }

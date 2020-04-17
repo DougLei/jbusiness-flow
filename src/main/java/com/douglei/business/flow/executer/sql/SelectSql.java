@@ -2,7 +2,7 @@ package com.douglei.business.flow.executer.sql;
 
 import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.DataType;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.component.Component;
 import com.douglei.business.flow.executer.sql.component.select.Select;
 import com.douglei.business.flow.executer.sql.component.select.With;
@@ -17,7 +17,7 @@ public class SelectSql extends Sql {
 	private With[] withs;
 	private Select[] selects;
 	
-	public SelectSql(String name, Parameter[] parameters) {
+	public SelectSql(String name, DeclaredParameter[] parameters) {
 		super(name, parameters);
 	}
 

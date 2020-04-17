@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
-import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.resolver.ParameterResolver;
 import com.douglei.tools.instances.scanner.ClassScanner;
@@ -46,7 +45,7 @@ public class SqlResolvers {
 	public static Sql parse(String name, JSONObject sqlJSON) {
 		return MAP.get(sqlJSON.getString("type")).parse(
 						   name, 
-						   ParameterResolver.parse(sqlJSON.getJSONArray("params"), Scope.LOCAL), 
+						   ParameterResolver.parse(sqlJSON.getJSONArray("params")), 
 						   sqlJSON.getJSONObject("content"));
 	}
 }

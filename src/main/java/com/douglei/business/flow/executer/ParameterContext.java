@@ -3,7 +3,7 @@ package com.douglei.business.flow.executer;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.executer.parameter.ps.ParameterScope;
 import com.douglei.business.flow.executer.parameter.ps.impl.GlobalParameterScope;
@@ -49,7 +49,7 @@ public class ParameterContext {
 	 * @param scope
 	 * @return 返回被清除的参数map
 	 */
-	public static Map<String, Parameter> clear(Scope scope) {
+	public static Map<String, DeclaredParameter> clear(Scope scope) {
 		return PARAMETER_SCOPES.get().get(scope).clear();
 	}
 	
@@ -58,17 +58,17 @@ public class ParameterContext {
 	 * 添加参数
 	 * @param parameter
 	 */
-	public static void addParameter(Parameter parameter) {
+	public static void addParameter(DeclaredParameter parameter) {
 		PARAMETER_SCOPES.get().get(parameter.getScope()).addParameter(parameter);
 	}
 	
 	/**
-	 * 根据配置的参数以及实际值, 添加参数
-	 * @param configParameter
+	 * 根据形参以及实际值, 添加实参
+	 * @param declaredParameter
 	 * @param actualValue
 	 */
-	public static void addParameter(Parameter configParameter, Object actualValue) {
-		PARAMETER_SCOPES.get().get(configParameter.getScope()).addParameter(Parameter.newInstance(configParameter, actualValue));
+	public static void addParameter(DeclaredParameter declaredParameter, Object actualValue) {
+		PARAMETER_SCOPES.get().get(declaredParameter.getScope()).addParameter(declaredParameter.toActualParameter(actualValue));
 	}
 	
 	
@@ -77,7 +77,7 @@ public class ParameterContext {
 	 * @param byParameter
 	 * @return
 	 */
-	public static Parameter getParameter(Parameter byParameter) {
+	public static DeclaredParameter getParameter(DeclaredParameter byParameter) {
 		return PARAMETER_SCOPES.get().get(byParameter.getScope()).getParameter(byParameter.getName());
 	}
 	
@@ -86,7 +86,7 @@ public class ParameterContext {
 	 * @param byParameter
 	 * @return
 	 */
-	public static Object getValue(Parameter byParameter) {
+	public static Object getValue(DeclaredParameter byParameter) {
 		return PARAMETER_SCOPES.get().get(byParameter.getScope()).getValue(byParameter.getName(), byParameter.getOgnlExpression());
 	}
 	
@@ -95,7 +95,7 @@ public class ParameterContext {
 	 * @param parameters
 	 * @return
 	 */
-	public static Object[] getValues(Parameter[] parameters) {
+	public static Object[] getValues(DeclaredParameter[] parameters) {
 		if(parameters.length == 0) {
 			return CollectionUtil.emptyObjectArray();
 		}
@@ -121,7 +121,7 @@ public class ParameterContext {
 	 * @param parameter
 	 * @param newValue
 	 */
-	public static void updateValue(Parameter parameter, Object newValue) {
+	public static void updateValue(DeclaredParameter parameter, Object newValue) {
 		PARAMETER_SCOPES.get().get(parameter.getScope()).updateValue(parameter, newValue);
 	}
 }

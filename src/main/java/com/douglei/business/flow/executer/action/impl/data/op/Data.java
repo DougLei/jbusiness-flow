@@ -7,7 +7,7 @@ import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.func.method.FuncMethodAction;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.tools.utils.CollectionUtil;
 
@@ -17,7 +17,7 @@ import com.douglei.tools.utils.CollectionUtil;
  */
 public class Data {
 	private Object value;
-	private Parameter parameter;
+	private DeclaredParameter parameter;
 	private String format;
 	private DataAction action;
 	private FuncMethodAction method; // FuncMethodAction
@@ -29,7 +29,7 @@ public class Data {
 	public void setValue(Object value) {
 		this.value = value;
 	}
-	public void setParameter(Parameter parameter) {
+	public void setParameter(DeclaredParameter parameter) {
 		this.parameter = parameter;
 	}
 	public void setAction(Action[] actions, boolean resultPick_all, String[] resultPick_names) {
@@ -71,7 +71,7 @@ public class Data {
 			}else {
 				if(names != null) {
 					valueMap = new HashMap<String, Object>(names.length);
-					Parameter tmpParameter = Parameter.newInstance("tmp", Scope.LOCAL);
+					DeclaredParameter tmpParameter = DeclaredParameter.newInstance("tmp", Scope.LOCAL);
 					for (String name : names) {
 						tmpParameter.updateName(name);
 						valueMap.put(name, ParameterContext.getValue(tmpParameter));
@@ -92,7 +92,7 @@ public class Data {
 		if(value != null) {
 			return new DataValue(value).setFormat(format);
 		}else if(parameter != null) {
-			Parameter p = ParameterContext.getParameter(parameter);
+			DeclaredParameter p = ParameterContext.getParameter(parameter);
 			return new DataValue(p.getValue(parameter.getOgnlExpression())).setFormat(format);
 		}else if(action != null) {
 			return action.execute(session, DataValue.NULL_DATA_VALUE);

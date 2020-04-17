@@ -2,7 +2,7 @@ package com.douglei.business.flow.resolver.sql.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.SelectSql;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.component.select.With;
@@ -21,7 +21,7 @@ public class SelectSqlResolver extends SqlResolver{
 	}
 
 	@Override
-	public Sql parse(String name, Parameter[] parameters, JSONObject content) {
+	public Sql parse(String name, DeclaredParameter[] parameters, JSONObject content) {
 		SelectSql sql = new SelectSql(name, parameters);
 		
 		JSONArray array = content.getJSONArray("withs");

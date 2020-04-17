@@ -1,7 +1,7 @@
 package com.douglei.business.flow.executer.sql;
 
 import com.douglei.business.flow.db.DBSession;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.component.Table;
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroups;
 
@@ -15,7 +15,7 @@ public class DeleteSql extends Sql {
 	private Table table;
 	private ConditionGroups whereGroups;
 	
-	public DeleteSql(String name, Parameter[] parameters) {
+	public DeleteSql(String name, DeclaredParameter[] parameters) {
 		super(name, parameters);
 	}
 

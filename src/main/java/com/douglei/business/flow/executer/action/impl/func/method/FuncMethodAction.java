@@ -9,7 +9,7 @@ import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.data.op.DataValue;
 import com.douglei.business.flow.executer.method.Method;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.tools.utils.CollectionUtil;
 
 /**
@@ -18,29 +18,29 @@ import com.douglei.tools.utils.CollectionUtil;
  */
 public class FuncMethodAction extends Action {
 	private Method method;
-	private Parameter[] parameters;
+	private DeclaredParameter[] parameters;
 	private Receive[] receives;
 	private ReceiveAll receiveAll;
 	
-	public FuncMethodAction(Method method, Parameter[] parameters) {
+	public FuncMethodAction(Method method, DeclaredParameter[] parameters) {
 		this.method = method;
 		this.parameters = parameters;
 	}
 
 	@SuppressWarnings("unchecked")
-	private Map<String, Parameter> invokeMethod(DBSession session){
+	private Map<String, DeclaredParameter> invokeMethod(DBSession session){
 		/*
 		 * 进入方法的时候, 获取对应参数的值, 而不是参数实例
 		 * 是不必修改原参数的范围, 因为一旦修改了范围, 在方法执行结束后, 还需要把范围修改回来, 比较复杂
 		 * 
 		 * 至于方法的返回值, 直接返回parameter, 因为可以直接修改其范围, 进入到新的范围, 而且后续不需要再修改回原范围
 		 */
-		return (Map<String, Parameter>)method.invoke(parameters, session);
+		return (Map<String, DeclaredParameter>)method.invoke(parameters, session);
 	}
 	
 	@Override
 	public Object execute(DBSession session) {
-		Map<String, Parameter> returnParameters = invokeMethod(session);
+		Map<String, DeclaredParameter> returnParameters = invokeMethod(session);
 		if(CollectionUtil.unEmpty(returnParameters)) { // 开始接收参数
 			if(receives != null) {
 				for (Receive receive : receives) {
@@ -61,11 +61,11 @@ public class FuncMethodAction extends Action {
 	 * @return
 	 */
 	public DataValue returnExecuteResult(DBSession session, DataValue defaultDataValue) {
-		Map<String, Parameter> returnParameters = invokeMethod(session);
+		Map<String, DeclaredParameter> returnParameters = invokeMethod(session);
 		if(CollectionUtil.unEmpty(returnParameters)) {
 			Map<String, Object> valueMap = null;
 			if(receives != null) {
-				Parameter p;
+				DeclaredParameter p;
 				if(receives.length == 1) {
 					p = returnParameters.get(receives[0].getReturnName());
 					return new DataValue(p.getValue(null), p.getDataType());

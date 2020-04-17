@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.ParameterContext;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.select.Select;
 import com.douglei.business.flow.resolver.action.impl.sql.SqlDefinedParameterContext;
@@ -19,7 +19,7 @@ public class Value implements Component{
 	private String column;
 	
 	private Object value; 
-	private Parameter parameter;
+	private DeclaredParameter parameter;
 	private DataType dataType;
 	private boolean placeholder;
 	private String valuePrefix="";
@@ -43,7 +43,7 @@ public class Value implements Component{
 			this.value = value;
 		}
 	}
-	public void setParameter(Parameter parameter, Boolean placeholder, String valuePrefix, String valueSuffix, String format) {
+	public void setParameter(DeclaredParameter parameter, Boolean placeholder, String valuePrefix, String valueSuffix, String format) {
 		this.parameter = parameter;
 		this.placeholder = placeholder == null?true:placeholder;
 		setValuePrefixAndSuffix(valuePrefix, valueSuffix, SqlDefinedParameterContext.get(parameter.getName()).getDataType());

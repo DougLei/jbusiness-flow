@@ -1,7 +1,7 @@
 package com.douglei.business.flow.executer.sql;
 
 import com.douglei.business.flow.db.DBSession;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.component.Component;
 import com.douglei.business.flow.executer.sql.component.Table;
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroups;
@@ -18,7 +18,7 @@ public class UpdateSql extends Sql {
 	private Set[] sets;
 	private ConditionGroups whereGroups;
 	
-	public UpdateSql(String name, Parameter[] parameters) {
+	public UpdateSql(String name, DeclaredParameter[] parameters) {
 		super(name, parameters);
 	}
 

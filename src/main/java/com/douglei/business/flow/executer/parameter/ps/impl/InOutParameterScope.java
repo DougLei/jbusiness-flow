@@ -1,6 +1,6 @@
 package com.douglei.business.flow.executer.parameter.ps.impl;
 
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.executer.parameter.ps.ParameterScope;
 
@@ -23,7 +23,7 @@ public class InOutParameterScope extends ParameterScope{
 	}
 
 	@Override
-	public void addParameter(Parameter parameter) {
+	public void addParameter(DeclaredParameter parameter) {
 		in.addParameter(parameter);
 		out.addParameter(parameter);
 	}
