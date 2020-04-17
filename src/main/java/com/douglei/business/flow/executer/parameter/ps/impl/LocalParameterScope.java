@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import com.douglei.business.flow.executer.parameter.ActualParameter;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.executer.parameter.ps.ParameterScope;
@@ -14,7 +15,7 @@ import com.douglei.business.flow.executer.parameter.ps.ParameterScope;
  */
 public class LocalParameterScope extends ParameterScope {
 	private boolean stackActivated;
-	private Stack<Map<String, DeclaredParameter>> parameterStack;
+	private Stack<Map<String, ActualParameter>> parameterStack;
 	
 	@Override
 	protected Scope belongScope() {
@@ -26,10 +27,10 @@ public class LocalParameterScope extends ParameterScope {
 		if(!stackActivated) {
 			stackActivated = true;
 			if(parameterStack == null) {
-				parameterStack = new Stack<Map<String,DeclaredParameter>>();
+				parameterStack = new Stack<Map<String,ActualParameter>>();
 			}
 		}
-		parameterStack.push(new HashMap<String, DeclaredParameter>());
+		parameterStack.push(new HashMap<String, ActualParameter>());
 	}
 	
 	@Override

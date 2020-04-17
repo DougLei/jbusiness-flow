@@ -88,13 +88,6 @@ public class BusinessFlow {
 		return version;
 	}
 	public void setInputParameters(DeclaredParameter[] inputParameters) {
-		if(inputParameters.length > 0) {
-			// 如果参数的范围不是输入参数或输入输出参数, 则默认改为输入参数
-			for (DeclaredParameter parameter : inputParameters) {
-				if(parameter.getScope() != Scope.IN && parameter.getScope() != Scope.INOUT)
-					parameter.updateScope(Scope.IN);
-			}
-		}
 		this.inputParameters = inputParameters;
 	}
 	public void setStartEvent(Event startEvent) {

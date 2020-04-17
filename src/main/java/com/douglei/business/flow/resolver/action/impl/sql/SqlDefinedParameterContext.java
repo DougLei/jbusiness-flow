@@ -4,25 +4,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
+import com.douglei.business.flow.executer.parameter.Parameter;
 
 /**
  * sql定义的参数容器, 在后续解析sql的时候会用到该参数
  * @author DougLei
  */
 public class SqlDefinedParameterContext {
-	private static final ThreadLocal<Map<String, DeclaredParameter>> PARAMETERS = new ThreadLocal<Map<String, DeclaredParameter>>();
+	private static final ThreadLocal<Map<String, Parameter>> PARAMETERS = new ThreadLocal<Map<String, Parameter>>();
 
 	/**
 	 * 
-	 * @param definedParameters
+	 * @param parameters
 	 * @return
 	 */
-	public static DeclaredParameter[] set(DeclaredParameter[] definedParameters) {
-		Map<String, DeclaredParameter> map = new HashMap<String, DeclaredParameter>(definedParameters.length);
-		for (DeclaredParameter dp : definedParameters)
-			map.put(dp.getName(), dp);
+	public static Parameter[] set(Parameter[] parameters) {
+		Map<String, Parameter> map = new HashMap<String, Parameter>(parameters.length);
+		for (Parameter p : parameters)
+			map.put(p.getName(), p);
 		PARAMETERS.set(map);
-		return definedParameters;
+		return parameters;
 	}
 	
 	/**

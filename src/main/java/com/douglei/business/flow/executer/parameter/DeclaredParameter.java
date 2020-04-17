@@ -10,12 +10,13 @@ public class DeclaredParameter extends ResultParameter {
 	protected Object defaultValue;
 	protected boolean required;
 	
-	protected DeclaredParameter() {}
 	public DeclaredParameter(String name, Scope scope, DataType dataType, Object defaultValue, boolean required) {
 		super(name, scope, dataType);
-		if(!dataType.matching(defaultValue))
-			throw new IllegalArgumentException("在"+scope.getDescription()+"范围中, 名为"+name+"的参数, 其默认值("+defaultValue+")的数据类型与配置的参数数据类型("+dataType.name()+")不匹配");
-		this.defaultValue = dataType.convert(defaultValue);
+		if(defaultValue != null) {
+			if(!dataType.matching(defaultValue))
+				throw new IllegalArgumentException("在"+scope.getDescription()+"范围中, 名为"+name+"的参数, 其默认值("+defaultValue+")的数据类型与配置的参数数据类型("+dataType.name()+")不匹配");
+			this.defaultValue = dataType.convert(defaultValue);
+		}
 		this.required = required;
 	}
 	

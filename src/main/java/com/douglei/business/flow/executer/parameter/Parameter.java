@@ -1,19 +1,18 @@
 package com.douglei.business.flow.executer.parameter;
 
-import com.douglei.business.flow.executer.DataType;
 import com.douglei.tools.utils.StringUtil;
 
 /**
  * 参数
  * @author DougLei
  */
-public abstract class Parameter {
+public class Parameter {
 	protected String name;
 	protected String ognlExpression; // ognl表达式, 例如name=zhangsan.age, 其中zhangsan为name值, 后面的则是ognl表达式
 	protected Scope scope;
 	
 	protected Parameter() {}
-	public Parameter(String name, Scope scope, DataType dataType) {
+	public Parameter(String name, Scope scope) {
 		if(StringUtil.isEmpty(name))
 			throw new NullPointerException("参数名不能为空");
 		

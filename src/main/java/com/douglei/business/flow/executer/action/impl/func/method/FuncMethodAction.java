@@ -10,6 +10,7 @@ import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.data.op.DataValue;
 import com.douglei.business.flow.executer.method.Method;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
+import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.tools.utils.CollectionUtil;
 
 /**
@@ -18,11 +19,11 @@ import com.douglei.tools.utils.CollectionUtil;
  */
 public class FuncMethodAction extends Action {
 	private Method method;
-	private DeclaredParameter[] parameters;
+	private Parameter[] parameters;
 	private Receive[] receives;
 	private ReceiveAll receiveAll;
 	
-	public FuncMethodAction(Method method, DeclaredParameter[] parameters) {
+	public FuncMethodAction(Method method, Parameter[] parameters) {
 		this.method = method;
 		this.parameters = parameters;
 	}

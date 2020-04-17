@@ -3,7 +3,7 @@ package com.douglei.business.flow.resolver.action.impl.sql;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.sql.SqlAction;
-import com.douglei.business.flow.executer.parameter.DeclaredParameter;
+import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.resolver.ParameterResolver;
 import com.douglei.business.flow.resolver.ReferenceResolver;
@@ -23,7 +23,7 @@ public class SqlActionResolver extends ActionResolver {
 	@Override
 	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
 		JSONObject content = actionJSON.getJSONObject("content");
-		DeclaredParameter[] parameters = SqlDefinedParameterContext.set(ParameterResolver.parse(content.getJSONArray("params")));
+		Parameter[] parameters = SqlDefinedParameterContext.set(ParameterResolver.parseParameters(content.getJSONArray("params")));
 		Sql sql = referenceResolver.parseSql(content.getString("name"));
 		return new SqlAction(sql, parameters, getResultParameter(actionJSON, sql.resultDataType()));
 	}

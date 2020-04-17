@@ -127,7 +127,7 @@ public class ReferenceResolver {
 		if(method == null) {
 			JSONObject methodJSON = methodMap.get(name);
 			
-			DeclaredParameter[] parameters = ParameterResolver.parse(methodJSON.getJSONArray("params"));
+			DeclaredParameter[] parameters = ParameterResolver.parseDeclaredParameters(methodJSON.getJSONArray("params"));
 			Action[] actions = parseAction_(methodJSON.getJSONArray("actions"));
 			
 			Return return_ = null;

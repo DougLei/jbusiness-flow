@@ -3,6 +3,7 @@ package com.douglei.business.flow.executer.action.impl.sql;
 import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
+import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.ResultParameter;
 import com.douglei.business.flow.executer.sql.Sql;
 
@@ -12,9 +13,9 @@ import com.douglei.business.flow.executer.sql.Sql;
  */
 public class SqlAction extends Action {
 	private Sql sql;
-	private DeclaredParameter[] parameters;
+	private Parameter[] parameters;
 	
-	public SqlAction(Sql sql, DeclaredParameter[] parameters, ResultParameter result) {
+	public SqlAction(Sql sql, Parameter[] parameters, ResultParameter result) {
 		this.sql = sql;
 		this.parameters = parameters;
 		super.result = result;
