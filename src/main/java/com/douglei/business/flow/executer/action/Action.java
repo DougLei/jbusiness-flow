@@ -2,14 +2,14 @@ package com.douglei.business.flow.executer.action;
 
 import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.ParameterContext;
-import com.douglei.business.flow.executer.parameter.DeclaredParameter;
+import com.douglei.business.flow.executer.parameter.ResultParameter;
 
 /**
  * 
  * @author DougLei
  */
 public abstract class Action {
-	protected DeclaredParameter result;
+	protected ResultParameter result;
 	
 	/**
 	 * 将结果set到参数map中

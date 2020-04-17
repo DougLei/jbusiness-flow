@@ -7,11 +7,10 @@ import com.douglei.tools.utils.StringUtil;
  * 参数
  * @author DougLei
  */
-public class Parameter {
+public abstract class Parameter {
 	protected String name;
 	protected String ognlExpression; // ognl表达式, 例如name=zhangsan.age, 其中zhangsan为name值, 后面的则是ognl表达式
 	protected Scope scope;
-	protected DataType dataType;
 	
 	protected Parameter() {}
 	public Parameter(String name, Scope scope, DataType dataType) {
@@ -26,34 +25,30 @@ public class Parameter {
 			this.name = name;
 		}
 		this.scope = scope;
-		this.dataType = dataType;
 	}
 	
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
-	public String getOgnlExpression() {
+	public final String getOgnlExpression() {
 		return ognlExpression;
 	}
-	public Scope getScope() {
+	public final Scope getScope() {
 		return scope;
-	}
-	public DataType getDataType() {
-		return dataType;
 	}
 	
 	/**
 	 * 修改参数名
 	 * @param name
 	 */
-	public void updateName(String name) {
+	public final void updateName(String name) {
 		this.name = name;
 	}
 	/**
 	 * 修改参数范围
 	 * @param scope
 	 */
-	public void updateScope(Scope scope) {
+	public final void updateScope(Scope scope) {
 		this.scope = scope;
 	}
 }

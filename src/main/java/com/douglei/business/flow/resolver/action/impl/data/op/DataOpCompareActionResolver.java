@@ -26,7 +26,7 @@ public class DataOpCompareActionResolver extends DataOpResolver{
 		CompareType op = CompareType.toValue(content.getString("op"));
 		Data left = parseData(content.getJSONObject("left"), referenceResolver);
 		Data right = (op == CompareType.BOOL || op == CompareType.NBOOL)?null:parseData(content.getJSONObject("right"), referenceResolver);
-		return new DataOpCompareAction(op, left, right, getResult(actionJSON, DataType.BOOLEAN));
+		return new DataOpCompareAction(op, left, right, getResultParameter(actionJSON, DataType.BOOLEAN));
 	}
 }
 

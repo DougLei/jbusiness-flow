@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.action.Action;
-import com.douglei.business.flow.executer.parameter.DeclaredParameter;
+import com.douglei.business.flow.executer.parameter.ResultParameter;
 import com.douglei.tools.instances.ognl.OgnlHandler;
 
 
@@ -17,7 +17,7 @@ public class DataOpArithmeticAction extends Action {
 	private static final Logger logger = LoggerFactory.getLogger(DataOpArithmeticAction.class);
 	private DataOpArithmetic[] group;
 
-	public DataOpArithmeticAction(DataOpArithmetic[] group, DeclaredParameter result) {
+	public DataOpArithmeticAction(DataOpArithmetic[] group, ResultParameter result) {
 		this.group = group;
 		this.result = result;
 	}

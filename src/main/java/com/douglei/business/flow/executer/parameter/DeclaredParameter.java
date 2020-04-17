@@ -6,7 +6,7 @@ import com.douglei.business.flow.executer.DataType;
  * 声明的参数(形参)
  * @author DougLei
  */
-public class DeclaredParameter extends Parameter {
+public class DeclaredParameter extends ResultParameter {
 	protected Object defaultValue;
 	protected boolean required;
 	

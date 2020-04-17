@@ -8,7 +8,7 @@ import com.douglei.tools.utils.StringUtil;
  * 实参
  * @author DougLei
  */
-public class ActualParameter extends Parameter {
+public class ActualParameter extends ResultParameter {
 	private Object value; // 实参值
 	
 	public ActualParameter(String name, Scope scope, DataType dataType) {

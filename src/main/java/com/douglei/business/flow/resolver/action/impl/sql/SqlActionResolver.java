@@ -25,6 +25,6 @@ public class SqlActionResolver extends ActionResolver {
 		JSONObject content = actionJSON.getJSONObject("content");
 		DeclaredParameter[] parameters = SqlDefinedParameterContext.set(ParameterResolver.parse(content.getJSONArray("params")));
 		Sql sql = referenceResolver.parseSql(content.getString("name"));
-		return new SqlAction(sql, parameters, getResult(actionJSON, sql.resultDataType()));
+		return new SqlAction(sql, parameters, getResultParameter(actionJSON, sql.resultDataType()));
 	}
 }

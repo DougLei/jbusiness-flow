@@ -3,9 +3,10 @@ package com.douglei.business.flow.resolver.action;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.action.Action;
-import com.douglei.business.flow.executer.parameter.Parameter;
-import com.douglei.business.flow.resolver.ParameterResolver;
+import com.douglei.business.flow.executer.parameter.ResultParameter;
+import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.resolver.ReferenceResolver;
+import com.douglei.tools.utils.StringUtil;
 
 /**
  * 
@@ -30,15 +31,19 @@ public abstract class ActionResolver {
 	/**
 	 * 获取配置的result
 	 * @param actionJSON
-	 * @param defaultDataType 强制指定数据类型, 如果传入null, 则使用配置的类型
+	 * @param assignDataType 指定的数据类型, 如果传入null, 则使用配置的类型
 	 * @return
 	 */
-	protected final Parameter getResult(JSONObject actionJSON, DataType forceDataType) {
+	protected final ResultParameter getResultParameter(JSONObject actionJSON, DataType assignDataType) {
 		JSONObject result = actionJSON.getJSONObject("result");
 		if(result == null)
 			return null;
-		if(forceDataType != null)
-			result.put("dataType", forceDataType.name());
-		return ParameterResolver.parse(result);
+		
+		DataType dataType = assignDataType;
+		if(dataType == null) {
+			String dt = result.getString("dataType");
+			dataType = StringUtil.isEmpty(dt)?null:DataType.toValue(dt);
+		}
+		return new ResultParameter(result.getString("name"), Scope.toValue(result.getByteValue("scope")), dataType);
 	}
 }

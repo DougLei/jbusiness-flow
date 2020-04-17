@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.ResultParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.tools.utils.StringUtil;
 
@@ -14,20 +15,6 @@ import com.douglei.tools.utils.StringUtil;
  */
 public class ParameterResolver {
 
-	/**
-	 * 解析参数
-	 * @param json
-	 * @return
-	 */
-	public static Parameter parse(JSONObject json) {
-		if(json == null)
-			return null;
-		
-		String dataTypeString = json.getString("dataType");
-		DataType dataType = StringUtil.isEmpty(dataTypeString)?null:DataType.toValue(dataTypeString);
-		return new Parameter(json.getString("name"), Scope.toValue(json.getByteValue("scope")), dataType);
-	}
-	
 	/**
 	 * 解析参数
 	 * @param array
