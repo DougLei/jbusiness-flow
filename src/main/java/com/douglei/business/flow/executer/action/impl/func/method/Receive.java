@@ -11,7 +11,15 @@ public class Receive {
 	private ResultParameter resultParameter;
 	
 	public Receive(String returnName, ResultParameter resultParameter) {
-		this.returnName = returnName==null?resultParameter.getName(): returnName;
+		if(returnName == null && resultParameter.getName() == null)
+			throw new NullPointerException("配置调用方法的action中, receives里的returnName和name, 至少配置一个");
+		
+		if(returnName == null)
+			returnName = resultParameter.getName();
+		this.returnName = returnName;
+		
+		if(resultParameter.getName() == null)
+			resultParameter.updateName(returnName);
 		this.resultParameter = resultParameter;
 	}
 
