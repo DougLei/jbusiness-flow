@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.douglei.business.flow.executer.parameter.ActualParameter;
-import com.douglei.business.flow.executer.parameter.DeclaredParameter;
+import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 
 /**
@@ -30,29 +30,19 @@ public abstract class ParameterScope {
 	 * 清空当前范围的参数
 	 * @return
 	 */
-	public Map<String, DeclaredParameter> clear(){
+	public Map<String, ActualParameter> clear(){
 		parameterMap.clear();
 		return null;
 	}
 	
-	// 给指定的参数map中添加实参
-	protected void addParamter(ActualParameter parameter, Map<String, ActualParameter> pm) {
-		ActualParameter oldParameter = pm.get(parameter.getName());
-		if(oldParameter == null) {
-			pm.put(parameter.getName(), parameter);
-		}else if(oldParameter.getDataType() != parameter.getDataType()){
-			throw new ParameterDataTypeUnmatchingException(belongScope(), oldParameter, parameter);
-		}else {
-			oldParameter.updateValue(parameter.getValue(null));
-		}
-	}
-	
 	/**
-	 * 添加实参
+	 * 根据配置的参数(ResultParameter或DeclaredParameter)以及实际值, 添加实参
 	 * @param parameter
+	 * @param value
 	 */
-	public void addParameter(ActualParameter parameter) {
-		addParamter(parameter, parameterMap);
+	public void addParameter(Parameter parameter, Object value) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/**
@@ -83,22 +73,6 @@ public abstract class ParameterScope {
 		return getValue(parameterName, ognlExpression, parameterMap);
 	}
 	
-	// 更新指定参数map中, 指定参数的值
-	protected void updateValue(DeclaredParameter parameter, Object newValue, Map<String, DeclaredParameter> pm) {
-		DeclaredParameter p = pm.get(parameter.getName());
-		if(p != null) {
-			p.updateValue(newValue);
-		}
-	}
-	
-	/**
-	 * 更新本范围内, 指定参数的值
-	 * @param parameter
-	 * @param newValue
-	 */
-	public void updateValue(DeclaredParameter parameter, Object newValue) {
-		updateValue(parameter, newValue, parameterMap);
-	}
 	
 	// 判断names中是否存在name
 	private boolean exists(String name, String[] names) {
@@ -113,13 +87,13 @@ public abstract class ParameterScope {
 	}
 	
 	// 从指定的参数map中, 获取值map
-	protected Map<String, Object> getValueMap(Map<String, DeclaredParameter> pm, String[] excludeNames){
+	protected Map<String, Object> getValueMap(Map<String, ActualParameter> pm, String[] excludeNames){
 		if(pm.isEmpty()) {
 			return Collections.emptyMap();
 		}
 		
 		Map<String, Object> valueMap = new HashMap<String, Object>(pm.size() - excludeNames.length);
-		for(DeclaredParameter entry : pm.values()) {
+		for(ActualParameter entry : pm.values()) {
 			if(!exists(entry.getName(), excludeNames)) {
 				valueMap.put(entry.getName(), entry.getValue(null));
 			}

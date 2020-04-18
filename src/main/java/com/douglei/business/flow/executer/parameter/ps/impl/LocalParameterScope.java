@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Stack;
 
 import com.douglei.business.flow.executer.parameter.ActualParameter;
-import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.executer.parameter.ps.ParameterScope;
 
@@ -34,23 +33,14 @@ public class LocalParameterScope extends ParameterScope {
 	}
 	
 	@Override
-	public Map<String, DeclaredParameter> clear() {
+	public Map<String, ActualParameter> clear() {
 		if(stackActivated) {
-			Map<String, DeclaredParameter> pm = parameterStack.pop();
+			Map<String, ActualParameter> pm = parameterStack.pop();
 			if(parameterStack.isEmpty())
 				stackActivated = false;
 			return pm;
 		}
 		return super.clear();
-	}
-	
-	@Override
-	public void addParameter(DeclaredParameter parameter) {
-		if(stackActivated) {
-			addParamter(parameter, parameterStack.peek());
-			return;
-		}
-		super.addParameter(parameter);
 	}
 	
 	@Override
@@ -69,15 +59,6 @@ public class LocalParameterScope extends ParameterScope {
 		return super.getValue(parameterName, ognlExpression);
 	}
 	
-	@Override
-	public void updateValue(DeclaredParameter parameter, Object newValue) {
-		if(stackActivated) {
-			updateValue(parameter, newValue, parameterStack.peek());
-			return;
-		}
-		super.updateValue(parameter, newValue);
-	}
-
 	@Override
 	public Map<String, Object> getValueMap(String... excludeNames) {
 		if(stackActivated) {

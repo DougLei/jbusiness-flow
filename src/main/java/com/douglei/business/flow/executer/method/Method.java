@@ -5,6 +5,7 @@ import java.util.Map;
 import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
+import com.douglei.business.flow.executer.parameter.ActualParameter;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.Scope;
@@ -60,7 +61,7 @@ public class Method {
 		for (Action action : actions)
 			action.execute(session);
 		
-		Map<String, DeclaredParameter> parameterMap = ParameterContext.clear(Scope.LOCAL);
+		Map<String, ActualParameter> parameterMap = ParameterContext.clear(Scope.LOCAL);
 		if(CollectionUtil.unEmpty(parameterMap) && return_ != null)
 			return return_.filter(parameterMap);
 		return null;

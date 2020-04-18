@@ -51,26 +51,17 @@ public class ParameterContext {
 	 * @param scope
 	 * @return 返回被清除的参数map
 	 */
-	public static Map<String, DeclaredParameter> clear(Scope scope) {
+	public static Map<String, ActualParameter> clear(Scope scope) {
 		return PARAMETER_SCOPES.get().get(scope).clear();
 	}
 	
-	
 	/**
-	 * 添加参数
+	 * 根据配置的参数(ResultParameter或DeclaredParameter)以及实际值, 添加实参
 	 * @param parameter
+	 * @param value
 	 */
-	public static void addParameter(DeclaredParameter parameter) {
-		PARAMETER_SCOPES.get().get(parameter.getScope()).addParameter(parameter);
-	}
-	
-	/**
-	 * 根据形参以及实际值, 添加实参
-	 * @param declaredParameter
-	 * @param actualValue
-	 */
-	public static void addParameter(DeclaredParameter declaredParameter, Object actualValue) {
-		PARAMETER_SCOPES.get().get(declaredParameter.getScope()).addParameter(declaredParameter.toActualParameter(actualValue));
+	public static void addParameter(Parameter parameter, Object value) {
+		PARAMETER_SCOPES.get().get(parameter.getScope()).addParameter(parameter, value);
 	}
 	
 	
