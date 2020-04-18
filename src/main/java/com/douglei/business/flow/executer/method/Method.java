@@ -6,6 +6,7 @@ import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
+import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.tools.utils.CollectionUtil;
 
@@ -39,12 +40,12 @@ public class Method {
 	/**
 	 * 调用前的预处理
 	 * 主要是对参数的设置, 以及开启本地参数的堆栈
-	 * @param invokerDefinedParameters
+	 * @param parameters
 	 */
-	private void invokePre(DeclaredParameter[] invokerDefinedParameters) {
+	private void invokePre(Parameter[] parameters) {
 		ParameterContext.activateStack(Scope.LOCAL);
 		if(parameters != null) {
-			Object[] values = ParameterContext.getValues(invokerDefinedParameters);
+			Object[] values = ParameterContext.getValues(parameters);
 			for (int i = 0; i < parameters.length; i++)
 				ParameterContext.addParameter(parameters[i], values[i]);
 		}
@@ -72,8 +73,8 @@ public class Method {
 	 * @param session
 	 * @return
 	 */
-	public Object invoke(DeclaredParameter[] invokerDefinedParameters, DBSession session) {
-		invokePre(invokerDefinedParameters);
+	public Object invoke(Parameter[] parameters, DBSession session) {
+		invokePre(parameters);
 		return invokeCore(session);
 	}
 	

@@ -90,7 +90,10 @@ public class ParameterContext {
 	 * @return
 	 */
 	public static Object getValue(Parameter parameter) {
-		return PARAMETER_SCOPES.get().get(parameter.getScope()).getValue(parameter.getName(), parameter.getOgnlExpression());
+		Object value = PARAMETER_SCOPES.get().get(parameter.getScope()).getValue(parameter.getName(), parameter.getOgnlExpression());
+		if(value == null)
+			return parameter.getDefaultValue();
+		return value;
 	}
 	
 	/**
@@ -117,14 +120,5 @@ public class ParameterContext {
 	 */
 	public static Map<String, Object> getValueMap(Scope scope, String... excludeNames) {
 		return PARAMETER_SCOPES.get().get(scope).getValueMap(excludeNames);
-	}
-	
-	/**
-	 * 根据参数, 修改对应的值
-	 * @param parameter
-	 * @param newValue
-	 */
-	public static void updateValue(DeclaredParameter parameter, Object newValue) {
-		PARAMETER_SCOPES.get().get(parameter.getScope()).updateValue(parameter, newValue);
 	}
 }

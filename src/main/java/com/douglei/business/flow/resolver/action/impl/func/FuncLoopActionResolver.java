@@ -27,11 +27,12 @@ public class FuncLoopActionResolver extends ActionResolver {
 		
 		Parameter collection = ParameterResolver.parseParameter(content);
 		
-		DeclaredParameter alias = ParameterResolver.parseDeclaredParameter(content.getJSONObject("alias"));
+		JSONObject aliasJSON = content.getJSONObject("alias");
+		DeclaredParameter alias = ParameterResolver.parseDeclaredParameter(aliasJSON);
 		if(alias.getScope() != Scope.LOCAL)
 			alias.updateScope(Scope.LOCAL);
 		
 		Action[] actions = referenceResolver.parseAction(content.get("actions"));
-		return new FuncLoopAction(collection, alias, actions);
+		return new FuncLoopAction(collection, alias, ParameterResolver.parseParameter(aliasJSON), actions);
 	}
 }

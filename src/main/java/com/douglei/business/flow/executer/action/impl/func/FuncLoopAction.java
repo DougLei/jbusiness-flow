@@ -15,11 +15,13 @@ import com.douglei.business.flow.executer.parameter.Parameter;
 public class FuncLoopAction extends Action {
 	private Parameter collection;
 	private DeclaredParameter alias;
+	private Parameter aliasParameter;
 	private Action[] actions;
 	
-	public FuncLoopAction(Parameter collection, DeclaredParameter alias, Action[] actions) {
+	public FuncLoopAction(Parameter collection, DeclaredParameter alias, Parameter aliasParameter, Action[] actions) {
 		this.collection = collection;
 		this.alias = alias;
+		this.aliasParameter = aliasParameter;
 		this.actions = actions;
 	}
 
@@ -47,7 +49,7 @@ public class FuncLoopAction extends Action {
 		return null;
 	}
 	private void executeCore(Object lv, DBSession session) {
-		ParameterContext.updateValue(alias, lv);
+		ParameterContext.getParameter(aliasParameter).updateValue(lv);
 		for (Action action : actions) {
 			action.execute(session);
 		}
