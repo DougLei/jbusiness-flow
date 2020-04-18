@@ -45,10 +45,10 @@ public class Method {
 	 */
 	private void invokePre(Parameter[] parameters) {
 		ParameterContext.activateStack(Scope.LOCAL);
-		if(parameters != null) {
+		if(this.parameters.length > 0) {
 			Object[] values = ParameterContext.getValues(parameters);
-			for (int i = 0; i < parameters.length; i++)
-				ParameterContext.addParameter(parameters[i], values[i]);
+			for (int i = 0; i < this.parameters.length; i++)
+				ParameterContext.addParameter(this.parameters[i], values[i]);
 		}
 	}
 	

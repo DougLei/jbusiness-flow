@@ -62,8 +62,9 @@ public abstract class ParameterScope {
 			if(oldAP != null)
 				throw new ParameterOPException("名为"+parameter.getName()+"的参数已经存在, 不能重复定义");
 			pm.put(parameter.getName(), ((DeclaredParameter)parameter).toActualParameter(value));
+		}else {
+			throw new IllegalArgumentException("添加实参时, 传入的参数类型("+parameter.getClass().getName()+")错误");
 		}
-		throw new IllegalArgumentException("添加实参时, 传入的参数类型("+parameter.getClass().getName()+")错误");
 	}
 	
 	/**

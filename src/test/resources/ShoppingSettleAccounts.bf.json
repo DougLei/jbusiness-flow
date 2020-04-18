@@ -56,7 +56,8 @@
 				"name": "products",
 				"scope": 4,
 				"alias": {
-					"name":"product"
+					"name":"product",
+					"dataType":"object"
 				},
 				"actions": [{
 					"type": "func_switch",
@@ -126,8 +127,7 @@
 					}],
 					"result": {
 						"name": "XiShuLeiProductTotalPrice",
-						"scope": 5,
-						"dataType": "double"
+						"scope": 5
 					}
 				}]
 			}]
@@ -143,8 +143,7 @@
 			}],
 			"result": {
 				"name": "totalPrice",
-				"scope": 3,
-				"dataType": "double"
+				"scope": 3
 			}
 		},{
 			"type": "param_op_declare",
