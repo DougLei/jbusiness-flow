@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.parameter.ActualParameter;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Parameter;
@@ -53,12 +54,9 @@ public abstract class ParameterScope {
 			if(oldAP == null) { // 不存在, 则添加
 				pm.put(parameter.getName(), rp.toActualParameter(value));
 			}else { 
-				
-				// 这两个的数据类型是否相同，可能出现自动拆箱和装箱的操作
-				
-				
-				
-				
+				if(rp.getDataType() != null)
+					oldAP.updateDataType(compareValueScope(rp.getDataType(), oldAP.getDataType()));
+				oldAP.updateValue(value);
 			}
 		}else if(parameter instanceof DeclaredParameter) {
 			if(oldAP != null)
@@ -68,6 +66,24 @@ public abstract class ParameterScope {
 		throw new IllegalArgumentException("添加实参时, 传入的参数类型("+parameter.getClass().getName()+")错误");
 	}
 	
+	/**
+	 * d1和d2进行值范围比较, 返回值范围更大的DataType
+	 * @param d1
+	 * @param d2
+	 * @return
+	 */
+	private DataType compareValueScope(DataType d1, DataType d2) {
+		if(d1 == d2)
+			return d1;
+		if(d1.noValueScope() || d2.noValueScope())
+			throw new ParameterOPException("数据类型" + d1.name() + "和"+d2.name()+", 没有值范围的可比性, 其值不可相互转换");
+		if(d1.getValueScope() > d2.getValueScope()) {
+			return d1;
+		}else {
+			return d2;
+		}
+	}
+
 	/**
 	 * 根据指定的参数名, 获取对应实参实例
 	 * @param parameterName

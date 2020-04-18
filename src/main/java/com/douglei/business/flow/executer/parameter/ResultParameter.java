@@ -21,6 +21,14 @@ public class ResultParameter extends Parameter {
 	}
 	
 	/**
+	 * 修改数据类型
+	 * @param dataType
+	 */
+	public void updateDataType(DataType dataType) {
+		this.dataType = dataType;
+	}
+	
+	/**
 	 * 根据value, 转换为实参
 	 * @param value
 	 * @return

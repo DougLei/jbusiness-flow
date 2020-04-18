@@ -14,7 +14,7 @@ import com.douglei.tools.utils.datatype.dateformat.DateFormatUtil;
  * @author DougLei
  */
 public enum DataType {
-	DATE(){
+	DATE(-1){
 		@Override
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
@@ -38,7 +38,7 @@ public enum DataType {
 			return value instanceof Date;
 		}
 	},
-	INTEGER(0){
+	INTEGER(1, 0){
 		@Override
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
@@ -71,7 +71,7 @@ public enum DataType {
 			return true;
 		}
 	},
-	DOUBLE(0.0){
+	DOUBLE(2, 0.0){
 		@Override
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
@@ -107,7 +107,7 @@ public enum DataType {
 			return true;
 		}
 	},
-	BOOLEAN(false){
+	BOOLEAN(-1, false){
 		@Override
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
@@ -131,7 +131,7 @@ public enum DataType {
 			return value instanceof Boolean || value.getClass() == boolean.class;
 		}
 	},
-	STRING(){
+	STRING(3){
 		@Override
 		public Object convert(Object value) {
 			if(value == null)
@@ -146,13 +146,13 @@ public enum DataType {
 			return value instanceof String || value instanceof Character || value.getClass() == char.class;
 		}
 	},
-	LIST(){
+	LIST(-1){
 		@Override
 		protected boolean isInstance(Object value) {
 			return value instanceof Collection || value.getClass().isArray();
 		}
 	},
-	OBJECT(){
+	OBJECT(4){
 		@Override
 		public boolean matching(Object value) {
 			return true;
@@ -164,14 +164,35 @@ public enum DataType {
 		}
 	};
 	
+	private byte valueScope; // 值范围, 其值越大, 包含的值范围就越大, -1表示没有值范围的概念
 	private Object defaultValue; // 默认值
-	private DataType() {}
-	private DataType(Object defaultValue) {
+	private DataType(int valueScope) {
+		this.valueScope = (byte)valueScope;
+	}
+	private DataType(int valueScope, Object defaultValue) {
+		this(valueScope);
 		this.defaultValue = defaultValue;
 	}
 	
+	public byte getValueScope() {
+		return valueScope;
+	}
 	public Object defaultValue() {
 		return defaultValue;
+	}
+	/**
+	 * 不存在值范围(的概念)
+	 * @return
+	 */
+	public boolean noValueScope() {
+		return valueScope == -1;
+	}
+	/**
+	 * 是否是数字类型
+	 * @return
+	 */
+	public boolean isNumber() {
+		return false;
 	}
 
 	/**
@@ -233,13 +254,5 @@ public enum DataType {
 	 */
 	public Object convert(Object value) {
 		return value;
-	}
-	
-	/**
-	 * 是否是数字类型
-	 * @return
-	 */
-	public boolean isNumber() {
-		return false;
 	}
 }
