@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Stack;
 
 import com.douglei.business.flow.executer.parameter.ActualParameter;
+import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.executer.parameter.ps.ParameterScope;
 
@@ -43,6 +44,15 @@ public class LocalParameterScope extends ParameterScope {
 		return super.clear();
 	}
 	
+	@Override
+	public void addParameter(Parameter parameter, Object value) {
+		if(stackActivated) {
+			addParameter(parameter, value, parameterStack.peek());
+		}else {
+			super.addParameter(parameter, value);
+		}
+	}
+
 	@Override
 	public ActualParameter getParameter(String parameterName) {
 		if(stackActivated) {

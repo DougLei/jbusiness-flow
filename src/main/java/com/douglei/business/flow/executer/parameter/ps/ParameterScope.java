@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.douglei.business.flow.executer.parameter.ActualParameter;
+import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.ResultParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 
 /**
@@ -41,8 +43,15 @@ public abstract class ParameterScope {
 	 * @param value
 	 */
 	public void addParameter(Parameter parameter, Object value) {
-		// TODO Auto-generated method stub
-		
+		addParameter(parameter, value, parameterMap);
+	}
+	protected void addParameter(Parameter parameter, Object value, Map<String, ActualParameter> pm) {
+		if(parameter instanceof ResultParameter) {
+			
+		}else if(parameter instanceof DeclaredParameter) {
+			
+		}
+		throw new IllegalArgumentException("添加实参时, 传入的参数类型("+parameter.getClass().getName()+")错误");
 	}
 	
 	/**
@@ -54,15 +63,6 @@ public abstract class ParameterScope {
 		return parameterMap.get(parameterName);
 	}
 	
-	// 从指定的参数map中获取指定name和ognl表达式的参数值
-	protected Object getValue(String parameterName, String ognlExpression, Map<String, ActualParameter> pm) {
-		ActualParameter p = pm.get(parameterName);
-		if(p == null) {
-			return null;
-		}
-		return p.getValue(ognlExpression);
-	}
-	
 	/**
 	 * 获取指定name和ognl表达式的参数value值
 	 * @param parameterName
@@ -72,21 +72,22 @@ public abstract class ParameterScope {
 	public Object getValue(String parameterName, String ognlExpression) {
 		return getValue(parameterName, ognlExpression, parameterMap);
 	}
-	
-	
-	// 判断names中是否存在name
-	private boolean exists(String name, String[] names) {
-		if(names.length > 0) {
-			for (String name_ : names) {
-				if(name_.equals(name)) {
-					return true;
-				}
-			}
+	protected Object getValue(String parameterName, String ognlExpression, Map<String, ActualParameter> pm) {
+		ActualParameter p = pm.get(parameterName);
+		if(p == null) {
+			return null;
 		}
-		return false;
+		return p.getValue(ognlExpression);
 	}
 	
-	// 从指定的参数map中, 获取值map
+	/**
+	 * 获取本范围内的值map
+	 * @param excludeNames 排除这些名字不获取
+	 * @return
+	 */
+	public Map<String, Object> getValueMap(String... excludeNames) {
+		return getValueMap(parameterMap, excludeNames);
+	}
 	protected Map<String, Object> getValueMap(Map<String, ActualParameter> pm, String[] excludeNames){
 		if(pm.isEmpty()) {
 			return Collections.emptyMap();
@@ -100,13 +101,15 @@ public abstract class ParameterScope {
 		}
 		return valueMap;
 	}
-	
-	/**
-	 * 获取本范围内的值map
-	 * @param excludeNames 排除这些名字不获取
-	 * @return
-	 */
-	public Map<String, Object> getValueMap(String... excludeNames) {
-		return getValueMap(parameterMap, excludeNames);
+	// 判断names中是否存在name
+	private boolean exists(String name, String[] names) {
+		if(names.length > 0) {
+			for (String name_ : names) {
+				if(name_.equals(name)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }
