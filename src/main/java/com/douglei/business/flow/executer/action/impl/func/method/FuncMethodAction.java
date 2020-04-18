@@ -46,11 +46,11 @@ public class FuncMethodAction extends Action {
 		if(CollectionUtil.unEmpty(returnParameters)) { // 开始接收参数
 			if(receives != null) {
 				for (Receive receive : receives) {
-					ParameterContext.addParameter(receive.updateParameter(returnParameters.get(receive.getReturnName())));
+					ParameterContext.addParameter(receive.getResultParameter(), returnParameters.get(receive.getReturnName()).getValue(null));
 				}
 			}else if(receiveAll != null) {
 				Map<String, Object> returnValues = receiveAll.excludeValues(returnParameters);
-				ParameterContext.addParameter(receiveAll.getParameter(), returnValues.isEmpty()?null:returnValues);
+				ParameterContext.addParameter(receiveAll.getResultParameter(), returnValues.isEmpty()?null:returnValues);
 			}
 		}
 		return null; // 这里就是返回null, 将返回的参数都合并到当前业务流的参数范围中
@@ -83,7 +83,7 @@ public class FuncMethodAction extends Action {
 				valueMap = new HashMap<String, Object>(2);
 				Map<String, Object> returnValues = receiveAll.excludeValues(returnParameters);
 				if(!returnValues.isEmpty()) {
-					valueMap.put(receiveAll.getParameter().getName(), returnValues);
+					valueMap.put(receiveAll.getResultParameter().getName(), returnValues);
 					return new DataValue(valueMap, DataType.OBJECT);
 				}
 			}

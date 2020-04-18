@@ -40,7 +40,7 @@ public class ReceiveAll {
 		return values;
 	}
 
-	public ResultParameter getParameter() {
+	public ResultParameter getResultParameter() {
 		return resultParameter;
 	}
 }

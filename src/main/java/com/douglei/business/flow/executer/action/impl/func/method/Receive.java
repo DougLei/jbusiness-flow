@@ -1,9 +1,6 @@
 package com.douglei.business.flow.executer.action.impl.func.method;
 
-import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.ResultParameter;
-import com.douglei.business.flow.executer.parameter.Scope;
-import com.douglei.tools.utils.StringUtil;
 
 /**
  * 
@@ -14,19 +11,14 @@ public class Receive {
 	private ResultParameter resultParameter;
 	
 	public Receive(String returnName, ResultParameter resultParameter) {
-		this.returnName = returnName;
+		this.returnName = returnName==null?resultParameter.getName(): returnName;
 		this.resultParameter = resultParameter;
 	}
 
 	public String getReturnName() {
 		return returnName;
 	}
-
-	public DeclaredParameter updateParameter(DeclaredParameter parameter) {
-		if(returnName != parameterName) {
-			parameter.updateName(parameterName);
-		}
-		parameter.updateScope(parameterScope);
-		return parameter;
+	public ResultParameter getResultParameter() {
+		return resultParameter;
 	}
 }
