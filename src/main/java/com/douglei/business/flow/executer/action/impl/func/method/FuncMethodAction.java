@@ -3,6 +3,9 @@ package com.douglei.business.flow.executer.action.impl.func.method;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.ParameterContext;
@@ -18,6 +21,7 @@ import com.douglei.tools.utils.CollectionUtil;
  * @author DougLei
  */
 public class FuncMethodAction extends Action {
+	private static final Logger logger = LoggerFactory.getLogger(FuncMethodAction.class);
 	private Method method;
 	private Parameter[] parameters;
 	private Receive[] receives;
@@ -41,6 +45,8 @@ public class FuncMethodAction extends Action {
 	
 	@Override
 	public Object execute(DBSession session) {
+		if(logger.isDebugEnabled())
+			logger.debug("执行[{}]", getClass().getName());
 		Map<String, ActualParameter> returnParameters = invokeMethod(session);
 		if(CollectionUtil.unEmpty(returnParameters)) { // 开始接收参数
 			if(receives != null) {

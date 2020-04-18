@@ -1,5 +1,8 @@
 package com.douglei.business.flow.executer.action.impl.func;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.condition.ConditionValidator;
@@ -9,6 +12,7 @@ import com.douglei.business.flow.executer.condition.ConditionValidator;
  * @author DougLei
  */
 public class FuncSwitchAction extends Action {
+	private static final Logger logger = LoggerFactory.getLogger(FuncSwitchAction.class);
 	private SwitchGroup[] groups;
 	
 	public FuncSwitchAction(int size) {
@@ -20,6 +24,8 @@ public class FuncSwitchAction extends Action {
 
 	@Override
 	public Object execute(DBSession session) {
+		if(logger.isDebugEnabled())
+			logger.debug("执行[{}]", getClass().getName());
 		for(SwitchGroup switch_ : groups) {
 			if(switch_.validate(session)) {
 				return switch_.execute(session);

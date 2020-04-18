@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.Sql;
@@ -20,6 +23,7 @@ import com.douglei.tools.utils.reflect.ValidationUtil;
  * @author DougLei
  */
 public class SqlResolvers {
+	private static final Logger logger = LoggerFactory.getLogger(SqlResolvers.class);
 	private static final Map<String, SqlResolver> MAP = new HashMap<String, SqlResolver>(8);
 	static {
 		ClassScanner cs = new ClassScanner();
@@ -46,6 +50,9 @@ public class SqlResolvers {
 	 */
 	public static Sql parse(String name, JSONObject sqlJSON) {
 		DeclaredParameter[] parameters = SqlDefinedParameterContext.set(ParameterResolver.parseDeclaredParameters(sqlJSON.getJSONArray("params")));
-		return MAP.get(sqlJSON.getString("type").toUpperCase()).parse(name, parameters, sqlJSON.getJSONObject("content"));
+		SqlResolver resolver = MAP.get(sqlJSON.getString("type").toUpperCase());
+		if(logger.isDebugEnabled())
+			logger.debug("使用[{}]解析器解析sql", resolver.getClass().getName());
+		return resolver.parse(name, parameters, sqlJSON.getJSONObject("content"));
 	}
 }

@@ -1,5 +1,8 @@
 package com.douglei.business.flow.executer.action.impl.param.op;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
@@ -11,6 +14,7 @@ import com.douglei.business.flow.executer.parameter.Parameter;
  * @author DougLei
  */
 public class ParamOpDeclareAction extends Action{
+	private static final Logger logger = LoggerFactory.getLogger(ParamOpDeclareAction.class);
 	private ParamDeclare[] declares;
 	
 	public ParamOpDeclareAction(byte size) {
@@ -26,6 +30,8 @@ public class ParamOpDeclareAction extends Action{
 
 	@Override
 	public Object execute(DBSession session) {
+		if(logger.isDebugEnabled())
+			logger.debug("执行[{}]", getClass().getName());
 		for (ParamDeclare paramDeclare : declares)
 			ParameterContext.addParameter(paramDeclare.getDeclareParameter(), paramDeclare.getActualValue());
 		return null;

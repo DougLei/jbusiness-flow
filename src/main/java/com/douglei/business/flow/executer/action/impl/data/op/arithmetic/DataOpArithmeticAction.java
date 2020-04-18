@@ -24,6 +24,8 @@ public class DataOpArithmeticAction extends Action {
 	
 	@Override
 	public Object execute(DBSession session) {
+		if(logger.isDebugEnabled())
+			logger.debug("执行[{}]", getClass().getName());
 		StringBuilder formula = new StringBuilder(40);
 		ArithmeticUtil.append(formula, group, session);
 		logger.debug("获取的运算表达式为: {}", formula);

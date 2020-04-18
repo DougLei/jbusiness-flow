@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.resolver.ReferenceResolver;
@@ -18,6 +21,7 @@ import com.douglei.tools.utils.reflect.ValidationUtil;
  * @author DougLei
  */
 public class ActionResolvers {
+	private static final Logger logger = LoggerFactory.getLogger(ActionResolvers.class);
 	private static final Map<String, ActionResolver> MAP = new HashMap<String, ActionResolver>(32);
 	static {
 		ClassScanner cs = new ClassScanner();
@@ -43,7 +47,10 @@ public class ActionResolvers {
 	 * @return
 	 */
 	public static Action parse(JSONObject action, ReferenceResolver referenceResolver) {
-		return MAP.get(action.getString("type").toUpperCase()).parse(action, referenceResolver);
+		ActionResolver resolver = MAP.get(action.getString("type").toUpperCase());
+		if(logger.isDebugEnabled())
+			logger.debug("使用[{}]解析器解析action", resolver.getClass().getName());
+		return resolver.parse(action, referenceResolver);
 	}
 	
 	/**
@@ -52,6 +59,9 @@ public class ActionResolvers {
 	 * @return
 	 */
 	public static ActionResolver getActionResolver(String type) {
-		return MAP.get(type.toUpperCase());
+		ActionResolver resolver = MAP.get(type.toUpperCase());
+		if(logger.isDebugEnabled())
+			logger.debug("使用[{}]解析器解析action", resolver.getClass().getName());
+		return resolver;
 	}
 }

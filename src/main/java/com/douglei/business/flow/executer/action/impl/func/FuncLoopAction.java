@@ -2,6 +2,9 @@ package com.douglei.business.flow.executer.action.impl.func;
 
 import java.util.Collection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
@@ -13,6 +16,7 @@ import com.douglei.business.flow.executer.parameter.Parameter;
  * @author DougLei
  */
 public class FuncLoopAction extends Action {
+	private static final Logger logger = LoggerFactory.getLogger(FuncLoopAction.class);
 	private Parameter collection;
 	private DeclaredParameter alias;
 	private Parameter aliasParameter;
@@ -28,6 +32,8 @@ public class FuncLoopAction extends Action {
 	@Override
 	@SuppressWarnings("unchecked")
 	public Object execute(DBSession session) {
+		if(logger.isDebugEnabled())
+			logger.debug("执行[{}]", getClass().getName());
 		Object value = ParameterContext.getValue(collection);
 		if(value != null) {
 			if(value instanceof Collection) {
