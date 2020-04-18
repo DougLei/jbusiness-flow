@@ -19,4 +19,17 @@ public class ResultParameter extends Parameter {
 	public final DataType getDataType() {
 		return dataType;
 	}
+	
+	/**
+	 * 根据value, 转换为实参
+	 * @param value
+	 * @return
+	 */
+	public ActualParameter toActualParameter(Object value) {
+		if(dataType == null)
+			dataType = DataType.toValue(value);
+		ActualParameter ap = new ActualParameter(name, scope, dataType);
+		ap.setValue(false, null, value);
+		return ap;
+	}
 }

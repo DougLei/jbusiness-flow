@@ -19,11 +19,7 @@ public class DeclaredParameter extends ResultParameter {
 		this.required = required;
 	}
 	
-	/**
-	 * 根据value, 转换为实参
-	 * @param value
-	 * @return
-	 */
+	@Override
 	public ActualParameter toActualParameter(Object value) {
 		ActualParameter ap = new ActualParameter(name, scope, dataType);
 		ap.setValue(required, super.defaultValue, value);

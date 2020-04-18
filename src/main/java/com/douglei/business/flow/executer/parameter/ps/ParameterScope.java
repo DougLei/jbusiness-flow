@@ -7,6 +7,7 @@ import java.util.Map;
 import com.douglei.business.flow.executer.parameter.ActualParameter;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.ParameterOPException;
 import com.douglei.business.flow.executer.parameter.ResultParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 
@@ -46,10 +47,22 @@ public abstract class ParameterScope {
 		addParameter(parameter, value, parameterMap);
 	}
 	protected void addParameter(Parameter parameter, Object value, Map<String, ActualParameter> pm) {
+		ActualParameter oldAP = pm.get(parameter.getName());
 		if(parameter instanceof ResultParameter) {
-			
+			ResultParameter rp = (ResultParameter) parameter;
+			if(oldAP == null) { // 不存在, 则添加
+				pm.put(parameter.getName(), rp.toActualParameter(value));
+			}else { 
+				
+				
+				
+				
+				
+			}
 		}else if(parameter instanceof DeclaredParameter) {
-			
+			if(oldAP != null)
+				throw new ParameterOPException("名为"+parameter.getName()+"的参数已经存在, 不能重复定义");
+			pm.put(parameter.getName(), ((DeclaredParameter)parameter).toActualParameter(value));
 		}
 		throw new IllegalArgumentException("添加实参时, 传入的参数类型("+parameter.getClass().getName()+")错误");
 	}
