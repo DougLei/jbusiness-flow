@@ -17,43 +17,17 @@ public class ParamOpDeclareAction extends Action{
 		declares = new ParamDeclare[size];
 	}
 	
-	public void addParam(byte index, DeclaredParameter parameter) {
-		declares[index] = new ParamDeclare(parameter);
+	public void addDeclareParameter(byte index, DeclaredParameter declaredParameter) {
+		declares[index] = new ParamDeclare(declaredParameter);
 	}
-	public void addRefParam(byte index, Parameter refParameter) {
-		if(refParameter != null) {
-			declares[index].setRefParameter(refParameter);
-		}
+	public void addRefParameter(byte index, Parameter refParameter) {
+		declares[index].setRefParameter(refParameter);
 	}
 
 	@Override
 	public Object execute(DBSession session) {
-		for (ParamDeclare paramDeclare : declares) {
-			ParameterContext.addParameter(paramDeclare.parameter, paramDeclare.getActualValue());
-		}
+		for (ParamDeclare paramDeclare : declares)
+			ParameterContext.addParameter(paramDeclare.getDeclareParameter(), paramDeclare.getActualValue());
 		return null;
-	}
-	
-	
-	private class ParamDeclare{
-		private DeclaredParameter parameter;
-		private Parameter refParameter;
-		
-		ParamDeclare(DeclaredParameter parameter) {
-			this.parameter = parameter;
-		}
-		void setRefParameter(Parameter refParameter) {
-			this.refParameter = refParameter;
-		}
-		
-		Object getActualValue() {
-			Object actualValue;
-			if(refParameter == null) {
-				actualValue = parameter.getDefaultValue();
-			}else {
-				actualValue = ParameterContext.getValue(refParameter);
-			}
-			return actualValue;
-		}
 	}
 }

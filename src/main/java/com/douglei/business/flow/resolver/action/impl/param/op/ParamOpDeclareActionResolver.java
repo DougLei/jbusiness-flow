@@ -10,6 +10,7 @@ import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.resolver.ParameterResolver;
 import com.douglei.business.flow.resolver.ReferenceResolver;
 import com.douglei.business.flow.resolver.action.ActionResolver;
+import com.douglei.tools.utils.StringUtil;
 
 /**
  * 
@@ -30,14 +31,17 @@ public class ParamOpDeclareActionResolver extends ActionResolver {
 		ParamOpDeclareAction action = new ParamOpDeclareAction(size);
 
 		JSONObject content;
-		DeclaredParameter parameter;
+		DeclaredParameter declaredParameter;
 		for(byte i=0;i<size;i++) {
 			content = contents.getJSONObject(i);
-			parameter = ParameterResolver.parseDeclaredParameter(content);
-			action.addParam(i, parameter);
+			declaredParameter = ParameterResolver.parseDeclaredParameter(content);
+			action.addDeclareParameter(i, declaredParameter);
 			
-			if(parameter.getDefaultValue() == null) {
-				action.addRefParam(i, new Parameter(content.getString("refParamName"), Scope.toValue(content.getByteValue("refParamScope")), null));
+			if(declaredParameter.getDefaultValue() == null) {
+				String refParamName = content.getString("refParamName");
+				if(StringUtil.notEmpty(refParamName)) {
+					action.addRefParameter(i, new Parameter(refParamName, Scope.toValue(content.getByteValue("refParamScope")), null));
+				}
 			}
 		}
 		return action;

@@ -54,6 +54,14 @@ public class LocalParameterScope extends ParameterScope {
 	}
 	
 	@Override
+	public ActualParameter getParameter(String parameterName) {
+		if(stackActivated) {
+			return parameterStack.peek().get(parameterName);
+		}
+		return super.getParameter(parameterName);
+	}
+	
+	@Override
 	public Object getValue(String parameterName, String ognlExpression) {
 		if(stackActivated) {
 			return getValue(parameterName, ognlExpression, parameterStack.peek());
@@ -61,14 +69,6 @@ public class LocalParameterScope extends ParameterScope {
 		return super.getValue(parameterName, ognlExpression);
 	}
 	
-	@Override
-	public DeclaredParameter getParameter(String parameterName) {
-		if(stackActivated) {
-			return parameterStack.peek().get(parameterName);
-		}
-		return super.getParameter(parameterName);
-	}
-
 	@Override
 	public void updateValue(DeclaredParameter parameter, Object newValue) {
 		if(stackActivated) {

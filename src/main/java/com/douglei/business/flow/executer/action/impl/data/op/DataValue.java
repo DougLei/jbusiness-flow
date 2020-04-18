@@ -20,7 +20,6 @@ public class DataValue {
 		setValue(null, null);
 	}
 	
-	
 	public DataValue(Object value) {
 		setValue(value, null);
 	}

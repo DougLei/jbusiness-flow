@@ -3,6 +3,7 @@ package com.douglei.business.flow.executer;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.douglei.business.flow.executer.parameter.ActualParameter;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.Scope;
@@ -74,22 +75,22 @@ public class ParameterContext {
 	
 	
 	/**
-	 * 根据指定的参数, 获取当前业务流相应范围内同名的参数实例
-	 * @param byParameter
+	 * 根据指定的参数, 获取对应实参实例
+	 * @param parameter
 	 * @return
 	 */
-	public static DeclaredParameter getParameter(DeclaredParameter byParameter) {
-		return PARAMETER_SCOPES.get().get(byParameter.getScope()).getParameter(byParameter.getName());
+	public static ActualParameter getParameter(Parameter parameter) {
+		return PARAMETER_SCOPES.get().get(parameter.getScope()).getParameter(parameter.getName());
 	}
 	
 	
 	/**
-	 * 根据指定的参数, 获取当前业务流相应范围内同名参数的值
+	 * 根据指定的参数, 获取对应实参的值
 	 * @param parameter
 	 * @return
 	 */
 	public static Object getValue(Parameter parameter) {
-		return PARAMETER_SCOPES.get().get(byParameter.getScope()).getValue(byParameter.getName(), byParameter.getOgnlExpression());
+		return PARAMETER_SCOPES.get().get(parameter.getScope()).getValue(parameter.getName(), parameter.getOgnlExpression());
 	}
 	
 	/**

@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.douglei.business.flow.db.DBSession;
+import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.func.method.FuncMethodAction;
-import com.douglei.business.flow.executer.parameter.DeclaredParameter;
+import com.douglei.business.flow.executer.parameter.ActualParameter;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.Scope;
-import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 
@@ -39,7 +39,24 @@ public class Data {
 	public void setMethod(Action method) {
 		this.method = (FuncMethodAction) method;
 	}
+	
+	public DataValue getValue(DBSession session) {
+		if(value != null) {
+			return new DataValue(value).setFormat(format);
+		}else if(parameter != null) {
+			return new DataValue(ParameterContext.getValue(parameter)).setFormat(format);
+		}else if(action != null) {
+			return action.execute(session, DataValue.NULL_DATA_VALUE);
+		}else {
+			return method.returnExecuteResult(session, DataValue.NULL_DATA_VALUE);
+		}
+	}
 
+	
+	/**
+	 * 
+	 * @author DougLei
+	 */
 	private class DataAction {
 		private Action[] actions;
 		private DataActionResultPick resultPick;
@@ -57,6 +74,11 @@ public class Data {
 		}
 	}
 	
+	
+	/**
+	 * 
+	 * @author DougLei
+	 */
 	private class DataActionResultPick{
 		private boolean all;
 		private String[] names;
@@ -66,39 +88,26 @@ public class Data {
 		}
 		
 		public DataValue pickValue(DataValue defaultDataValue) {
-			Map<String, Object> valueMap = null;
 			if(all) {
-				valueMap = ParameterContext.getValueMap(Scope.LOCAL, names); 
+				return new DataValue(ParameterContext.getValueMap(Scope.LOCAL, names), DataType.OBJECT);
 			}else {
 				if(names != null) {
-					valueMap = new HashMap<String, Object>(names.length);
-					DeclaredParameter tmpParameter = DeclaredParameter.newInstance("tmp", Scope.LOCAL);
-					for (String name : names) {
-						tmpParameter.updateName(name);
-						valueMap.put(name, ParameterContext.getValue(tmpParameter));
+					Parameter tmpParameter = new Parameter("tmpParameter", Scope.LOCAL, null);
+					if(names.length == 1) {
+						tmpParameter.updateName(names[0]);		
+						ActualParameter p = ParameterContext.getParameter(tmpParameter);
+						return new DataValue(p.getValue(null), p.getDataType());
+					}else {
+						Map<String, Object> valueMap = new HashMap<String, Object>(names.length);
+						for (String name : names) {
+							tmpParameter.updateName(name);
+							valueMap.put(name, ParameterContext.getValue(tmpParameter));
+						}
+						return new DataValue(valueMap, DataType.OBJECT);
 					}
 				}
 			}
-			
-			if(CollectionUtil.isEmpty(valueMap)) {
-				return defaultDataValue;
-			}else if(valueMap.size() == 1) {
-				return new DataValue(valueMap.values().iterator().next());
-			}
-			return new DataValue(valueMap);
-		}
-	}
-	
-	public DataValue getValue(DBSession session) {
-		if(value != null) {
-			return new DataValue(value).setFormat(format);
-		}else if(parameter != null) {
-			DeclaredParameter p = ParameterContext.getParameter(parameter);
-			return new DataValue(p.getValue(parameter.getOgnlExpression())).setFormat(format);
-		}else if(action != null) {
-			return action.execute(session, DataValue.NULL_DATA_VALUE);
-		}else {
-			return method.returnExecuteResult(session, DataValue.NULL_DATA_VALUE);
+			return defaultDataValue;
 		}
 	}
 }

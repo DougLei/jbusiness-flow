@@ -55,9 +55,18 @@ public abstract class ParameterScope {
 		addParamter(parameter, parameterMap);
 	}
 	
+	/**
+	 * 根据指定的参数名, 获取对应实参实例
+	 * @param parameterName
+	 * @return
+	 */
+	public ActualParameter getParameter(String parameterName) {
+		return parameterMap.get(parameterName);
+	}
+	
 	// 从指定的参数map中获取指定name和ognl表达式的参数值
-	protected Object getValue(String parameterName, String ognlExpression, Map<String, DeclaredParameter> pm) {
-		DeclaredParameter p = pm.get(parameterName);
+	protected Object getValue(String parameterName, String ognlExpression, Map<String, ActualParameter> pm) {
+		ActualParameter p = pm.get(parameterName);
 		if(p == null) {
 			return null;
 		}
@@ -72,15 +81,6 @@ public abstract class ParameterScope {
 	 */
 	public Object getValue(String parameterName, String ognlExpression) {
 		return getValue(parameterName, ognlExpression, parameterMap);
-	}
-	
-	/**
-	 * 从当前业务流中获取指定name的参数
-	 * @param parameterName
-	 * @return
-	 */
-	public DeclaredParameter getParameter(String parameterName) {
-		return parameterMap.get(parameterName);
 	}
 	
 	// 更新指定参数map中, 指定参数的值
