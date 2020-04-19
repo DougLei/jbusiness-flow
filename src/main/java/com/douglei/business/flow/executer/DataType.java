@@ -131,7 +131,7 @@ public enum DataType {
 			return value instanceof Boolean || value.getClass() == boolean.class;
 		}
 	},
-	STRING(3){
+	STRING(-1){
 		@Override
 		public Object convert(Object value) {
 			if(value == null)
@@ -152,7 +152,7 @@ public enum DataType {
 			return value instanceof Collection || value.getClass().isArray();
 		}
 	},
-	OBJECT(4){
+	OBJECT(10){
 		@Override
 		public boolean matching(Object value) {
 			return true;

@@ -34,9 +34,11 @@ public class ResultParameter extends Parameter {
 	 * @return
 	 */
 	public ActualParameter toActualParameter(Object value) {
-		if(dataType == null)
-			dataType = DataType.toValue(value);
-		ActualParameter ap = new ActualParameter(name, scope, dataType);
+		DataType valueDataType = dataType;
+		if(valueDataType == null) 
+			valueDataType = DataType.toValue(value);
+		
+		ActualParameter ap = new ActualParameter(name, scope, valueDataType);
 		ap.setValue(false, null, value);
 		return ap;
 	}

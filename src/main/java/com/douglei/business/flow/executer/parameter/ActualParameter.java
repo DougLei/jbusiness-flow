@@ -55,6 +55,28 @@ public class ActualParameter extends ResultParameter {
 	 */
 	public void updateValue(Object value) {
 		this.value = validateValueDataType(value);
+		if(this.value != null)
+			this.dataType = compareValueScope(dataType, DataType.toValue(this.value));
+	}
+	
+	/**
+	 * d1和d2进行值范围比较, 返回值范围更大的DataType
+	 * @param d1
+	 * @param d2
+	 * @return
+	 */
+	private DataType compareValueScope(DataType d1, DataType d2) {
+		if(d1 == d2)
+			return d1;
+		if(d1 == DataType.OBJECT || d2 == DataType.OBJECT)
+			return DataType.OBJECT;
+		if(d1.noValueScope() || d2.noValueScope())
+			throw new ParameterOPException("["+scope.getDescription()+"]["+name+"]的原数据类型[" + d1.name() + "]和目标数据类型["+d2.name()+"], 没有值范围的可比性, 其值不可相互转换");
+		if(d1.getValueScope() > d2.getValueScope()) {
+			return d1;
+		}else {
+			return d2;
+		}
 	}
 	
 	/**
