@@ -6,6 +6,7 @@ import java.util.Map;
 import com.douglei.business.flow.db.DBSession;
 import com.douglei.orm.sessionfactory.SessionFactory;
 import com.douglei.orm.sessionfactory.sessions.Session;
+import com.douglei.orm.sessionfactory.sessions.sqlsession.SqlSession;
 
 /**
  * 
@@ -24,10 +25,10 @@ public class JdbOrmDBSession implements DBSession {
 		this.autoCommit = autoCommit;
 	}
 
-	private Session getSession() {
+	private SqlSession getSqlSession() {
 		if(session == null)
 			session = sessionFactory.openSession();
-		return session;
+		return session.getSqlSession();
 	}
 	
 	@Override
@@ -37,14 +38,19 @@ public class JdbOrmDBSession implements DBSession {
 
 	@Override
 	public int executeUpdate(String sql, List<Object> values) {
-		return getSession().getSqlSession().executeUpdate(sql, values);
+		return getSqlSession().executeUpdate(sql, values);
 	}
-
+	
+	@Override
+	public Map<String, Object> uniqueQuery(String sql, List<Object> values) {
+		return getSqlSession().uniqueQuery(sql, values);
+	}
+	
 	@Override
 	public List<Map<String, Object>> query(String sql, List<Object> values) {
-		return getSession().getSqlSession().query(sql, values);
+		return getSqlSession().query(sql, values);
 	}
-
+	
 	@Override
 	public void commit() {
 		if(session != null)

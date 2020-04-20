@@ -3,9 +3,9 @@ package com.douglei.business.flow.resolver.sql.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
-import com.douglei.business.flow.executer.sql.SelectSql;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.component.select.With;
+import com.douglei.business.flow.executer.sql.core.SelectSql;
 import com.douglei.business.flow.resolver.sql.SqlResolver;
 import com.douglei.tools.utils.CollectionUtil;
 
@@ -19,10 +19,20 @@ public class SelectSqlResolver extends SqlResolver{
 	public String getType() {
 		return SelectSql.TYPE;
 	}
-
+	
+	/**
+	 * 创建一个SelectSql实例
+	 * @param name
+	 * @param parameters
+	 * @return
+	 */
+	protected SelectSql newSelectSqlInstance(String name, DeclaredParameter[] parameters) {
+		return new SelectSql(name, parameters);
+	}
+	
 	@Override
 	public Sql parse(String name, DeclaredParameter[] parameters, JSONObject content) {
-		SelectSql sql = new SelectSql(name, parameters);
+		SelectSql sql = newSelectSqlInstance(name, parameters);
 		
 		JSONArray array = content.getJSONArray("withs");
 		byte size = array==null?0:(byte)array.size();

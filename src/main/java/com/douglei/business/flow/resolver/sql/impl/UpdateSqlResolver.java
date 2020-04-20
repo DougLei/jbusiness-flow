@@ -4,9 +4,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.Sql;
-import com.douglei.business.flow.executer.sql.UpdateSql;
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionType;
 import com.douglei.business.flow.executer.sql.component.update.Set;
+import com.douglei.business.flow.executer.sql.core.UpdateSql;
 import com.douglei.business.flow.resolver.sql.SqlResolver;
 
 /**

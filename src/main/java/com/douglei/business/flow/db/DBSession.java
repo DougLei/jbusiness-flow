@@ -26,6 +26,14 @@ public interface DBSession {
 	int executeUpdate(String sql, List<Object> values);
 
 	/**
+	 * 查询唯一数据
+	 * @param sql
+	 * @param values
+	 * @return
+	 */
+	Map<String, Object> uniqueQuery(String sql, List<Object> values);
+	
+	/**
 	 * 查询数据
 	 * @param sql
 	 * @param values
