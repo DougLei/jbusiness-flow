@@ -20,7 +20,7 @@
 		"paramName":"", // 从sql中配置的参数params获取指定的参数值
 		"placeholder":true, // 是否使用占位符, 默认为true
 		
-		// 包裹值只有在placeholder=false时会被激活
+		// valuePrefix, valueSuffix, format三个参数, 只有在placeholder=false时会被激活
 		"valuePrefix":"'", // 包裹值的前缀, 如果配置了则使用配置的值, 否则判断具体值的类型, 如果是数字, 则默认为空字符串, 否则默认为单引号
 		"valueSuffix":"'", // 包裹值的后缀, 如果配置了则使用配置的值, 否则判断具体值的类型, 如果是数字, 则默认为空字符串, 否则默认为单引号
 		"format":"", // 格式化, 针对日期类型的值

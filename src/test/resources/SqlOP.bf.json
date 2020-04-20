@@ -1,0 +1,178 @@
+{
+	"name": "ShoppingSettleAccounts",
+	"description": "购物结账",
+	"version": "1",
+	"enabled": true,
+
+	"params": [{
+		"name": "shoppingCarId",
+		"description": "购物车id",
+		"scope": 1,
+		"dataType": "string",
+		"required": true
+	}, {
+		"name": "productName",
+		"description": "商品名称",
+		"scope": 1,
+		"dataType": "string",
+		"required": true
+	}, {
+		"name": "productType",
+		"description": "商品类型",
+		"scope": 1,
+		"dataType": "integer",
+		"required": true
+	}, {
+		"name": "productPrice",
+		"description": "商品价格",
+		"scope": 2,
+		"dataType": "double",
+		"required": true
+	}, {
+		"name": "productCount",
+		"description": "购买数量",
+		"scope": 1,
+		"dataType": "integer",
+		"defaultValue": 100
+	}],
+
+	"events": [{
+		"type": 1,
+		"name": "deleteShoppingInfo",
+		"description": "删除一条购物信息",
+		"actions": [{
+			"type": "sql_op",
+			"content": {
+				"name": "deleteShopping",
+				"params": [{
+					"name": "shoppingCarId",
+					"scope": 1
+				}]
+			},
+			"result": {
+				"name": "影响的条数",
+				"scope": 3
+			}
+		}]
+	}],
+
+
+	"sqls": [{
+		"type": "insert",
+		"name": "insertShopping",
+		"params": [{
+			"name": "shoppingCarId",
+			"description": "购物车id",
+			"scope": 1,
+			"dataType": "string",
+			"required": true
+		}, {
+			"name": "productName",
+			"description": "商品名称",
+			"scope": 1,
+			"dataType": "string",
+			"required": true
+		}, {
+			"name": "productType",
+			"description": "商品类型",
+			"scope": 1,
+			"dataType": "integer",
+			"required": true
+		}, {
+			"name": "productPrice",
+			"description": "商品价格",
+			"scope": 2,
+			"dataType": "double",
+			"required": true
+		}, {
+			"name": "productCount",
+			"description": "购买数量",
+			"scope": 1,
+			"dataType": "integer",
+			"required": true
+		}],
+		"content": {
+			"table": {
+				"name": "shopping_car"
+			},
+			"columns": ["shopping_car_id", "product_name", "product_type", "product_price", "product_count"],
+
+			"valuesType": 0,
+			"values": [{
+				"paramName": "shoppingCarId"
+			}, {
+				"paramName": "productName"
+			}, {
+				"paramName": "productType"
+			}, {
+				"paramName": "productPrice"
+			}, {
+				"paramName": "productCount"
+			}]
+		}
+	}, {
+		"type": "update",
+		"name": "updateShopping",
+		"params": [{
+			"name": "shoppingCarId",
+			"description": "购物车id",
+			"scope": 1,
+			"dataType": "string",
+			"required": true
+		}, {
+			"name": "productPrice",
+			"description": "商品价格",
+			"scope": 2,
+			"dataType": "double",
+			"required": true
+		}],
+		"content": {
+			"table": {
+				"name": "shopping_car"
+			},
+			"sets": [{
+				"column": "product_price",
+				"value": {
+					"paramName": "productPrice"
+				}
+			}],
+			"whereGroups": [{
+				"conditions": [{
+					"left": {
+						"column": "shopping_car_id"
+					},
+					"rights": [{
+						"paramName": "shoppingCarId"
+					}],
+					"cop": "eq"
+				}]
+			}]
+		}
+	}, {
+		"type": "delete",
+		"name": "deleteShopping",
+		"params": [{
+			"name": "shoppingCarId",
+			"description": "购物车id",
+			"scope": 1,
+			"dataType": "string",
+			"required": true
+		}],
+		"content": {
+			"table": {
+				"name": "shopping_car"
+			},
+			"whereGroups": [{
+				"conditions": [{
+					"left": {
+						"column": "shopping_car_id"
+					},
+					"rights": [{
+						"paramName": "shoppingCarId"
+					}],
+					"cop": "eq"
+				}]
+			}]
+		}
+	}]
+}

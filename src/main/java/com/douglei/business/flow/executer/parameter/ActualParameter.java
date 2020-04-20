@@ -25,7 +25,7 @@ public class ActualParameter extends ResultParameter {
 	 */
 	void setValue(boolean required, Object defaultValue, Object value) {
 		if(required && value == null)
-			throw new NullPointerException(super.scope.getDescription() + "["+super.name+"]的初始值不能为空");
+			throw new NullPointerException(super.scope.getDescription() + "["+super.name+"]的值不能为空");
 		
 		if(value == null) {
 			value = defaultValue;

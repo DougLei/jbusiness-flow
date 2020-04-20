@@ -15,6 +15,7 @@ public class DeclaredParameter extends ResultParameter {
 			if(!dataType.matching(defaultValue))
 				throw new IllegalArgumentException("在"+scope.getDescription()+"范围中, 名为"+name+"的参数, 其默认值("+defaultValue+")的数据类型与配置的参数数据类型("+dataType.name()+")不匹配");
 			super.defaultValue = dataType.convert(defaultValue);
+			required = false; // 有默认值的情况下, 自动改为非必填项
 		}
 		this.required = required;
 	}
