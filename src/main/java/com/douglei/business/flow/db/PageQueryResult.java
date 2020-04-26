@@ -7,7 +7,7 @@ import java.util.Map;
  * 
  * @author DougLei
  */
-public interface PageResult {
+public interface PageQueryResult {
 	
 	/**
 	 * 获取数据总数量
