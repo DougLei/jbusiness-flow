@@ -3,9 +3,9 @@ package com.douglei.business.flow.executer.action.impl.param.op;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
+import com.douglei.business.flow.executer.action.ExecuteParameter;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Parameter;
 
@@ -29,7 +29,7 @@ public class ParamOpDeclareAction extends Action{
 	}
 
 	@Override
-	public Object execute(DBSession session) {
+	public Object execute(ExecuteParameter executeParameter) {
 		if(logger.isDebugEnabled())
 			logger.debug("执行[{}]", getClass().getName());
 		for (ParamDeclare paramDeclare : declares)

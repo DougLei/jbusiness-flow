@@ -3,8 +3,8 @@ package com.douglei.business.flow.executer.action.impl.func;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.action.Action;
+import com.douglei.business.flow.executer.action.ExecuteParameter;
 import com.douglei.business.flow.executer.condition.ConditionValidator;
 
 /**
@@ -23,12 +23,12 @@ public class FuncSwitchAction extends Action {
 	}
 
 	@Override
-	public Object execute(DBSession session) {
+	public Object execute(ExecuteParameter executeParameter) {
 		if(logger.isDebugEnabled())
 			logger.debug("执行[{}]", getClass().getName());
 		for(SwitchGroup switch_ : groups) {
-			if(switch_.validate(session)) {
-				return switch_.execute(session);
+			if(switch_.validate(executeParameter)) {
+				return switch_.execute(executeParameter);
 			}
 		}
 		return null;
@@ -43,13 +43,13 @@ public class FuncSwitchAction extends Action {
 			this.actions = actions;
 		}
 
-		boolean validate(DBSession session) {
-			return conditionValidator.validate(session);
+		boolean validate(ExecuteParameter executeParameter) {
+			return conditionValidator.validate(executeParameter);
 		}
 
-		Object execute(DBSession session) {
+		Object execute(ExecuteParameter executeParameter) {
 			for (Action action : actions) {
-				action.execute(session);
+				action.execute(executeParameter);
 			}
 			return null;
 		}

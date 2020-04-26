@@ -1,7 +1,7 @@
 package com.douglei.business.flow.executer.condition;
 
-import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.LogicalOP;
+import com.douglei.business.flow.executer.action.ExecuteParameter;
 
 /**
  * 
@@ -22,9 +22,9 @@ class ConditionResult {
 				|| (!booleanValue && nextOP == LogicalOP.AND);
 	}
 	
-	public void merge(ConditionChunk chunk, DBSession session) {
+	public void merge(ConditionChunk chunk, ExecuteParameter executeParameter) {
 		if(!isShortCircuit()) {
-			booleanValue = nextOP.operating(booleanValue, chunk.validate(session).booleanValue);
+			booleanValue = nextOP.operating(booleanValue, chunk.validate(executeParameter).booleanValue);
 		}
 		this.nextOP = chunk.nextOP;
 	}

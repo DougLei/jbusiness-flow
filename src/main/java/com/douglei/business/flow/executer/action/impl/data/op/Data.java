@@ -3,10 +3,10 @@ package com.douglei.business.flow.executer.action.impl.data.op;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
+import com.douglei.business.flow.executer.action.ExecuteParameter;
 import com.douglei.business.flow.executer.action.impl.func.method.FuncMethodAction;
 import com.douglei.business.flow.executer.parameter.ActualParameter;
 import com.douglei.business.flow.executer.parameter.Parameter;
@@ -40,15 +40,15 @@ public class Data {
 		this.method = (FuncMethodAction) method;
 	}
 	
-	public DataValue getValue(DBSession session) {
+	public DataValue getValue(ExecuteParameter executeParameter) {
 		if(value != null) {
 			return new DataValue(value).setFormat(format);
 		}else if(parameter != null) {
 			return new DataValue(ParameterContext.getValue(parameter)).setFormat(format);
 		}else if(action != null) {
-			return action.execute(session, DataValue.NULL_DATA_VALUE);
+			return action.execute(executeParameter, DataValue.NULL_DATA_VALUE);
 		}else {
-			return method.returnExecuteResult(session, DataValue.NULL_DATA_VALUE);
+			return method.returnExecuteResult(executeParameter, DataValue.NULL_DATA_VALUE);
 		}
 	}
 
@@ -66,9 +66,9 @@ public class Data {
 			this.resultPick = new DataActionResultPick(resultPick_all, resultPick_names);
 		}
 
-		public DataValue execute(DBSession session, DataValue defaultDataValue) {
+		public DataValue execute(ExecuteParameter executeParameter, DataValue defaultDataValue) {
 			for (Action action : actions) {
-				action.execute(session);
+				action.execute(executeParameter);
 			}
 			return resultPick.pickValue(defaultDataValue);
 		}

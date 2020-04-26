@@ -43,13 +43,13 @@ public class JdbOrmDBSession implements DBSession {
 	}
 	
 	@Override
-	public Map<String, Object> uniqueQuery(String sql, List<Object> values) {
-		return getSqlSession().uniqueQuery(sql, values);
+	public List<Map<String, Object>> query(String sql, List<Object> values) {
+		return getSqlSession().query(sql, values);
 	}
 	
 	@Override
-	public List<Map<String, Object>> query(String sql, List<Object> values) {
-		return getSqlSession().query(sql, values);
+	public Map<String, Object> uniqueQuery(String sql, List<Object> values) {
+		return getSqlSession().uniqueQuery(sql, values);
 	}
 	
 	@Override

@@ -2,8 +2,8 @@ package com.douglei.business.flow.executer.condition;
 
 import java.util.LinkedList;
 
-import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.LogicalOP;
+import com.douglei.business.flow.executer.action.ExecuteParameter;
 
 /**
  * 
@@ -38,16 +38,16 @@ class ConditionChunks extends ConditionChunk{
 	}
 
 	@Override
-	public ConditionResult validate(DBSession session) {
-		ConditionResult result = chunks[0].validate(session);
+	public ConditionResult validate(ExecuteParameter executeParameter) {
+		ConditionResult result = chunks[0].validate(executeParameter);
 		if(size > 1) {
 			byte index = 1;
 			do {
-				result.merge(chunks[index], session);
+				result.merge(chunks[index], executeParameter);
 			}while(++index < size);
 		}
 		if(list != null) 
-			list.forEach(l -> result.merge(l, session));
+			list.forEach(l -> result.merge(l, executeParameter));
 		return result;
 	}
 }

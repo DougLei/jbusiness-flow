@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import com.douglei.business.flow.db.DBSession;
+import com.douglei.business.flow.executer.action.ExecuteParameter;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 
@@ -65,7 +66,7 @@ public class BusinessFlow {
 				}
 			}
 			
-			startEvent.execute(session);
+			startEvent.execute(new ExecuteParameter(session));
 			Map<String, Object> vm = ParameterContext.getValueMap(Scope.OUT);
 			if(autoCommit)
 				session.commit();

@@ -2,9 +2,9 @@ package com.douglei.business.flow.executer.method;
 
 import java.util.Map;
 
-import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
+import com.douglei.business.flow.executer.action.ExecuteParameter;
 import com.douglei.business.flow.executer.parameter.ActualParameter;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.InvokerParameter;
@@ -57,9 +57,9 @@ public class Method {
 	 * @param session
 	 * @return
 	 */
-	protected Object invokeCore(DBSession session) {
+	protected Object invokeCore(ExecuteParameter executeParameter) {
 		for (Action action : actions)
-			action.execute(session);
+			action.execute(executeParameter);
 		
 		Map<String, ActualParameter> parameterMap = ParameterContext.clear(Scope.LOCAL);
 		if(CollectionUtil.unEmpty(parameterMap) && return_ != null)
@@ -74,9 +74,9 @@ public class Method {
 	 * @param session
 	 * @return
 	 */
-	public Object invoke(InvokerParameter[] parameters, DBSession session) {
+	public Object invoke(InvokerParameter[] parameters, ExecuteParameter executeParameter) {
 		invokePre(parameters);
-		return invokeCore(session);
+		return invokeCore(executeParameter);
 	}
 	
 	public String getName() {

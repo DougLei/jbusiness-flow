@@ -3,8 +3,8 @@ package com.douglei.business.flow.executer.condition;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.LogicalOP;
+import com.douglei.business.flow.executer.action.ExecuteParameter;
 
 /**
  * 
@@ -42,22 +42,22 @@ public class ConditionChunk {
 		}
 	}
 	
-	public ConditionResult validate(DBSession session) {
+	public ConditionResult validate(ExecuteParameter executeParameter) {
 		Iterator<ConditionChunk> iterator = list.iterator();
 		
-		ConditionResult result = iterator.next().validate(session);
+		ConditionResult result = iterator.next().validate(executeParameter);
 		ConditionChunk chunk = null;
 		while(iterator.hasNext()) {
 			chunk = iterator.next();
 			if(chunk.getClass() == ConditionChunk.class)
 				break;
-			result.merge(chunk, session);
+			result.merge(chunk, executeParameter);
 		}
 		result.update(inverse, nextOP);
 		
 		if(chunk != null && chunk.getClass() == ConditionChunk.class) {
 			while(true) {
-				result.merge(chunk, session);
+				result.merge(chunk, executeParameter);
 				if(iterator.hasNext()) {
 					chunk = iterator.next();
 				}else {

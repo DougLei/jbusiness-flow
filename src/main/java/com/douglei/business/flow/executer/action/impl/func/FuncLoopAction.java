@@ -5,9 +5,9 @@ import java.util.Collection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
+import com.douglei.business.flow.executer.action.ExecuteParameter;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Parameter;
 
@@ -31,7 +31,7 @@ public class FuncLoopAction extends Action {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public Object execute(DBSession session) {
+	public Object execute(ExecuteParameter executeParameter) {
 		if(logger.isDebugEnabled())
 			logger.debug("执行[{}]", getClass().getName());
 		Object value = ParameterContext.getValue(collection);
@@ -41,23 +41,23 @@ public class FuncLoopAction extends Action {
 				if(list.size() > 0) {
 					ParameterContext.addParameter(alias, null);
 					for (Object lv : list)
-						executeCore(lv, session);
+						executeCore(lv, executeParameter);
 				}
 			}else  if(value.getClass().isArray()) {
 				Object[] list = (Object[]) value;
 				if(list.length > 0) {
 					ParameterContext.addParameter(alias, null);
 					for (Object lv : list)
-						executeCore(lv, session);
+						executeCore(lv, executeParameter);
 				}
 			}
 		}
 		return null;
 	}
-	private void executeCore(Object lv, DBSession session) {
+	private void executeCore(Object lv, ExecuteParameter executeParameter) {
 		ParameterContext.getParameter(aliasParameter).updateValue(lv);
 		for (Action action : actions) {
-			action.execute(session);
+			action.execute(executeParameter);
 		}
 	}
 }

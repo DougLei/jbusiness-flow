@@ -2,9 +2,9 @@ package com.douglei.business.flow.executer.condition;
 
 import java.util.LinkedList;
 
-import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.LogicalOP;
 import com.douglei.business.flow.executer.action.Action;
+import com.douglei.business.flow.executer.action.ExecuteParameter;
 
 /**
  * 
@@ -33,13 +33,13 @@ public class Condition extends ConditionChunk{
 	}
 	
 	@Override
-	public ConditionResult validate(DBSession session) {
-		boolean result = (boolean) dataOpCompareAction.execute(session);
+	public ConditionResult validate(ExecuteParameter executeParameter) {
+		boolean result = (boolean) dataOpCompareAction.execute(executeParameter);
 		if(inverse)
 			result = !result;
 		ConditionResult cr = new ConditionResult(result, nextOP);
 		if(list != null) 
-			list.forEach(l -> cr.merge(l, session));
+			list.forEach(l -> cr.merge(l, executeParameter));
 		return cr;
 	}
 }

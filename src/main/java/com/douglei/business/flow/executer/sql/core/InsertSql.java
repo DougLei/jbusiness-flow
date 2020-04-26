@@ -1,6 +1,6 @@
 package com.douglei.business.flow.executer.sql.core;
 
-import com.douglei.business.flow.db.DBSession;
+import com.douglei.business.flow.executer.action.ExecuteParameter;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.SqlData;
@@ -40,12 +40,12 @@ public class InsertSql extends Sql {
 	}
 
 	@Override
-	protected Object invokeCore(DBSession session) {
+	protected Object invokeCore(ExecuteParameter executeParameter) {
 		SqlData sqlData = new SqlData("INSERT INTO ");
 		table.append2SqlData(sqlData);
 		appendColumns2SqlData(sqlData);
 		appendValues2SqlData(sqlData);
-		return session.executeUpdate(sqlData.getSql(), sqlData.getParameterValues());
+		return executeParameter.getSession().executeUpdate(sqlData.getSql(), sqlData.getParameterValues());
 	}
 
 	private void appendColumns2SqlData(SqlData sqlData) {

@@ -3,8 +3,8 @@ package com.douglei.business.flow.executer.action.impl.data.op.compare;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.action.Action;
+import com.douglei.business.flow.executer.action.ExecuteParameter;
 import com.douglei.business.flow.executer.action.impl.data.op.Data;
 import com.douglei.business.flow.executer.parameter.ResultParameter;
 
@@ -26,9 +26,9 @@ public class DataOpCompareAction extends Action {
 	}
 
 	@Override
-	public Object execute(DBSession session) {
+	public Object execute(ExecuteParameter executeParameter) {
 		if(logger.isDebugEnabled())
 			logger.debug("执行[{}]", getClass().getName());
-		return setResult(op.compare(left.getValue(session), right==null?null:right.getValue(session)));
+		return setResult(op.compare(left.getValue(executeParameter), right==null?null:right.getValue(executeParameter)));
 	}
 }

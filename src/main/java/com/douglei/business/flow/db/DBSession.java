@@ -26,20 +26,20 @@ public interface DBSession {
 	int executeUpdate(String sql, List<Object> values);
 
 	/**
-	 * 查询唯一数据
-	 * @param sql
-	 * @param values
-	 * @return
-	 */
-	Map<String, Object> uniqueQuery(String sql, List<Object> values);
-	
-	/**
 	 * 查询数据
 	 * @param sql
 	 * @param values
 	 * @return 结果集, Map中, key为列名, value为对应的值
 	 */
 	List<Map<String, Object>> query(String sql, List<Object> values);
+	
+	/**
+	 * 查询唯一数据
+	 * @param sql
+	 * @param values
+	 * @return
+	 */
+	Map<String, Object> uniqueQuery(String sql, List<Object> values);
 	
 	/**
 	 * 分页查询
