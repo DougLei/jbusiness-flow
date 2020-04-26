@@ -13,7 +13,7 @@ import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.data.op.DataValue;
 import com.douglei.business.flow.executer.method.Method;
 import com.douglei.business.flow.executer.parameter.ActualParameter;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.InvokerParameter;
 import com.douglei.tools.utils.CollectionUtil;
 
 /**
@@ -23,11 +23,11 @@ import com.douglei.tools.utils.CollectionUtil;
 public class FuncMethodAction extends Action {
 	private static final Logger logger = LoggerFactory.getLogger(FuncMethodAction.class);
 	private Method method;
-	private Parameter[] parameters;
+	private InvokerParameter[] parameters;
 	private Receive[] receives;
 	private ReceiveAll receiveAll;
 	
-	public FuncMethodAction(Method method, Parameter[] parameters) {
+	public FuncMethodAction(Method method, InvokerParameter[] parameters) {
 		this.method = method;
 		this.parameters = parameters;
 	}

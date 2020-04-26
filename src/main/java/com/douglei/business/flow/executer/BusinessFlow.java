@@ -59,7 +59,7 @@ public class BusinessFlow {
 		boolean autoCommit = session==null?false:session.autoCommit();
 		try {
 			ParameterContext.initial();
-			if(inputParameters.length > 0) {
+			if(inputParameters != null) {
 				for (DeclaredParameter parameter : inputParameters) {
 					ParameterContext.addParameter(parameter, inputValueMap.get(parameter.getName()));
 				}

@@ -20,19 +20,9 @@ public class SelectSqlResolver extends SqlResolver{
 		return SelectSql.TYPE;
 	}
 	
-	/**
-	 * 创建一个SelectSql实例
-	 * @param name
-	 * @param parameters
-	 * @return
-	 */
-	protected SelectSql newSelectSqlInstance(String name, DeclaredParameter[] parameters) {
-		return new SelectSql(name, parameters);
-	}
-	
 	@Override
 	public Sql parse(String name, DeclaredParameter[] parameters, JSONObject content) {
-		SelectSql sql = newSelectSqlInstance(name, parameters);
+		SelectSql sql = new SelectSql(name, parameters);
 		
 		JSONArray array = content.getJSONArray("withs");
 		byte size = array==null?0:(byte)array.size();

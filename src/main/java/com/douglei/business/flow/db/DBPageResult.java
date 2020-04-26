@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
+ * 数据库分页查询结果对象
  * @author DougLei
  */
-public interface PageQueryResult {
+public interface DBPageResult {
 	
 	/**
 	 * 获取数据总数量

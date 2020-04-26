@@ -27,7 +27,7 @@ public class FuncMethodActionResolver extends ActionResolver {
 		
 		FuncMethodAction action = new FuncMethodAction(
 				referenceResolver.parseMethod(content.getString("methodName")),
-				ParameterResolver.parseParameters(content.getJSONArray("params")));
+				ParameterResolver.parseInvokerParameters(content.getJSONArray("params")));
 		
 		byte size;
 		JSONObject json;

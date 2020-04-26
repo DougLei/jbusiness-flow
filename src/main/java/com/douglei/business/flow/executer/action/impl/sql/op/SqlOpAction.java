@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.douglei.business.flow.db.DBSession;
 import com.douglei.business.flow.executer.action.Action;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.InvokerParameter;
 import com.douglei.business.flow.executer.parameter.ResultParameter;
 import com.douglei.business.flow.executer.sql.Sql;
 
@@ -16,9 +16,9 @@ import com.douglei.business.flow.executer.sql.Sql;
 public class SqlOpAction extends Action {
 	private static final Logger logger = LoggerFactory.getLogger(SqlOpAction.class);
 	private Sql sql;
-	private Parameter[] parameters;
+	private InvokerParameter[] parameters;
 	
-	public SqlOpAction(Sql sql, Parameter[] parameters, ResultParameter result) {
+	public SqlOpAction(Sql sql, InvokerParameter[] parameters, ResultParameter result) {
 		this.sql = sql;
 		this.parameters = parameters;
 		super.result = result;

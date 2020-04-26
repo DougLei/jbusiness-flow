@@ -7,7 +7,7 @@ import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.parameter.ActualParameter;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
-import com.douglei.business.flow.executer.parameter.Parameter;
+import com.douglei.business.flow.executer.parameter.InvokerParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.tools.utils.CollectionUtil;
 
@@ -23,7 +23,7 @@ public class Method {
 	
 	protected Method(String name, DeclaredParameter[] parameters) {
 		this.name = name;
-		if(parameters.length > 0) {
+		if(parameters != null) {
 			// 如果参数的范围不是本地参数, 则修改为本地参数
 			for (DeclaredParameter parameter : parameters) {
 				if(parameter.getScope() != Scope.LOCAL)
@@ -43,12 +43,12 @@ public class Method {
 	 * 主要是对参数的设置, 以及开启本地参数的堆栈
 	 * @param parameters
 	 */
-	private void invokePre(Parameter[] parameters) {
+	private void invokePre(InvokerParameter[] parameters) {
 		ParameterContext.activateStack(Scope.LOCAL);
-		if(this.parameters.length > 0) {
-			Object[] values = ParameterContext.getValues(parameters);
+		if(this.parameters != null) {
+			InvokerParameterValues values = ParameterContext.getValues(parameters);
 			for (int i = 0; i < this.parameters.length; i++)
-				ParameterContext.addParameter(this.parameters[i], values[i]);
+				ParameterContext.addParameter(this.parameters[i], (values==null?null:values.getValue(i, this.parameters[i].getName())));
 		}
 	}
 	
@@ -70,11 +70,11 @@ public class Method {
 	
 	/**
 	 * 调用方法
-	 * @param invokerDefinedParameters 调用方定义的参数数组, 根据该参数数组, 从当前业务流中获取相应的value数组
+	 * @param parameters 调用方定义的参数数组, 根据该参数数组, 从当前业务流中获取相应的value数组
 	 * @param session
 	 * @return
 	 */
-	public Object invoke(Parameter[] parameters, DBSession session) {
+	public Object invoke(InvokerParameter[] parameters, DBSession session) {
 		invokePre(parameters);
 		return invokeCore(session);
 	}

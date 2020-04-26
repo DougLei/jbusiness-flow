@@ -3,7 +3,9 @@ package com.douglei.business.flow.executer;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.douglei.business.flow.executer.method.InvokerParameterValues;
 import com.douglei.business.flow.executer.parameter.ActualParameter;
+import com.douglei.business.flow.executer.parameter.InvokerParameter;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.executer.parameter.ps.ParameterScope;
@@ -12,7 +14,7 @@ import com.douglei.business.flow.executer.parameter.ps.impl.InOutParameterScope;
 import com.douglei.business.flow.executer.parameter.ps.impl.InParameterScope;
 import com.douglei.business.flow.executer.parameter.ps.impl.LocalParameterScope;
 import com.douglei.business.flow.executer.parameter.ps.impl.OutParameterScope;
-import com.douglei.tools.utils.CollectionUtil;
+import com.douglei.tools.utils.StringUtil;
 
 /**
  * 
@@ -87,17 +89,24 @@ public class ParameterContext {
 	}
 	
 	/**
-	 * 根据参数, 获取对应的值数组
+	 * 根据调用者参数, 获取对应的结果值
 	 * @param parameters
 	 * @return
 	 */
-	public static Object[] getValues(Parameter[] parameters) {
-		if(parameters.length == 0) {
-			return CollectionUtil.emptyObjectArray();
+	public static InvokerParameterValues getValues(InvokerParameter[] parameters) {
+		if(parameters == null) {
+			return null;
 		}
-		Object[] values = new Object[parameters.length];
+		
+		InvokerParameterValues values = new InvokerParameterValues(parameters.length, StringUtil.notEmpty(parameters[0].getTargetName()));
+		InvokerParameter parameter;
 		for(byte i=0;i<parameters.length;i++) {
-			values[i] = getValue(parameters[i]);
+			parameter = parameters[i];
+			if(StringUtil.isEmpty(parameter.getName())) {
+				values.addValue(parameter.getDefaultValue(), i, parameter.getTargetName());
+			}else {
+				values.addValue(getValue(parameter), i, parameter.getTargetName());
+			}
 		}
 		return values;
 	}

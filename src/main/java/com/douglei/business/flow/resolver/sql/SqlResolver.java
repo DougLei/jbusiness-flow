@@ -37,10 +37,10 @@ public abstract class SqlResolver {
 	 * 解析sql
 	 * @param name
 	 * @param parameters
-	 * @param content
+	 * @param sqlJSON
 	 * @return
 	 */
-	public abstract Sql parse(String name, DeclaredParameter[] parameters, JSONObject content);
+	public abstract Sql parse(String name, DeclaredParameter[] parameters, JSONObject sqlJSON);
 	
 	
 	// 解析Function

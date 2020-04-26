@@ -109,7 +109,11 @@ public class ReferenceResolver {
 	public Sql parseSql(String name) {
 		Sql sql = container.getSql(name);
 		if(sql == null) {
-			sql = SqlResolvers.parse(name, sqlMap.get(name));
+			JSONObject sqlJSON = sqlMap.get(name);
+			if(sqlJSON == null) 
+				throw new NullPointerException("不存在名为"+name+"的sql");
+			
+			sql = SqlResolvers.parse(name, sqlJSON);
 			container.putSql(sql);
 		}
 		return sql;
@@ -126,6 +130,8 @@ public class ReferenceResolver {
 		Method method = container.getMethod(name);
 		if(method == null) {
 			JSONObject methodJSON = methodMap.get(name);
+			if(methodJSON == null) 
+				throw new NullPointerException("不存在名为"+name+"的方法");
 			
 			DeclaredParameter[] parameters = ParameterResolver.parseDeclaredParameters(methodJSON.getJSONArray("params"));
 			Action[] actions = parseAction_(methodJSON.getJSONArray("actions"));

@@ -14,9 +14,11 @@ public class Parameter {
 	
 	protected Parameter() {}
 	public Parameter(String name, Scope scope, Object defaultValue) {
-		if(StringUtil.isEmpty(name))
+		this(name, scope, defaultValue, true);
+	}
+	protected Parameter(String name, Scope scope, Object defaultValue, boolean validateNameNotNull) {
+		if(validateNameNotNull && StringUtil.isEmpty(name))
 			throw new NullPointerException("参数名不能为空");
-		
 		short dot = (short) name.indexOf(".");
 		if(dot > -1) { // 证明是ognl表达式
 			this.name = name.substring(0, dot);

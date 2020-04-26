@@ -3,17 +3,17 @@ package com.douglei.business.flow.db.def.impl;
 import java.util.List;
 import java.util.Map;
 
-import com.douglei.business.flow.db.PageQueryResult;
+import com.douglei.business.flow.db.DBPageResult;
 import com.douglei.orm.core.sql.pagequery.PageResult;
 
 /**
  * 
  * @author DougLei
  */
-public class JdbPageQueryResult implements PageQueryResult {
+public class JdbOrmDBPageResult implements DBPageResult {
 	private PageResult<Map<String, Object>> pageResult;
 	
-	public JdbPageQueryResult(PageResult<Map<String, Object>> pageResult) {
+	public JdbOrmDBPageResult(PageResult<Map<String, Object>> pageResult) {
 		this.pageResult = pageResult;
 	}
 
