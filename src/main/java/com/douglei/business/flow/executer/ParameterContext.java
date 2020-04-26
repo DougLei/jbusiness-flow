@@ -82,7 +82,9 @@ public class ParameterContext {
 	 * @return
 	 */
 	public static Object getValue(Parameter parameter) {
-		Object value = PARAMETER_SCOPES.get().get(parameter.getScope()).getValue(parameter.getName(), parameter.getOgnlExpression());
+		Object value = null;
+		if(StringUtil.notEmpty(parameter.getName()))
+			value = PARAMETER_SCOPES.get().get(parameter.getScope()).getValue(parameter.getName(), parameter.getOgnlExpression());
 		if(value == null)
 			return parameter.getDefaultValue();
 		return value;
@@ -99,14 +101,8 @@ public class ParameterContext {
 		}
 		
 		InvokerParameterValues values = new InvokerParameterValues(parameters.length, StringUtil.notEmpty(parameters[0].getTargetName()));
-		InvokerParameter parameter;
 		for(byte i=0;i<parameters.length;i++) {
-			parameter = parameters[i];
-			if(StringUtil.isEmpty(parameter.getName())) {
-				values.addValue(parameter.getDefaultValue(), i, parameter.getTargetName());
-			}else {
-				values.addValue(getValue(parameter), i, parameter.getTargetName());
-			}
+			values.addValue(getValue(parameters[i]), i, parameters[i].getTargetName());
 		}
 		return values;
 	}

@@ -8,7 +8,7 @@ public class InvokerParameter extends Parameter {
 	private String targetName;
 
 	public InvokerParameter(String name, Scope scope, Object defaultValue, String targetName) {
-		super(name, scope, defaultValue, false);
+		super(name, false, scope, defaultValue);
 		this.targetName = targetName;
 	}
 	

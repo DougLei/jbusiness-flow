@@ -17,12 +17,12 @@ public class SqlOpAction extends Action {
 	private static final Logger logger = LoggerFactory.getLogger(SqlOpAction.class);
 	private Sql sql;
 	private InvokerParameter[] parameters;
-	private QueryConfig queryConfig;
+	private QueryExecuter queryExecuter;
 	
-	public SqlOpAction(Sql sql, InvokerParameter[] parameters, QueryConfig queryConfig, ResultParameter result) {
+	public SqlOpAction(Sql sql, InvokerParameter[] parameters, QueryExecuter queryExecuter, ResultParameter result) {
 		this.sql = sql;
 		this.parameters = parameters;
-		this.queryConfig = queryConfig;
+		this.queryExecuter = queryExecuter;
 		super.result = result;
 	}
 	
@@ -30,12 +30,9 @@ public class SqlOpAction extends Action {
 	public Object execute(ExecuteParameter executeParameter) {
 		if(logger.isDebugEnabled())
 			logger.debug("执行[{}]", getClass().getName());
-		setResult(sql.invoke(parameters, queryConfig, executeParameter));
-		return null;
-	}
-	
-	@Override
-	protected Object setResult(Object value) {
+		
+		executeParameter.updateQueryExecuter(queryExecuter);
+		setResult(sql.invoke(parameters, executeParameter));
 		return null;
 	}
 }

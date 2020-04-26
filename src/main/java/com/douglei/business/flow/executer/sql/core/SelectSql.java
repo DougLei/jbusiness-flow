@@ -2,6 +2,7 @@ package com.douglei.business.flow.executer.sql.core;
 
 import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.action.ExecuteParameter;
+import com.douglei.business.flow.executer.action.impl.sql.op.QueryExecuter;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.SqlData;
@@ -35,7 +36,7 @@ public class SelectSql extends Sql {
 		SqlData sqlData = new SqlData();
 		appendWiths2SqlData(sqlData);
 		Component.appendComponents2SqlData(selects, sqlData);
-		return executeParameter.getSession().query(sqlData.getSql(), sqlData.getParameterValues());
+		return executeParameter.getQueryExecuter().executeQuery(executeParameter.getSession(), sqlData.getSql(), sqlData.getParameterValues());
 	}
 	
 	// 追加with子句
@@ -47,7 +48,7 @@ public class SelectSql extends Sql {
 	}
 	
 	@Override
-	public DataType resultDataType() {
-		return DataType.LIST;
+	public DataType resultDataType(QueryExecuter queryExecuter) {
+		return queryExecuter.resultDataType();
 	}
 }

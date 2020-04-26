@@ -9,6 +9,7 @@
 		"name":"", // 配置的sql名称
 		"params":[{ // 传入要使用的参数配置
 			"name":"", // 参数名(当前业务流中), 可为null, 如果为null, 则取defaultValue
+			"nameRequired":true, // 参数名是否必须, 默认为true
 			"scope":1, // 参数所在的范围(当前业务流中)
 			"defaultValue":"", // 默认值
 			"targetName":"" // 目标参数名, 即将该值传递给sql中对应名称的参数, 可为空
@@ -18,22 +19,43 @@
 		"queryConfig":{ // 针对查询语句时的配置, 可不配置, 不配置时, 为一般查询
 			"type":0, // 查询的类型, 0一般查询(返回list), 1唯一查询, 2分页查询, 3递归查询, 4分页递归查询, 默认为0
 			
-			// 分页查询配置
-			"pageNum":{ // 第几页
+			// 分页查询配置, 配置的结构与sql_op中params的配置结构相同, 但是不使用targetName
+			"pageNum":{ // 第几页, integer类型
+				"name":"",
+				"scope":1,
+				"defaultValue":1
 			},
-			"pageSize":{ // 一页的数量
+			"pageSize":{ // 一页的数量, integer类型
+				"name":"",
+				"scope":10,
+				"defaultValue":10
 			},
 			
 			// 递归查询配置
-			"deep":{ // 递归的深度, 小于等于0表示为无限递归
+			"deep":{ // 递归的深度, 小于等于0表示为无限递归, integer类型
+				"name":"",
+				"scope":1,
+				"defaultValue":2
 			},
-			"pkColumnName":{ // 存储主键的列名
+			"pkColumnName":{ // 存储主键的列名, string类型
+				"name":"",
+				"scope":1,
+				"defaultValue":"ID"
 			},
-			"parentPkColumnName":{ // 存储父级主键的列名
+			"parentPkColumnName":{ // 存储父级主键的列名, string类型
+				"name":"",
+				"scope":1,
+				"defaultValue":"PARENT_ID"
 			},
-			"parentValue":{ // 递归语句中, 父主键的值, 可以是单个值, 也可以是数组, 也可以是List, 如果传入null, 则表示查询parentPkColumnName is null的数据
+			"parentValue":{ // 递归语句中, 父主键的值, 可以是单个值, 也可以是数组, 也可以是List, 如果传入null, 则表示查询parentPkColumnName is null的数据, object类型
+				"name":"",
+				"scope":1,
+				"defaultValue":null
 			},
-			"childNodeName":{ // 父级存储子集的节点名称
+			"childNodeName":{ // 父级存储子集的节点名称, string类型
+				"name":"",
+				"scope":1,
+				"defaultValue":"CHILDREN"
 			}
 			
 			// 分页递归查询, 合并分页查询配置和递归查询配置

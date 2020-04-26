@@ -23,7 +23,8 @@ public class ParameterResolver {
 	 * @return
 	 */
 	public static Parameter parseParameter(JSONObject json) {
-		return new Parameter(json.getString("name"), Scope.toValue(json.getByteValue("scope")), json.get("defaultValue"));
+		Boolean nameRequired = json.getBoolean("nameRequired");
+		return new Parameter(json.getString("name"), (nameRequired==null?true:nameRequired), Scope.toValue(json.getByteValue("scope")), json.get("defaultValue"));
 	}
 	
 	// -----------------------------------------------------------------------------------------------------------
