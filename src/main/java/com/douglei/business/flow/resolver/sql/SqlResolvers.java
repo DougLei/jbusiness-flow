@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
+import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.resolver.ParameterResolver;
 import com.douglei.business.flow.resolver.action.impl.sql.op.SqlDefinedParameterContext;
@@ -49,7 +50,7 @@ public class SqlResolvers {
 	 * @return
 	 */
 	public static Sql parse(String name, JSONObject sqlJSON) {
-		DeclaredParameter[] parameters = SqlDefinedParameterContext.set(ParameterResolver.parseDeclaredParameters(sqlJSON.getJSONArray("params")));
+		DeclaredParameter[] parameters = SqlDefinedParameterContext.set(ParameterResolver.parseDeclaredParameters(sqlJSON.getJSONArray("params"), Scope.LOCAL));
 		SqlResolver resolver = MAP.get(sqlJSON.getString("type").toUpperCase());
 		if(logger.isDebugEnabled())
 			logger.debug("使用[{}]解析器解析sql", resolver.getClass().getName());

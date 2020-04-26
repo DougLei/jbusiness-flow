@@ -23,13 +23,6 @@ public class Method {
 	
 	protected Method(String name, DeclaredParameter[] parameters) {
 		this.name = name;
-		if(parameters != null) {
-			// 如果参数的范围不是本地参数, 则修改为本地参数
-			for (DeclaredParameter parameter : parameters) {
-				if(parameter.getScope() != Scope.LOCAL)
-					parameter.updateScope(Scope.LOCAL);
-			}
-		}
 		this.parameters = parameters;
 	}
 	public Method(String name, DeclaredParameter[] parameters, Action[] actions, Return return_) {

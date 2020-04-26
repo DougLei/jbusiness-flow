@@ -11,6 +11,7 @@ import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.method.Method;
 import com.douglei.business.flow.executer.method.Return;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
+import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.resolver.action.ActionResolvers;
 import com.douglei.business.flow.resolver.sql.SqlResolvers;
@@ -133,7 +134,7 @@ public class ReferenceResolver {
 			if(methodJSON == null) 
 				throw new NullPointerException("不存在名为"+name+"的方法");
 			
-			DeclaredParameter[] parameters = ParameterResolver.parseDeclaredParameters(methodJSON.getJSONArray("params"));
+			DeclaredParameter[] parameters = ParameterResolver.parseDeclaredParameters(methodJSON.getJSONArray("params"), Scope.LOCAL);
 			Action[] actions = parseAction_(methodJSON.getJSONArray("actions"));
 			
 			Return return_ = null;
