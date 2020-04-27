@@ -34,6 +34,14 @@
 		"scope": 1,
 		"dataType": "integer",
 		"defaultValue": 100
+	}, {
+		"name": "pageNum",
+		"scope": 1,
+		"dataType": "integer"
+	}, {
+		"name": "pageSize",
+		"scope": 1,
+		"dataType": "integer"
 	}],
 
 	"events": [{
@@ -43,14 +51,25 @@
 		"actions": [{
 			"type": "sql_op",
 			"content": {
-				"name": "deleteShopping",
+				"name": "queryProductsByShoppingCarId",
 				"params": [{
 					"name": "shoppingCarId",
 					"scope": 1
-				}]
+				}],
+				"queryConfig":{
+					"type":2,
+					"pageNum":{
+						"name":"pageNum",
+						"scope":1
+					},
+					"pageSize":{
+						"name":"pageSize",
+						"scope":1
+					}
+				}
 			},
 			"result": {
-				"name": "影响的条数",
+				"name": "商品集合",
 				"scope": 3
 			}
 		}]
@@ -171,6 +190,43 @@
 						"paramName": "shoppingCarId"
 					}],
 					"cop": "eq"
+				}]
+			}]
+		}
+	},{
+		"type": "select",
+		"name": "queryProductsByShoppingCarId",
+		"params": [{
+			"name": "shoppingCarId",
+			"description": "购物车id",
+			"scope": 5,
+			"dataType": "string",
+			"required": true
+		}],
+		"content": {
+			"selects": [{
+				"results": [{
+					"column": "product_name"
+				}, {
+					"column": "product_type"
+				}, {
+					"column": "product_price"
+				}, {
+					"column": "product_count"
+				}],
+				"table": {
+					"name": "shopping_car"
+				},
+				"whereGroups": [{
+					"conditions": [{
+						"left": {
+							"column": "shopping_car_id"
+						},
+						"rights": [{
+							"paramName": "shoppingCarId"
+						}],
+						"cop": "eq"
+					}]
 				}]
 			}]
 		}
