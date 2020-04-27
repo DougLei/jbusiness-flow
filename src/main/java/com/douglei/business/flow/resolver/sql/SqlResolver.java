@@ -187,6 +187,9 @@ public abstract class SqlResolver {
 	}
 	// 解析condition中right部分
 	private Value[] parseRights(JSONArray array) {
+		if(array == null || array.size() == 0)
+			throw new NullPointerException("条件右边的值不能为空");
+		
 		Value[] rights = new Value[array.size()];
 		for(byte i=0;i<array.size();i++) {
 			rights[i] = parseValue(array.getJSONObject(i));

@@ -23,6 +23,7 @@ public class Condition implements Component{
 
 	public void setRights(Value[] rights) {
 		this.rights = rights;
+		this.cop = cop.correct(rights.length);
 	}
 	
 	/**

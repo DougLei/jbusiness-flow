@@ -11,8 +11,22 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public enum CompareType {
-	EQ("NE", "="),
-	NE("EQ", "!="),
+	EQ("NE", "="){
+		@Override
+		public CompareType correct(int rightValueCount) {
+			if(rightValueCount == 1)
+				return this;
+			return IN;
+		}
+	},
+	NE("EQ", "!="){
+		@Override
+		public CompareType correct(int rightValueCount) {
+			if(rightValueCount == 1)
+				return this;
+			return NIN;
+		}
+	},
 	GT("LT", ">"),
 	GE("LE", ">="),
 	LT("GT", "<"),
@@ -33,8 +47,22 @@ public enum CompareType {
 			BTN.append2SqlData(left, rights, sqlData);
 		}
 	},
-	IN("NIN", " IN ", true),
-	NIN("IN", " NOT IN ", true),
+	IN("NIN", " IN ", true){
+		@Override
+		public CompareType correct(int rightValueCount) {
+			if(rightValueCount > 1)
+				return this;
+			return EQ;
+		}
+	},
+	NIN("IN", " NOT IN ", true){
+		@Override
+		public CompareType correct(int rightValueCount) {
+			if(rightValueCount > 1)
+				return this;
+			return NE;
+		}
+	},
 	LIKE("NLIKE", " LIKE "),
 	NLIKE("LIKE", " NOT LIKE "),
 	NULL("NNULL", " IS NULL "),
@@ -53,6 +81,26 @@ public enum CompareType {
 	private CompareType(String inversion, String linkSymbol, boolean multiRightValues) {
 		this(inversion, linkSymbol);
 		this.multiRightValues = multiRightValues;
+	}
+	
+	public static CompareType toValue(String value) {
+		if(StringUtil.notEmpty(value)) {
+			value = value.trim().toUpperCase();
+			
+			boolean isInversion = false;
+			if(isInversion = value.charAt(0) == '!') {
+				value = value.substring(1);
+			}
+			for(CompareType ct : CompareType.values()) {
+				if(ct.name().equals(value)) {
+					if(isInversion) {
+						return CompareType.toValue(ct.inversion);
+					}
+					return ct;
+				}
+			}
+		}
+		throw new CompareTypeMatchingException(value);
 	}
 	
 	/**
@@ -75,23 +123,14 @@ public enum CompareType {
 		}
 	}
 	
-	public static CompareType toValue(String value) {
-		if(StringUtil.notEmpty(value)) {
-			value = value.trim().toUpperCase();
-			
-			boolean isInversion = false;
-			if(isInversion = value.charAt(0) == '!') {
-				value = value.substring(1);
-			}
-			for(CompareType ct : CompareType.values()) {
-				if(ct.name().equals(value)) {
-					if(isInversion) {
-						return CompareType.toValue(ct.inversion);
-					}
-					return ct;
-				}
-			}
-		}
-		throw new CompareTypeMatchingException(value);
+	/**
+	 * 根据右边的参数的数量, 修正CompareType, 
+	 * 例如CompareType为eq, rights有多个, 将CompareType应为in, 而不能再是eq
+	 * 当然, 如果CompareType和右边的参数数量匹配, 则不用修正
+	 * @param rightValueCount
+	 * @return 修正后的CompareType
+	 */
+	public CompareType correct(int rightValueCount) {
+		return this;
 	}
 }
