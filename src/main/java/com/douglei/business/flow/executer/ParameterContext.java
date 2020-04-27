@@ -83,7 +83,7 @@ public class ParameterContext {
 	 */
 	public static Object getValue(Parameter parameter) {
 		Object value = null;
-		if(StringUtil.notEmpty(parameter.getName()))
+		if(parameter.getName() == null)
 			value = PARAMETER_SCOPES.get().get(parameter.getScope()).getValue(parameter.getName(), parameter.getOgnlExpression());
 		if(value == null)
 			return parameter.getDefaultValue();

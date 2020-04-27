@@ -17,14 +17,18 @@ public class Parameter {
 		this(name, true, scope, defaultValue);
 	}
 	public Parameter(String name, boolean nameRequired, Scope scope, Object defaultValue) {
-		if(nameRequired && StringUtil.isEmpty(name))
+		boolean nameEmpty = StringUtil.isEmpty(name);
+		if(nameRequired && nameEmpty)
 			throw new NullPointerException("参数名不能为空");
-		short dot = (short) name.indexOf(".");
-		if(dot > -1) { // 证明是ognl表达式
-			this.name = name.substring(0, dot);
-			this.ognlExpression = name.substring(dot+1);
-		}else {
-			this.name = name;
+		
+		if(!nameEmpty) {
+			short dot = (short) name.indexOf(".");
+			if(dot > -1) { // 证明是ognl表达式
+				this.name = name.substring(0, dot);
+				this.ognlExpression = name.substring(dot+1);
+			}else {
+				this.name = name;
+			}
 		}
 		this.scope = scope;
 		this.defaultValue = defaultValue;

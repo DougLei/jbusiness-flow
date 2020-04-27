@@ -12,6 +12,8 @@
 	
 	"valuesType":0, // values的类型, 0表示值插入, 1表示子查询插入
 	"values":[{ // 值插入
+		"conditionGroups":[{}], // 条件, 可为空, 默认为true, 如果配置了, 则只有结果为true, 该内容才会在sql中出现
+	
 		// 优先级排序: column > value > paramName > function > select
 		"column":"", // 列名, 在insert中不使用, 在其他地方会使用
 		

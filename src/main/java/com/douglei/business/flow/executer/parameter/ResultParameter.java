@@ -11,8 +11,7 @@ public class ResultParameter extends Parameter {
 	
 	public ResultParameter() {}
 	public ResultParameter(String name, Scope scope, DataType dataType) {
-		super.name = name;
-		super.scope = scope;
+		super(name, scope, null);
 		this.dataType = dataType;
 	}
 	
