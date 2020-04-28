@@ -6,6 +6,7 @@ import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.SqlData;
+import com.douglei.business.flow.executer.sql.component.insert.Column;
 import com.douglei.business.flow.executer.sql.component.select.Select;
 import com.douglei.business.flow.resolver.action.impl.sql.op.SqlDefinedParameterContext;
 import com.douglei.tools.utils.StringUtil;
@@ -15,8 +16,7 @@ import com.douglei.tools.utils.datatype.dateformat.DateFormatUtil;
  * 
  * @author DougLei
  */
-public class Value implements Component{
-	private String column;
+public class Value extends Column{
 	
 	private Object value; 
 	private DeclaredParameter parameter;
@@ -29,9 +29,6 @@ public class Value implements Component{
 	private Function function;
 	private Select[] selects;
 	
-	public void setColumn(String column) {
-		this.column = column;
-	}
 	public void setValue(Object value, Boolean placeholder, String valuePrefix, String valueSuffix, String format) {
 		this.dataType = DataType.toValue(value);
 		this.placeholder = placeholder == null?true:placeholder;

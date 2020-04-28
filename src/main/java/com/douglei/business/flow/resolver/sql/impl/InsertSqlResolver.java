@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.component.Value;
+import com.douglei.business.flow.executer.sql.component.insert.Column;
 import com.douglei.business.flow.executer.sql.core.InsertSql;
 import com.douglei.business.flow.resolver.sql.SqlResolver;
 import com.douglei.tools.utils.CollectionUtil;
@@ -24,26 +25,37 @@ public class InsertSqlResolver extends SqlResolver{
 	public Sql parse(String name, DeclaredParameter[] parameters, JSONObject content) {
 		InsertSql sql = new InsertSql(name, parameters, content.getByteValue("valuesType"));
 		sql.setTable(parseTable(content.getJSONObject("table")));
+		sql.setColumns(parseColumns(content.getJSONArray("columns")));
 		
-		JSONArray array = content.getJSONArray("columns");
-		if(CollectionUtil.unEmpty(array)) {
-			sql.setColumns(array.toArray(new String[array.size()]));
-		}
-		
-		array = content.getJSONArray("values");
 		switch(sql.getValuesType()) {
 			case InsertSql.VALUES_TYPE_VALUE:
-				short size = (short) array.size();
-				Value[] values = new Value[size];
-				for(short i=0;i<size;i++) {
-					values[i] = parseValue(array.getJSONObject(i));
-				}
-				sql.setValues(values);
+				sql.setValues(parseValues(content.getJSONArray("values")));
 				break;
 			case InsertSql.VALUES_TYPE_SELECT:
-				sql.setValues(parseSelects(array));
+				sql.setValues(parseSelects(content.getJSONArray("values")));
 				break;
 		}
 		return sql;
+	}
+	
+	// 解析column数组
+	private Column[] parseColumns(JSONArray array) {
+		if(CollectionUtil.isEmpty(array))
+			return null;
+		
+		Column[] columns = new Column[array.size()];
+		for(int i=0;i<array.size();i++) {
+			columns[i] = new Column(array.getJSONObject(i).getString("column"));
+		}
+		return columns;
+	}
+
+	// 解析Value数组
+	private Value[] parseValues(JSONArray array) {
+		Value[] values = new Value[array.size()];
+		for(int i=0;i<array.size();i++) {
+			values[i] = parseValue(array.getJSONObject(i));
+		}
+		return values;
 	}
 }

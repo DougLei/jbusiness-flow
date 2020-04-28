@@ -6,6 +6,7 @@ import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.Component;
 import com.douglei.business.flow.executer.sql.component.Table;
+import com.douglei.business.flow.executer.sql.component.insert.Column;
 
 /**
  * 
@@ -17,7 +18,7 @@ public class InsertSql extends Sql {
 	public static final byte VALUES_TYPE_SELECT = 1; // values的类型: 子查询
 	
 	private Table table;
-	private String[] columns;
+	private Column[] columns;
 	private byte valuesType;
 	private Component[] values; // 可能是value数组, 也可能是select
 	
@@ -29,7 +30,7 @@ public class InsertSql extends Sql {
 	public void setTable(Table table) {
 		this.table = table;
 	}
-	public void setColumns(String[] columns) {
+	public void setColumns(Column[] columns) {
 		this.columns = columns;
 	}
 	public void setValues(Component[] values) {
@@ -51,11 +52,7 @@ public class InsertSql extends Sql {
 	private void appendColumns2SqlData(SqlData sqlData) {
 		if(columns != null) {
 			sqlData.appendSql('(');
-			for(int i=0;i<columns.length;i++) {
-				sqlData.appendSql(columns[i]);
-				if(i < columns.length-1)
-					sqlData.appendSql(',');
-			}
+			Component.appendComponents2SqlData(columns, sqlData);
 			sqlData.appendSql(')');
 		}
 	}
