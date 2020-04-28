@@ -6,7 +6,7 @@ import com.douglei.business.flow.executer.sql.SqlData;
  * 
  * @author DougLei
  */
-public class Function implements Component{
+public class Function extends Component{
 	private String name; // 函数名
 	private Value[] values;
 	

@@ -54,7 +54,6 @@ public class BusinessFlowResolver {
 		
 		// 通过flow, 将event连接起来, 如果只有一个节点, 可以没有连线
 		if(CollectionUtil.unEmpty(flows)) {
-			ConditionResolver conditionResolver = new ConditionResolver(referenceResolver);
 			Flow flow;
 			for(int index=0;index<flows.size();index++) {
 				json = flows.getJSONObject(index);
@@ -62,7 +61,7 @@ public class BusinessFlowResolver {
 								json.getByteValue("order"), 
 								json.getString("sourceEvent"), 
 								json.getString("targetEvent"),
-								conditionResolver.parse(json.getJSONArray("conditionGroups")));
+								ConditionResolver.parse(json.getJSONArray("conditionGroups"), referenceResolver));
 				eventMap.get(flow.getSourceEvent()).linkFlows(flow);// 将sourceEvent和flow关联
 				flow.linkEvent(eventMap.get(flow.getTargetEvent()));// 将targetEvent和flow关联
 			}

@@ -9,7 +9,7 @@ import com.douglei.business.flow.executer.sql.component.Value;
  * 
  * @author DougLei
  */
-public class Condition implements Component{
+public class Condition extends Component{
 	private Value left;
 	private Value[] rights;
 	private CompareType cop;

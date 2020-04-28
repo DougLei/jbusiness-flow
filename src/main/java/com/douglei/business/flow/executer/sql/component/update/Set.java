@@ -8,7 +8,7 @@ import com.douglei.business.flow.executer.sql.component.Value;
  * 
  * @author DougLei
  */
-public class Set implements Component{
+public class Set extends Component{
 	private String column;
 	private Value value;
 	

@@ -8,7 +8,7 @@ import com.douglei.business.flow.executer.sql.component.Component;
  * 
  * @author DougLei
  */
-public class ConditionGroup implements Component {
+public class ConditionGroup extends Component {
 	private ConditionGroup[] conditionGroups;
 	private Condition[] conditions;
 	private LogicalOP cgcop;

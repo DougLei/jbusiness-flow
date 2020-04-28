@@ -7,7 +7,7 @@ import com.douglei.business.flow.executer.sql.component.Component;
  * 
  * @author DougLei
  */
-public class With implements Component{
+public class With extends Component{
 	private String alias;
 	private String[] columns;
 	private Select[] selects;

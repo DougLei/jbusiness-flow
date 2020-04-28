@@ -7,7 +7,7 @@ import com.douglei.business.flow.executer.sql.component.Component;
  * 
  * @author DougLei
  */
-public class ConditionGroups implements Component {
+public class ConditionGroups extends Component {
 	private String prefixSql;
 	private ConditionGroup[] groups;
 	

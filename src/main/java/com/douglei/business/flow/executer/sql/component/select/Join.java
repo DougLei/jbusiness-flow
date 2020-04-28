@@ -9,7 +9,7 @@ import com.douglei.business.flow.executer.sql.component.select.condition.Conditi
  * 
  * @author DougLei
  */
-public class Join implements Component{
+public class Join extends Component{
 	private Type type;
 	private Table table;
 	private ConditionGroups onGroups;

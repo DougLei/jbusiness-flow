@@ -8,7 +8,7 @@ import com.douglei.business.flow.executer.sql.component.Function;
  * group by 和 order by
  * @author DougLei
  */
-class GroupAndOrder implements Component{
+class GroupAndOrder extends Component{
 	public static final byte ASC = 0;
 	public static final byte DESC = 1;
 	

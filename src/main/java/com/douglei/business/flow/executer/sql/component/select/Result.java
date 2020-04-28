@@ -9,7 +9,7 @@ import com.douglei.tools.utils.StringUtil;
  * 
  * @author DougLei
  */
-public class Result implements Component{
+public class Result extends Component{
 	private String alias;
 	private Value value;
 	

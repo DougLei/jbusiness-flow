@@ -10,7 +10,7 @@ import com.douglei.business.flow.executer.sql.component.select.group.and.order.G
  * 
  * @author DougLei
  */
-public class Select implements Component{
+public class Select extends Component{
 	private Result[] results;
 	private Table table;
 	

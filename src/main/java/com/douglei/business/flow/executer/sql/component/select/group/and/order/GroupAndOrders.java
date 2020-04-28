@@ -8,7 +8,7 @@ import com.douglei.business.flow.executer.sql.component.Function;
  * 
  * @author DougLei
  */
-public class GroupAndOrders implements Component{
+public class GroupAndOrders extends Component{
 	private String prefixSql;
 	private GroupAndOrder[] groupAndOrders;
 	

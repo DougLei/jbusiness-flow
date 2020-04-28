@@ -10,7 +10,7 @@ import com.douglei.tools.utils.StringUtil;
  * 
  * @author DougLei
  */
-public class Table implements Component{
+public class Table extends Component{
 	private String alias;
 	private String name;
 	

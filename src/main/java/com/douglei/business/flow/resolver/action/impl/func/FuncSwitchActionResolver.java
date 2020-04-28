@@ -23,12 +23,10 @@ public class FuncSwitchActionResolver extends ActionResolver {
 	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
 		JSONArray contents = actionJSON.getJSONArray("content");
 		FuncSwitchAction action = new FuncSwitchAction(contents.size());
-		ConditionResolver conditionResolver = new ConditionResolver(referenceResolver);
 		JSONObject content;
 		for(byte i=0;i<contents.size();i++) {
 			content = contents.getJSONObject(i);
-			action.add(i, 
-					conditionResolver.parse(content.getJSONArray("conditionGroups")), 
+			action.add(i, ConditionResolver.parse(content.getJSONArray("conditionGroups"), referenceResolver), 
 					referenceResolver.parseAction(content.get("actions")));
 		}
 		return action;

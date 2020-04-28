@@ -19,8 +19,7 @@ public class SqlDefinedParameterContext {
 	 */
 	public static DeclaredParameter[] set(DeclaredParameter[] parameters) {
 		if(parameters == null) {
-			if(PARAMETERS.get() != null)
-				PARAMETERS.remove();
+			PARAMETERS.remove();
 		}else {
 			Map<String, DeclaredParameter> map = new HashMap<String, DeclaredParameter>(parameters.length);
 			for (DeclaredParameter p : parameters) {

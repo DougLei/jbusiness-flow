@@ -7,7 +7,7 @@ import com.douglei.business.flow.executer.sql.component.Component;
  * 
  * @author DougLei
  */
-public class Column implements Component{
+public class Column extends Component{
 	protected String column;
 	
 	protected Column() {}

@@ -48,7 +48,8 @@ public class InsertSql extends Sql {
 		appendValues2SqlData(sqlData);
 		return executeParameter.getSession().executeUpdate(sqlData.getSql(), sqlData.getParameterValues());
 	}
-
+	
+	// columns
 	private void appendColumns2SqlData(SqlData sqlData) {
 		if(columns != null) {
 			sqlData.appendSql('(');
@@ -57,6 +58,7 @@ public class InsertSql extends Sql {
 		}
 	}
 	
+	// values
 	private void appendValues2SqlData(SqlData sqlData) {
 		sqlData.appendSql(' ');
 		if(valuesType == VALUES_TYPE_VALUE) {
