@@ -7,7 +7,6 @@ import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.component.select.With;
 import com.douglei.business.flow.executer.sql.core.SelectSql;
 import com.douglei.business.flow.resolver.sql.SqlResolver;
-import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 
@@ -39,12 +38,6 @@ public class SelectSqlResolver extends SqlResolver{
 		
 		sql.setSelects(parseSelects(content.getJSONArray("selects")));
 		return sql;
-	}
-
-	private String[] parseColumns(JSONArray array) {
-		if(CollectionUtil.unEmpty(array))
-			return array.toArray(new String[array.size()]);
-		return null;
 	}
 }
  

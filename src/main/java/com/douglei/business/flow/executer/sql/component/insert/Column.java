@@ -2,6 +2,7 @@ package com.douglei.business.flow.executer.sql.component.insert;
 
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.Component;
+import com.douglei.tools.utils.StringUtil;
 
 /**
  * 
@@ -16,7 +17,8 @@ public class Column extends Component{
 	}
 
 	public void setColumn(String column) {
-		this.column = column;
+		if(StringUtil.notEmpty(column))
+			this.column = column;
 	}
 	
 	@Override

@@ -1,15 +1,14 @@
 package com.douglei.business.flow.executer.sql.component.update;
 
 import com.douglei.business.flow.executer.sql.SqlData;
-import com.douglei.business.flow.executer.sql.component.Component;
 import com.douglei.business.flow.executer.sql.component.Value;
+import com.douglei.business.flow.executer.sql.component.insert.Column;
 
 /**
  * 
  * @author DougLei
  */
-public class Set extends Component{
-	private String column;
+public class Set extends Column{
 	private Value value;
 	
 	public Set(String column, Value value) {

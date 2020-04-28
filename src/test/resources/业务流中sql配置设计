@@ -9,12 +9,12 @@
 		"name":""
 	}, 
 	"columns":[{
-		"conditionGroups":[{}], // 条件, 可为空, 默认为true, 如果配置了, 则只有结果为true, 该内容才会在sql中出现, 即为动态sql
+		"dynamic":[{}], // 动态配置, 里面配置的是条件组, 可为空, 默认为true, 如果配置了, 则只有结果为true, 该内容才会在sql中出现, 即为动态sql
 		"column":"" // 要插入得列名
 	}], 
 	"valuesType":0, // values的类型, 0表示值插入, 1表示子查询插入
 	"values":[{ // 值插入
-		"conditionGroups":[{}], 
+		"dynamic":[{}], 
 	
 		// 优先级排序: column > value > paramName > function > select
 		"column":"", // 列名
@@ -62,6 +62,7 @@
 		"name":""
 	}, 
 	"sets":[{
+		"dynamic":[{}],
 		"column":"", // 列名
 		"value":{
 			... // 配置的具体信息参看insert的value配置
@@ -73,12 +74,19 @@
 // select
 {
 	"withs":[{ // with字句, 非必须配置
+		"dynamic":[{}],
 		"alias":"", // 对with查询定义的别名,
-		"columns":["", ""], // 针对with查询的列名定义
+		"columns":[{ // 针对with查询的列名定义
+			"dynamic":[{}],
+			"column":""
+		}], 
 		"selects":[{}] // 具体的查询语句
 	}],
 	"selects":[{
+		"dynamic":[{}],
 		"results":[{ // 查询结果集, 即列名的配置
+			"dynamic":[{}],
+		
 			// 优先级排序: column > value > paramName > function > select
 			"alias":"", // 别名
 			
@@ -106,6 +114,8 @@
 			"selects":[{}] // 子查询, 具体的配置参看select中的selects
 		},
 		"joins":[{ // join
+			"dynamic":[{}],
+		
 			"type":0, // 0.inner join, 1.left join, 2.right join, 3.full join
 			
 			// 以下配置的具体信息参看selects的table配置
@@ -115,8 +125,10 @@
 			}]
 		}],
 		"whereGroups":[{ // where
+			"dynamic":[{}],
 			"conditionGroups":[{}],
 			"conditions":[{
+				"dynamic":[{}],
 				"left":{ // 主要是列的信息
 					// 参考insert的values中的value配置
 				},
@@ -130,6 +142,7 @@
 			"op":0
 		}],
 		"groupBys":[{ // group by
+			"dynamic":[{}],
 			"column":"", // 列名
 			"function":{} // 参看selects的results中的function配置
 		}],
@@ -137,6 +150,7 @@
 			// 参看select中whereGroups中的配置
 		}],
 		"orderBys":[{ // order by
+			"dynamic":[{}],
 			// 优先级排序: column > function
 			"column":"", // 列名
 			"function":{}, // 参看selects的results中的function配置

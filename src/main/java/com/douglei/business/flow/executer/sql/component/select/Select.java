@@ -4,7 +4,6 @@ import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.Component;
 import com.douglei.business.flow.executer.sql.component.Table;
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroups;
-import com.douglei.business.flow.executer.sql.component.select.group.and.order.GroupAndOrders;
 
 /**
  * 
@@ -16,9 +15,9 @@ public class Select extends Component{
 	
 	private Join[] joins;
 	private ConditionGroups whereGroups;
-	private GroupAndOrders groupBys;
+	private GroupBy[] groupBys;
 	private ConditionGroups havingGroups;
-	private GroupAndOrders orderBys;
+	private OrderBy[] orderBys;
 
 	private UnionType union;
 	public Select(byte union) {
@@ -37,13 +36,13 @@ public class Select extends Component{
 	public void setWhereGroups(ConditionGroups whereGroups) {
 		this.whereGroups = whereGroups;
 	}
-	public void setGroupBys(GroupAndOrders groupBys) {
+	public void setGroupBys(GroupBy[] groupBys) {
 		this.groupBys = groupBys;
 	}
 	public void setHavingGroups(ConditionGroups havingGroups) {
 		this.havingGroups = havingGroups;
 	}
-	public void setOrderBys(GroupAndOrders orderBys) {
+	public void setOrderBys(OrderBy[] orderBys) {
 		this.orderBys = orderBys;
 	}
 
@@ -58,12 +57,16 @@ public class Select extends Component{
 			Component.appendComponents2SqlData(joins, sqlData);
 		if(whereGroups != null)
 			whereGroups.append2SqlData(sqlData);
-		if(groupBys != null)
-			groupBys.append2SqlData(sqlData);
+		if(groupBys != null) {
+			sqlData.appendSql(" GROUP BY ");
+			Component.appendComponents2SqlData(groupBys, sqlData);
+		}
 		if(havingGroups != null)
 			havingGroups.append2SqlData(sqlData);
-		if(orderBys != null)
-			orderBys.append2SqlData(sqlData);
+		if(orderBys != null) {
+			sqlData.appendSql(" ORDER BY ");
+			Component.appendComponents2SqlData(orderBys, sqlData);
+		}
 	}
 
 	@Override

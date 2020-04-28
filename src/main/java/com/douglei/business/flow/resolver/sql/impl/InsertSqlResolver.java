@@ -5,10 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.component.Value;
-import com.douglei.business.flow.executer.sql.component.insert.Column;
 import com.douglei.business.flow.executer.sql.core.InsertSql;
 import com.douglei.business.flow.resolver.sql.SqlResolver;
-import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 
@@ -38,18 +36,6 @@ public class InsertSqlResolver extends SqlResolver{
 		return sql;
 	}
 	
-	// 解析column数组
-	private Column[] parseColumns(JSONArray array) {
-		if(CollectionUtil.isEmpty(array))
-			return null;
-		
-		Column[] columns = new Column[array.size()];
-		for(int i=0;i<array.size();i++) {
-			columns[i] = new Column(array.getJSONObject(i).getString("column"));
-		}
-		return columns;
-	}
-
 	// 解析Value数组
 	private Value[] parseValues(JSONArray array) {
 		Value[] values = new Value[array.size()];

@@ -2,6 +2,7 @@ package com.douglei.business.flow.executer.sql.component.select;
 
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.Component;
+import com.douglei.business.flow.executer.sql.component.insert.Column;
 
 /**
  * 
@@ -9,10 +10,10 @@ import com.douglei.business.flow.executer.sql.component.Component;
  */
 public class With extends Component{
 	private String alias;
-	private String[] columns;
+	private Column[] columns;
 	private Select[] selects;
 	
-	public With(String alias, String[] columns, Select[] selects) {
+	public With(String alias, Column[] columns, Select[] selects) {
 		this.alias = alias;
 		this.columns = columns;
 		this.selects = selects;
@@ -24,12 +25,7 @@ public class With extends Component{
 		
 		if(columns != null) {
 			sqlData.appendSql('(');
-			for(int i=0;i<columns.length;i++) {
-				sqlData.appendSql(columns[i]);
-				if(i<columns.length-1) {
-					sqlData.appendSql(',');
-				}
-			}
+			Component.appendComponents2SqlData(columns, sqlData);
 			sqlData.appendSql(')');
 		}
 		

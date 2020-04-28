@@ -8,7 +8,10 @@ import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.component.Function;
 import com.douglei.business.flow.executer.sql.component.Table;
 import com.douglei.business.flow.executer.sql.component.Value;
+import com.douglei.business.flow.executer.sql.component.insert.Column;
+import com.douglei.business.flow.executer.sql.component.select.GroupBy;
 import com.douglei.business.flow.executer.sql.component.select.Join;
+import com.douglei.business.flow.executer.sql.component.select.OrderBy;
 import com.douglei.business.flow.executer.sql.component.select.Result;
 import com.douglei.business.flow.executer.sql.component.select.Select;
 import com.douglei.business.flow.executer.sql.component.select.condition.CompareType;
@@ -16,9 +19,8 @@ import com.douglei.business.flow.executer.sql.component.select.condition.Conditi
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroup;
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroups;
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionType;
-import com.douglei.business.flow.executer.sql.component.select.group.and.order.GroupAndOrderType;
-import com.douglei.business.flow.executer.sql.component.select.group.and.order.GroupAndOrders;
 import com.douglei.business.flow.resolver.action.impl.sql.op.SqlDefinedParameterContext;
+import com.douglei.tools.utils.CollectionUtil;
 import com.douglei.tools.utils.StringUtil;
 
 /**
@@ -78,10 +80,26 @@ public abstract class SqlResolver {
 		return table;
 	}
 	
+	// 解析column数组
+	protected Column[] parseColumns(JSONArray array) {
+		if(CollectionUtil.isEmpty(array))
+			return null;
+		
+		Column[] columns = new Column[array.size()];
+		for(int i=0;i<array.size();i++) {
+			columns[i] = new Column(array.getJSONObject(i).getString("column"));
+		}
+		return columns;
+	}
+	
 	// 解析Value
 	protected Value parseValue(JSONObject valueJSON) {
 		Value value = new Value();
-		
+		setValue(valueJSON, value);
+		return value;
+	}
+	// 给value中设置值
+	private void setValue(JSONObject valueJSON, Value value) {
 		Object object;
 		if(StringUtil.notEmpty(object = valueJSON.getString("column"))) {
 			value.setColumn(object.toString());
@@ -94,7 +112,6 @@ public abstract class SqlResolver {
 		}else if((object = valueJSON.getJSONArray("selects")) != null) {
 			value.setSelects(parseSelects((JSONArray)object));
 		}
-		return value;
 	}
 	
 	// ----------------------------------------------------------------------------------------------------
@@ -117,9 +134,9 @@ public abstract class SqlResolver {
 		select.setTable(parseTable(selectJSON.getJSONObject("table")));
 		select.setJoins(parseJoins(selectJSON.getJSONArray("joins")));
 		select.setWhereGroups(parseConditionGroups(ConditionType.WHERE, selectJSON));
-		select.setGroupBys(parseGroupAndOrders(GroupAndOrderType.GROUP_BY, selectJSON));
+		select.setGroupBys(parseGroupBys(selectJSON.getJSONArray("groupBys")));
 		select.setHavingGroups(parseConditionGroups(ConditionType.HAVING, selectJSON));
-		select.setOrderBys(parseGroupAndOrders(GroupAndOrderType.ORDER_BY, selectJSON));
+		select.setOrderBys(parseOrderBys(selectJSON.getJSONArray("orderBys")));
 		return select;
 	}
 	// 解析result
@@ -128,7 +145,8 @@ public abstract class SqlResolver {
 		Result[] results = new Result[array.size()];
 		for(short i=0;i<array.size();i++) {
 			resultJSON = array.getJSONObject(i);
-			results[i] = new Result(resultJSON.getString("alias"), parseValue(resultJSON));
+			results[i] = new Result(resultJSON.getString("alias"));
+			setValue(resultJSON, results[i]);
 		}
 		return results;
 	}
@@ -191,32 +209,44 @@ public abstract class SqlResolver {
 			throw new NullPointerException("条件右边的值不能为空");
 		
 		Value[] rights = new Value[array.size()];
-		for(byte i=0;i<array.size();i++) {
+		for(int i=0;i<array.size();i++) {
 			rights[i] = parseValue(array.getJSONObject(i));
 		}
 		return rights;
 	}
 
-	// 解析group by和order by
-	private GroupAndOrders parseGroupAndOrders(GroupAndOrderType type, JSONObject selectJSON) {
-		JSONArray array = selectJSON.getJSONArray(type.getJsonKey());
-		byte size = array==null?0:(byte)array.size();
-		if(size == 0) {
+	// 解析group by
+	private GroupBy[] parseGroupBys(JSONArray array) {
+		if(CollectionUtil.isEmpty(array))
 			return null;
-		}
-		GroupAndOrders groupAndOrders = new GroupAndOrders(type.getPrefixSql(), size);
 		
-		JSONObject goJSON;
-		String column;
-		for(byte i=0;i<size;i++) {
-			goJSON = array.getJSONObject(i);
-			groupAndOrders.initialGroupAndOrder(i, goJSON.getByte("sort"));
-			if(StringUtil.notEmpty(column = goJSON.getString("column"))) {
-				groupAndOrders.setColumn(i, column);
-			}else {
-				groupAndOrders.setFunction(i, parseFunction(goJSON.getJSONObject("function")));
-			}
+		GroupBy[] groupBys = new GroupBy[array.size()];
+		for(int i=0;i<array.size();i++) {
+			groupBys[i] = new GroupBy();
+			setGroupByInfo(groupBys[i], array.getJSONObject(i));
 		}
-		return groupAndOrders;
+		return groupBys;
+	}
+	
+	// 解析order by
+	private OrderBy[] parseOrderBys(JSONArray array) {
+		if(CollectionUtil.isEmpty(array))
+			return null;
+		
+		JSONObject json;
+		OrderBy[] orderBys = new OrderBy[array.size()];
+		for(int i=0;i<array.size();i++) {
+			json = array.getJSONObject(i);
+			orderBys[i] = new OrderBy(json.getByteValue("sort"));
+			setGroupByInfo(orderBys[i], json);
+		}
+		return orderBys;
+	}
+	
+	// 设置group by的信息
+	private void setGroupByInfo(GroupBy groupBy, JSONObject json) {
+		groupBy.setColumn(json.getString("column"));
+		if(groupBy.columnIsEmpty())
+			groupBy.setFunction(parseFunction(json.getJSONObject("function")));
 	}
 }
