@@ -42,6 +42,10 @@
 		"name": "pageSize",
 		"scope": 1,
 		"dataType": "integer"
+	}, {
+		"name": "dynamicTest",
+		"scope": 1,
+		"dataType": "boolean"
 	}],
 
 	"events": [{
@@ -55,18 +59,10 @@
 				"params": [{
 					"name": "shoppingCarId",
 					"scope": 1
-				}],
-				"queryConfig":{
-					"type":2,
-					"pageNum":{
-						"name":"pageNum",
-						"scope":1
-					},
-					"pageSize":{
-						"name":"pageSize",
-						"scope":1
-					}
-				}
+				},{
+					"name": "dynamicTest",
+					"scope": 1
+				}]
 			},
 			"result": {
 				"name": "商品集合",
@@ -199,8 +195,11 @@
 		"params": [{
 			"name": "shoppingCarId",
 			"description": "购物车id",
-			"scope": 5,
 			"dataType": "string",
+			"required": true
+		},{
+			"name": "dynamicTest",
+			"dataType": "boolean",
 			"required": true
 		}],
 		"content": {
@@ -218,6 +217,17 @@
 					"name": "shopping_car"
 				},
 				"whereGroups": [{
+					"dynamic":[{
+						"conditions": [{
+							"content": {
+								"op": "bool",
+								"left": {
+									"name": "dynamicTest",
+									"scope": 5
+								}
+							}
+						}]
+					}],
 					"conditions": [{
 						"left": {
 							"column": "shopping_car_id"

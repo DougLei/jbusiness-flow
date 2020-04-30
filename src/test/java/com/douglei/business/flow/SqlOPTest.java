@@ -26,6 +26,7 @@ public class SqlOPTest {
 		
 		inputValueMap.put("pageNum", 2);
 		inputValueMap.put("pageSize", 1);
+		inputValueMap.put("dynamicTest", false);
 		
 		Map<String, Object> result = opBF.execute(inputValueMap, session);
 		System.out.println(JSONObject.toJSONString(result));
