@@ -62,7 +62,18 @@
 				},{
 					"name": "dynamicTest",
 					"scope": 1
-				}]
+				}],
+				"queryConfig":{
+					"type":2,
+					"pageNum":{
+						"name":"pageNum",
+						"scope":1
+					},
+					"pageSize":{
+						"name":"pageSize",
+						"scope":1
+					}
+				}
 			},
 			"result": {
 				"name": "商品集合",
