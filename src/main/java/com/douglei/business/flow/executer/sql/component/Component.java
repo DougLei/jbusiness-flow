@@ -61,7 +61,7 @@ public abstract class Component {
 			}
 		}
 		
-		first = !first; // 将first反转
+		first = !first; // 将first反转, 这里的first可以标识是否有验证成功的组件, 只要不是第一个, 就证明有验证成功的组件
 		if(first && suffix != null)
 			sqlData.appendSql(suffix);
 		return (byte)(first?1:0);

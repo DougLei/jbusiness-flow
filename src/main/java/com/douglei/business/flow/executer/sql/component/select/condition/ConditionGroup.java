@@ -32,9 +32,12 @@ public class ConditionGroup extends Component {
 			flag += Component.appendComponents2SqlData(null, null, conditionGroups, sqlData);
 		
 		if(conditions != null) {
-			if(conditionGroups != null)
-				sqlData.appendSql(cgcop.name());
-			flag +=Component.appendComponents2SqlData(null, null, conditions, sqlData);
+			boolean existsConditionGroups = (flag == 1);
+			if(existsConditionGroups)
+				sqlData.appendSql(cgcop.sql());
+			flag += Component.appendComponents2SqlData(null, null, conditions, sqlData);
+			if(existsConditionGroups && flag == 1)
+				sqlData.removeLast(cgcop.sql().length());
 		}
 		
 		if(flag == 0) {

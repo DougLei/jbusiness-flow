@@ -22,8 +22,15 @@ public enum LogicalOP {
 	public static LogicalOP toValue(byte value) {
 		return value==0?AND:OR;
 	}
-
 	
+	private String sql;
+	private LogicalOP() {
+		this.sql = " " + name() + " ";
+	}
+	public String sql() {
+		return sql;
+	}
+
 	/**
 	 * 对bool1和bool2的值进行and/or的运算操作
 	 * @param bool1
