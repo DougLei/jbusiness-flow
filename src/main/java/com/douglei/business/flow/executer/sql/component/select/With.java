@@ -24,15 +24,8 @@ public class With extends Component{
 	@Override
 	public void append2SqlData(SqlData sqlData) {
 		sqlData.appendSql(alias);
-		
-		if(columns != null) {
-			sqlData.appendSql('(');
-			Component.appendComponents2SqlData(columns, sqlData);
-			sqlData.appendSql(')');
-		}
-		
-		sqlData.appendSql(" AS (");
-		Component.appendComponents2SqlData(selects, sqlData);
-		sqlData.appendSql(')');
+		if(columns != null) 
+			Component.appendComponents2SqlData("(", ")", columns, sqlData);
+		Component.appendComponents2SqlData(" AS (", ")", selects, sqlData);
 	}
 }

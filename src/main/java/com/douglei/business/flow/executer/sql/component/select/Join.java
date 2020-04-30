@@ -17,9 +17,19 @@ public class Join extends Component{
 	
 	public Join(ConditionValidator validator, byte type, Table table, ConditionGroupWrapper onGroups) {
 		super(validator);
-		this.type = Type.toValue(type);
+		this.type = toValue(type);
 		this.table = table;
 		this.onGroups = onGroups;
+	}
+	
+	private Type toValue(byte value) {
+		if(value == 1)
+			return Type.LEFT;
+		if(value == 2)
+			return Type.RIGHT;
+		if(value == 3)
+			return Type.FULL;
+		return Type.INNER;
 	}
 
 	@Override
@@ -31,24 +41,11 @@ public class Join extends Component{
 }
 
 enum Type{
-	INNER(" INNER JOIN "),
-	LEFT(" LEFT JOIN "),
-	RIGHT(" RIGHT JOIN "),
-	FULL(" FULL JOIN ");
+	INNER, LEFT, RIGHT, FULL;
 	
 	private String sql;
-	private Type(String sql) {
-		this.sql = sql;
-	}
-
-	static Type toValue(byte value) {
-		if(value == 1)
-			return LEFT;
-		if(value == 2)
-			return RIGHT;
-		if(value == 3)
-			return FULL;
-		return INNER;
+	private Type() {
+		this.sql = " " + name() + " JOIN ";
 	}
 
 	public String sql() {

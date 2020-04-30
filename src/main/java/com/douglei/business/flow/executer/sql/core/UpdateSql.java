@@ -44,7 +44,6 @@ public class UpdateSql extends Sql {
 	}
 
 	private void appendSets2SqlData(SqlData sqlData) {
-		sqlData.appendSql(" SET ");
-		Component.appendComponents2SqlData(sets, sqlData);
+		Component.appendComponents2SqlData(" SET ", null, sets, sqlData);
 	}
 }

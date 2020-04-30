@@ -51,22 +51,16 @@ public class InsertSql extends Sql {
 	
 	// columns
 	private void appendColumns2SqlData(SqlData sqlData) {
-		if(columns != null) {
-			sqlData.appendSql('(');
-			Component.appendComponents2SqlData(columns, sqlData);
-			sqlData.appendSql(')');
-		}
+		if(columns != null)
+			Component.appendComponents2SqlData("(", ")", columns, sqlData);
 	}
 	
 	// values
 	private void appendValues2SqlData(SqlData sqlData) {
-		sqlData.appendSql(' ');
 		if(valuesType == VALUES_TYPE_VALUE) {
-			sqlData.appendSql("values(");
-			Component.appendComponents2SqlData(values, sqlData);
-			sqlData.appendSql(')');
-		}else if(valuesType == VALUES_TYPE_SELECT && values != null) {
-			Component.appendComponents2SqlData(values, sqlData);
+			Component.appendComponents2SqlData(" values(", ")", values, sqlData);
+		}else if(valuesType == VALUES_TYPE_SELECT) {
+			Component.appendComponents2SqlData(" ", null, values, sqlData);
 		}
 	}
 }

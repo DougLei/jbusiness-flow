@@ -23,7 +23,7 @@ public class Select extends Component{
 	private UnionType union;
 	public Select(ConditionValidator validator, byte union) {
 		super(validator);
-		this.union = UnionType.toValue(union);
+		this.union = union==1?UnionType.UNION_ALL:UnionType.UNION;;
 	}
 
 	public void setResults(Result[] results) {
@@ -54,25 +54,21 @@ public class Select extends Component{
 		if(results == null) {
 			sqlData.appendSql('*');
 		}else {
-			Component.appendComponents2SqlData(results, sqlData);
+			Component.appendComponents2SqlData(null, null, results, sqlData);
 		}
 		sqlData.appendSql(" FROM ");
 		table.append2SqlData(sqlData);
 		
 		if(joins != null)
-			Component.appendComponents2SqlData(joins, sqlData);
+			Component.appendComponents2SqlData(null, null, joins, sqlData);
 		if(whereGroups != null)
 			whereGroups.append2SqlData(sqlData);
-		if(groupBys != null) {
-			sqlData.appendSql(" GROUP BY ");
-			Component.appendComponents2SqlData(groupBys, sqlData);
-		}
+		if(groupBys != null) 
+			Component.appendComponents2SqlData(" GROUP BY ", null, groupBys, sqlData);
 		if(havingGroups != null)
 			havingGroups.append2SqlData(sqlData);
-		if(orderBys != null) {
-			sqlData.appendSql(" ORDER BY ");
-			Component.appendComponents2SqlData(orderBys, sqlData);
-		}
+		if(orderBys != null) 
+			Component.appendComponents2SqlData(" ORDER BY ", null, orderBys, sqlData);
 	}
 
 	@Override
@@ -93,12 +89,6 @@ enum UnionType{
 	private String sql;
 	private UnionType(String sql) {
 		this.sql = sql;
-	}
-
-	static UnionType toValue(byte value) {
-		if(value == 1)
-			return UNION_ALL;
-		return UNION;
 	}
 
 	public String sql() {

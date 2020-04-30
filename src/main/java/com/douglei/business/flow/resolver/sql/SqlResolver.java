@@ -133,9 +133,6 @@ public abstract class SqlResolver {
 	// ----------------------------------------------------------------------------------------------------
 	// 解析selects, 因为都是数组形式配置, 所以不开放解析单个select的方法
 	protected Select[] parseSelects(JSONArray array, ReferenceResolver referenceResolver) {
-		if(CollectionUtil.isEmpty(array)) {
-			return null;
-		}
 		Select[] selects = new Select[array.size()];
 		for(int i=0;i<array.size();i++) {
 			selects[i] = parseSelect(array.getJSONObject(i), referenceResolver);
@@ -156,9 +153,8 @@ public abstract class SqlResolver {
 	}
 	// 解析result
 	private Result[] parseResults(JSONArray array, ReferenceResolver referenceResolver) {
-		if(CollectionUtil.isEmpty(array)) {
+		if(CollectionUtil.isEmpty(array))
 			return null;
-		}
 		JSONObject json;
 		Result[] results = new Result[array.size()];
 		for(int i=0;i<array.size();i++) {
@@ -170,9 +166,8 @@ public abstract class SqlResolver {
 	}
 	// 解析join
 	private Join[] parseJoins(JSONArray array, ReferenceResolver referenceResolver) {
-		if(CollectionUtil.isEmpty(array)) {
+		if(CollectionUtil.isEmpty(array))
 			return null;
-		}
 		Join[] joins = new Join[array.size()];
 		JSONObject json;
 		for(int i=0;i<array.size();i++) {
@@ -185,15 +180,13 @@ public abstract class SqlResolver {
 	// 解析条件组, 包括where, join中的on, having
 	protected ConditionGroupWrapper parseConditionGroupWrapper(ConditionType type, JSONObject json, ReferenceResolver referenceResolver) {
 		ConditionGroup[] array = parseConditionGroups_(json.getJSONArray(type.getJsonKey()), referenceResolver);
-		if(array == null) {
+		if(array == null)
 			return null;
-		}
 		return new ConditionGroupWrapper(parseConditionValidator(null, referenceResolver), type.getPrefixSql(), array);
 	}
 	private ConditionGroup[] parseConditionGroups_(JSONArray array, ReferenceResolver referenceResolver) {
-		if(CollectionUtil.isEmpty(array)) {
+		if(CollectionUtil.isEmpty(array)) 
 			return null;
-		}
 		ConditionGroup[] conditionGroups = new ConditionGroup[array.size()];
 		JSONObject json;
 		for(int i=0;i<array.size();i++) {
@@ -204,9 +197,8 @@ public abstract class SqlResolver {
 	}
 	// 解析具体的conditions
 	private Condition[] parseConditions(JSONArray array, ReferenceResolver referenceResolver) {
-		if(CollectionUtil.isEmpty(array)) {
+		if(CollectionUtil.isEmpty(array))
 			return null;
-		}
 		Condition[] conditions = new Condition[array.size()];
 		JSONObject json;
 		for(int i=0;i<array.size();i++) {

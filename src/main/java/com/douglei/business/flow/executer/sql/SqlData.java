@@ -39,6 +39,14 @@ public class SqlData {
 		return this;
 	}
 	
+	/**
+	 * 移除最后的数据
+	 * @param length 移除数据的长度
+	 */
+	public void removeLast(int length) {
+		sql.setLength(sql.length() - length);
+	}
+	
 	private List<Object> parameterValues;
 	public void addParameterValue(Object parameterValue) {
 		if(parameterValues == null)

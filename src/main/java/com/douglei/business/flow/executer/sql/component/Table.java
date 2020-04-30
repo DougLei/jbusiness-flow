@@ -48,9 +48,7 @@ public class Table extends Component{
 		}else if(function != null) {
 			function.append2SqlData(sqlData);
 		}else if(selects != null) {
-			sqlData.appendSql('(');
-			Component.appendComponents2SqlData(selects, sqlData);
-			sqlData.appendSql(')');
+			Component.appendComponents2SqlData("(", ")", selects, sqlData);
 		}
 		
 		if(alias != null) {

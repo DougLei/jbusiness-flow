@@ -20,7 +20,6 @@ public class ConditionGroupWrapper extends Component {
 
 	@Override
 	public void append2SqlData(SqlData sqlData) {
-		sqlData.appendSql(prefixSql);
-		Component.appendComponents2SqlData(groups, sqlData);
+		Component.appendComponents2SqlData(prefixSql, null, groups, sqlData);
 	}
 }

@@ -21,8 +21,7 @@ public class Function extends Component{
 	
 	@Override
 	public void append2SqlData(SqlData sqlData) {
-		sqlData.appendSql(name).appendSql('(');
-		Component.appendComponents2SqlData(values, sqlData);
-		sqlData.appendSql(')');
+		sqlData.appendSql(name);
+		Component.appendComponents2SqlData("(", ")", values, sqlData);
 	}
 }

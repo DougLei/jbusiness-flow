@@ -114,9 +114,7 @@ public enum CompareType {
 		sqlData.appendSql(linkSymbol);
 		if(rights != null) {
 			if(multiRightValues) {
-				sqlData.appendSql('(');
-				Component.appendComponents2SqlData(rights, sqlData);
-				sqlData.appendSql(')');
+				Component.appendComponents2SqlData("(", ")", rights, sqlData);
 			}else {
 				rights[0].append2SqlData(sqlData);
 			}

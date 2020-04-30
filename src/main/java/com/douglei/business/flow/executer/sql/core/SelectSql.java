@@ -35,15 +35,14 @@ public class SelectSql extends Sql {
 	protected Object invokeCore(ExecuteParameter executeParameter) {
 		SqlData sqlData = new SqlData(executeParameter);
 		appendWiths2SqlData(sqlData);
-		Component.appendComponents2SqlData(selects, sqlData);
+		Component.appendComponents2SqlData(null, null, selects, sqlData);
 		return executeParameter.getQueryExecuter().executeQuery(executeParameter.getSession(), sqlData.getSql(), sqlData.getParameterValues());
 	}
 	
 	// 追加with子句
 	private void appendWiths2SqlData(SqlData sqlData) {
 		if(withs != null) {
-			sqlData.appendSql("WITH ");
-			Component.appendComponents2SqlData(withs, sqlData);
+			Component.appendComponents2SqlData("WITH ", null, withs, sqlData);
 		}
 	}
 	

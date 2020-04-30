@@ -25,16 +25,23 @@ public class ConditionGroup extends Component {
 
 	@Override
 	public void append2SqlData(SqlData sqlData) {
+		byte flag = 0;
+		
 		sqlData.appendSql('(');
 		if(conditionGroups != null)
-			Component.appendComponents2SqlData(conditionGroups, sqlData);
+			flag += Component.appendComponents2SqlData(null, null, conditionGroups, sqlData);
 		
 		if(conditions != null) {
 			if(conditionGroups != null)
 				sqlData.appendSql(cgcop.name());
-			Component.appendComponents2SqlData(conditions, sqlData);
+			flag +=Component.appendComponents2SqlData(null, null, conditions, sqlData);
 		}
-		sqlData.appendSql(')');
+		
+		if(flag == 0) {
+			sqlData.removeLast(1);
+		}else {
+			sqlData.appendSql(')');
+		}
 	}
 
 	@Override
