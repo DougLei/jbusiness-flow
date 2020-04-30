@@ -3,6 +3,7 @@ package com.douglei.business.flow.resolver.condition;
 import com.alibaba.fastjson.JSONArray;
 import com.douglei.business.flow.executer.condition.ConditionValidator;
 import com.douglei.business.flow.resolver.ReferenceResolver;
+import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 条件解析器
@@ -18,6 +19,9 @@ public class ConditionResolver {
 	 * @return
 	 */
 	public static ConditionValidator parse(JSONArray conditionGroups, ReferenceResolver referenceResolver) {
+		if(CollectionUtil.isEmpty(conditionGroups))
+			return ConditionValidator.defaultValidator();
+		
 		ConditionGroupResolver resolver = CONTEXT.get();
 		if(resolver == null) {
 			resolver = new ConditionGroupResolver(referenceResolver);

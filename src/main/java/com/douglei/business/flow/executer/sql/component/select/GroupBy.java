@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.sql.component.select;
 
+import com.douglei.business.flow.executer.condition.ConditionValidator;
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.Function;
 import com.douglei.business.flow.executer.sql.component.insert.Column;
@@ -11,6 +12,10 @@ import com.douglei.business.flow.executer.sql.component.insert.Column;
 public class GroupBy extends Column{
 	private Function function;
 	
+	public GroupBy(ConditionValidator validator) {
+		super(validator);
+	}
+
 	public void setFunction(Function function) {
 		this.function = function;
 	}

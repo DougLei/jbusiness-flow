@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.ParameterContext;
+import com.douglei.business.flow.executer.condition.ConditionValidator;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.insert.Column;
@@ -28,6 +29,10 @@ public class Value extends Column{
 	
 	private Function function;
 	private Select[] selects;
+	
+	public Value(ConditionValidator validator) {
+		super(validator);
+	}
 	
 	public void setValue(Object value, Boolean placeholder, String valuePrefix, String valueSuffix, String format) {
 		this.dataType = DataType.toValue(value);

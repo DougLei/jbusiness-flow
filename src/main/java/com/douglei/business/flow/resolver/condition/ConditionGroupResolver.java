@@ -34,9 +34,6 @@ class ConditionGroupResolver {
 	 * @return
 	 */
 	public ConditionValidator parse(JSONArray conditionGroups) {
-		if(CollectionUtil.isEmpty(conditionGroups))
-			return ConditionValidator.defaultValidator();
-		
 		ConditionChunk[] chunks = parse_(conditionGroups);
 		return new ConditionValidator(chunks);
 	}

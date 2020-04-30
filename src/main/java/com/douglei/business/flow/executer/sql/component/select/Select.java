@@ -1,9 +1,10 @@
 package com.douglei.business.flow.executer.sql.component.select;
 
+import com.douglei.business.flow.executer.condition.ConditionValidator;
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.Component;
 import com.douglei.business.flow.executer.sql.component.Table;
-import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroups;
+import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroupWrapper;
 
 /**
  * 
@@ -14,13 +15,14 @@ public class Select extends Component{
 	private Table table;
 	
 	private Join[] joins;
-	private ConditionGroups whereGroups;
+	private ConditionGroupWrapper whereGroups;
 	private GroupBy[] groupBys;
-	private ConditionGroups havingGroups;
+	private ConditionGroupWrapper havingGroups;
 	private OrderBy[] orderBys;
 
 	private UnionType union;
-	public Select(byte union) {
+	public Select(ConditionValidator validator, byte union) {
+		super(validator);
 		this.union = UnionType.toValue(union);
 	}
 
@@ -33,13 +35,13 @@ public class Select extends Component{
 	public void setJoins(Join[] joins) {
 		this.joins = joins;
 	}
-	public void setWhereGroups(ConditionGroups whereGroups) {
+	public void setWhereGroups(ConditionGroupWrapper whereGroups) {
 		this.whereGroups = whereGroups;
 	}
 	public void setGroupBys(GroupBy[] groupBys) {
 		this.groupBys = groupBys;
 	}
-	public void setHavingGroups(ConditionGroups havingGroups) {
+	public void setHavingGroups(ConditionGroupWrapper havingGroups) {
 		this.havingGroups = havingGroups;
 	}
 	public void setOrderBys(OrderBy[] orderBys) {
@@ -49,7 +51,11 @@ public class Select extends Component{
 	@Override
 	public void append2SqlData(SqlData sqlData) {
 		sqlData.appendSql(" SELECT ");
-		Component.appendComponents2SqlData(results, sqlData);
+		if(results == null) {
+			sqlData.appendSql('*');
+		}else {
+			Component.appendComponents2SqlData(results, sqlData);
+		}
 		sqlData.appendSql(" FROM ");
 		table.append2SqlData(sqlData);
 		

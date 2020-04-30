@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.sql.component.select;
 
+import com.douglei.business.flow.executer.condition.ConditionValidator;
 import com.douglei.business.flow.executer.sql.SqlData;
 
 /**
@@ -9,7 +10,8 @@ import com.douglei.business.flow.executer.sql.SqlData;
 public class OrderBy extends GroupBy {
 	private Sort sort;
 
-	public OrderBy(byte sort) {
+	public OrderBy(ConditionValidator validator, byte sort) {
+		super(validator);
 		this.sort = sort==1?Sort.DESC:Sort.ASC;;
 	}
 

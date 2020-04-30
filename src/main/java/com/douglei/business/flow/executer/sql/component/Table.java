@@ -1,6 +1,7 @@
 package com.douglei.business.flow.executer.sql.component;
 
 import com.douglei.business.flow.executer.ParameterContext;
+import com.douglei.business.flow.executer.condition.ConditionValidator;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.select.Select;
@@ -18,7 +19,8 @@ public class Table extends Component{
 	private Function function;
 	private Select[] selects;
 	
-	public Table(String alias) {
+	public Table(ConditionValidator validator, String alias) {
+		super(validator);
 		if(StringUtil.notEmpty(alias)) {
 			this.alias = alias;
 		}

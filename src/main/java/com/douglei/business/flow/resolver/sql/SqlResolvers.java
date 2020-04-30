@@ -13,6 +13,7 @@ import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.resolver.ParameterResolver;
+import com.douglei.business.flow.resolver.ReferenceResolver;
 import com.douglei.business.flow.resolver.action.impl.sql.op.SqlDefinedParameterContext;
 import com.douglei.tools.instances.scanner.ClassScanner;
 import com.douglei.tools.utils.reflect.ClassLoadUtil;
@@ -47,13 +48,14 @@ public class SqlResolvers {
 	 * 解析sql
 	 * @param name
 	 * @param sqlJSON
+	 * @param referenceResolver
 	 * @return
 	 */
-	public static Sql parse(String name, JSONObject sqlJSON) {
+	public static Sql parse(String name, JSONObject sqlJSON, ReferenceResolver referenceResolver) {
 		DeclaredParameter[] parameters = SqlDefinedParameterContext.set(ParameterResolver.parseDeclaredParameters(sqlJSON.getJSONArray("params"), Scope.LOCAL));
 		SqlResolver resolver = MAP.get(sqlJSON.getString("type").toUpperCase());
 		if(logger.isDebugEnabled())
 			logger.debug("使用[{}]解析器解析sql", resolver.getClass().getName());
-		return resolver.parse(name, parameters, sqlJSON.getJSONObject("content"));
+		return resolver.parse(name, parameters, sqlJSON.getJSONObject("content"), referenceResolver);
 	}
 }

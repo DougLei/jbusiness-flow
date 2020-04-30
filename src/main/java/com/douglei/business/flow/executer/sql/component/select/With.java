@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.sql.component.select;
 
+import com.douglei.business.flow.executer.condition.ConditionValidator;
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.Component;
 import com.douglei.business.flow.executer.sql.component.insert.Column;
@@ -13,7 +14,8 @@ public class With extends Component{
 	private Column[] columns;
 	private Select[] selects;
 	
-	public With(String alias, Column[] columns, Select[] selects) {
+	public With(ConditionValidator validator, String alias, Column[] columns, Select[] selects) {
+		super(validator);
 		this.alias = alias;
 		this.columns = columns;
 		this.selects = selects;

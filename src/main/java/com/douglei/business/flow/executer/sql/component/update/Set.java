@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.sql.component.update;
 
+import com.douglei.business.flow.executer.condition.ConditionValidator;
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.Value;
 import com.douglei.business.flow.executer.sql.component.insert.Column;
@@ -11,7 +12,8 @@ import com.douglei.business.flow.executer.sql.component.insert.Column;
 public class Set extends Column{
 	private Value value;
 	
-	public Set(String column, Value value) {
+	public Set(ConditionValidator validator, String column, Value value) {
+		super(validator);
 		this.column = column;
 		this.value = value;
 	}

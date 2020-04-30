@@ -6,7 +6,7 @@ import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.Component;
 import com.douglei.business.flow.executer.sql.component.Table;
-import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroups;
+import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroupWrapper;
 import com.douglei.business.flow.executer.sql.component.update.Set;
 
 /**
@@ -18,7 +18,7 @@ public class UpdateSql extends Sql {
 
 	private Table table;
 	private Set[] sets;
-	private ConditionGroups whereGroups;
+	private ConditionGroupWrapper whereGroups;
 	
 	public UpdateSql(String name, DeclaredParameter[] parameters) {
 		super(name, parameters);
@@ -30,7 +30,7 @@ public class UpdateSql extends Sql {
 	public void setSets(Set[] sets) {
 		this.sets = sets;
 	}
-	public void setWhereGroups(ConditionGroups whereGroups) {
+	public void setWhereGroups(ConditionGroupWrapper whereGroups) {
 		this.whereGroups = whereGroups;
 	}
 

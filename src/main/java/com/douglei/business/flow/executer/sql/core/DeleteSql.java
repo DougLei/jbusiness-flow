@@ -5,7 +5,7 @@ import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.Table;
-import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroups;
+import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroupWrapper;
 
 /**
  * 
@@ -15,7 +15,7 @@ public class DeleteSql extends Sql {
 	public static final String TYPE = "delete";
 
 	private Table table;
-	private ConditionGroups whereGroups;
+	private ConditionGroupWrapper whereGroups;
 	
 	public DeleteSql(String name, DeclaredParameter[] parameters) {
 		super(name, parameters);
@@ -24,7 +24,7 @@ public class DeleteSql extends Sql {
 	public void setTable(Table table) {
 		this.table = table;
 	}
-	public void setWhereGroups(ConditionGroups whereGroups) {
+	public void setWhereGroups(ConditionGroupWrapper whereGroups) {
 		this.whereGroups = whereGroups;
 	}
 

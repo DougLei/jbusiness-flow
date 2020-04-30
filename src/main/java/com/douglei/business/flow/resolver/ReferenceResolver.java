@@ -114,7 +114,7 @@ public class ReferenceResolver {
 			if(sqlJSON == null) 
 				throw new NullPointerException("不存在名为"+name+"的sql");
 			
-			sql = SqlResolvers.parse(name, sqlJSON);
+			sql = SqlResolvers.parse(name, sqlJSON, this);
 			container.putSql(sql);
 		}
 		return sql;

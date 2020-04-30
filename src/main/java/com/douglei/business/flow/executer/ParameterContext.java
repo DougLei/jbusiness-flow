@@ -17,11 +17,11 @@ import com.douglei.business.flow.executer.parameter.ps.impl.OutParameterScope;
 import com.douglei.tools.utils.StringUtil;
 
 /**
- * 
+ * 参数上下文
  * @author DougLei
  */
 public class ParameterContext {
-	private static final ThreadLocal<Map<Scope, ParameterScope>> PARAMETER_SCOPES = new ThreadLocal<Map<Scope,ParameterScope>>();
+	private static final ThreadLocal<Map<Scope, ParameterScope>> PARAMETER_SCOPES_CONTEXT = new ThreadLocal<Map<Scope,ParameterScope>>();
 	
 	// 初始化
 	static void initial() {
@@ -31,12 +31,12 @@ public class ParameterContext {
 		map.put(Scope.INOUT, new InOutParameterScope(map.get(Scope.IN), map.get(Scope.OUT)));
 		map.put(Scope.GLOBAL, new GlobalParameterScope());
 		map.put(Scope.LOCAL, new LocalParameterScope());
-		PARAMETER_SCOPES.set(map);
+		PARAMETER_SCOPES_CONTEXT.set(map);
 	}
 	
 	// 销毁
 	static void destory() {
-		PARAMETER_SCOPES.remove();
+		PARAMETER_SCOPES_CONTEXT.remove();
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public class ParameterContext {
 	 * @param scope
 	 */
 	public static void activateStack(Scope scope) {
-		PARAMETER_SCOPES.get().get(scope).activateStack();
+		PARAMETER_SCOPES_CONTEXT.get().get(scope).activateStack();
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class ParameterContext {
 	 * @return 返回被清除的参数map
 	 */
 	public static Map<String, ActualParameter> clear(Scope scope) {
-		return PARAMETER_SCOPES.get().get(scope).clear();
+		return PARAMETER_SCOPES_CONTEXT.get().get(scope).clear();
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class ParameterContext {
 	 * @param value
 	 */
 	public static void addParameter(Parameter parameter, Object value) {
-		PARAMETER_SCOPES.get().get(parameter.getScope()).addParameter(parameter, value);
+		PARAMETER_SCOPES_CONTEXT.get().get(parameter.getScope()).addParameter(parameter, value);
 	}
 	
 	
@@ -72,7 +72,7 @@ public class ParameterContext {
 	 * @return
 	 */
 	public static ActualParameter getParameter(Parameter parameter) {
-		return PARAMETER_SCOPES.get().get(parameter.getScope()).getParameter(parameter.getName());
+		return PARAMETER_SCOPES_CONTEXT.get().get(parameter.getScope()).getParameter(parameter.getName());
 	}
 	
 	
@@ -84,7 +84,7 @@ public class ParameterContext {
 	public static Object getValue(Parameter parameter) {
 		Object value = null;
 		if(parameter.getName() != null)
-			value = PARAMETER_SCOPES.get().get(parameter.getScope()).getValue(parameter.getName(), parameter.getOgnlExpression());
+			value = PARAMETER_SCOPES_CONTEXT.get().get(parameter.getScope()).getValue(parameter.getName(), parameter.getOgnlExpression());
 		if(value == null)
 			return parameter.getDefaultValue();
 		return value;
@@ -114,6 +114,6 @@ public class ParameterContext {
 	 * @return
 	 */
 	public static Map<String, Object> getValueMap(Scope scope, String... excludeNames) {
-		return PARAMETER_SCOPES.get().get(scope).getValueMap(excludeNames);
+		return PARAMETER_SCOPES_CONTEXT.get().get(scope).getValueMap(excludeNames);
 	}
 }

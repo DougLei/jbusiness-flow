@@ -1,9 +1,10 @@
 package com.douglei.business.flow.executer.sql.component.select;
 
+import com.douglei.business.flow.executer.condition.ConditionValidator;
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.Component;
 import com.douglei.business.flow.executer.sql.component.Table;
-import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroups;
+import com.douglei.business.flow.executer.sql.component.select.condition.ConditionGroupWrapper;
 
 /**
  * 
@@ -12,9 +13,10 @@ import com.douglei.business.flow.executer.sql.component.select.condition.Conditi
 public class Join extends Component{
 	private Type type;
 	private Table table;
-	private ConditionGroups onGroups;
+	private ConditionGroupWrapper onGroups;
 	
-	public Join(byte type, Table table, ConditionGroups onGroups) {
+	public Join(ConditionValidator validator, byte type, Table table, ConditionGroupWrapper onGroups) {
+		super(validator);
 		this.type = Type.toValue(type);
 		this.table = table;
 		this.onGroups = onGroups;

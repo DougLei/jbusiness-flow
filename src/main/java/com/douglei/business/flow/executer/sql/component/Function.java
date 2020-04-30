@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.sql.component;
 
+import com.douglei.business.flow.executer.condition.ConditionValidator;
 import com.douglei.business.flow.executer.sql.SqlData;
 
 /**
@@ -10,7 +11,8 @@ public class Function extends Component{
 	private String name; // 函数名
 	private Value[] values;
 	
-	public Function(String name) {
+	public Function(ConditionValidator validator, String name) {
+		super(validator);
 		this.name = name;
 	}
 	public void setValues(Value[] values) {

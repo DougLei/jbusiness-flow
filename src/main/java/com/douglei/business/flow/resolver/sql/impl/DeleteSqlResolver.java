@@ -5,6 +5,7 @@ import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.component.select.condition.ConditionType;
 import com.douglei.business.flow.executer.sql.core.DeleteSql;
+import com.douglei.business.flow.resolver.ReferenceResolver;
 import com.douglei.business.flow.resolver.sql.SqlResolver;
 
 /**
@@ -19,10 +20,10 @@ public class DeleteSqlResolver extends SqlResolver{
 	}
 
 	@Override
-	public Sql parse(String name, DeclaredParameter[] parameters, JSONObject content) {
+	public Sql parse(String name, DeclaredParameter[] parameters, JSONObject content, ReferenceResolver referenceResolver) {
 		DeleteSql sql = new DeleteSql(name, parameters);
-		sql.setTable(parseTable(content.getJSONObject("table")));
-		sql.setWhereGroups(parseConditionGroups(ConditionType.WHERE, content));
+		sql.setTable(parseTable(content.getJSONObject("table"), referenceResolver));
+		sql.setWhereGroups(parseConditionGroupWrapper(ConditionType.WHERE, content, referenceResolver));
 		return sql;
 	}
 }

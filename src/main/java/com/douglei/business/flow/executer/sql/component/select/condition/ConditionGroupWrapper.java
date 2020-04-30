@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.sql.component.select.condition;
 
+import com.douglei.business.flow.executer.condition.ConditionValidator;
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.Component;
 
@@ -7,11 +8,12 @@ import com.douglei.business.flow.executer.sql.component.Component;
  * 
  * @author DougLei
  */
-public class ConditionGroups extends Component {
+public class ConditionGroupWrapper extends Component {
 	private String prefixSql;
 	private ConditionGroup[] groups;
 	
-	public ConditionGroups(String prefixSql, ConditionGroup[] groups) {
+	public ConditionGroupWrapper(ConditionValidator validator, String prefixSql, ConditionGroup[] groups) {
+		super(validator);
 		this.prefixSql = prefixSql;
 		this.groups = groups;
 	}

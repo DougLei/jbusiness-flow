@@ -10,6 +10,10 @@ import com.douglei.business.flow.executer.sql.SqlData;
 public abstract class Component {
 	protected ConditionValidator validator; 
 	
+	protected Component(ConditionValidator validator) {
+		this.validator = validator;
+	}
+
 	/**
 	 * 给SqlData中追加数据
 	 * @param sqlData
