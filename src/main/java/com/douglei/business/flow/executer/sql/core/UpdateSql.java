@@ -36,7 +36,7 @@ public class UpdateSql extends Sql {
 
 	@Override
 	protected Object invokeCore(ExecuteParameter executeParameter) {
-		SqlData sqlData = new SqlData("UPDATE ");
+		SqlData sqlData = new SqlData("UPDATE ", executeParameter);
 		table.append2SqlData(sqlData);
 		appendSets2SqlData(sqlData);
 		whereGroups.append2SqlData(sqlData);

@@ -33,7 +33,7 @@ public class SelectSql extends Sql {
 
 	@Override
 	protected Object invokeCore(ExecuteParameter executeParameter) {
-		SqlData sqlData = new SqlData();
+		SqlData sqlData = new SqlData(executeParameter);
 		appendWiths2SqlData(sqlData);
 		Component.appendComponents2SqlData(selects, sqlData);
 		return executeParameter.getQueryExecuter().executeQuery(executeParameter.getSession(), sqlData.getSql(), sqlData.getParameterValues());

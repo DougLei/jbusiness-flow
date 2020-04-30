@@ -42,7 +42,7 @@ public class InsertSql extends Sql {
 
 	@Override
 	protected Object invokeCore(ExecuteParameter executeParameter) {
-		SqlData sqlData = new SqlData("INSERT INTO ");
+		SqlData sqlData = new SqlData("INSERT INTO ", executeParameter);
 		table.append2SqlData(sqlData);
 		appendColumns2SqlData(sqlData);
 		appendValues2SqlData(sqlData);

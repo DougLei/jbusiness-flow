@@ -6,6 +6,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.douglei.business.flow.executer.action.ExecuteParameter;
+
 /**
  * 
  * @author DougLei
@@ -14,12 +16,14 @@ public class SqlData {
 	private static final Logger logger = LoggerFactory.getLogger(SqlData.class);
 	
 	private StringBuilder sql;
-	public SqlData() {
-		sql = new StringBuilder(100);
+	private ExecuteParameter executeParameter;
+	public SqlData(ExecuteParameter executeParameter) {
+		this.sql = new StringBuilder(100);
+		this.executeParameter = executeParameter;
 	}
-	public SqlData(String s) {
-		this();
-		sql.append(s);
+	public SqlData(String s, ExecuteParameter executeParameter) {
+		this(executeParameter);
+		this.sql.append(s);
 	}
 	
 	public SqlData appendSql(char c) {
@@ -51,5 +55,8 @@ public class SqlData {
 		if(logger.isDebugEnabled())
 			logger.debug("获取的sql语句参数list为: {}", parameterValues);
 		return parameterValues;
+	}
+	public ExecuteParameter getExecuteParameter() {
+		return executeParameter;
 	}
 }

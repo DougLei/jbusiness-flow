@@ -30,7 +30,7 @@ public class DeleteSql extends Sql {
 
 	@Override
 	protected Object invokeCore(ExecuteParameter executeParameter) {
-		SqlData sqlData = new SqlData("DELETE ");
+		SqlData sqlData = new SqlData("DELETE ", executeParameter);
 		table.append2SqlData(sqlData);
 		whereGroups.append2SqlData(sqlData);
 		return executeParameter.getSession().executeUpdate(sqlData.getSql(), sqlData.getParameterValues());
