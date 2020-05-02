@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
-import com.douglei.business.flow.executer.parameter.InvokerParameter;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.ResultParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
@@ -25,26 +24,6 @@ public class ParameterResolver {
 	public static Parameter parseParameter(JSONObject json) {
 		Boolean nameRequired = json.getBoolean("nameRequired");
 		return new Parameter(json.getString("name"), (nameRequired==null?true:nameRequired), Scope.toValue(json.getByteValue("scope")), json.get("defaultValue"));
-	}
-	
-	// -----------------------------------------------------------------------------------------------------------
-	/**
-	 * 解析调用者参数
-	 * @param array
-	 * @return
-	 */
-	public static InvokerParameter[] parseInvokerParameters(JSONArray array) {
-		int size = array==null?0:array.size();
-		if(size == 0)
-			return null;
-		
-		JSONObject json;
-		InvokerParameter[] parameters = new InvokerParameter[size];
-		for (byte i=0;i<size;i++) {
-			json = array.getJSONObject(i);
-			parameters[i] = new InvokerParameter(json.getString("name"), Scope.toValue(json.getByteValue("scope")), json.get("defaultValue"), json.getString("targetName"));
-		}
-		return parameters;
 	}
 	
 	// -----------------------------------------------------------------------------------------------------------

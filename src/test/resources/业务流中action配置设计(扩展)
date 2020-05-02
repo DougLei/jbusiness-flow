@@ -1,14 +1,35 @@
 // 业务流中扩展action的配置设计, 这部分action主要是为了简化配置而设计的
 
-// 计算和
+-----------------------------------------------------------
+// sql
+// 查询大数据量sql操作
 {
-	"type":"func_sum", 
+	"type":"sql_op_query_ldv", // ldv: Large data volume
 	"content":{
-		"collection":"", // 要操作的集合名称
-		"scope":3, // 操作集合所在的范围
-		"property":"" // 操作集合中数据的某个属性名
-	},
-	"result":{
-		...
+		"name":"", // 配置的查询sql名称
+		// 如果不配置分页参数, 就默认使用全部查询
+		"pageNum":{ // 第几页, integer类型
+			"name":"",
+			"scope":1,
+			"defaultValue":1
+		},
+		"pageSize":{ // 一页的数量, integer类型
+			"name":"",
+			"scope":10,
+			"defaultValue":1000
+		},
+		"params":[{ // 传入要使用的参数配置
+			"name":"", // 参数名(当前业务流中), 可为null, 如果为null, 则取defaultValue
+			"nameRequired":true, // 参数名是否必须, 默认为true
+			"scope":1, // 参数所在的范围(当前业务流中)
+			"defaultValue":"", // 默认值
+			"targetName":"" // 目标参数名, 即将该值传递给sql中对应名称的参数, 可为空
+			                // 如果配置, 则所有的参数都必须配置该属性
+			                // 如果不配置, 则这里配置的参数顺序, 必须和声明sql那里配置的参数顺序一致, 如果想使用声明那边参数的默认值, 这里也要随便配置一个null值, 不能跨过去不配置
+		}],
+		"alias":{ // 存储每次查询出来的结果, 在下面的actions中可以使用
+			...  // 和输入参数那里配置结构相同, 但是scope只能为本地
+		},
+		"actions":[{}] // 查询获取数据后要进行的actions
 	}
 }

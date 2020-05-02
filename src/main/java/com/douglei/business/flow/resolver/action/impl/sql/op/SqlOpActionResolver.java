@@ -10,13 +10,13 @@ import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.core.SelectSql;
 import com.douglei.business.flow.resolver.ParameterResolver;
 import com.douglei.business.flow.resolver.ReferenceResolver;
-import com.douglei.business.flow.resolver.action.ActionResolver;
+import com.douglei.business.flow.resolver.action.impl.func.FuncMethodActionResolver;
 
 /**
  * 
  * @author DougLei
  */
-public class SqlOpActionResolver extends ActionResolver {
+public class SqlOpActionResolver extends FuncMethodActionResolver {
 
 	@Override
 	public String getType() {
@@ -26,7 +26,7 @@ public class SqlOpActionResolver extends ActionResolver {
 	@Override
 	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
 		JSONObject content = actionJSON.getJSONObject("content");
-		InvokerParameter[] parameters = ParameterResolver.parseInvokerParameters(content.getJSONArray("params"));
+		InvokerParameter[] parameters = parseInvokerParameters(content.getJSONArray("params"));
 		Sql sql = referenceResolver.parseSql(content.getString("name"));
 		
 		QueryExecuter queryExecuter = (sql instanceof SelectSql)?parseQueryConfig(content.getJSONObject("queryConfig")):null;

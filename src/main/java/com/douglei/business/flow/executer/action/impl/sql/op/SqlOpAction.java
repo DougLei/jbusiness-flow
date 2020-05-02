@@ -15,9 +15,9 @@ import com.douglei.business.flow.executer.sql.Sql;
  */
 public class SqlOpAction extends Action {
 	private static final Logger logger = LoggerFactory.getLogger(SqlOpAction.class);
-	private Sql sql;
-	private InvokerParameter[] parameters;
-	private QueryExecuter queryExecuter;
+	protected Sql sql;
+	protected InvokerParameter[] parameters;
+	protected QueryExecuter queryExecuter;
 	
 	public SqlOpAction(Sql sql, InvokerParameter[] parameters, QueryExecuter queryExecuter, ResultParameter result) {
 		this.sql = sql;
@@ -26,13 +26,22 @@ public class SqlOpAction extends Action {
 		super.result = result;
 	}
 	
+	/**
+	 * 执行并返回执行结果
+	 * @param executeParameter
+	 * @return
+	 */
+	protected Object execute_(ExecuteParameter executeParameter) {
+		executeParameter.updateQueryExecuter(queryExecuter);
+		return sql.invoke(parameters, executeParameter);
+	}
+	
 	@Override
 	public Object execute(ExecuteParameter executeParameter) {
 		if(logger.isDebugEnabled())
 			logger.debug("执行[{}]", getClass().getName());
 		
-		executeParameter.updateQueryExecuter(queryExecuter);
-		setResult(sql.invoke(parameters, executeParameter));
+		setResult(execute_(executeParameter));
 		return null;
 	}
 }

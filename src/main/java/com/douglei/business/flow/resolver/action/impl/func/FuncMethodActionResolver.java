@@ -6,6 +6,8 @@ import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.func.method.FuncMethodAction;
 import com.douglei.business.flow.executer.action.impl.func.method.Receive;
 import com.douglei.business.flow.executer.action.impl.func.method.ReceiveAll;
+import com.douglei.business.flow.executer.parameter.InvokerParameter;
+import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.resolver.ParameterResolver;
 import com.douglei.business.flow.resolver.ReferenceResolver;
 import com.douglei.business.flow.resolver.action.ActionResolver;
@@ -27,7 +29,7 @@ public class FuncMethodActionResolver extends ActionResolver {
 		
 		FuncMethodAction action = new FuncMethodAction(
 				referenceResolver.parseMethod(content.getString("methodName")),
-				ParameterResolver.parseInvokerParameters(content.getJSONArray("params")));
+				parseInvokerParameters(content.getJSONArray("params")));
 		
 		byte size;
 		JSONObject json;
@@ -53,5 +55,24 @@ public class FuncMethodActionResolver extends ActionResolver {
 			action.setReceiveAll(new ReceiveAll(excludeNames, ParameterResolver.parseResultParameter(json, null)));
 		}
 		return action;
+	}
+	
+	/**
+	 * 解析调用者参数
+	 * @param array
+	 * @return
+	 */
+	protected InvokerParameter[] parseInvokerParameters(JSONArray array) {
+		int size = array==null?0:array.size();
+		if(size == 0)
+			return null;
+		
+		JSONObject json;
+		InvokerParameter[] parameters = new InvokerParameter[size];
+		for (byte i=0;i<size;i++) {
+			json = array.getJSONObject(i);
+			parameters[i] = new InvokerParameter(json.getString("name"), Scope.toValue(json.getByteValue("scope")), json.get("defaultValue"), json.getString("targetName"));
+		}
+		return parameters;
 	}
 }
