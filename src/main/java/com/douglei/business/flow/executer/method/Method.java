@@ -49,15 +49,15 @@ public class Method {
 	
 	/**
 	 * 调用方法
-	 * @param parameters 调用方定义的参数数组, 根据该参数数组, 从当前业务流中获取相应的value数组
-	 * @param session
+	 * @param invokerParameters 调用方定义的参数数组, 根据该参数数组, 从当前业务流中获取相应的value数组
+	 * @param executeParameter
 	 * @return
 	 */
-	public Object invoke(InvokerParameter[] parameters, ExecuteParameter executeParameter) {
+	public Object invoke(InvokerParameter[] invokerParameters, ExecuteParameter executeParameter) {
 		// 调用前的预处理, 主要是对参数的设置, 以及开启本地参数的堆栈
 		ParameterContext.activateStack(Scope.LOCAL);
 		if(this.parameters != null) {
-			InvokerParameterValues values = ParameterContext.getValues(parameters);
+			InvokerParameterValues values = ParameterContext.getValues(invokerParameters);
 			for (int i = 0; i < this.parameters.length; i++)
 				ParameterContext.addParameter(this.parameters[i], (values==null?null:values.getValue(i, this.parameters[i].getName())));
 		}

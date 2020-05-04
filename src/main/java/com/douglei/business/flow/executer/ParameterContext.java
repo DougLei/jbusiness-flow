@@ -92,17 +92,17 @@ public class ParameterContext {
 	
 	/**
 	 * 根据调用者参数, 获取对应的结果值
-	 * @param parameters
+	 * @param invokerParameters
 	 * @return
 	 */
-	public static InvokerParameterValues getValues(InvokerParameter[] parameters) {
-		if(parameters == null) {
+	public static InvokerParameterValues getValues(InvokerParameter[] invokerParameters) {
+		if(invokerParameters == null) {
 			return null;
 		}
 		
-		InvokerParameterValues values = new InvokerParameterValues(parameters.length, StringUtil.notEmpty(parameters[0].getTargetName()));
-		for(byte i=0;i<parameters.length;i++) {
-			values.addValue(getValue(parameters[i]), i, parameters[i].getTargetName());
+		InvokerParameterValues values = new InvokerParameterValues(invokerParameters.length, StringUtil.notEmpty(invokerParameters[0].getTargetName()));
+		for(byte i=0;i<invokerParameters.length;i++) {
+			values.addValue(getValue(invokerParameters[i]), i,invokerParameters[i].getTargetName());
 		}
 		return values;
 	}
