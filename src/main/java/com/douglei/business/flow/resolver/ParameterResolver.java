@@ -50,12 +50,13 @@ public class ParameterResolver {
 	 * 解析定义参数
 	 * @param json
 	 * @param assignScope 指定的范围, 如果传入null, 则使用配置的范围
+	 * @param assignDataType 指定的数据类型, 如果传入null, 则使用配置的类型
 	 * @return
 	 */
-	public static DeclaredParameter parseDeclaredParameter(JSONObject json, Scope assignScope) {
+	public static DeclaredParameter parseDeclaredParameter(JSONObject json, Scope assignScope, DataType assignDataType) {
 		return new DeclaredParameter(json.getString("name"),
 					(assignScope==null?Scope.toValue(json.getByteValue("scope")):assignScope),
-					DataType.toValue(json.getString("dataType")),
+					(assignDataType==null?DataType.toValue(json.getString("dataType")):assignDataType),
 					json.get("defaultValue"),
 					json.getBooleanValue("required"));
 	}
@@ -64,16 +65,17 @@ public class ParameterResolver {
 	 * 解析定义参数
 	 * @param array
 	 * @param assignScope 指定的范围, 如果传入null, 则使用配置的范围
+	 * @param assignDataType 指定的数据类型, 如果传入null, 则使用配置的类型
 	 * @return
 	 */
-	public static DeclaredParameter[] parseDeclaredParameters(JSONArray array, Scope assignScope) {
+	public static DeclaredParameter[] parseDeclaredParameters(JSONArray array, Scope assignScope, DataType assignDataType) {
 		int size = array==null?0:array.size();
 		if(size == 0)
 			return null;
 		
 		DeclaredParameter[] parameters = new DeclaredParameter[size];
 		for (byte i=0;i<size;i++) {
-			parameters[i] = parseDeclaredParameter(array.getJSONObject(i), assignScope);
+			parameters[i] = parseDeclaredParameter(array.getJSONObject(i), assignScope, assignDataType);
 		}
 		return parameters;
 	}

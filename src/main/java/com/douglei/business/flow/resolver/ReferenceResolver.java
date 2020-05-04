@@ -134,7 +134,7 @@ public class ReferenceResolver {
 			if(methodJSON == null) 
 				throw new NullPointerException("不存在名为"+name+"的方法");
 			
-			DeclaredParameter[] parameters = ParameterResolver.parseDeclaredParameters(methodJSON.getJSONArray("params"), Scope.LOCAL);
+			DeclaredParameter[] parameters = ParameterResolver.parseDeclaredParameters(methodJSON.getJSONArray("params"), Scope.LOCAL, null);
 			Action[] actions = parseAction_(methodJSON.getJSONArray("actions"));
 			
 			Return return_ = null;

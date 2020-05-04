@@ -14,10 +14,10 @@ import com.douglei.business.flow.executer.parameter.Parameter;
 public class QueryExecuter {
 	public static final QueryExecuter DEFAULT_QUERY_EXECUTER = new QueryExecuter(ExecuterType.LIST);
 	
-	private ExecuterType type;
+	protected ExecuterType type;
 	
-	private Parameter pageNum;
-	private Parameter pageSize;
+	protected Parameter pageNum;
+	protected Parameter pageSize;
 	
 	private Parameter deep;
 	private Parameter pkColumnName;
@@ -25,6 +25,7 @@ public class QueryExecuter {
 	private Parameter parentValue;
 	private Parameter childNodeName;
 	
+	protected QueryExecuter() {}
 	private QueryExecuter(ExecuterType type) {
 		this.type = type;
 	}
@@ -82,11 +83,11 @@ public class QueryExecuter {
 	}
 	
 	// 获取数字值
-	private int getIntegerValue(Parameter parameter) {
+	protected int getIntegerValue(Parameter parameter) {
 		return (int) ParameterContext.getValue(parameter);
 	}
 	// 获取字符串值
-	private String getStringValue(Parameter parameter) {
+	protected String getStringValue(Parameter parameter) {
 		return ParameterContext.getValue(parameter).toString();
 	}
 	

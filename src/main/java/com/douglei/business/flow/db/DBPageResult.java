@@ -50,4 +50,10 @@ public interface DBPageResult {
 	 * @return
 	 */
 	public boolean isLastPage();
+	
+	/**
+	 * 是否有下一页
+	 * @return
+	 */
+	public boolean hasNextPage();
 }

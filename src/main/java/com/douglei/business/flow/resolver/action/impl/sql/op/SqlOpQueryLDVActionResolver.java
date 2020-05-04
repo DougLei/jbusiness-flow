@@ -1,8 +1,10 @@
 package com.douglei.business.flow.resolver.action.impl.sql.op;
 
 import com.alibaba.fastjson.JSONObject;
+import com.douglei.business.flow.executer.DataType;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.impl.sql.op.QueryExecuter;
+import com.douglei.business.flow.executer.action.impl.sql.op.QueryLDVExecuter;
 import com.douglei.business.flow.executer.action.impl.sql.op.SqlOpQueryLDVAction;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.InvokerParameter;
@@ -11,12 +13,13 @@ import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.executer.sql.core.SelectSql;
 import com.douglei.business.flow.resolver.ParameterResolver;
 import com.douglei.business.flow.resolver.ReferenceResolver;
+import com.douglei.business.flow.resolver.action.impl.func.FuncMethodActionResolver;
 
 /**
  * 
  * @author DougLei
  */
-public class SqlOpQueryLDVActionResolver extends SqlOpActionResolver{
+public class SqlOpQueryLDVActionResolver extends FuncMethodActionResolver{
 	
 	@Override
 	public String getType() {
@@ -33,7 +36,7 @@ public class SqlOpQueryLDVActionResolver extends SqlOpActionResolver{
 		QueryExecuter queryExecuter = parseQueryConfig(content.getJSONObject("pageNum"), content.getJSONObject("pageSize"));
 		
 		JSONObject aliasJSON = content.getJSONObject("alias");
-		DeclaredParameter alias = ParameterResolver.parseDeclaredParameter(aliasJSON, Scope.LOCAL);
+		DeclaredParameter alias = ParameterResolver.parseDeclaredParameter(aliasJSON, Scope.LOCAL, DataType.OBJECT);
 		
 		Action[] actions = referenceResolver.parseAction(content.getJSONArray("actions"));
 		return new SqlOpQueryLDVAction(sql, parameters, queryExecuter, 
@@ -47,9 +50,7 @@ public class SqlOpQueryLDVActionResolver extends SqlOpActionResolver{
 	 */
 	private QueryExecuter parseQueryConfig(JSONObject pageNum, JSONObject pageSize) {
 		if(pageNum != null && pageSize != null) {
-			QueryExecuter qe = new QueryExecuter((byte)2);
-			qe.setPageQueryParameters(ParameterResolver.parseParameter(pageNum), ParameterResolver.parseParameter(pageSize));
-			return qe;
+			return new QueryLDVExecuter(ParameterResolver.parseParameter(pageNum), ParameterResolver.parseParameter(pageSize));
 		}
 		return QueryExecuter.DEFAULT_QUERY_EXECUTER;
 	}

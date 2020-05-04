@@ -52,7 +52,7 @@ public class SqlResolvers {
 	 * @return
 	 */
 	public static Sql parse(String name, JSONObject sqlJSON, ReferenceResolver referenceResolver) {
-		DeclaredParameter[] parameters = SqlDefinedParameterContext.set(ParameterResolver.parseDeclaredParameters(sqlJSON.getJSONArray("params"), Scope.LOCAL));
+		DeclaredParameter[] parameters = SqlDefinedParameterContext.set(ParameterResolver.parseDeclaredParameters(sqlJSON.getJSONArray("params"), Scope.LOCAL, null));
 		SqlResolver resolver = MAP.get(sqlJSON.getString("type").toUpperCase());
 		if(logger.isDebugEnabled())
 			logger.debug("使用[{}]解析器解析sql", resolver.getClass().getName());

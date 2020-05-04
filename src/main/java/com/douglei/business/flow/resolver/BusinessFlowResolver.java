@@ -28,7 +28,7 @@ public class BusinessFlowResolver {
 		if(!json.getBooleanValue("enabled"))
 			throw new BusinessFlowDisabledException(json.getString("name"), json.getString("description"));
 		BusinessFlow bf = new BusinessFlow(json.getString("name"), json.getString("version"));
-		bf.setInputParameters(ParameterResolver.parseDeclaredParameters(json.getJSONArray("params"), null));
+		bf.setInputParameters(ParameterResolver.parseDeclaredParameters(json.getJSONArray("params"), null, null));
 		bf.setStartEvent(buildBFStruct(json.getJSONArray("events"), json.getJSONArray("flows"), new ReferenceResolver(referenceContainer, json.getJSONArray("commonActions"), json.getJSONArray("methods"), json.getJSONArray("sqls"))));
 		return bf;
 	}

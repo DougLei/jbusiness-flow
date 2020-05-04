@@ -26,22 +26,13 @@ public class SqlOpAction extends Action {
 		super.result = result;
 	}
 	
-	/**
-	 * 执行并返回执行结果
-	 * @param executeParameter
-	 * @return
-	 */
-	protected Object execute_(ExecuteParameter executeParameter) {
-		executeParameter.updateQueryExecuter(queryExecuter);
-		return sql.invoke(parameters, executeParameter);
-	}
-	
 	@Override
 	public Object execute(ExecuteParameter executeParameter) {
 		if(logger.isDebugEnabled())
 			logger.debug("执行[{}]", getClass().getName());
 		
-		setResult(execute_(executeParameter));
+		executeParameter.updateQueryExecuter(queryExecuter);
+		setResult(sql.invoke(parameters, executeParameter));
 		return null;
 	}
 }

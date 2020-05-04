@@ -51,4 +51,9 @@ public class JdbOrmDBPageResult implements DBPageResult {
 	public boolean isLastPage() {
 		return pageResult.isLastPage();
 	}
+
+	@Override
+	public boolean hasNextPage() {
+		return pageResult.hasNextPage();
+	}
 }

@@ -34,7 +34,7 @@ public class ParamOpDeclareActionResolver extends ActionResolver {
 		DeclaredParameter declaredParameter;
 		for(byte i=0;i<size;i++) {
 			content = contents.getJSONObject(i);
-			declaredParameter = ParameterResolver.parseDeclaredParameter(content, null);
+			declaredParameter = ParameterResolver.parseDeclaredParameter(content, null, null);
 			action.addDeclareParameter(i, declaredParameter);
 			
 			if(declaredParameter.getDefaultValue() == null) {
