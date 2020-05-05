@@ -32,6 +32,19 @@ public class Method {
 	}
 	
 	/**
+	 * 调用前的预处理, 主要是对参数的设置, 以及开启本地参数的堆栈
+	 * @param invokerParameters
+	 */
+	protected void invokePre(InvokerParameter[] invokerParameters) {
+		ParameterContext.activateStack(Scope.LOCAL);
+		if(this.parameters != null) {
+			InvokerParameterValues values = ParameterContext.getValues(invokerParameters);
+			for (int i = 0; i < this.parameters.length; i++)
+				ParameterContext.addParameter(this.parameters[i], (values==null?null:values.getValue(i, this.parameters[i].getName())));
+		}
+	}
+	
+	/**
 	 * 调用的核心方法
 	 * @param session
 	 * @return
@@ -54,14 +67,7 @@ public class Method {
 	 * @return
 	 */
 	public Object invoke(InvokerParameter[] invokerParameters, ExecuteParameter executeParameter) {
-		// 调用前的预处理, 主要是对参数的设置, 以及开启本地参数的堆栈
-		ParameterContext.activateStack(Scope.LOCAL);
-		if(this.parameters != null) {
-			InvokerParameterValues values = ParameterContext.getValues(invokerParameters);
-			for (int i = 0; i < this.parameters.length; i++)
-				ParameterContext.addParameter(this.parameters[i], (values==null?null:values.getValue(i, this.parameters[i].getName())));
-		}
-		
+		invokePre(invokerParameters);
 		return invokeCore(executeParameter);
 	}
 	

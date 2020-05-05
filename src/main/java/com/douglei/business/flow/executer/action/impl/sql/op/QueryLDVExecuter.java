@@ -25,11 +25,7 @@ public class QueryLDVExecuter extends QueryExecuter {
 	 */
 	@Override
 	public Object executeQuery(DBSession session, String sql, List<Object> values) {
-		if(type == ExecuterType.PAGE) {
-			return session.pageQuery(getPageNumVal(), getPageSizeVal(), sql, values);
-		}else {
-			return session.query(sql, values);
-		}
+		return session.pageQuery(getPageNumVal(), getPageSizeVal(), sql, values);
 	}
 	
 	private int pageNumVal;

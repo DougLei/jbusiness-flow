@@ -13,6 +13,8 @@ import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.InvokerParameter;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.sql.Sql;
+import com.douglei.business.flow.executer.sql.core.SelectSql;
+import com.douglei.business.flow.executer.sql.core.LDVSelectSql;
 
 /**
  * 查询大数据量sql操作
@@ -39,7 +41,9 @@ public class SqlOpQueryLDVAction extends SqlOpAction{
 			logger.debug("执行[{}]", getClass().getName());
 		
 		executeParameter.updateQueryExecuter(queryExecuter);
-		Object result = sql.invoke(parameters, executeParameter);
+		
+		LDVSelectSql ldvSelectSql = ((SelectSql) super.sql).toLDVSelectSql(parameters, executeParameter);
+		Object result = ldvSelectSql.query();
 		
 		ParameterContext.addParameter(alias, null);
 		if(queryExecuter.isPageQuery()) {
@@ -47,7 +51,7 @@ public class SqlOpQueryLDVAction extends SqlOpAction{
 			do {
 				executeList(dbPageResult.getResultDatas(), executeParameter);
 				if(dbPageResult.hasNextPage() || dbPageResult.isLastPage()) {
-					dbPageResult = (DBPageResult) sql.invoke(parameters, executeParameter);
+					dbPageResult = (DBPageResult) ldvSelectSql.query();;
 					continue;
 				}
 				break;
