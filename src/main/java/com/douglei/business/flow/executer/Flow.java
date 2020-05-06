@@ -8,8 +8,8 @@ import com.douglei.business.flow.executer.condition.ConditionValidator;
  * @author DougLei
  */
 public class Flow {
-	public static final byte FLOW_TYPE_SEQUENCE = 0; // 流类型: 顺序流
-	public static final byte FLOW_TYPE_CONDITION = 1; // 流类型: 条件流
+	private static final byte FLOW_TYPE_SEQUENCE = 0; // 流类型: 顺序流
+	// private static final byte FLOW_TYPE_CONDITION = 1; // 流类型: 条件流, 该属性值没有用上, 所以注释掉, 但是1代表的就是条件流类型
 	
 	private byte type;
 	private byte order;
@@ -33,8 +33,12 @@ public class Flow {
 		return event;
 	}
 	
-	// 对条件进行验证, 获取结果
-	public boolean validate(ExecuteParameter executeParameter) {
+	/**
+	 * 执行, 对条件进行验证, 获取结果
+	 * @param executeParameter
+	 * @return
+	 */
+	public boolean execute(ExecuteParameter executeParameter) {
 		return conditionValidator.validate(executeParameter);
 	}
 	

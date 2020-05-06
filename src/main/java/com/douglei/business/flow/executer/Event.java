@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.ExecuteParameter;
-import com.douglei.business.flow.executer.action.impl.sql.op.SqlOpAction;
 import com.douglei.business.flow.executer.parameter.Scope;
 
 /**
@@ -14,9 +13,9 @@ import com.douglei.business.flow.executer.parameter.Scope;
  * @author DougLei
  */
 public class Event {
-	public static final byte EVENT_TYPE_NORMAL = 0; // 事件类型: 一般
-	public static final byte EVENT_TYPE_START = 1; // 事件类型: 起始
-	public static final byte EVENT_TYPE_END = 2; // 事件类型: 结束
+	// private static final byte EVENT_TYPE_NORMAL = 0; // 事件类型: 一般, 该属性值没有用上, 所以注释掉, 但是0代表的就是一般事件类型
+	private static final byte EVENT_TYPE_START = 1; // 事件类型: 起始
+	private static final byte EVENT_TYPE_END = 2; // 事件类型: 结束
 	
 	private byte type;
 	private String name;
@@ -58,14 +57,6 @@ public class Event {
 	public String getName() {
 		return name;
 	}
-	public boolean includeSqlAction() {
-		for (Action action : actions) {
-			if(action instanceof SqlOpAction) {
-				return true;
-			}
-		}
-		return false;
-	}
 	
 	public void execute(ExecuteParameter executeParameter) {
 		for (Action action : actions) {
@@ -83,7 +74,7 @@ public class Event {
 			flows.get(0).targetEvent().execute(executeParameter);
 		}else { // 条件流
 			flows.forEach(flow -> {
-				if(flow.validate(executeParameter)) {
+				if(flow.execute(executeParameter)) {
 					ParameterContext.clear(Scope.LOCAL); // 清空flow验证时产生的本地参数
 					flow.targetEvent().execute(executeParameter);
 					return;

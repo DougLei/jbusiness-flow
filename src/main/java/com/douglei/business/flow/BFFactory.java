@@ -60,7 +60,7 @@ public class BFFactory {
 	 */
 	public BusinessFlow buildByInputStream(InputStream in) {
 		ResourcesReader reader = new ResourcesReader(in, StandardCharsets.UTF_8);
-		return build(reader.readAll(200).toString());
+		return build(reader.readAll(3000).toString());
 	}
 	
 	/**
