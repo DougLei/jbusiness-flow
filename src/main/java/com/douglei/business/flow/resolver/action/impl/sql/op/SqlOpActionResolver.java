@@ -26,7 +26,7 @@ public class SqlOpActionResolver extends FuncMethodActionResolver {
 	@Override
 	public Action parse(JSONObject actionJSON, ReferenceResolver referenceResolver) {
 		JSONObject content = actionJSON.getJSONObject("content");
-		InvokerParameter[] parameters = parseInvokerParameters(content.getJSONArray("params"));
+		InvokerParameter[] parameters = ParameterResolver.parseInvokerParameters(content.getJSONArray("params"));
 		Sql sql = referenceResolver.parseSql(content.getString("name"));
 		
 		QueryExecuter queryExecuter = (sql instanceof SelectSql)?parseQueryConfig(content.getJSONObject("queryConfig")):null;

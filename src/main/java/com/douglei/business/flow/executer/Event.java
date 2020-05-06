@@ -58,6 +58,10 @@ public class Event {
 		return name;
 	}
 	
+	/**
+	 * 执行
+	 * @param executeParameter
+	 */
 	public void execute(ExecuteParameter executeParameter) {
 		for (Action action : actions) {
 			action.execute(executeParameter);

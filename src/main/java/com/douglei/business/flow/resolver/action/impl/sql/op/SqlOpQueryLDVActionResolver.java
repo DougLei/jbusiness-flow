@@ -32,7 +32,7 @@ public class SqlOpQueryLDVActionResolver extends FuncMethodActionResolver{
 		Sql sql = referenceResolver.parseSql(content.getString("name"));
 		if(!(sql instanceof SelectSql))
 			throw new IllegalArgumentException("查询大数据量sql操作action, 只支持查询类型的sql语句");
-		InvokerParameter[] parameters = parseInvokerParameters(content.getJSONArray("params"));
+		InvokerParameter[] parameters = ParameterResolver.parseInvokerParameters(content.getJSONArray("params"));
 		QueryExecuter queryExecuter = parseQueryConfig(content.getJSONObject("pageNum"), content.getJSONObject("pageSize"));
 		
 		JSONObject aliasJSON = content.getJSONObject("alias");
