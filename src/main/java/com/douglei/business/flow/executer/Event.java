@@ -33,20 +33,22 @@ public class Event {
 			flows = new ArrayList<Flow>(flow.isSequence()?1:4);
 		}
 		flows.add(flow);
-		if(flows.size() > 1) {
-			flows.sort(new Comparator<Flow>() {
-				@Override
-				public int compare(Flow f1, Flow f2) {
-					if(f1.getOrder() == f2.getOrder()) {
-						return 0;
-					}else if(f1.getOrder() < f2.getOrder()) {
-						return -1;
-					}
-					return 1;
-				}
-			});
-		}
+		if(flows.size() > 1) 
+			flows.sort(flowComparator);
 	}
+	
+	// 线排序的比较器
+	private Comparator<Flow> flowComparator = new Comparator<Flow>() {
+		@Override
+		public int compare(Flow f1, Flow f2) {
+			if(f1.getOrder() == f2.getOrder()) {
+				return 0;
+			}else if(f1.getOrder() < f2.getOrder()) {
+				return -1;
+			}
+			return 1;
+		}
+	};
 	
 	public boolean isStart() {
 		return type == EVENT_TYPE_START;
