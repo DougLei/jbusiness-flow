@@ -10,10 +10,10 @@ import java.util.Map;
 public interface DBSession {
 	
 	/**
-	 * 是否自动提交
+	 * 是否开启事物
 	 * @return
 	 */
-	default boolean autoCommit() {
+	default boolean beginTransaction() {
 		return true;
 	}
 	

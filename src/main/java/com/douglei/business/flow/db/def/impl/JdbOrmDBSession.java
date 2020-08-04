@@ -16,25 +16,29 @@ import com.douglei.orm.sessionfactory.sessions.sqlsession.SqlSession;
 public class JdbOrmDBSession implements DBSession {
 	private SessionFactory sessionFactory;
 	private Session session;
-	private boolean autoCommit;
+	private boolean beginTransaction;
 	
+	/**
+	 * 默认开启事物
+	 * @param sessionFactory
+	 */
 	public JdbOrmDBSession(SessionFactory sessionFactory) {
 		this(sessionFactory, true);
 	}
-	public JdbOrmDBSession(SessionFactory sessionFactory, boolean autoCommit) {
+	public JdbOrmDBSession(SessionFactory sessionFactory, boolean beginTransaction) {
 		this.sessionFactory = sessionFactory;
-		this.autoCommit = autoCommit;
+		this.beginTransaction = beginTransaction;
 	}
 
 	private SqlSession getSqlSession() {
 		if(session == null)
-			session = sessionFactory.openSession();
+			session = sessionFactory.openSession(beginTransaction);
 		return session.getSqlSession();
 	}
 	
 	@Override
-	public boolean autoCommit() {
-		return autoCommit;
+	public boolean beginTransaction() {
+		return beginTransaction;
 	}
 
 	@Override

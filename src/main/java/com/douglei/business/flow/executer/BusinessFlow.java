@@ -57,7 +57,7 @@ public class BusinessFlow {
 	 * @return
 	 */
 	public Map<String, Object> execute(Map<String, Object> inputValueMap, DBSession session) {
-		boolean autoCommit = session==null?false:session.autoCommit();
+		boolean beginTransaction = session==null?false:session.beginTransaction();
 		try {
 			ParameterContext.initial();
 			if(inputParameters != null) {
@@ -68,16 +68,15 @@ public class BusinessFlow {
 			
 			startEvent.execute(new ExecuteParameter(session));
 			Map<String, Object> vm = ParameterContext.getValueMap(Scope.OUT);
-			if(autoCommit)
+			if(beginTransaction)
 				session.commit();
 			return vm;
 		} catch(Exception e){
-			if(autoCommit)
+			if(beginTransaction)
 				session.rollback();
 			throw new BusinessFlowExecuteException(name, e);
 		}finally {
-			if(autoCommit)
-				session.close();
+			session.close();
 			ParameterContext.destory();
 		}
 	}

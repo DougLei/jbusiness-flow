@@ -14,7 +14,6 @@ public class SqlOPTest {
 	
 	@Test
 	public void opTest() {
-		JdbOrmDBSession session = new JdbOrmDBSession(new XmlConfiguration().buildSessionFactory());
 		BusinessFlow opBF = new BFFactory().buildByResourceFile("SqlOP.bf.json");
 		
 		Map<String, Object> inputValueMap = new HashMap<String, Object>();
@@ -28,7 +27,7 @@ public class SqlOPTest {
 		inputValueMap.put("pageSize", 1);
 		inputValueMap.put("dynamicTest", false);
 		
-		Map<String, Object> result = opBF.execute(inputValueMap, session);
+		Map<String, Object> result = opBF.execute(inputValueMap, new JdbOrmDBSession(new XmlConfiguration().buildSessionFactory()));
 		System.out.println(JSONObject.toJSONString(result));
 	}
 }
