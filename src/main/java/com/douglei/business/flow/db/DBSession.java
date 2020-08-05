@@ -18,6 +18,12 @@ public interface DBSession {
 	}
 	
 	/**
+	 * 设置是否开启事物
+	 * @param beginTransaction
+	 */
+	void setBeginTransaction(boolean beginTransaction);
+	
+	/**
 	 * 增删改数据
 	 * @param sql
 	 * @param values

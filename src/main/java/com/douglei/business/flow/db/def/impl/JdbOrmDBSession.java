@@ -40,6 +40,11 @@ public class JdbOrmDBSession implements DBSession {
 	public boolean beginTransaction() {
 		return beginTransaction;
 	}
+	
+	@Override
+	public void setBeginTransaction(boolean beginTransaction) {
+		this.beginTransaction = beginTransaction;
+	}
 
 	@Override
 	public int executeUpdate(String sql, List<Object> values) {
