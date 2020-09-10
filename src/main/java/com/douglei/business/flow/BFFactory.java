@@ -10,7 +10,7 @@ import com.douglei.business.flow.container.reference.ReferenceContainer;
 import com.douglei.business.flow.container.reference.impl.ApplicationReferenceContainer;
 import com.douglei.business.flow.executer.BusinessFlow;
 import com.douglei.business.flow.resolver.BusinessFlowResolver;
-import com.douglei.tools.instances.file.resources.reader.ResourcesReader;
+import com.douglei.tools.instances.file.resource.reader.ResourceReader;
 
 /**
  * 业务流工厂
@@ -59,7 +59,7 @@ public class BFFactory {
 	 * @return
 	 */
 	public BusinessFlow buildByInputStream(InputStream in) {
-		ResourcesReader reader = new ResourcesReader(in, StandardCharsets.UTF_8);
+		ResourceReader reader = new ResourceReader(in, StandardCharsets.UTF_8);
 		return build(reader.readAll(3000).toString());
 	}
 	
