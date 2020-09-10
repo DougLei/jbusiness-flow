@@ -4,13 +4,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 
 import com.douglei.business.flow.container.reference.ReferenceContainer;
 import com.douglei.business.flow.container.reference.impl.ApplicationReferenceContainer;
 import com.douglei.business.flow.executer.BusinessFlow;
 import com.douglei.business.flow.resolver.BusinessFlowResolver;
-import com.douglei.tools.instances.file.resource.reader.ResourceReader;
+import com.douglei.tools.instances.file.reader.FileBufferedReader;
 
 /**
  * 业务流工厂
@@ -59,8 +58,8 @@ public class BFFactory {
 	 * @return
 	 */
 	public BusinessFlow buildByInputStream(InputStream in) {
-		ResourceReader reader = new ResourceReader(in, StandardCharsets.UTF_8);
-		return build(reader.readAll(3000).toString());
+		FileBufferedReader reader = new FileBufferedReader(in);
+		return build(reader.readAll(5000).toString());
 	}
 	
 	/**

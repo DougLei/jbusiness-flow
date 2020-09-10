@@ -25,7 +25,7 @@ public class OgnlTest {
 		
 		map.put("str", " ");
 		
-		System.out.println(OgnlHandler.singleInstance().getObjectValue("list.equals(list2)", map));;
-		System.out.println(OgnlHandler.singleInstance().getObjectValue("str == \" \"", map));;
+		System.out.println(OgnlHandler.getSingleton().getObjectValue("list.equals(list2)", map));;
+		System.out.println(OgnlHandler.getSingleton().getObjectValue("str == \" \"", map));;
 	}
 }

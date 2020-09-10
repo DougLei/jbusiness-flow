@@ -29,6 +29,6 @@ public class DataOpArithmeticAction extends Action {
 		StringBuilder formula = new StringBuilder(40);
 		ArithmeticUtil.append(formula, group, executeParameter);
 		logger.debug("获取的运算表达式为: {}", formula);
-		return setResult(OgnlHandler.singleInstance().getObjectValue(formula.toString()));
+		return setResult(OgnlHandler.getSingleton().getObjectValue(formula.toString()));
 	}
 }

@@ -86,7 +86,7 @@ public class ActualParameter extends ResultParameter {
 	 */
 	public Object getValue(String ognlExpression) {
 		if(value != null && StringUtil.notEmpty(ognlExpression))
-			return OgnlHandler.singleInstance().getObjectValue(ognlExpression, value);
+			return OgnlHandler.getSingleton().getObjectValue(ognlExpression, value);
 		return value;
 	}
 }
