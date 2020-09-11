@@ -59,7 +59,7 @@ public class BFFactory {
 	 */
 	public BusinessFlow buildByInputStream(InputStream in) {
 		FileBufferedReader reader = new FileBufferedReader(in);
-		return build(reader.readAll(5000).toString());
+		return build(reader.readAll(5000).trim());
 	}
 	
 	/**
