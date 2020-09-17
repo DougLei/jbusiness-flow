@@ -26,7 +26,7 @@ public class BusinessFlowParser {
 	public BusinessFlow parse(String bfjson) {
 		JSONObject json = JSONObject.parseObject(bfjson);
 		if(!json.getBooleanValue("enabled"))
-			throw new BusinessFlowDisabledException(json.getString("name"), json.getString("description"));
+			throw new BusinessFlowParseException(json.getString("name") + "("+json.getString("description")+")流程未被激活, 无法解析");
 		BusinessFlow bf = new BusinessFlow(json.getString("name"), json.getString("version"));
 		bf.setInputParameters(ParameterParser.parseDeclaredParameters(json.getJSONArray("params"), null, null));
 		bf.setStartEvent(buildBFStruct(json.getJSONArray("events"), json.getJSONArray("flows"), new ReferenceParser(referenceContainer, json.getJSONArray("commonActions"), json.getJSONArray("methods"), json.getJSONArray("sqls"))));
@@ -47,6 +47,8 @@ public class BusinessFlowParser {
 							  json.getString("name"), 
 							  referenceResolver.parseAction(json.get("actions")));
 			if(event.isStart()) {
+				if(startEvent != null)
+					throw new BusinessFlowParseException("业务流中只能配置一个起始事件"); 
 				startEvent = event;
 			}
 			eventMap.put(event.getName(), event);
