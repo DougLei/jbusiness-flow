@@ -26,7 +26,7 @@ public class Event implements Serializable {
 	}
 	
 	private List<Flow> flows;
-	public void linkFlows(Flow flow) {
+	public void addFlow(Flow flow) {
 		if(flows == null) 
 			flows = new ArrayList<Flow>(flow.isSequence()?1:4);
 		flows.add(flow);

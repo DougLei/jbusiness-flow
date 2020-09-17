@@ -25,12 +25,12 @@ public class Flow implements Serializable{
 		this.conditionValidator = conditionValidator;
 	}
 	
-	private Event event;
-	public void linkEvent(Event event) {
-		this.event = event;
+	private Event targetEvent_;
+	public void setTargetEvent(Event targetEvent) {
+		this.targetEvent_ = targetEvent;
 	}
 	public Event targetEvent() { // 目标event实例
-		return event;
+		return targetEvent_;
 	}
 	
 	/**

@@ -73,12 +73,12 @@ public class BusinessFlowParser {
 				event = eventMap.get(flow.getSourceEvent());
 				if(event == null)
 					throw new BusinessFlowParseException("不存在name为"+flow.getSourceEvent()+"的事件, 无法设置其为flow的sourceEvent");  
-				event.linkFlows(flow);// 将sourceEvent和flow关联
+				event.addFlow(flow);// 将sourceEvent和flow关联
 				
 				event = eventMap.get(flow.getTargetEvent());
 				if(event == null)
 					throw new BusinessFlowParseException("不存在name为"+flow.getTargetEvent()+"的事件, 无法设置其为flow的targetEvent");  
-				flow.linkEvent(event);// 将targetEvent和flow关联
+				flow.setTargetEvent(event);// 将targetEvent和flow关联
 			}
 		}
 		return startEvent;
