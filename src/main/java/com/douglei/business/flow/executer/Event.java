@@ -62,10 +62,10 @@ public class Event implements Serializable {
 	 * @param executeParameter
 	 */
 	public void execute(ExecuteParameter executeParameter) {
-		for (Action action : actions) {
+		for (Action action : actions) 
 			action.execute(executeParameter);
-		}
-		if(flows != null && type != 2) {
+		
+		if(type != 2 && flows != null) {
 			ParameterContext.clear(Scope.LOCAL); // 清空执行action时产生的本地参数
 			toNextEvent(executeParameter);
 		}
