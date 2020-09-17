@@ -10,6 +10,7 @@ import com.douglei.business.flow.executer.sql.component.insert.Column;
  * @author DougLei
  */
 public class With extends Component{
+	private static final long serialVersionUID = -8896346344966304930L;
 	private String alias;
 	private Column[] columns;
 	private Select[] selects;

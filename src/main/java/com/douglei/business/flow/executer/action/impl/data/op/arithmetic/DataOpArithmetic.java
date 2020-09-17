@@ -1,5 +1,7 @@
 package com.douglei.business.flow.executer.action.impl.data.op.arithmetic;
 
+import java.io.Serializable;
+
 import com.douglei.business.flow.executer.action.ExecuteParameter;
 import com.douglei.business.flow.executer.action.impl.data.op.Data;
 
@@ -7,7 +9,8 @@ import com.douglei.business.flow.executer.action.impl.data.op.Data;
  * 
  * @author DougLei
  */
-public class DataOpArithmetic {
+public class DataOpArithmetic implements Serializable{
+	private static final long serialVersionUID = 6821340532213651998L;
 	private DataOpArithmetic[] group;
 	private Data data;
 	private ArithmeticType op;

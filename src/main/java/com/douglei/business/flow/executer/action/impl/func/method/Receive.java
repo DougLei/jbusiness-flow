@@ -1,12 +1,15 @@
 package com.douglei.business.flow.executer.action.impl.func.method;
 
+import java.io.Serializable;
+
 import com.douglei.business.flow.executer.parameter.ResultParameter;
 
 /**
  * 
  * @author DougLei
  */
-public class Receive {
+public class Receive implements Serializable{
+	private static final long serialVersionUID = -1103889544434611363L;
 	private String returnName;
 	private ResultParameter resultParameter;
 	

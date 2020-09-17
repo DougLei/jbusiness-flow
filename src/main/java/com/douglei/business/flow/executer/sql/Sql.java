@@ -14,7 +14,8 @@ import com.douglei.business.flow.executer.parameter.Scope;
  * @author DougLei
  */
 public abstract class Sql extends Method{
-	
+	private static final long serialVersionUID = 6521328905029762449L;
+
 	protected Sql(String name, DeclaredParameter[] parameters) {
 		super(name, parameters);
 	}

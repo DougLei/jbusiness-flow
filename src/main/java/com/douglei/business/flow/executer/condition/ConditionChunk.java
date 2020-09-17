@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.condition;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -10,7 +11,8 @@ import com.douglei.business.flow.executer.action.ExecuteParameter;
  * 
  * @author DougLei
  */
-public class ConditionChunk {
+public class ConditionChunk implements Serializable{
+	private static final long serialVersionUID = 8112766721355161168L;
 	protected LinkedList<ConditionChunk> list;
 	protected boolean inverse;
 	protected LogicalOP nextOP;

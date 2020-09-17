@@ -1,5 +1,7 @@
 package com.douglei.business.flow.executer.sql.component;
 
+import java.io.Serializable;
+
 import com.douglei.business.flow.executer.action.ExecuteParameter;
 import com.douglei.business.flow.executer.condition.ConditionValidator;
 import com.douglei.business.flow.executer.sql.SqlData;
@@ -8,7 +10,8 @@ import com.douglei.business.flow.executer.sql.SqlData;
  * 
  * @author DougLei
  */
-public abstract class Component {
+public abstract class Component implements Serializable{
+	private static final long serialVersionUID = -11069836111900255L;
 	protected ConditionValidator validator; 
 	
 	protected Component(ConditionValidator validator) {

@@ -10,6 +10,7 @@ import com.douglei.business.flow.executer.parameter.Parameter;
  * @author DougLei
  */
 public class QueryLDVExecuter extends QueryExecuter {
+	private static final long serialVersionUID = -6935642439781616148L;
 
 	public QueryLDVExecuter(Parameter pageNum, Parameter pageSize) {
 		super.type = ExecuterType.PAGE;

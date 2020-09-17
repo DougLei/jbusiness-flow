@@ -16,6 +16,7 @@ import com.douglei.business.flow.executer.parameter.Parameter;
  * @author DougLei
  */
 public class FuncLoopAction extends Action {
+	private static final long serialVersionUID = -2746871227926573838L;
 	private static final Logger logger = LoggerFactory.getLogger(FuncLoopAction.class);
 	private Parameter collection;
 	private DeclaredParameter alias;

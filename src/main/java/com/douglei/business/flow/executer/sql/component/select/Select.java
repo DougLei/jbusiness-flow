@@ -11,6 +11,7 @@ import com.douglei.business.flow.executer.sql.component.select.condition.Conditi
  * @author DougLei
  */
 public class Select extends Component{
+	private static final long serialVersionUID = -7863651939043563841L;
 	private Result[] results;
 	private Table table;
 	

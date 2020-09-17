@@ -14,6 +14,7 @@ import com.douglei.tools.instances.ognl.OgnlHandler;
  * @author DougLei
  */
 public class DataOpArithmeticAction extends Action {
+	private static final long serialVersionUID = -4103704066921507283L;
 	private static final Logger logger = LoggerFactory.getLogger(DataOpArithmeticAction.class);
 	private DataOpArithmetic[] group;
 

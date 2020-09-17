@@ -14,6 +14,7 @@ import com.douglei.business.flow.executer.parameter.Parameter;
  * @author DougLei
  */
 public class ParamOpDeclareAction extends Action{
+	private static final long serialVersionUID = -2388900230388686423L;
 	private static final Logger logger = LoggerFactory.getLogger(ParamOpDeclareAction.class);
 	private ParamDeclare[] declares;
 	

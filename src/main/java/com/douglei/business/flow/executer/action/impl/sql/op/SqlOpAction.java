@@ -14,6 +14,7 @@ import com.douglei.business.flow.executer.sql.Sql;
  * @author DougLei
  */
 public class SqlOpAction extends Action {
+	private static final long serialVersionUID = 1279907042382818408L;
 	private static final Logger logger = LoggerFactory.getLogger(SqlOpAction.class);
 	protected Sql sql;
 	protected InvokerParameter[] parameters;

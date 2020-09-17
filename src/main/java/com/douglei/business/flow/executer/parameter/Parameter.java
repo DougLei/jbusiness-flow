@@ -1,12 +1,15 @@
 package com.douglei.business.flow.executer.parameter;
 
+import java.io.Serializable;
+
 import com.douglei.tools.utils.StringUtil;
 
 /**
  * 参数
  * @author DougLei
  */
-public class Parameter {
+public class Parameter implements Serializable{
+	private static final long serialVersionUID = 6920234380241232242L;
 	protected String name;
 	protected String ognlExpression; // ognl表达式, 例如name=zhangsan.age, 其中zhangsan为name值, 后面的则是ognl表达式
 	protected Scope scope;

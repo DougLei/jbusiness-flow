@@ -1,5 +1,7 @@
 package com.douglei.business.flow.executer.action.impl.func;
 
+import java.io.Serializable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import com.douglei.business.flow.executer.condition.ConditionValidator;
  * @author DougLei
  */
 public class FuncSwitchAction extends Action {
+	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LoggerFactory.getLogger(FuncSwitchAction.class);
 	private SwitchGroup[] groups;
 	
@@ -34,7 +37,8 @@ public class FuncSwitchAction extends Action {
 		return null;
 	}
 	
-	private class SwitchGroup{
+	private class SwitchGroup implements Serializable{
+		private static final long serialVersionUID = 1L;
 		private ConditionValidator conditionValidator;
 		private Action[] actions;
 		

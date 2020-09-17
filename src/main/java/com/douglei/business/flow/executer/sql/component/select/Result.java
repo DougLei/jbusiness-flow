@@ -10,6 +10,7 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public class Result extends Value{
+	private static final long serialVersionUID = -9039525868101387079L;
 	private String alias;
 	
 	public Result(ConditionValidator validator, String alias) {

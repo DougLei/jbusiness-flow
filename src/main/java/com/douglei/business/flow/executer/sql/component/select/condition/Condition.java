@@ -11,6 +11,7 @@ import com.douglei.business.flow.executer.sql.component.Value;
  * @author DougLei
  */
 public class Condition extends Component{
+	private static final long serialVersionUID = 7425881173980371142L;
 	private Value left;
 	private Value[] rights;
 	private CompareType cop;

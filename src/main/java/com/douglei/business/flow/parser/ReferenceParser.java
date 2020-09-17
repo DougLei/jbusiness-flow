@@ -29,12 +29,12 @@ public class ReferenceParser {
 	
 	public ReferenceParser(ReferenceContainer container, JSONArray commonActions, JSONArray methods, JSONArray sqls) {
 		this.container = container;
-		this.commonActionWrapperMap = array2CommonActionWrapperMap(commonActions);
-		this.methodMap = array2Map(methods);
-		this.sqlMap = array2Map(sqls);
+		this.commonActionWrapperMap = array2CommonActionWrapperMap("commonAction", commonActions);
+		this.methodMap = array2Map("method", methods);
+		this.sqlMap = array2Map("sql", sqls);
 	}
 	
-	private Map<String, CommonActionWrapper> array2CommonActionWrapperMap(JSONArray array) {
+	private Map<String, CommonActionWrapper> array2CommonActionWrapperMap(String key, JSONArray array) {
 		if(CollectionUtil.isEmpty(array)) {
 			return Collections.emptyMap();
 		}
@@ -42,12 +42,14 @@ public class ReferenceParser {
 		JSONObject json;
 		for(short i=0;i<array.size();i++) {
 			json = array.getJSONObject(i);
+			if(map.containsKey(json.getString("name")))
+				throw new BusinessFlowParseException("存在相同name("+json.getString("name")+")的" + key);
 			map.put(json.getString("name"), new CommonActionWrapper(json.getJSONArray("actions")));
 		}
 		return map;
 	}
 	
-	private Map<String, JSONObject> array2Map(JSONArray array) {
+	private Map<String, JSONObject> array2Map(String key, JSONArray array) {
 		if(CollectionUtil.isEmpty(array)) {
 			return Collections.emptyMap();
 		}
@@ -55,6 +57,8 @@ public class ReferenceParser {
 		JSONObject json;
 		for(short i=0;i<array.size();i++) {
 			json = array.getJSONObject(i);
+			if(map.containsKey(json.getString("name")))
+				throw new BusinessFlowParseException("存在相同name("+json.getString("name")+")的" + key);
 			map.put(json.getString("name"), json);
 		}
 		return map;

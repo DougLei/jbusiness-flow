@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -12,12 +13,9 @@ import com.douglei.business.flow.executer.parameter.Scope;
  * 
  * @author DougLei
  */
-public class Event {
-	// private static final byte EVENT_TYPE_NORMAL = 0; // 事件类型: 一般, 该属性值没有用上, 所以注释掉, 但是0代表的就是一般事件类型
-	private static final byte EVENT_TYPE_START = 1; // 事件类型: 起始
-	private static final byte EVENT_TYPE_END = 2; // 事件类型: 结束
-	
-	private byte type;
+public class Event implements Serializable {
+	private static final long serialVersionUID = 8465283886981706980L;
+	private byte type; // 0一般事件, 1起始事件, 2结束事件
 	private String name;
 	private Action[] actions;
 	
@@ -29,16 +27,15 @@ public class Event {
 	
 	private List<Flow> flows;
 	public void linkFlows(Flow flow) {
-		if(flows == null) {
+		if(flows == null) 
 			flows = new ArrayList<Flow>(flow.isSequence()?1:4);
-		}
 		flows.add(flow);
 		if(flows.size() > 1) 
 			flows.sort(flowComparator);
 	}
 	
-	// 线排序的比较器
-	private Comparator<Flow> flowComparator = new Comparator<Flow>() {
+	// 流排序的比较器
+	private static Comparator<Flow> flowComparator = new Comparator<Flow>() {
 		@Override
 		public int compare(Flow f1, Flow f2) {
 			if(f1.getOrder() == f2.getOrder()) {
@@ -51,7 +48,7 @@ public class Event {
 	};
 	
 	public boolean isStart() {
-		return type == EVENT_TYPE_START;
+		return type == 1;
 	}
 	public byte getType() {
 		return type;
@@ -68,7 +65,7 @@ public class Event {
 		for (Action action : actions) {
 			action.execute(executeParameter);
 		}
-		if(flows != null && type != EVENT_TYPE_END) {
+		if(flows != null && type != 2) {
 			ParameterContext.clear(Scope.LOCAL); // 清空执行action时产生的本地参数
 			toNextEvent(executeParameter);
 		}

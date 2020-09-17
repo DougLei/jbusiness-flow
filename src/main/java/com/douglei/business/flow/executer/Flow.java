@@ -1,5 +1,7 @@
 package com.douglei.business.flow.executer;
 
+import java.io.Serializable;
+
 import com.douglei.business.flow.executer.action.ExecuteParameter;
 import com.douglei.business.flow.executer.condition.ConditionValidator;
 
@@ -7,17 +9,15 @@ import com.douglei.business.flow.executer.condition.ConditionValidator;
  * 
  * @author DougLei
  */
-public class Flow {
-	private static final byte FLOW_TYPE_SEQUENCE = 0; // 流类型: 顺序流
-	// private static final byte FLOW_TYPE_CONDITION = 1; // 流类型: 条件流, 该属性值没有用上, 所以注释掉, 但是1代表的就是条件流类型
-	
-	private byte type;
-	private byte order;
+public class Flow implements Serializable{
+	private static final long serialVersionUID = -4546623542765944082L;
+	private int type; // 0顺序流, 2条件流
+	private int order;
 	private String sourceEvent;
 	private String targetEvent;
 	private ConditionValidator conditionValidator;
 	
-	public Flow(byte type, byte order, String sourceEvent, String targetEvent, ConditionValidator conditionValidator) {
+	public Flow(int type, int order, String sourceEvent, String targetEvent, ConditionValidator conditionValidator) {
 		this.type = type;
 		this.order = order;
 		this.sourceEvent = sourceEvent;
@@ -44,13 +44,13 @@ public class Flow {
 	
 	// 是否是顺序流
 	public boolean isSequence() {
-		return type == FLOW_TYPE_SEQUENCE;
+		return type == 0;
 	}
 	
-	public byte getType() {
+	public int getType() {
 		return type;
 	}
-	public byte getOrder() {
+	public int getOrder() {
 		return order;
 	}
 	public String getSourceEvent() {

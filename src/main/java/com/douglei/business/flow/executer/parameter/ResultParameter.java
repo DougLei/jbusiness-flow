@@ -7,6 +7,7 @@ import com.douglei.business.flow.executer.DataType;
  * @author DougLei
  */
 public class ResultParameter extends Parameter {
+	private static final long serialVersionUID = 1231811296735921508L;
 	protected DataType dataType;
 	
 	public ResultParameter() {}

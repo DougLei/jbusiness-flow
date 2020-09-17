@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.container.reference.ReferenceContainer;
 import com.douglei.business.flow.executer.BusinessFlow;
+import com.douglei.business.flow.executer.BusinessFlowBuilder;
 import com.douglei.business.flow.executer.Event;
 import com.douglei.business.flow.executer.Flow;
 import com.douglei.business.flow.parser.condition.ConditionParser;
@@ -27,10 +28,11 @@ public class BusinessFlowParser {
 		JSONObject json = JSONObject.parseObject(bfjson);
 		if(!json.getBooleanValue("enabled"))
 			throw new BusinessFlowParseException(json.getString("name") + "("+json.getString("description")+")流程未被激活, 无法解析");
-		BusinessFlow bf = new BusinessFlow(json.getString("name"), json.getString("version"));
-		bf.setInputParameters(ParameterParser.parseDeclaredParameters(json.getJSONArray("params"), null, null));
-		bf.setStartEvent(buildBFStruct(json.getJSONArray("events"), json.getJSONArray("flows"), new ReferenceParser(referenceContainer, json.getJSONArray("commonActions"), json.getJSONArray("methods"), json.getJSONArray("sqls"))));
-		return bf;
+		
+		BusinessFlowBuilder businessFlowBuilder = new BusinessFlowBuilder(json.getString("name"), json.getString("version"));
+		businessFlowBuilder.setInputParameters(ParameterParser.parseDeclaredParameters(json.getJSONArray("params"), null, null));
+		businessFlowBuilder.setStartEvent(buildBFStruct(json.getJSONArray("events"), json.getJSONArray("flows"), new ReferenceParser(referenceContainer, json.getJSONArray("commonActions"), json.getJSONArray("methods"), json.getJSONArray("sqls"))));
+		return businessFlowBuilder.build();
 	}
 	
 	// 根据event和flow, 搭建业务流的整体结构
@@ -51,6 +53,9 @@ public class BusinessFlowParser {
 					throw new BusinessFlowParseException("业务流中只能配置一个起始事件"); 
 				startEvent = event;
 			}
+			
+			if(eventMap.containsKey(event.getName()))
+				throw new BusinessFlowParseException("业务流中出现相同name("+event.getName()+")的事件");  
 			eventMap.put(event.getName(), event);
 		}
 		
@@ -59,13 +64,21 @@ public class BusinessFlowParser {
 			Flow flow;
 			for(int index=0;index<flows.size();index++) {
 				json = flows.getJSONObject(index);
-				flow = new Flow(json.getByteValue("type"), 
-								json.getByteValue("order"), 
+				flow = new Flow(json.getIntValue("type"), 
+								json.getIntValue("order"), 
 								json.getString("sourceEvent"), 
 								json.getString("targetEvent"),
 								ConditionParser.parse(json.getJSONArray("conditionGroups"), referenceResolver));
-				eventMap.get(flow.getSourceEvent()).linkFlows(flow);// 将sourceEvent和flow关联
-				flow.linkEvent(eventMap.get(flow.getTargetEvent()));// 将targetEvent和flow关联
+				
+				event = eventMap.get(flow.getSourceEvent());
+				if(event == null)
+					throw new BusinessFlowParseException("不存在name为"+flow.getSourceEvent()+"的事件, 无法设置其为flow的sourceEvent");  
+				event.linkFlows(flow);// 将sourceEvent和flow关联
+				
+				event = eventMap.get(flow.getTargetEvent());
+				if(event == null)
+					throw new BusinessFlowParseException("不存在name为"+flow.getTargetEvent()+"的事件, 无法设置其为flow的targetEvent");  
+				flow.linkEvent(event);// 将targetEvent和flow关联
 			}
 		}
 		return startEvent;

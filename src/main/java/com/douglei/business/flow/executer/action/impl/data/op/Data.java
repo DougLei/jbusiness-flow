@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.action.impl.data.op;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +17,8 @@ import com.douglei.business.flow.executer.parameter.Scope;
  * 
  * @author DougLei
  */
-public class Data {
+public class Data implements Serializable{
+	private static final long serialVersionUID = -3745166482152818898L;
 	private Object value;
 	private Parameter parameter;
 	private String format;

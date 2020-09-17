@@ -11,6 +11,7 @@ import com.douglei.business.flow.executer.action.ExecuteParameter;
  * @author DougLei
  */
 public class Condition extends ConditionChunk{
+	private static final long serialVersionUID = -6342019747215765936L;
 	private Action dataOpCompareAction;
 	
 	public Condition(boolean inverse, LogicalOP nextOP, Action dataOpCompareAction) {

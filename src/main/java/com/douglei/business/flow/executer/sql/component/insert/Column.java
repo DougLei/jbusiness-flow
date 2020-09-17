@@ -10,6 +10,7 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public class Column extends Component{
+	private static final long serialVersionUID = 1194819731180250264L;
 	protected String column;
 	
 	protected Column(ConditionValidator validator) {

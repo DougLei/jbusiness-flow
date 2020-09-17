@@ -8,6 +8,7 @@ import com.douglei.business.flow.executer.sql.SqlData;
  * @author DougLei
  */
 public class OrderBy extends GroupBy {
+	private static final long serialVersionUID = -2301968140235150561L;
 	private Sort sort;
 
 	public OrderBy(ConditionValidator validator, byte sort) {

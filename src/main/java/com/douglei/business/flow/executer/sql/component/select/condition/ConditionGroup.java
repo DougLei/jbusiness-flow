@@ -10,6 +10,7 @@ import com.douglei.business.flow.executer.sql.component.Component;
  * @author DougLei
  */
 public class ConditionGroup extends Component {
+	private static final long serialVersionUID = -2741341561828330565L;
 	private ConditionGroup[] conditionGroups;
 	private Condition[] conditions;
 	private LogicalOP cgcop;

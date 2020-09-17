@@ -9,6 +9,7 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public class ActualParameter extends ResultParameter {
+	private static final long serialVersionUID = 2912430667934036921L;
 	private Object value; // 实参值
 	
 	public ActualParameter(String name, Scope scope, DataType dataType) {

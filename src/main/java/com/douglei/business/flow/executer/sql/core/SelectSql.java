@@ -18,6 +18,8 @@ import com.douglei.business.flow.executer.sql.component.select.With;
  * @author DougLei
  */
 public class SelectSql extends Sql {
+	private static final long serialVersionUID = 3193016940661018581L;
+
 	public static final String TYPE = "select";
 	
 	private With[] withs;

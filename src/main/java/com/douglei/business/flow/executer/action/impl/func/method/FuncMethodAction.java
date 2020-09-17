@@ -21,6 +21,7 @@ import com.douglei.tools.utils.CollectionUtil;
  * @author DougLei
  */
 public class FuncMethodAction extends Action {
+	private static final long serialVersionUID = 7707314164025936987L;
 	private static final Logger logger = LoggerFactory.getLogger(FuncMethodAction.class);
 	private Method method;
 	private InvokerParameter[] parameters;

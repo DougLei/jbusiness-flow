@@ -18,7 +18,7 @@ import com.douglei.tools.utils.datatype.dateformat.DateFormatUtil;
  * @author DougLei
  */
 public class Value extends Column{
-	
+	private static final long serialVersionUID = 7919175804105508496L;
 	private Object value; 
 	private DeclaredParameter parameter;
 	private DataType dataType;

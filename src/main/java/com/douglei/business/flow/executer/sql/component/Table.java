@@ -12,6 +12,7 @@ import com.douglei.tools.utils.StringUtil;
  * @author DougLei
  */
 public class Table extends Component{
+	private static final long serialVersionUID = -2246294276519782516L;
 	private String alias;
 	private String name;
 	

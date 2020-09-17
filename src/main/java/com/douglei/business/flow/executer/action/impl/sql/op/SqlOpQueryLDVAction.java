@@ -22,6 +22,7 @@ import com.douglei.business.flow.executer.sql.core.LDVSelectSql;
  * @author DougLei
  */
 public class SqlOpQueryLDVAction extends SqlOpAction{
+	private static final long serialVersionUID = 4055263043670371448L;
 	private static final Logger logger = LoggerFactory.getLogger(SqlOpQueryLDVAction.class);
 	private DeclaredParameter alias;
 	private Parameter aliasParameter;

@@ -5,6 +5,7 @@ package com.douglei.business.flow.executer.parameter;
  * @author DougLei
  */
 public class InvokerParameter extends Parameter {
+	private static final long serialVersionUID = 7433062479945616995L;
 	private String targetName;
 
 	public InvokerParameter(String name, Scope scope, Object defaultValue, String targetName) {

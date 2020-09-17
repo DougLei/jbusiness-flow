@@ -7,6 +7,7 @@ import com.douglei.business.flow.executer.DataType;
  * @author DougLei
  */
 public class DeclaredParameter extends ResultParameter {
+	private static final long serialVersionUID = -8453715035628059846L;
 	protected boolean required;
 	
 	public DeclaredParameter(String name, Scope scope, DataType dataType, Object defaultValue, boolean required) {

@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.action.impl.func.method;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +12,8 @@ import com.douglei.business.flow.executer.parameter.ResultParameter;
  * 
  * @author DougLei
  */
-public class ReceiveAll {
+public class ReceiveAll implements Serializable{
+	private static final long serialVersionUID = -1614103158348286701L;
 	private String[] excludeNames;
 	private ResultParameter resultParameter;
 	

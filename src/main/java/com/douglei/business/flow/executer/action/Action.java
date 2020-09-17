@@ -1,5 +1,7 @@
 package com.douglei.business.flow.executer.action;
 
+import java.io.Serializable;
+
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.parameter.ResultParameter;
 
@@ -7,7 +9,8 @@ import com.douglei.business.flow.executer.parameter.ResultParameter;
  * 
  * @author DougLei
  */
-public abstract class Action {
+public abstract class Action implements Serializable{
+	private static final long serialVersionUID = -8026308717342273355L;
 	protected ResultParameter result;
 	
 	/**

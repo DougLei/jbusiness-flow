@@ -10,6 +10,7 @@ import com.douglei.business.flow.executer.sql.component.insert.Column;
  * @author DougLei
  */
 public class GroupBy extends Column{
+	private static final long serialVersionUID = -6180084275792263415L;
 	private Function function;
 	
 	public GroupBy(ConditionValidator validator) {

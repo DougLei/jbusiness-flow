@@ -1,5 +1,7 @@
 package com.douglei.business.flow.executer.action.impl.param.op;
 
+import java.io.Serializable;
+
 import com.douglei.business.flow.executer.ParameterContext;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.Parameter;
@@ -8,7 +10,8 @@ import com.douglei.business.flow.executer.parameter.Parameter;
  * 
  * @author DougLei
  */
-class ParamDeclare {
+class ParamDeclare implements Serializable{
+	private static final long serialVersionUID = -3619381531548141292L;
 	private DeclaredParameter declaredParameter;
 	private Parameter refParameter;
 	

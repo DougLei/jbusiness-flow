@@ -9,6 +9,7 @@ import com.douglei.business.flow.executer.sql.component.Component;
  * @author DougLei
  */
 public class ConditionGroupWrapper extends Component {
+	private static final long serialVersionUID = 8979786745215238657L;
 	private String prefixSql;
 	private ConditionGroup[] groups;
 	

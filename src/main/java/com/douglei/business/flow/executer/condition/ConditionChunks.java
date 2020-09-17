@@ -10,6 +10,7 @@ import com.douglei.business.flow.executer.action.ExecuteParameter;
  * @author DougLei
  */
 class ConditionChunks extends ConditionChunk{
+	private static final long serialVersionUID = 2132110066280080878L;
 	private byte size;
 	private ConditionChunk[] chunks;
 	

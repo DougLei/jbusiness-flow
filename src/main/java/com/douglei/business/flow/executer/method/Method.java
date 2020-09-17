@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.method;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import com.douglei.business.flow.executer.ParameterContext;
@@ -15,7 +16,8 @@ import com.douglei.tools.utils.CollectionUtil;
  * 
  * @author DougLei
  */
-public class Method {
+public class Method implements Serializable{
+	private static final long serialVersionUID = 5239000366249685463L;
 	protected String name;
 	protected DeclaredParameter[] parameters;
 	private Action[] actions;

@@ -13,6 +13,7 @@ import com.douglei.business.flow.executer.parameter.ResultParameter;
  * @author DougLei
  */
 public class DataOpCompareAction extends Action {
+	private static final long serialVersionUID = 4415512635930647794L;
 	private static final Logger logger = LoggerFactory.getLogger(DataOpCompareAction.class);
 	private CompareType op;
 	private Data left;

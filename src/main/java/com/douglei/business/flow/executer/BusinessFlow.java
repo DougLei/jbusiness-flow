@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
 
@@ -12,14 +13,15 @@ import com.douglei.business.flow.executer.parameter.Scope;
  * 
  * @author DougLei
  */
-public class BusinessFlow {
+public class BusinessFlow implements Serializable {
+	private static final long serialVersionUID = 4076271443860212565L;
 	private String name;
 	private String version;
 	
-	private DeclaredParameter[] inputParameters;
-	private Event startEvent;
+	private DeclaredParameter[] inputParameters; // 输入参数
+	private Event startEvent; // StartEvent
 	
-	public BusinessFlow(String name, String version) {
+	BusinessFlow(String name, String version) {
 		this.name = name;
 		this.version = version;
 	}
@@ -87,10 +89,10 @@ public class BusinessFlow {
 	public String getVersion() {
 		return version;
 	}
-	public void setInputParameters(DeclaredParameter[] inputParameters) {
+	void setInputParameters(DeclaredParameter[] inputParameters) {
 		this.inputParameters = inputParameters;
 	}
-	public void setStartEvent(Event startEvent) {
+	void setStartEvent(Event startEvent) {
 		this.startEvent = startEvent;
 	}
 }

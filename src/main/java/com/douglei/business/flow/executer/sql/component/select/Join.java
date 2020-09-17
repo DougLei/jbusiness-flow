@@ -11,6 +11,7 @@ import com.douglei.business.flow.executer.sql.component.select.condition.Conditi
  * @author DougLei
  */
 public class Join extends Component{
+	private static final long serialVersionUID = -948803178579570464L;
 	private Type type;
 	private Table table;
 	private ConditionGroupWrapper onGroups;

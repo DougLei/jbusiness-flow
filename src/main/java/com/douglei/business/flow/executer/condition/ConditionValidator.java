@@ -1,12 +1,15 @@
 package com.douglei.business.flow.executer.condition;
 
+import java.io.Serializable;
+
 import com.douglei.business.flow.executer.action.ExecuteParameter;
 
 /**
  * 
  * @author DougLei
  */
-public class ConditionValidator {
+public class ConditionValidator implements Serializable{
+	private static final long serialVersionUID = -3925802831615595887L;
 	private byte size;
 	private ConditionChunk[] chunks;
 	

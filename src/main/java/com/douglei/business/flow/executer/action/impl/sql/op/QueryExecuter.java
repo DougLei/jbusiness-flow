@@ -1,5 +1,6 @@
 package com.douglei.business.flow.executer.action.impl.sql.op;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.douglei.business.flow.db.DBSession;
@@ -11,7 +12,9 @@ import com.douglei.business.flow.executer.parameter.Parameter;
  * 查询执行器
  * @author DougLei
  */
-public class QueryExecuter {
+public class QueryExecuter implements Serializable{
+	private static final long serialVersionUID = -4265560739115955111L;
+
 	public static final QueryExecuter DEFAULT_QUERY_EXECUTER = new QueryExecuter(ExecuterType.LIST);
 	
 	protected ExecuterType type;
