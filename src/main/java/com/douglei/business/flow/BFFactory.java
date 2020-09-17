@@ -8,7 +8,7 @@ import java.io.InputStream;
 import com.douglei.business.flow.container.reference.ReferenceContainer;
 import com.douglei.business.flow.container.reference.impl.ApplicationReferenceContainer;
 import com.douglei.business.flow.executer.BusinessFlow;
-import com.douglei.business.flow.resolver.BusinessFlowResolver;
+import com.douglei.business.flow.parser.BusinessFlowParser;
 import com.douglei.tools.instances.file.reader.FileBufferedReader;
 
 /**
@@ -16,7 +16,7 @@ import com.douglei.tools.instances.file.reader.FileBufferedReader;
  * @author DougLei
  */
 public class BFFactory {
-	private BusinessFlowResolver resolver;
+	private BusinessFlowParser parser;
 	
 	public BFFactory() {
 		this(null);
@@ -24,7 +24,7 @@ public class BFFactory {
 	public BFFactory(ReferenceContainer referenceContainer) {
 		if(referenceContainer == null)
 			referenceContainer = new ApplicationReferenceContainer();
-		this.resolver = new BusinessFlowResolver(referenceContainer);
+		this.parser = new BusinessFlowParser(referenceContainer);
 	}
 	
 	/**
@@ -68,6 +68,6 @@ public class BFFactory {
 	 * @return
 	 */
 	public BusinessFlow build(String json) {
-		return resolver.parse(json);
+		return parser.parse(json);
 	}
 }

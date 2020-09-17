@@ -9,7 +9,7 @@ import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.sql.SqlData;
 import com.douglei.business.flow.executer.sql.component.insert.Column;
 import com.douglei.business.flow.executer.sql.component.select.Select;
-import com.douglei.business.flow.resolver.action.impl.sql.op.SqlDefinedParameterContext;
+import com.douglei.business.flow.parser.action.impl.sql.op.SqlDefinedParameterContext;
 import com.douglei.tools.utils.StringUtil;
 import com.douglei.tools.utils.datatype.dateformat.DateFormatUtil;
 
