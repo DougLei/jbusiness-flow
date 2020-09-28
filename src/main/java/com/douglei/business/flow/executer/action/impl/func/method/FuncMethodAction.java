@@ -14,7 +14,6 @@ import com.douglei.business.flow.executer.action.impl.data.op.DataValue;
 import com.douglei.business.flow.executer.method.Method;
 import com.douglei.business.flow.executer.parameter.ActualParameter;
 import com.douglei.business.flow.executer.parameter.InvokerParameter;
-import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 
@@ -49,7 +48,7 @@ public class FuncMethodAction extends Action {
 		if(logger.isDebugEnabled())
 			logger.debug("执行[{}]", getClass().getName());
 		Map<String, ActualParameter> returnParameters = invokeMethod(executeParameter);
-		if(CollectionUtil.unEmpty(returnParameters)) { // 开始接收参数
+		if(returnParameters != null && !returnParameters.isEmpty()) { // 开始接收参数
 			if(receives != null) {
 				for (Receive receive : receives) {
 					ParameterContext.addParameter(receive.getResultParameter(), returnParameters.get(receive.getReturnName()).getValue(null));
@@ -70,7 +69,7 @@ public class FuncMethodAction extends Action {
 	 */
 	public DataValue returnExecuteResult(ExecuteParameter executeParameter, DataValue defaultDataValue) {
 		Map<String, ActualParameter> returnParameters = invokeMethod(executeParameter);
-		if(CollectionUtil.unEmpty(returnParameters)) {
+		if(returnParameters != null && !returnParameters.isEmpty()) {
 			Map<String, Object> valueMap = null;
 			if(receives != null) {
 				ActualParameter p;

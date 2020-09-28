@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.parser.ReferenceParser;
-import com.douglei.tools.instances.scanner.ClassScanner;
+import com.douglei.tools.instances.scanner.impl.ClassScanner;
 import com.douglei.tools.utils.reflect.ClassLoadUtil;
 import com.douglei.tools.utils.reflect.ConstructorUtil;
 import com.douglei.tools.utils.reflect.ValidationUtil;
@@ -24,8 +24,8 @@ public class ActionParsers {
 	private static final Logger logger = LoggerFactory.getLogger(ActionParsers.class);
 	private static final Map<String, ActionParser> MAP = new HashMap<String, ActionParser>(32);
 	static {
-		ClassScanner cs = new ClassScanner();
-		List<String> classPaths = cs.scan(ActionParsers.class.getPackage().getName() + ".impl");
+		ClassScanner scanner = new ClassScanner();
+		List<String> classPaths = scanner.scan(ActionParsers.class.getPackage().getName() + ".impl");
 		
 		Class<?> clz;
 		ActionParser actionResolver;
@@ -37,7 +37,7 @@ public class ActionParsers {
 			actionResolver= (ActionParser) ConstructorUtil.newInstance(clz);
 			MAP.put(actionResolver.getType().toUpperCase(), actionResolver);
 		}
-		cs.destroy();
+		scanner.destroy();
 	}
 	
 	/**

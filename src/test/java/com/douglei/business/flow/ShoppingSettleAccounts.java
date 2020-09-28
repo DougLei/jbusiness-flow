@@ -9,7 +9,7 @@ import org.junit.Test;
 import com.douglei.business.flow.db.def.impl.JdbOrmDBSession;
 import com.douglei.business.flow.executer.BusinessFlow;
 import com.douglei.orm.configuration.impl.ConfigurationImpl;
-import com.douglei.tools.utils.IOUtil;
+import com.douglei.tools.utils.FileUtil;
 import com.douglei.tools.utils.serialize.JdkSerializeProcessor;
 
 public class ShoppingSettleAccounts {
@@ -34,6 +34,6 @@ public class ShoppingSettleAccounts {
 		System.out.println(result);
 		
 		
-		IOUtil.delete(new File("C:\\Users\\Administrator.USER-20190410XF\\Desktop\\t.result"));
+		FileUtil.delete(new File("C:\\Users\\Administrator.USER-20190410XF\\Desktop\\t.result"));
 	}
 }

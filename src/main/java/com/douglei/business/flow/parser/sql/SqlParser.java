@@ -23,7 +23,6 @@ import com.douglei.business.flow.executer.sql.component.select.condition.Conditi
 import com.douglei.business.flow.parser.ReferenceParser;
 import com.douglei.business.flow.parser.action.impl.sql.op.SqlDefinedParameterContext;
 import com.douglei.business.flow.parser.condition.ConditionParser;
-import com.douglei.tools.utils.CollectionUtil;
 import com.douglei.tools.utils.StringUtil;
 
 /**
@@ -65,7 +64,7 @@ public abstract class SqlParser {
 		Function function = new Function(ConditionParser.parse(null, referenceResolver), json.getString("name"));
 		
 		JSONArray array = json.getJSONArray("values");
-		if(CollectionUtil.unEmpty(array)) {
+		if(array != null && !array.isEmpty()) {
 			Value[] values = new Value[array.size()];
 			for(int i=0;i<array.size();i++) {
 				values[i] = parseValue(array.getJSONObject(i), referenceResolver);
@@ -96,7 +95,7 @@ public abstract class SqlParser {
 	
 	// 解析column数组
 	protected Column[] parseColumns(JSONArray array, ReferenceParser referenceResolver) {
-		if(CollectionUtil.isEmpty(array))
+		if(array == null || array.isEmpty())
 			return null;
 		
 		Column[] columns = new Column[array.size()];
@@ -153,7 +152,7 @@ public abstract class SqlParser {
 	}
 	// 解析result
 	private Result[] parseResults(JSONArray array, ReferenceParser referenceResolver) {
-		if(CollectionUtil.isEmpty(array))
+		if(array == null || array.isEmpty())
 			return null;
 		JSONObject json;
 		Result[] results = new Result[array.size()];
@@ -166,7 +165,7 @@ public abstract class SqlParser {
 	}
 	// 解析join
 	private Join[] parseJoins(JSONArray array, ReferenceParser referenceResolver) {
-		if(CollectionUtil.isEmpty(array))
+		if(array == null || array.isEmpty())
 			return null;
 		Join[] joins = new Join[array.size()];
 		JSONObject json;
@@ -185,7 +184,7 @@ public abstract class SqlParser {
 		return new ConditionGroupWrapper(parseConditionValidator(null, referenceResolver), type.getPrefixSql(), array);
 	}
 	private ConditionGroup[] parseConditionGroups_(JSONArray array, ReferenceParser referenceResolver) {
-		if(CollectionUtil.isEmpty(array)) 
+		if(array == null || array.isEmpty()) 
 			return null;
 		ConditionGroup[] conditionGroups = new ConditionGroup[array.size()];
 		JSONObject json;
@@ -197,7 +196,7 @@ public abstract class SqlParser {
 	}
 	// 解析具体的conditions
 	private Condition[] parseConditions(JSONArray array, ReferenceParser referenceResolver) {
-		if(CollectionUtil.isEmpty(array))
+		if(array == null || array.isEmpty())
 			return null;
 		Condition[] conditions = new Condition[array.size()];
 		JSONObject json;
@@ -212,7 +211,7 @@ public abstract class SqlParser {
 	}
 	// 解析condition中right部分
 	private Value[] parseRights(JSONArray array, ReferenceParser referenceResolver) {
-		if(CollectionUtil.isEmpty(array))
+		if(array == null || array.isEmpty())
 			throw new NullPointerException("条件右边的值不能为空");
 		
 		Value[] rights = new Value[array.size()];
@@ -224,7 +223,7 @@ public abstract class SqlParser {
 
 	// 解析group by
 	private GroupBy[] parseGroupBys(JSONArray array, ReferenceParser referenceResolver) {
-		if(CollectionUtil.isEmpty(array))
+		if(array == null || array.isEmpty())
 			return null;
 		
 		JSONObject json;
@@ -239,7 +238,7 @@ public abstract class SqlParser {
 	
 	// 解析order by
 	private OrderBy[] parseOrderBys(JSONArray array, ReferenceParser referenceResolver) {
-		if(CollectionUtil.isEmpty(array))
+		if(array == null || array.isEmpty())
 			return null;
 		
 		JSONObject json;

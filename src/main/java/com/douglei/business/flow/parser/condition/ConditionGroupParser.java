@@ -8,7 +8,6 @@ import com.douglei.business.flow.executer.condition.ConditionChunk;
 import com.douglei.business.flow.executer.condition.ConditionValidator;
 import com.douglei.business.flow.parser.ReferenceParser;
 import com.douglei.business.flow.parser.action.ActionParsers;
-import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 
@@ -66,7 +65,7 @@ class ConditionGroupParser {
 	// 解析条件组中的条件组
 	private void parseConditionGroups(JSONObject conditionGroup, ConditionChunk topChunk) {
 		JSONArray conditionGroups = conditionGroup.getJSONArray("conditionGroups");
-		if(CollectionUtil.isEmpty(conditionGroups))
+		if(conditionGroups == null || conditionGroups.isEmpty())
 			return;
 		
 		ConditionChunk[] chunks = parse_(conditionGroups);
@@ -75,7 +74,7 @@ class ConditionGroupParser {
 	
 	// 解析条件
 	private void parseConditions(JSONArray conditions, ConditionChunk topChunk) {
-		if(CollectionUtil.unEmpty(conditions)) {
+		if(conditions != null && !conditions.isEmpty()) {
 			JSONObject condition;
 			for(int i=0;i<conditions.size();i++) {
 				condition = conditions.getJSONObject(i);

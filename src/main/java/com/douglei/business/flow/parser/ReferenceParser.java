@@ -15,7 +15,6 @@ import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.parser.action.ActionParsers;
 import com.douglei.business.flow.parser.sql.SqlParsers;
-import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 针对 commonAction, method, sql的解析器 (这三种配置, 都可被业务流引用)
@@ -35,7 +34,7 @@ public class ReferenceParser {
 	}
 	
 	private Map<String, CommonActionWrapper> array2CommonActionWrapperMap(String key, JSONArray array) {
-		if(CollectionUtil.isEmpty(array)) {
+		if(array==null || array.isEmpty()) {
 			return Collections.emptyMap();
 		}
 		Map<String, CommonActionWrapper> map = new HashMap<String, CommonActionWrapper>();
@@ -50,7 +49,7 @@ public class ReferenceParser {
 	}
 	
 	private Map<String, JSONObject> array2Map(String key, JSONArray array) {
-		if(CollectionUtil.isEmpty(array)) {
+		if(array==null || array.isEmpty()) {
 			return Collections.emptyMap();
 		}
 		Map<String, JSONObject> map = new HashMap<String, JSONObject>();

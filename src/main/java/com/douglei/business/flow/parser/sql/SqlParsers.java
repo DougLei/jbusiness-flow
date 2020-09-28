@@ -15,7 +15,7 @@ import com.douglei.business.flow.executer.sql.Sql;
 import com.douglei.business.flow.parser.ParameterParser;
 import com.douglei.business.flow.parser.ReferenceParser;
 import com.douglei.business.flow.parser.action.impl.sql.op.SqlDefinedParameterContext;
-import com.douglei.tools.instances.scanner.ClassScanner;
+import com.douglei.tools.instances.scanner.impl.ClassScanner;
 import com.douglei.tools.utils.reflect.ClassLoadUtil;
 import com.douglei.tools.utils.reflect.ConstructorUtil;
 import com.douglei.tools.utils.reflect.ValidationUtil;
@@ -28,8 +28,8 @@ public class SqlParsers {
 	private static final Logger logger = LoggerFactory.getLogger(SqlParsers.class);
 	private static final Map<String, SqlParser> MAP = new HashMap<String, SqlParser>(8);
 	static {
-		ClassScanner cs = new ClassScanner();
-		List<String> classPaths = cs.scan(SqlParsers.class.getPackage().getName() + ".impl");
+		ClassScanner scanner = new ClassScanner();
+		List<String> classPaths = scanner.scan(SqlParsers.class.getPackage().getName() + ".impl");
 		
 		Class<?> clz;
 		SqlParser sqlResolver;
@@ -41,7 +41,7 @@ public class SqlParsers {
 			sqlResolver = (SqlParser) ConstructorUtil.newInstance(clz);
 			MAP.put(sqlResolver.getType().toUpperCase(), sqlResolver);
 		}
-		cs.destroy();
+		scanner.destroy();
 	}
 	
 	/**

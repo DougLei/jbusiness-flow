@@ -11,7 +11,6 @@ import com.douglei.business.flow.executer.BusinessFlowBuilder;
 import com.douglei.business.flow.executer.Event;
 import com.douglei.business.flow.executer.Flow;
 import com.douglei.business.flow.parser.condition.ConditionParser;
-import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 业务流解析器
@@ -60,7 +59,7 @@ public class BusinessFlowParser {
 		}
 		
 		// 通过flow, 将event连接起来, 如果只有一个节点, 可以没有连线
-		if(CollectionUtil.unEmpty(flows)) {
+		if(flows != null && !flows.isEmpty()) {
 			Flow flow;
 			for(int index=0;index<flows.size();index++) {
 				json = flows.getJSONObject(index);

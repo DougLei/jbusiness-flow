@@ -8,7 +8,6 @@ import com.douglei.business.flow.executer.action.impl.data.op.arithmetic.DataOpA
 import com.douglei.business.flow.executer.action.impl.data.op.arithmetic.DataOpArithmeticAction;
 import com.douglei.business.flow.parser.ReferenceParser;
 import com.douglei.business.flow.parser.action.impl.data.DataOpParser;
-import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 
@@ -36,7 +35,7 @@ public class DataOpArithmeticActionParser extends DataOpParser{
 	private DataOpArithmetic parse_(JSONObject content, ReferenceParser referenceResolver) {
 		DataOpArithmetic dataOpArithmetic = new DataOpArithmetic(ArithmeticType.toValue(content.getString("op")));
 		JSONArray groupArray = content.getJSONArray("group");
-		if(CollectionUtil.isEmpty(groupArray)) {
+		if(groupArray == null || groupArray.isEmpty()) {
 			dataOpArithmetic.setData(parseData(content, referenceResolver));
 		}else {
 			byte size = (byte) groupArray.size();

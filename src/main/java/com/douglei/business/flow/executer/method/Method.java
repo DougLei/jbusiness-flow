@@ -10,7 +10,6 @@ import com.douglei.business.flow.executer.parameter.ActualParameter;
 import com.douglei.business.flow.executer.parameter.DeclaredParameter;
 import com.douglei.business.flow.executer.parameter.InvokerParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
-import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 
@@ -56,7 +55,7 @@ public class Method implements Serializable{
 			action.execute(executeParameter);
 		
 		Map<String, ActualParameter> parameterMap = ParameterContext.clear(Scope.LOCAL);
-		if(CollectionUtil.unEmpty(parameterMap) && return_ != null)
+		if((parameterMap!=null && !parameterMap.isEmpty()) && return_ != null)
 			return return_.filter(parameterMap);
 		return null;
 	}

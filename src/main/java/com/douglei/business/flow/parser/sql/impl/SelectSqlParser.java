@@ -8,7 +8,6 @@ import com.douglei.business.flow.executer.sql.component.select.With;
 import com.douglei.business.flow.executer.sql.core.SelectSql;
 import com.douglei.business.flow.parser.ReferenceParser;
 import com.douglei.business.flow.parser.sql.SqlParser;
-import com.douglei.tools.utils.CollectionUtil;
 
 /**
  * 
@@ -26,7 +25,7 @@ public class SelectSqlParser extends SqlParser{
 		SelectSql sql = new SelectSql(name, parameters);
 		
 		JSONArray array = content.getJSONArray("withs");
-		if(CollectionUtil.unEmpty(array)) {
+		if(array != null && !array.isEmpty()) {
 			With[] withs = new With[array.size()];
 			
 			JSONObject json;
