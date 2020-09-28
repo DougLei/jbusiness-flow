@@ -29,19 +29,18 @@ public class SqlParsers {
 	private static final Map<String, SqlParser> MAP = new HashMap<String, SqlParser>(8);
 	static {
 		ClassScanner scanner = new ClassScanner();
-		List<String> classPaths = scanner.scan(SqlParsers.class.getPackage().getName() + ".impl");
+		List<String> classes = scanner.scan(SqlParsers.class.getPackage().getName() + ".impl");
 		
 		Class<?> clz;
 		SqlParser sqlResolver;
-		for (String cp : classPaths) {
-			clz = ClassLoadUtil.loadClass(cp);
+		for (String clazz : classes) {
+			clz = ClassLoadUtil.loadClass(clazz);
 			if(Modifier.isAbstract(clz.getModifiers()) || !ValidationUtil.isExtendClass(clz, SqlParser.class)) {
 				continue;
 			}
 			sqlResolver = (SqlParser) ConstructorUtil.newInstance(clz);
 			MAP.put(sqlResolver.getType().toUpperCase(), sqlResolver);
 		}
-		scanner.destroy();
 	}
 	
 	/**

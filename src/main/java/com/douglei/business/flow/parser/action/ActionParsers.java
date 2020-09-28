@@ -25,19 +25,18 @@ public class ActionParsers {
 	private static final Map<String, ActionParser> MAP = new HashMap<String, ActionParser>(32);
 	static {
 		ClassScanner scanner = new ClassScanner();
-		List<String> classPaths = scanner.scan(ActionParsers.class.getPackage().getName() + ".impl");
+		List<String> classes = scanner.scan(ActionParsers.class.getPackage().getName() + ".impl");
 		
 		Class<?> clz;
 		ActionParser actionResolver;
-		for (String cp : classPaths) {
-			clz = ClassLoadUtil.loadClass(cp);
+		for (String clazz : classes) {
+			clz = ClassLoadUtil.loadClass(clazz);
 			if(Modifier.isAbstract(clz.getModifiers()) || !ValidationUtil.isExtendClass(clz, ActionParser.class)) {
 				continue;
 			}
 			actionResolver= (ActionParser) ConstructorUtil.newInstance(clz);
 			MAP.put(actionResolver.getType().toUpperCase(), actionResolver);
 		}
-		scanner.destroy();
 	}
 	
 	/**
