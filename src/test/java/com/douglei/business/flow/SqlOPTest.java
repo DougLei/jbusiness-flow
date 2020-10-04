@@ -8,7 +8,7 @@ import org.junit.Test;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.db.def.impl.JdbOrmDBSession;
 import com.douglei.business.flow.executer.BusinessFlow;
-import com.douglei.orm.configuration.impl.ConfigurationImpl;
+import com.douglei.orm.Configuration;
 
 public class SqlOPTest {
 	
@@ -27,7 +27,7 @@ public class SqlOPTest {
 		inputValueMap.put("pageSize", 1);
 		inputValueMap.put("dynamicTest", false);
 		
-		Map<String, Object> result = opBF.execute(inputValueMap, new JdbOrmDBSession(new ConfigurationImpl().buildSessionFactory()));
+		Map<String, Object> result = opBF.execute(inputValueMap, new JdbOrmDBSession(new Configuration().getSessionFactory()));
 		System.out.println(JSONObject.toJSONString(result));
 	}
 }

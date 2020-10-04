@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import com.douglei.business.flow.db.def.impl.JdbOrmDBSession;
 import com.douglei.business.flow.executer.BusinessFlow;
-import com.douglei.orm.configuration.impl.ConfigurationImpl;
+import com.douglei.orm.Configuration;
 import com.douglei.tools.utils.FileUtil;
 import com.douglei.tools.utils.serialize.JdkSerializeProcessor;
 
@@ -16,7 +16,7 @@ public class ShoppingSettleAccounts {
 	
 	@Test
 	public void test() {
-		JdbOrmDBSession session = new JdbOrmDBSession(new ConfigurationImpl().buildSessionFactory());
+		JdbOrmDBSession session = new JdbOrmDBSession(new Configuration().getSessionFactory());
 		
 		BusinessFlow shoppingBF = new BFFactory().buildByResourceFile("ShoppingSettleAccounts.bf.json");
 		
