@@ -27,7 +27,7 @@ public class SqlOPTest {
 		inputValueMap.put("pageSize", 1);
 		inputValueMap.put("dynamicTest", false);
 		
-		Map<String, Object> result = opBF.execute(inputValueMap, new JdbOrmDBSession(new Configuration().getSessionFactory()));
+		Map<String, Object> result = opBF.execute(inputValueMap, new JdbOrmDBSession(new Configuration().buildSessionFactory()));
 		System.out.println(JSONObject.toJSONString(result));
 	}
 }

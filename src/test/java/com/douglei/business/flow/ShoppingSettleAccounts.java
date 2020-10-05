@@ -16,7 +16,7 @@ public class ShoppingSettleAccounts {
 	
 	@Test
 	public void test() {
-		JdbOrmDBSession session = new JdbOrmDBSession(new Configuration().getSessionFactory());
+		JdbOrmDBSession session = new JdbOrmDBSession(new Configuration().buildSessionFactory());
 		
 		BusinessFlow shoppingBF = new BFFactory().buildByResourceFile("ShoppingSettleAccounts.bf.json");
 		
