@@ -8,7 +8,7 @@ import org.junit.Test;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.db.def.impl.JdbOrmDBSession;
 import com.douglei.business.flow.executer.BusinessFlow;
-import com.douglei.orm.Configuration;
+import com.douglei.orm.configuration.Configuration;
 
 public class SqlOPTest {
 	
