@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
-import com.douglei.tools.utils.StringUtil;
-import com.douglei.tools.utils.datatype.VerifyTypeMatchUtil;
-import com.douglei.tools.utils.datatype.dateformat.DateFormatUtil;
+import com.douglei.tools.StringUtil;
+import com.douglei.tools.datatype.DataTypeValidateUtil;
+import com.douglei.tools.datatype.DateFormatUtil;
 
 /**
  * 
@@ -43,7 +43,7 @@ public enum DataType {
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
 			if(!result && value instanceof String) {
-				return VerifyTypeMatchUtil.isInteger(value.toString());
+				return DataTypeValidateUtil.isInteger(value.toString());
 			}
 			return result;
 		}
@@ -76,7 +76,7 @@ public enum DataType {
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
 			if(!result && value instanceof String) {
-				return VerifyTypeMatchUtil.isDouble(value.toString());
+				return DataTypeValidateUtil.isDouble(value.toString());
 			}
 			return result;
 		}
@@ -112,7 +112,7 @@ public enum DataType {
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
 			if(!result && value instanceof String) {
-				return VerifyTypeMatchUtil.isBoolean(value.toString());
+				return DataTypeValidateUtil.isBoolean(value.toString());
 			}
 			return result;
 		}

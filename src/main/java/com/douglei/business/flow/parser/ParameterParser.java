@@ -8,7 +8,7 @@ import com.douglei.business.flow.executer.parameter.InvokerParameter;
 import com.douglei.business.flow.executer.parameter.Parameter;
 import com.douglei.business.flow.executer.parameter.ResultParameter;
 import com.douglei.business.flow.executer.parameter.Scope;
-import com.douglei.tools.utils.StringUtil;
+import com.douglei.tools.StringUtil;
 
 /**
  * 参数解析器

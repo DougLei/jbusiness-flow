@@ -23,7 +23,7 @@ import com.douglei.business.flow.executer.sql.component.select.condition.Conditi
 import com.douglei.business.flow.parser.ReferenceParser;
 import com.douglei.business.flow.parser.action.impl.sql.op.SqlDefinedParameterContext;
 import com.douglei.business.flow.parser.condition.ConditionParser;
-import com.douglei.tools.utils.StringUtil;
+import com.douglei.tools.StringUtil;
 
 /**
  * 

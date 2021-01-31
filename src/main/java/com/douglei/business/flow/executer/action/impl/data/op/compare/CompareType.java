@@ -1,7 +1,7 @@
 package com.douglei.business.flow.executer.action.impl.data.op.compare;
 
 import com.douglei.business.flow.executer.action.impl.data.op.DataValue;
-import com.douglei.tools.utils.StringUtil;
+import com.douglei.tools.StringUtil;
 
 /**
  * 

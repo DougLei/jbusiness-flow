@@ -10,7 +10,7 @@ import com.douglei.business.flow.executer.parameter.Scope;
 import com.douglei.business.flow.parser.ParameterParser;
 import com.douglei.business.flow.parser.ReferenceParser;
 import com.douglei.business.flow.parser.action.ActionParser;
-import com.douglei.tools.utils.StringUtil;
+import com.douglei.tools.StringUtil;
 
 /**
  * 

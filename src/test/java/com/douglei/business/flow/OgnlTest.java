@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.douglei.tools.instances.ognl.OgnlHandler;
+import com.douglei.tools.ognl.OgnlHandler;
 
 public class OgnlTest {
 	

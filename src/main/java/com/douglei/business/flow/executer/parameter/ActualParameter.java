@@ -1,8 +1,8 @@
 package com.douglei.business.flow.executer.parameter;
 
 import com.douglei.business.flow.executer.DataType;
-import com.douglei.tools.instances.ognl.OgnlHandler;
-import com.douglei.tools.utils.StringUtil;
+import com.douglei.tools.StringUtil;
+import com.douglei.tools.ognl.OgnlHandler;
 
 /**
  * 实参

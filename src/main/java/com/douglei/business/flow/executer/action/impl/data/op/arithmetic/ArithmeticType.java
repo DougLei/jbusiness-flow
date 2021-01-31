@@ -1,6 +1,6 @@
 package com.douglei.business.flow.executer.action.impl.data.op.arithmetic;
 
-import com.douglei.tools.utils.StringUtil;
+import com.douglei.tools.StringUtil;
 
 /**
  * 

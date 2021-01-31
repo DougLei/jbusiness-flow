@@ -14,7 +14,7 @@ import com.douglei.business.flow.executer.parameter.ps.impl.InOutParameterScope;
 import com.douglei.business.flow.executer.parameter.ps.impl.InParameterScope;
 import com.douglei.business.flow.executer.parameter.ps.impl.LocalParameterScope;
 import com.douglei.business.flow.executer.parameter.ps.impl.OutParameterScope;
-import com.douglei.tools.utils.StringUtil;
+import com.douglei.tools.StringUtil;
 
 /**
  * 参数上下文
