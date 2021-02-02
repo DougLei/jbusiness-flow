@@ -22,7 +22,7 @@ public class Column extends Component{
 	}
 
 	public void setColumn(String column) {
-		if(StringUtil.notEmpty(column))
+		if(StringUtil.unEmpty(column))
 			this.column = column;
 	}
 	

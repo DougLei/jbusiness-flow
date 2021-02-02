@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.douglei.tools.ognl.OgnlHandler;
+import com.douglei.tools.OgnlUtil;
 
 public class OgnlTest {
 	
@@ -25,7 +25,7 @@ public class OgnlTest {
 		
 		map.put("str", " ");
 		
-		System.out.println(OgnlHandler.getSingleton().getObjectValue("list.equals(list2)", map));;
-		System.out.println(OgnlHandler.getSingleton().getObjectValue("str == \" \"", map));;
+		System.out.println(OgnlUtil.getObjectValue("list.equals(list2)", map));;
+		System.out.println(OgnlUtil.getObjectValue("str == \" \"", map));;
 	}
 }

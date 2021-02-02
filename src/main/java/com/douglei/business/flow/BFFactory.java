@@ -58,7 +58,9 @@ public class BFFactory {
 	 * @return
 	 */
 	public BusinessFlow buildByInputStream(InputStream in) {
-		return build(new FileBufferedReader(in).readAll(5000).trim());
+		try(FileBufferedReader reader = new FileBufferedReader(in)){
+			return build(reader.readAll(5000).trim());
+		}
 	}
 	
 	/**

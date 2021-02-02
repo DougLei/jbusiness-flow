@@ -9,8 +9,8 @@ import org.junit.Test;
 import com.douglei.business.flow.db.def.impl.JdbOrmDBSession;
 import com.douglei.business.flow.executer.BusinessFlow;
 import com.douglei.orm.configuration.Configuration;
+import com.douglei.tools.JdkSerializeUtil;
 import com.douglei.tools.file.FileUtil;
-import com.douglei.tools.serialize.JdkSerializeProcessor;
 
 public class ShoppingSettleAccounts {
 	
@@ -22,10 +22,10 @@ public class ShoppingSettleAccounts {
 		
 		
 		
-		JdkSerializeProcessor.serialize2File(shoppingBF, "C:\\Users\\Administrator.USER-20190410XF\\Desktop\\t.result");
+		JdkSerializeUtil.serialize4File(shoppingBF, new File("C:\\Users\\Administrator.USER-20190410XF\\Desktop\\t.result"));
 		
 		
-		shoppingBF = JdkSerializeProcessor.deserializeFromFile(BusinessFlow.class, "C:\\Users\\Administrator.USER-20190410XF\\Desktop\\t.result");
+		shoppingBF = JdkSerializeUtil.deserialize4File(BusinessFlow.class, new File("C:\\Users\\Administrator.USER-20190410XF\\Desktop\\t.result"));
 		
 		
 		Map<String, Object> inputValueMap = new HashMap<String, Object>();

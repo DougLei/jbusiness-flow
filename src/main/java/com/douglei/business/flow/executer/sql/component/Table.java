@@ -22,7 +22,7 @@ public class Table extends Component{
 	
 	public Table(ConditionValidator validator, String alias) {
 		super(validator);
-		if(StringUtil.notEmpty(alias)) {
+		if(StringUtil.unEmpty(alias)) {
 			this.alias = alias;
 		}
 	}

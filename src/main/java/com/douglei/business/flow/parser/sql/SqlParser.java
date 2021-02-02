@@ -81,9 +81,9 @@ public abstract class SqlParser {
 		Table table = new Table(ConditionParser.parse(null, referenceResolver), json.getString("alias"));
 		
 		Object object;
-		if(StringUtil.notEmpty(object = json.getString("name"))) {
+		if(StringUtil.unEmpty(object = json.getString("name"))) {
 			table.setName(object.toString());
-		}else if(StringUtil.notEmpty(object = json.getString("paramName"))) {
+		}else if(StringUtil.unEmpty(object = json.getString("paramName"))) {
 			table.setParameter(SqlDefinedParameterContext.get(object.toString()));
 		}else if((object = json.getJSONObject("function")) != null) {
 			table.setFunction(parseFunction((JSONObject)object, referenceResolver));
@@ -116,11 +116,11 @@ public abstract class SqlParser {
 	// 给value中设置值
 	private void setValue(JSONObject json, Value value, ReferenceParser referenceResolver) {
 		Object object;
-		if(StringUtil.notEmpty(object = json.getString("column"))) {
+		if(StringUtil.unEmpty(object = json.getString("column"))) {
 			value.setColumn(object.toString());
 		}else if((object = json.get("value")) != null) {
 			value.setValue(object, json.getBoolean("placeholder"), json.getString("valuePrefix"), json.getString("valueSuffix"), json.getString("format"));
-		}else if(StringUtil.notEmpty(object = json.getString("paramName"))) {
+		}else if(StringUtil.unEmpty(object = json.getString("paramName"))) {
 			value.setParameter(SqlDefinedParameterContext.get(object.toString()), json.getBoolean("placeholder"), json.getString("valuePrefix"), json.getString("valueSuffix"), json.getString("format"));
 		}else if((object = json.getJSONObject("function")) != null) {
 			value.setFunction(parseFunction((JSONObject)object, referenceResolver));

@@ -73,7 +73,7 @@ public class Value extends Column{
 				sqlData.appendSql('?');
 				sqlData.addParameterValue(value);
 			}else {
-				sqlData.appendSql(valuePrefix).appendSql((dataType==DataType.DATE && StringUtil.notEmpty(format))?DateFormatUtil.format(DateFormatUtil.parseDate(value), format):value).appendSql(valueSuffix);
+				sqlData.appendSql(valuePrefix).appendSql((dataType==DataType.DATE && StringUtil.unEmpty(format))?DateFormatUtil.format(format, DateFormatUtil.parseDate(value)):value).appendSql(valueSuffix);
 			}
 		}else if(parameter != null) {
 			Object parameterValue = ParameterContext.getValue(parameter);
@@ -81,7 +81,7 @@ public class Value extends Column{
 				sqlData.appendSql('?');
 				sqlData.addParameterValue(parameterValue);
 			}else {
-				sqlData.appendSql(valuePrefix).appendSql(dataType==DataType.DATE?DateFormatUtil.format((Date)parameterValue, format):parameterValue).appendSql(valueSuffix);
+				sqlData.appendSql(valuePrefix).appendSql(dataType==DataType.DATE?DateFormatUtil.format(format, (Date)parameterValue):parameterValue).appendSql(valueSuffix);
 			}
 		}else if(function != null) {
 			function.append2SqlData(sqlData);

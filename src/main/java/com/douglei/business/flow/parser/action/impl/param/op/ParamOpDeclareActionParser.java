@@ -39,7 +39,7 @@ public class ParamOpDeclareActionParser extends ActionParser {
 			
 			if(declaredParameter.getDefaultValue() == null) {
 				String refParamName = content.getString("refParamName");
-				if(StringUtil.notEmpty(refParamName)) {
+				if(StringUtil.unEmpty(refParamName)) {
 					action.addRefParameter(i, new Parameter(refParamName, Scope.toValue(content.getByteValue("refParamScope")), null));
 				}
 			}

@@ -63,7 +63,7 @@ public enum CompareType {
 	}
 	
 	public static CompareType toValue(String value) {
-		if(StringUtil.notEmpty(value)) {
+		if(StringUtil.unEmpty(value)) {
 			value = value.trim().toUpperCase();
 			
 			boolean isInversion = false;

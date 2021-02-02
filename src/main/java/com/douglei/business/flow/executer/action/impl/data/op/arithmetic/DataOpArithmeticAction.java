@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.executer.action.ExecuteParameter;
 import com.douglei.business.flow.executer.parameter.ResultParameter;
-import com.douglei.tools.ognl.OgnlHandler;
+import com.douglei.tools.OgnlUtil;
 
 
 /**
@@ -30,6 +30,6 @@ public class DataOpArithmeticAction extends Action {
 		StringBuilder formula = new StringBuilder(40);
 		ArithmeticUtil.append(formula, group, executeParameter);
 		logger.debug("获取的运算表达式为: {}", formula);
-		return setResult(OgnlHandler.getSingleton().getObjectValue(formula.toString()));
+		return setResult(OgnlUtil.getObjectValue(formula.toString()));
 	}
 }

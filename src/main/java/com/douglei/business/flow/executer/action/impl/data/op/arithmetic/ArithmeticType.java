@@ -19,7 +19,7 @@ public enum ArithmeticType {
 	}
 
 	public static ArithmeticType toValue(String value) {
-		if(StringUtil.notEmpty(value)) {
+		if(StringUtil.unEmpty(value)) {
 			value = value.trim().toUpperCase();
 			for(ArithmeticType at : ArithmeticType.values()) {
 				if(at.name().equals(value)) {

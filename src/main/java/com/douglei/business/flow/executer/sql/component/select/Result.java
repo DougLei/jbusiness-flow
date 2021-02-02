@@ -15,7 +15,7 @@ public class Result extends Value{
 	
 	public Result(ConditionValidator validator, String alias) {
 		super(validator);
-		if(StringUtil.notEmpty(alias))
+		if(StringUtil.unEmpty(alias))
 			this.alias = alias;
 	}
 

@@ -100,7 +100,7 @@ public class ParameterContext {
 			return null;
 		}
 		
-		InvokerParameterValues values = new InvokerParameterValues(invokerParameters.length, StringUtil.notEmpty(invokerParameters[0].getTargetName()));
+		InvokerParameterValues values = new InvokerParameterValues(invokerParameters.length, StringUtil.unEmpty(invokerParameters[0].getTargetName()));
 		for(byte i=0;i<invokerParameters.length;i++) {
 			values.addValue(getValue(invokerParameters[i]), i,invokerParameters[i].getTargetName());
 		}

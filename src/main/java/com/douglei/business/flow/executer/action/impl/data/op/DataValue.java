@@ -103,8 +103,8 @@ public class DataValue {
 			return value.toString();
 		}
 		if(dataType == DataType.DATE) {
-			if(StringUtil.notEmpty(format))
-				return DateFormatUtil.format(((Date)value), format);
+			if(StringUtil.unEmpty(format))
+				return DateFormatUtil.format(format, ((Date)value));
 			return ((Date)value).getTime()+"";
 		}
 		return "\"" + value.toString() + "\"";

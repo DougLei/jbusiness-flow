@@ -19,7 +19,7 @@ public enum DataType {
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
 			if(!result && (value instanceof String || value instanceof Long || value.getClass() == long.class)) {
-				return DateFormatUtil.verifyIsDate(value.toString());
+				return DataTypeValidateUtil.isDate(value);
 			}
 			return result;
 		}
@@ -76,7 +76,7 @@ public enum DataType {
 		public boolean matching(Object value) {
 			boolean result = super.matching(value);
 			if(!result && value instanceof String) {
-				return DataTypeValidateUtil.isDouble(value.toString());
+				return DataTypeValidateUtil.isNumber(value.toString());
 			}
 			return result;
 		}
@@ -201,7 +201,7 @@ public enum DataType {
 	 * @return
 	 */
 	public static DataType toValue(String value) {
-		if(StringUtil.notEmpty(value)) {
+		if(StringUtil.unEmpty(value)) {
 			value = value.trim().toUpperCase();
 			for(DataType dt : DataType.values()) {
 				if(dt.name().equals(value)) {

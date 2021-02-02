@@ -1,8 +1,8 @@
 package com.douglei.business.flow.executer.parameter;
 
 import com.douglei.business.flow.executer.DataType;
+import com.douglei.tools.OgnlUtil;
 import com.douglei.tools.StringUtil;
-import com.douglei.tools.ognl.OgnlHandler;
 
 /**
  * 实参
@@ -86,8 +86,8 @@ public class ActualParameter extends ResultParameter {
 	 * @return
 	 */
 	public Object getValue(String ognlExpression) {
-		if(value != null && StringUtil.notEmpty(ognlExpression))
-			return OgnlHandler.getSingleton().getObjectValue(ognlExpression, value);
+		if(value != null && StringUtil.unEmpty(ognlExpression))
+			return OgnlUtil.getObjectValue(ognlExpression, value);
 		return value;
 	}
 }

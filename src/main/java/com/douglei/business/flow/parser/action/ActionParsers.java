@@ -11,10 +11,8 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSONObject;
 import com.douglei.business.flow.executer.action.Action;
 import com.douglei.business.flow.parser.ReferenceParser;
-import com.douglei.tools.instances.resource.scanner.impl.ClassScanner;
-import com.douglei.tools.reflect.ClassLoadUtil;
-import com.douglei.tools.reflect.ConstructorUtil;
-import com.douglei.tools.reflect.ValidationUtil;
+import com.douglei.tools.file.scanner.impl.ClassScanner;
+import com.douglei.tools.reflect.ClassUtil;
 
 /**
  * 
@@ -24,17 +22,16 @@ public class ActionParsers {
 	private static final Logger logger = LoggerFactory.getLogger(ActionParsers.class);
 	private static final Map<String, ActionParser> MAP = new HashMap<String, ActionParser>(32);
 	static {
-		ClassScanner scanner = new ClassScanner();
-		List<String> classes = scanner.scan(ActionParsers.class.getPackage().getName() + ".impl");
+		List<String> classes = new ClassScanner().scan(ActionParsers.class.getPackage().getName() + ".impl");
 		
 		Class<?> clz;
 		ActionParser actionResolver;
 		for (String clazz : classes) {
-			clz = ClassLoadUtil.loadClass(clazz);
-			if(Modifier.isAbstract(clz.getModifiers()) || !ValidationUtil.isExtendClass(clz, ActionParser.class)) {
+			clz = ClassUtil.loadClass1(clazz);
+			if(Modifier.isAbstract(clz.getModifiers()) || !ClassUtil.isExtendClass(clz, ActionParser.class)) 
 				continue;
-			}
-			actionResolver= (ActionParser) ConstructorUtil.newInstance(clz);
+			
+			actionResolver= (ActionParser) ClassUtil.newInstance(clz);
 			MAP.put(actionResolver.getType().toUpperCase(), actionResolver);
 		}
 	}
