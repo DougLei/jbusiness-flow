@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.douglei.business.flow.db.DBPageResult;
-import com.douglei.orm.sql.pagequery.PageResult;
+import com.douglei.orm.sql.query.page.PageResult;
 
 /**
  * 
