@@ -65,14 +65,14 @@ public class JdbOrmDBSession implements DBSession {
 	public DBPageResult pageQuery(int pageNum, int pageSize, String sql, List<Object> values) {
 		return new JdbOrmDBPageResult(getSqlSession().pageQuery(pageNum, pageSize, sql, values));
 	}
-	@Override
-	public List<Map<String, Object>> recursiveQuery(int deep, String pkColumnName, String parentPkColumnName, Object parentValue, String childNodeName, String sql, List<Object> values) {
-		return getSqlSession().recursiveQuery(deep, pkColumnName, parentPkColumnName, parentValue, childNodeName, sql, values);
-	}
-	@Override
-	public DBPageResult pageRecursiveQuery(int pageNum, int pageSize, int deep, String pkColumnName, String parentPkColumnName, Object parentValue, String childNodeName, String sql, List<Object> values) {
-		return new JdbOrmDBPageResult(getSqlSession().pageRecursiveQuery(pageNum, pageSize, deep, pkColumnName, parentPkColumnName, parentValue, childNodeName, sql, values));
-	}
+//	@Override
+//	public List<Map<String, Object>> recursiveQuery(int deep, String pkColumnName, String parentPkColumnName, Object parentValue, String childNodeName, String sql, List<Object> values) {
+//		return getSqlSession().recursiveQuery(deep, pkColumnName, parentPkColumnName, parentValue, childNodeName, sql, values);
+//	}
+//	@Override
+//	public DBPageResult pageRecursiveQuery(int pageNum, int pageSize, int deep, String pkColumnName, String parentPkColumnName, Object parentValue, String childNodeName, String sql, List<Object> values) {
+//		return new JdbOrmDBPageResult(getSqlSession().pageRecursiveQuery(pageNum, pageSize, deep, pkColumnName, parentPkColumnName, parentValue, childNodeName, sql, values));
+//	}
 	
 	@Override
 	public void commit() {

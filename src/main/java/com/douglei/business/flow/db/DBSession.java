@@ -68,7 +68,7 @@ public interface DBSession {
 	 * @param values
 	 * @return
 	 */
-	List<Map<String, Object>> recursiveQuery(int deep, String pkColumnName, String parentPkColumnName, Object parentValue, String childNodeName, String sql, List<Object> values);
+//	List<Map<String, Object>> recursiveQuery(int deep, String pkColumnName, String parentPkColumnName, Object parentValue, String childNodeName, String sql, List<Object> values);
 	
 	/**
 	 * 分页递归查询
@@ -83,7 +83,7 @@ public interface DBSession {
 	 * @param values
 	 * @return
 	 */
-	DBPageResult pageRecursiveQuery(int pageNum, int pageSize, int deep, String pkColumnName, String parentPkColumnName, Object parentValue, String childNodeName, String sql, List<Object> values); 
+//	DBPageResult pageRecursiveQuery(int pageNum, int pageSize, int deep, String pkColumnName, String parentPkColumnName, Object parentValue, String childNodeName, String sql, List<Object> values); 
 	
 	/**
 	 * 提交

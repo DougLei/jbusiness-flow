@@ -78,9 +78,9 @@ public class QueryExecuter implements Serializable{
 			case PAGE:
 				return session.pageQuery(getIntegerValue(pageNum), getIntegerValue(pageSize), sql, values);
 			case RECURSIVE:
-				return session.recursiveQuery(getIntegerValue(deep), getStringValue(pkColumnName), getStringValue(parentPkColumnName), ParameterContext.getValue(parentValue), getStringValue(childNodeName), sql, values);
+//				return session.recursiveQuery(getIntegerValue(deep), getStringValue(pkColumnName), getStringValue(parentPkColumnName), ParameterContext.getValue(parentValue), getStringValue(childNodeName), sql, values);
 			case PAGE_RECURSIVE:
-				return session.pageRecursiveQuery(getIntegerValue(pageNum), getIntegerValue(pageSize), getIntegerValue(deep), getStringValue(pkColumnName), getStringValue(parentPkColumnName), ParameterContext.getValue(parentValue), getStringValue(childNodeName), sql, values);
+//				return session.pageRecursiveQuery(getIntegerValue(pageNum), getIntegerValue(pageSize), getIntegerValue(deep), getStringValue(pkColumnName), getStringValue(parentPkColumnName), ParameterContext.getValue(parentValue), getStringValue(childNodeName), sql, values);
 		}
 		return null;
 	}
