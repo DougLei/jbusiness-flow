@@ -14,8 +14,6 @@ import com.douglei.business.flow.executer.sql.component.update.Set;
  * @author DougLei
  */
 public class UpdateSql extends Sql {
-	private static final long serialVersionUID = 4871351280442009624L;
-
 	public static final String TYPE = "update"; 
 
 	private Table table;

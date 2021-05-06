@@ -12,7 +12,6 @@ import com.douglei.business.flow.executer.sql.component.select.condition.Conditi
  * @author DougLei
  */
 public class DeleteSql extends Sql {
-	private static final long serialVersionUID = 2557471143603686893L;
 
 	public static final String TYPE = "delete";
 

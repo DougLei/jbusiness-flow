@@ -36,7 +36,7 @@ public class Method implements Serializable{
 	 * 调用前的预处理, 主要是对参数的设置, 以及开启本地参数的堆栈
 	 * @param invokerParameters
 	 */
-	protected void invokePre(InvokerParameter[] invokerParameters) {
+	protected final void invokePre(InvokerParameter[] invokerParameters) {
 		ParameterContext.activateStack(Scope.LOCAL);
 		if(this.parameters != null) {
 			InvokerParameterValues values = ParameterContext.getValues(invokerParameters);

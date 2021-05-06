@@ -1,0 +1,57 @@
+{
+	"name": "ShoppingSettleAccounts",
+	"description": "购物结账",
+	"version": "1",
+	"enabled": true,
+
+	"params": [{
+		"name": "productName",
+		"description": "商品名称",
+		"scope": 1,
+		"dataType": "string",
+		"required": true
+	}, {
+		"name": "productPrice",
+		"description": "商品价格",
+		"scope": 1,
+		"dataType": "integer",
+		"required": true
+	}, {
+		"name": "productList",
+		"description": "商品集合",
+		"scope": 3,
+		"dataType": "list"
+	}],
+
+	"events": [{
+		"type": 1,
+		"name": "insertShoppingInfo",
+		"description": "添加一条购物信息",
+		"actions": [{
+			"type": "sql_op_direct",
+			"content": {
+				"type": "insert",
+				"sql": "insert into shopping_car(name, price) values($productName$,$productPrice$)",
+				"params": [{
+					"name": "productPrice",
+					"targetName":"productPrice",
+					"scope": 1
+				},{
+					"name": "productName",
+					"targetName":"productName",
+					"scope": 1
+				}]
+			 }
+		}, {
+			"type": "sql_op_direct",
+			"content": {
+				"type": "select",
+				"sql": "select * from shopping_car"
+			 },
+			 "result":{
+			 	"name":"productList",
+			 	"scope":3
+			 }
+		}]
+	}]
+}

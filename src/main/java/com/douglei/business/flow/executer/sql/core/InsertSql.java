@@ -13,7 +13,6 @@ import com.douglei.business.flow.executer.sql.component.insert.Column;
  * @author DougLei
  */
 public class InsertSql extends Sql {
-	private static final long serialVersionUID = 3275700689257450016L;
 	public static final String TYPE = "insert";
 	public static final byte VALUES_TYPE_VALUE = 0; // values的类型: 值
 	public static final byte VALUES_TYPE_SELECT = 1; // values的类型: 子查询
